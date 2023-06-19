@@ -4,6 +4,7 @@ from .building import BUILDING, BUILDING_BOUNDARY_SURFACE
 from .cityfurniture import CITY_FURNITURE
 from .landslide import LAND_SLIDE
 from .landuse import LAND_USE
+from .relief import RELIEF
 from .transportation import ROAD, TRAFFIC_AREA
 from .waterbody import WATER_BODY
 
@@ -18,6 +19,7 @@ processors = ProcessorRegistory(
         CITY_FURNITURE,
         LAND_SLIDE,
         LAND_USE,
+        RELIEF,
         WATER_BODY,
     ]
 )
