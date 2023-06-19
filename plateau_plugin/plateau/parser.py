@@ -6,18 +6,22 @@ import lxml.etree as et
 from .codelists import get_codelist
 from .geometry import parse_multipolygon
 from .models import processors
-from .namespaces import _NS, to_prefixed_name
-from .types import CityObject
+from .namespaces import Namespace
+from .types import CityObject, ParseSettings
 
 
 def process_cityobj_element(
     elem: et._Element,
+    settings: ParseSettings,
     ancestors: list[tuple[str, str]],  # 親地物の (target_element, gml_id)
 ) -> Iterable[CityObject]:
+    ns = settings.namespace
+    nsmap = ns.nsmap
+
     gml_id = elem.get("{http://www.opengis.net/gml}id", None)
     gml_name = (
         name_elem.text
-        if (name_elem := elem.find("./gml:name", _NS)) is not None
+        if (name_elem := elem.find("./gml:name", nsmap)) is not None
         else None
     )
     props = OrderedDict()
@@ -29,7 +33,7 @@ def process_cityobj_element(
         return
 
     for attr in processor.attributes:
-        values = elem.xpath(attr.xpath, namespaces=_NS)
+        values = [e.text for e in elem.iterfind(attr.path, nsmap)]
         if attr.datatype == "[]string":
             values = [str(v) for v in values]
             if attr.codelist:
@@ -47,7 +51,7 @@ def process_cityobj_element(
         else:
             raise NotImplementedError(f"Unknown datatype: {attr.datatype}")
 
-    has_lods = processor.get_lods(elem)
+    has_lods = processor.get_lods(elem, nsmap)
     emissions_for_lod = processor.emissions_list
     children_for_lod = processor.children_paths_list
     new_ancestors = [*ancestors, (processor.id, gml_id)]
@@ -59,8 +63,8 @@ def process_cityobj_element(
         has_children = False
         if paths := children_for_lod[lod]:
             for path in paths:
-                for child in elem.iterfind(path, _NS):
-                    yield from process_cityobj_element(child, new_ancestors)
+                for child in elem.iterfind(path, nsmap):
+                    yield from process_cityobj_element(child, settings, new_ancestors)
                     has_children = True
 
         if has_children:
@@ -71,7 +75,7 @@ def process_cityobj_element(
                 continue
 
             if emission.geometry_loader == "polygons":
-                geom = parse_multipolygon(elem, emission.elem_paths)
+                geom = parse_multipolygon(elem, emission.elem_paths, nsmap)
             else:
                 raise NotImplementedError(
                     f"Unknown geometry loader: {emission.geometry_loader}"
@@ -80,7 +84,7 @@ def process_cityobj_element(
             if geom:
                 yield CityObject(
                     lod=lod,
-                    type=to_prefixed_name(elem.tag),
+                    type=ns.to_prefixed_name(elem.tag),
                     properties=props,
                     geometry=geom,
                     processor_path=new_ancestors,
@@ -89,7 +93,7 @@ def process_cityobj_element(
     if need_nogeom_table:
         # 子地物を出力したときは、親の情報を含んだジオメトリなしの地物を出力する
         yield CityObject(
-            type=to_prefixed_name(elem.tag),
+            type=ns.to_prefixed_name(elem.tag),
             lod=None,
             geometry=None,
             properties=props,
@@ -101,12 +105,20 @@ class FileParser:
     def __init__(self, filename: str):
         self._doc = et.parse(filename, None)
 
+        # Detect i-UR versions
+        self._ns = Namespace.from_document_nsmap(self._doc.getroot().nsmap)
+
     def count_toplevel_objects(self):
-        return sum(1 for _ in self._doc.iterfind("./core:cityObjectMember", _NS))
+        return sum(
+            1 for _ in self._doc.iterfind("./core:cityObjectMember", self._ns.nsmap)
+        )
 
     def iter_city_objects(self) -> Iterable[tuple[int, CityObject]]:
+        settings = ParseSettings(namespace=self._ns)
         toplevel_count = 0
-        for city_object in self._doc.iterfind("./core:cityObjectMember/*", _NS):
-            for cityobj in process_cityobj_element(city_object, ancestors=[]):
+        for city_object in self._doc.iterfind(
+            "./core:cityObjectMember/*", self._ns.nsmap
+        ):
+            for cityobj in process_cityobj_element(city_object, settings, ancestors=[]):
                 yield (toplevel_count, cityobj)
             toplevel_count += 1

@@ -2,7 +2,7 @@
 
 import re
 
-_NS = {
+BASE_NS = {
     "gml": "http://www.opengis.net/gml",
     "core": "http://www.opengis.net/citygml/2.0",
     "app": "http://www.opengis.net/citygml/appearance/2.0",
@@ -23,12 +23,28 @@ _NS = {
 }
 """XML Namespaces"""
 
-_inverted = {v: k for k, v in _NS.items()}
 
+class Namespace:
+    def __init__(self, update: dict):
+        self.nsmap: dict[str, str] = dict(**BASE_NS, **update)
+        self.inverted = {v: k for k, v in self.nsmap.items()}
 
-def to_qualified_name(prefixed_name: str) -> str:
-    return re.sub(r"^(.+?):()", lambda m: "{" + _NS[m.group(1)] + "}", prefixed_name)
+    @classmethod
+    def from_document_nsmap(cls, src_nsmap: dict[str, str]) -> "Namespace":
+        _ns_update = {}
+        for ns in src_nsmap.values():
+            if ns.startswith("https://www.geospatial.jp/iur/uro/"):
+                _ns_update["uro"] = ns
+            if ns.startswith("https://www.geospatial.jp/iur/urf/"):
+                _ns_update["urf"] = ns
+        return cls(_ns_update)
 
+    def to_qualified_name(self, prefixed_name: str) -> str:
+        return re.sub(
+            r"^(.+?):()", lambda m: "{" + self.nsmap[m.group(1)] + "}", prefixed_name
+        )
 
-def to_prefixed_name(qualified_name: str) -> str:
-    return re.sub(r"^{([^}]+)}", lambda m: f"{_inverted[m.group(1)]}:", qualified_name)
+    def to_prefixed_name(self, qualified_name: str) -> str:
+        return re.sub(
+            r"^{([^}]+)}", lambda m: f"{self.inverted[m.group(1)]}:", qualified_name
+        )

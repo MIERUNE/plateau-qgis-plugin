@@ -19,7 +19,7 @@ BUILDING = ProcessorDefinition(
     attributes=[
         Attribute(
             name="usage",
-            xpath="./bldg:usage/text()",
+            path="./bldg:usage",
             datatype="[]string",
             codelist="Building_usage",
         ),

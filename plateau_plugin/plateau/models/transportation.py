@@ -19,19 +19,19 @@ ROAD = ProcessorDefinition(
     attributes=[
         Attribute(
             name="class",
-            xpath="./tran:class/text()",
+            path="./tran:class",
             datatype="string",
-            codelist="Road_class",
+            codelist="TransportationComplex_class",
         ),
         Attribute(
             name="function",
-            xpath="./tran:function/text()",
+            path="./tran:function",
             datatype="[]string",
             codelist="Road_function",
         ),
         Attribute(
             name="usage",
-            xpath="./tran:usage/text()",
+            path="./tran:usage",
             datatype="[]string",
             codelist="Road_usage",
         ),
@@ -56,13 +56,13 @@ TRAFFIC_AREA = ProcessorDefinition(
     attributes=[
         Attribute(
             name="function",
-            xpath="./tran:function/text()",
+            path="./tran:function",
             datatype="[]string",
             codelist="TrafficArea_function",
         ),
         Attribute(
             name="surfaceMaterial",
-            xpath="./tran:surfaceMaterial/text()",
+            path="./tran:surfaceMaterial",
             datatype="string",
             codelist="TrafficArea_surfaceMaterial",
         ),

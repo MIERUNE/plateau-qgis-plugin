@@ -4,6 +4,8 @@ from typing import Any, Literal, Optional, Union
 
 import numpy as np
 
+from .namespaces import Namespace
+
 
 @dataclass
 class MultiPoint:
@@ -37,4 +39,4 @@ class CityObject:
 
 @dataclass
 class ParseSettings:
-    pass
+    namespace: Namespace

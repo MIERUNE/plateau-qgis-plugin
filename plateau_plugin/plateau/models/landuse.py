@@ -17,13 +17,13 @@ LAND_USE = ProcessorDefinition(
     attributes=[
         Attribute(
             name="class",
-            xpath="./luse:class/text()",
+            path="./luse:class",
             datatype="string",
             codelist="Common_landUseType",
         ),
         Attribute(
             name="usage",
-            xpath="./luse:usage/text()",
+            path="./luse:usage",
             datatype="string",
             codelist="LandUse_usage",
         ),

@@ -17,19 +17,19 @@ CITY_FURNITURE = ProcessorDefinition(
     attributes=[
         Attribute(
             name="class",
-            xpath="./frn:class/text()",
+            path="./frn:class",
             datatype="string",
             codelist="CityFurniture_class",
         ),
         Attribute(
             name="function",
-            xpath="./frn:function/text()",
+            path="./frn:function",
             datatype="[]string",
             codelist="CityFurniture_function",
         ),
         Attribute(
             name="usage",
-            xpath="./frn:usage/text()",
+            path="./frn:usage",
             datatype="[]string",
         ),
     ],

@@ -1,4 +1,4 @@
-"""Relief (DEM)"""
+"""Relief (dem)"""
 
 from .base import (
     Attribute,

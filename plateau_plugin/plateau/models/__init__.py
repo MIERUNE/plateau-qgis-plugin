@@ -6,6 +6,7 @@ from .landslide import LAND_SLIDE
 from .landuse import LAND_USE
 from .relief import RELIEF
 from .transportation import ROAD, TRAFFIC_AREA
+from .vegetation import PLANT_COVER, SOLITARY_VEGETATION_OBJECT
 from .waterbody import WATER_BODY
 
 processors = ProcessorRegistory(
@@ -17,6 +18,8 @@ processors = ProcessorRegistory(
         ROAD,
         TRAFFIC_AREA,
         CITY_FURNITURE,
+        SOLITARY_VEGETATION_OBJECT,
+        PLANT_COVER,
         LAND_SLIDE,
         LAND_USE,
         RELIEF,

@@ -19,13 +19,13 @@ BRIDGE = ProcessorDefinition(
     attributes=[
         Attribute(
             name="class",
-            xpath="./brid:class/text()",
+            path="./brid:class",
             datatype="string",
             codelist="Bridge_class",
         ),
         Attribute(
             name="function",
-            xpath="./brid:function/text()",
+            path="./brid:function",
             datatype="[]string",
             codelist="Bridge_function",
         ),

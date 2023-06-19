@@ -20,7 +20,7 @@ WATER_BODY = ProcessorDefinition(
     attributes=[
         Attribute(
             name="class",
-            xpath="./wtr:class/text()",
+            path="./wtr:class",
             datatype="string",
             codelist="WaterBody_class",
         ),

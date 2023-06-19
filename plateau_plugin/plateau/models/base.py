@@ -1,10 +1,11 @@
+import re
 from dataclasses import dataclass
 from functools import cached_property
 from typing import Iterable, Literal, Optional
 
 import lxml.etree as et
 
-from ..namespaces import _NS, to_qualified_name
+from ..namespaces import BASE_NS
 
 
 @dataclass
@@ -48,7 +49,7 @@ class ChildrenPaths:
 @dataclass
 class Attribute:
     name: str
-    xpath: str
+    path: str
     datatype: Literal["string", "integer", "double", "datetime", "[]string"]
     codelist: Optional[str] = None
 
@@ -73,17 +74,17 @@ class ProcessorDefinition:
     emissions: Emissions
     children: Optional[ChildrenPaths] = None
 
-    def get_lods(self, elem: et._Element):
+    def get_lods(self, elem: et._Element, nsmap: dict[str, str]):
         det = self.lod_detection
         if det.lod_n:
-            lod = int(elem.find(det.lod_n, _NS).text)
+            lod = int(elem.find(det.lod_n, BASE_NS).text)
             return [lod == i for i in range(5)]
         return (
-            bool(det.lod0 and any(elem.find(p, _NS) is not None for p in det.lod0)),
-            bool(det.lod1 and any(elem.find(p, _NS) is not None for p in det.lod1)),
-            bool(det.lod2 and any(elem.find(p, _NS) is not None for p in det.lod2)),
-            bool(det.lod3 and any(elem.find(p, _NS) is not None for p in det.lod3)),
-            bool(det.lod4 and any(elem.find(p, _NS) is not None for p in det.lod4)),
+            bool(det.lod0 and any(elem.find(p, nsmap) is not None for p in det.lod0)),
+            bool(det.lod1 and any(elem.find(p, nsmap) is not None for p in det.lod1)),
+            bool(det.lod2 and any(elem.find(p, nsmap) is not None for p in det.lod2)),
+            bool(det.lod3 and any(elem.find(p, nsmap) is not None for p in det.lod3)),
+            bool(det.lod4 and any(elem.find(p, nsmap) is not None for p in det.lod4)),
         )
 
     @cached_property
@@ -122,7 +123,9 @@ class ProcessorRegistory:
     def register_processor(self, processor: ProcessorDefinition):
         self._id_map[processor.id] = processor
         for prefixed_name in processor.target_elements:
-            qualified_name = to_qualified_name(prefixed_name)
+            qualified_name = re.sub(
+                r"^(.+?):()", lambda m: "{" + BASE_NS[m.group(1)] + "}", prefixed_name
+            )
             self._tag_map[prefixed_name] = processor
             self._tag_map[qualified_name] = processor
 

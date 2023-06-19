@@ -12,5 +12,5 @@ python3 -m plateau /path/to/city/udx/luse/563846_luse_6668_op.gml
 QGIS にデプロイ (macOS):
 
 ```console
-$ make deploy
+make deploy
 ```
