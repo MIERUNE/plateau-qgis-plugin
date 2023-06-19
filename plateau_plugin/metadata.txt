@@ -1,0 +1,23 @@
+[general]
+name=PLATEAU 3D City Model Loader
+version=0.0.0
+qgisMinimumVersion=3.6
+description=<<<PROJECT DESCRIPTION>>>
+author=MIERUNE Inc.
+email=info@mierune.co.jp
+
+about=<<<PROJECT DESCRIPTION>>>
+
+tracker=https://github.com/MIERUNE/plateau-qgis-plugin/issues
+repository=https://github.com/MIERUNE/plateau-qgis-plugin
+
+hasProcessingProvider=yes
+changelog=
+tags=python,processing
+
+homepage=https://github.com/MIERUNE/plateau-qgis-plugin
+category=Plugins
+icon=icon.png
+experimental=False
+deprecated=False
+server=False
