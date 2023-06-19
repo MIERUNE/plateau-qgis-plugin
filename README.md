@@ -1,8 +1,16 @@
-# plateau-qgis-plugin
+# plateau-qgis-plugin-rev2
 
-Mac での開発
+[PoC]
+
+QGIS を使わずにテスト実行:
 
 ```console
-# QGIS にデプロイ
+cd plateau_plugin
+python3 -m plateau /path/to/city/udx/luse/563846_luse_6668_op.gml
+```
+
+QGIS にデプロイ (macOS):
+
+```console
 $ make deploy
 ```
