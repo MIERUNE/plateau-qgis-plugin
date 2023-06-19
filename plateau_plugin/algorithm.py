@@ -93,6 +93,7 @@ class PlateauProcessingAlrogithm(QgsProcessingAlgorithm):
     """Processing algorithm for converting PLATEAU 3D City models"""
 
     INPUT = "INPUT"
+    SEMANTIC_PARTS = "SEMANTIC_PARTS"
     # OUTPUT = "OUTPUT"
 
     def tr(self, string: str):

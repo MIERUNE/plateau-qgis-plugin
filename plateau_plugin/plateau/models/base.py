@@ -22,7 +22,8 @@ class LODDetection:
 
 @dataclass
 class Emission:
-    elem_paths: list[str]
+    catch_all: list[str]
+    direct: Optional[list[str]] = None
     geometry_loader: Literal["polygons"] = "polygons"
 
 
@@ -35,15 +36,7 @@ class Emissions:
     lod2: Optional[Emission] = None
     lod3: Optional[Emission] = None
     lod4: Optional[Emission] = None
-
-
-@dataclass
-class ChildrenPaths:
-    lod0: Optional[list[str]] = None
-    lod1: Optional[list[str]] = None
-    lod2: Optional[list[str]] = None
-    lod3: Optional[list[str]] = None
-    lod4: Optional[list[str]] = None
+    semantic_parts: Optional[list[str]] = None
 
 
 @dataclass
@@ -72,7 +65,6 @@ class ProcessorDefinition:
     lod_detection: LODDetection
     attributes: list[Attribute]
     emissions: Emissions
-    children: Optional[ChildrenPaths] = None
 
     def get_lods(self, elem: et._Element, nsmap: dict[str, str]):
         det = self.lod_detection
@@ -96,19 +88,6 @@ class ProcessorDefinition:
             emissions.lod2,
             emissions.lod3,
             emissions.lod4,
-        )
-
-    @cached_property
-    def children_paths_list(self) -> tuple[Optional[list[str]], ...]:
-        children = self.children
-        if children is None:
-            return (None, None, None, None, None)
-        return (
-            children.lod0,
-            children.lod1,
-            children.lod2,
-            children.lod3,
-            children.lod4,
         )
 
 

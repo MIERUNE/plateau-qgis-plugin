@@ -16,9 +16,9 @@ SOLITARY_VEGETATION_OBJECT = ProcessorDefinition(
     ),
     attributes=[],
     emissions=Emissions(
-        lod1=Emission(elem_paths=["./veg:lod1Geometry//gml:Polygon"]),
-        lod2=Emission(elem_paths=["./veg:lod2Geometry//gml:Polygon"]),
-        lod3=Emission(elem_paths=["./veg:lod3Geometry//gml:Polygon"]),
+        lod1=Emission(catch_all=["./veg:lod1Geometry//gml:Polygon"]),
+        lod2=Emission(catch_all=["./veg:lod2Geometry//gml:Polygon"]),
+        lod3=Emission(catch_all=["./veg:lod3Geometry//gml:Polygon"]),
     ),
 )
 
@@ -33,19 +33,19 @@ PLANT_COVER = ProcessorDefinition(
     attributes=[],
     emissions=Emissions(
         lod1=Emission(
-            elem_paths=[
+            catch_all=[
                 "./veg:lod1MultiSolid//gml:Polygon",
                 "./veg:lod1MultiSurface//gml:Polygon",
             ]
         ),
         lod2=Emission(
-            elem_paths=[
+            catch_all=[
                 "./veg:lod1MultiSolid//gml:Polygon",
                 "./veg:lod2MultiSurface//gml:Polygon",
             ]
         ),
         lod3=Emission(
-            elem_paths=[
+            catch_all=[
                 "./veg:lod1MultiSolid//gml:Polygon",
                 "./veg:lod3MultiSurface//gml:Polygon",
             ]

@@ -1,6 +1,5 @@
 from .base import (
     Attribute,
-    ChildrenPaths,
     Emission,
     Emissions,
     LODDetection,
@@ -27,32 +26,24 @@ WATER_BODY = ProcessorDefinition(
     ],
     emissions=Emissions(
         lod1=Emission(
-            elem_paths=[
+            catch_all=[
                 "./wtr:lod1MultiSurface//gml:Polygon",
             ]
         ),
         lod2=Emission(
-            elem_paths=[
+            catch_all=[
                 ".//wtr:lod2MultiSurface//gml:Polygon",
             ]
         ),
         lod3=Emission(
-            elem_paths=[
+            catch_all=[
                 ".//wtr:lod3MultiSurface//gml:Polygon",
             ]
         ),
-    ),
-    children=ChildrenPaths(
-        # NOTE: 実際のデータがない
-        # lod2=[
-        #     ".//wtr:WaterSurface",
-        #     ".//wtr:WaterGroundSurface",
-        #     ".//wtr:WaterClosureSurface",
-        # ],
-        # lod3=[
-        #     ".//wtr:WaterSurface",
-        #     ".//wtr:WaterGroundSurface",
-        #     ".//wtr:WaterClosureSurface",
-        # ],
+        # semantic_parts=[
+        #      ".//wtr:WaterSurface",
+        #      ".//wtr:WaterGroundSurface",
+        #      ".//wtr:WaterClosureSurface",
+        # ]
     ),
 )

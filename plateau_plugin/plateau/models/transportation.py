@@ -1,6 +1,5 @@
 from .base import (
     Attribute,
-    ChildrenPaths,
     Emission,
     Emissions,
     LODDetection,
@@ -37,15 +36,26 @@ ROAD = ProcessorDefinition(
         ),
     ],
     emissions=Emissions(
-        lod1=Emission(elem_paths=["./tran:lod1MultiSurface//gml:Polygon"]),
-        lod2=Emission(elem_paths=["./tran:*//tran:lod2MultiSurface//gml:Polygon"]),
-        lod3=Emission(elem_paths=["./tran:*//tran:lod3MultiSurface//gml:Polygon"]),
-        lod4=Emission(elem_paths=["./tran:*//tran:lod4MultiSurface//gml:Polygon"]),
-    ),
-    children=ChildrenPaths(
-        lod2=["./tran:trafficArea/tran:TrafficArea"],
-        lod3=["./tran:trafficArea/tran:TrafficArea"],
-        lod4=["./tran:trafficArea/tran:TrafficArea"],
+        lod1=Emission(
+            catch_all=["./tran:lod1MultiSurface//gml:Polygon"],
+            direct=["./tran:lod1MultiSurface//gml:Polygon"],
+        ),
+        lod2=Emission(
+            catch_all=["./tran:*//tran:lod2MultiSurface//gml:Polygon"],
+            direct=["./tran:lod2MultiSurface//gml:Polygon"],
+        ),
+        lod3=Emission(
+            catch_all=["./tran:*//tran:lod3MultiSurface//gml:Polygon"],
+            direct=["./tran:lod3MultiSurface//gml:Polygon"],
+        ),
+        lod4=Emission(
+            catch_all=["./tran:*//tran:lod4MultiSurface//gml:Polygon"],
+            direct=["./tran:lod4MultiSurface//gml:Polygon"],
+        ),
+        semantic_parts=[
+            "./tran:trafficArea/tran:TrafficArea",
+            "./tran:auxiliaryTrafficArea/tran:AuxiliaryTrafficArea",
+        ],
     ),
 )
 
@@ -73,8 +83,8 @@ TRAFFIC_AREA = ProcessorDefinition(
         lod4=["./tran:lod4MultiSurface"],
     ),
     emissions=Emissions(
-        lod2=Emission(elem_paths=["./tran:lod2MultiSurface//gml:Polygon"]),
-        lod3=Emission(elem_paths=["./tran:lod3MultiSurface//gml:Polygon"]),
-        lod4=Emission(elem_paths=["./tran:lod4MultiSurface//gml:Polygon"]),
+        lod2=Emission(catch_all=["./tran:lod2MultiSurface//gml:Polygon"]),
+        lod3=Emission(catch_all=["./tran:lod3MultiSurface//gml:Polygon"]),
+        lod4=Emission(catch_all=["./tran:lod4MultiSurface//gml:Polygon"]),
     ),
 )

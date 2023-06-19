@@ -18,13 +18,13 @@ RELIEF = ProcessorDefinition(
     emissions=Emissions(
         # ひとまず TIN のみ対応する
         lod1=Emission(
-            elem_paths=["./dem:reliefComponent/dem:TINRelief/dem:tin//gml:Triangle"]
+            catch_all=["./dem:reliefComponent/dem:TINRelief/dem:tin//gml:Triangle"]
         ),
         lod2=Emission(
-            elem_paths=["./dem:reliefComponent/dem:TINRelief/dem:tin//gml:Triangle"]
+            catch_all=["./dem:reliefComponent/dem:TINRelief/dem:tin//gml:Triangle"]
         ),
         lod3=Emission(
-            elem_paths=["./dem:reliefComponent/dem:TINRelief/dem:tin//gml:Triangle"]
+            catch_all=["./dem:reliefComponent/dem:TINRelief/dem:tin//gml:Triangle"]
         ),
     ),
 )

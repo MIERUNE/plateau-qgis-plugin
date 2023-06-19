@@ -51,46 +51,48 @@ def process_cityobj_element(
         else:
             raise NotImplementedError(f"Unknown datatype: {attr.datatype}")
 
-    has_lods = processor.get_lods(elem, nsmap)
     emissions_for_lod = processor.emissions_list
-    children_for_lod = processor.children_paths_list
     new_ancestors = [*ancestors, (processor.id, gml_id)]
-    need_nogeom_table = False
+    is_semantic_parts_mode = True
+    has_semantic_parts = False
+
+    if is_semantic_parts_mode and processor.emissions.semantic_parts:
+        for path in processor.emissions.semantic_parts:
+            for child in elem.iterfind(path, nsmap):
+                yield from process_cityobj_element(child, settings, new_ancestors)
+                has_semantic_parts = True
+
+    has_lods = processor.get_lods(elem, nsmap)
     for lod in (4, 3, 2, 1):
         if not has_lods[lod]:
             continue
 
-        has_children = False
-        if paths := children_for_lod[lod]:
-            for path in paths:
-                for child in elem.iterfind(path, nsmap):
-                    yield from process_cityobj_element(child, settings, new_ancestors)
-                    has_children = True
+        if (emission := emissions_for_lod[lod]) is None:
+            continue
 
-        if has_children:
-            need_nogeom_table = True
+        geom_paths = (
+            (emission.direct or emission.catch_all)
+            if is_semantic_parts_mode
+            else emission.catch_all
+        )
+
+        if emission.geometry_loader == "polygons":
+            geom = parse_multipolygon(elem, geom_paths, nsmap)
         else:
-            emission = emissions_for_lod[lod]
-            if not emission:
-                continue
+            raise NotImplementedError(
+                f"Unknown geometry loader: {emission.geometry_loader}"
+            )
 
-            if emission.geometry_loader == "polygons":
-                geom = parse_multipolygon(elem, emission.elem_paths, nsmap)
-            else:
-                raise NotImplementedError(
-                    f"Unknown geometry loader: {emission.geometry_loader}"
-                )
+        if geom:
+            yield CityObject(
+                lod=lod,
+                type=ns.to_prefixed_name(elem.tag),
+                properties=props,
+                geometry=geom,
+                processor_path=new_ancestors,
+            )
 
-            if geom:
-                yield CityObject(
-                    lod=lod,
-                    type=ns.to_prefixed_name(elem.tag),
-                    properties=props,
-                    geometry=geom,
-                    processor_path=new_ancestors,
-                )
-
-    if need_nogeom_table:
+    if has_semantic_parts:
         # 子地物を出力したときは、親の情報を含んだジオメトリなしの地物を出力する
         yield CityObject(
             type=ns.to_prefixed_name(elem.tag),

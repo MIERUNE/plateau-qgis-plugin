@@ -32,7 +32,7 @@ class PlateauProcessingProvider(QgsProcessingProvider):
         return "plateau_plugin"
 
     def name(self, *args, **kwargs):
-        return self.tr("PLATEAU")
+        return self.tr("Project PLATEAU")
 
     def icon(self):
         path = (Path(__file__).parent / "icon.png").resolve()

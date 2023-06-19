@@ -30,7 +30,7 @@ LAND_USE = ProcessorDefinition(
     ],
     emissions=Emissions(
         lod1=Emission(
-            elem_paths=[
+            catch_all=[
                 "./luse:lod1MultiSurface//gml:Polygon",
             ]
         ),

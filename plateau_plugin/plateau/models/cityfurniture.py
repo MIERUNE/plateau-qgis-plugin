@@ -34,8 +34,8 @@ CITY_FURNITURE = ProcessorDefinition(
         ),
     ],
     emissions=Emissions(
-        lod1=Emission(elem_paths=["./frn:lod1Geometry/gml:MultiSurface//gml:Polygon"]),
-        lod2=Emission(elem_paths=["./frn:lod2Geometry/gml:MultiSurface//gml:Polygon"]),
-        lod3=Emission(elem_paths=["./frn:lod3Geometry/gml:MultiSurface//gml:Polygon"]),
+        lod1=Emission(catch_all=["./frn:lod1Geometry/gml:MultiSurface//gml:Polygon"]),
+        lod2=Emission(catch_all=["./frn:lod2Geometry/gml:MultiSurface//gml:Polygon"]),
+        lod3=Emission(catch_all=["./frn:lod3Geometry/gml:MultiSurface//gml:Polygon"]),
     ),
 )

@@ -3,7 +3,6 @@ from typing import Iterable, Optional
 import lxml.etree as et
 import numpy as np
 
-from .namespaces import BASE_NS
 from .types import MultiPolygon
 
 

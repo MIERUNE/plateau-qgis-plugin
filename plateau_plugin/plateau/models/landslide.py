@@ -60,7 +60,7 @@ LAND_SLIDE = ProcessorDefinition(
     ],
     emissions=Emissions(
         lod1=Emission(
-            elem_paths=[
+            catch_all=[
                 "./urf:lod1MultiSurface//gml:Polygon",
             ]
         ),

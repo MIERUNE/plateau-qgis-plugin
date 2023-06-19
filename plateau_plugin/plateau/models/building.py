@@ -1,6 +1,5 @@
 from .base import (
     Attribute,
-    ChildrenPaths,
     Emission,
     Emissions,
     LODDetection,
@@ -25,24 +24,16 @@ BUILDING = ProcessorDefinition(
         ),
     ],
     emissions=Emissions(
-        lod1=Emission(
-            elem_paths=[
-                "./bldg:lod1Solid/gml:Solid/gml:exterior/gml:CompositeSurface//gml:Polygon"
-            ]
+        lod1=Emission(catch_all=[".//bldg:lod1Solid//gml:Polygon"]),
+        lod2=Emission(
+            catch_all=[".//bldg:lod2MultiSurface//gml:Polygon"],
+            direct=["./bldg:lod2MultiSurface//gml:Polygon"],
         ),
-        lod2=Emission(elem_paths=["./bldg:*//bldg:lod2MultiSurface//gml:Polygon"]),
-        lod3=Emission(elem_paths=["./bldg:*//bldg:lod3MultiSurface//gml:Polygon"]),
-    ),
-    children=ChildrenPaths(
-        lod2=[
-            ".//bldg:GroundSurface",
-            ".//bldg:WallSurface",
-            ".//bldg:RoofSurface",
-            ".//bldg:OuterCeilingSurface",
-            ".//bldg:OuterFloorSurface",
-            ".//bldg:ClosureSurface",
-        ],
-        lod3=[
+        lod3=Emission(
+            catch_all=[".//bldg:lod3MultiSurface//gml:Polygon"],
+            direct=["./bldg:lod3MultiSurface//gml:Polygon"],
+        ),
+        semantic_parts=[
             ".//bldg:GroundSurface",
             ".//bldg:WallSurface",
             ".//bldg:RoofSurface",
@@ -70,8 +61,8 @@ BUILDING_BOUNDARY_SURFACE = ProcessorDefinition(
         lod4=["./bldg:lod4MultiSurface"],
     ),
     emissions=Emissions(
-        lod2=Emission(elem_paths=[".//bldg:lod2MultiSurface//gml:Polygon"]),
-        lod3=Emission(elem_paths=[".//bldg:lod3MultiSurface//gml:Polygon"]),
-        lod4=Emission(elem_paths=[".//bldg:lod4MultiSurface//gml:Polygon"]),
+        lod2=Emission(catch_all=[".//bldg:lod2MultiSurface//gml:Polygon"]),
+        lod3=Emission(catch_all=[".//bldg:lod3MultiSurface//gml:Polygon"]),
+        lod4=Emission(catch_all=[".//bldg:lod4MultiSurface//gml:Polygon"]),
     ),
 )
