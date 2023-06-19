@@ -1,0 +1,83 @@
+from .base import (
+    Attribute,
+    ChildrenPaths,
+    Emission,
+    Emissions,
+    LODDetection,
+    ProcessorDefinition,
+)
+
+BRIDGE = ProcessorDefinition(
+    id="Bridge",
+    target_elements=["brid:Bridge"],
+    lod_detection=LODDetection(
+        lod1=["./brid:lod1Solid"],
+        lod2=["./brid:lod2MultiSurface"],
+        lod3=["./brid:lod3MultiSurface"],
+        # lod4=["./brid:lod4Solid", "./brid:lod4MultiSurface"],
+    ),
+    attributes=[
+        Attribute(
+            name="class",
+            xpath="./brid:class/text()",
+            datatype="string",
+            codelist="Bridge_class",
+        ),
+        Attribute(
+            name="function",
+            xpath="./brid:function/text()",
+            datatype="[]string",
+            codelist="Bridge_function",
+        ),
+    ],
+    emissions=Emissions(
+        lod1=Emission(
+            elem_paths=[
+                "./brid:lod1Solid/gml:Solid/gml:exterior/gml:CompositeSurface//gml:Polygon"
+            ]
+        ),
+        lod2=Emission(elem_paths=[".//brid:lod2MultiSurface//gml:Polygon"]),
+        lod3=Emission(elem_paths=[".//brid:lod3MultiSurface//gml:Polygon"]),
+    ),
+    children=ChildrenPaths(
+        lod2=[
+            ".//brid:GroundSurface",
+            ".//brid:WallSurface",
+            ".//brid:RoofSurface",
+            ".//brid:OuterCeilingSurface",
+            ".//brid:OuterFloorSurface",
+            ".//brid:ClosureSurface",
+        ],
+        lod3=[
+            ".//brid:GroundSurface",
+            ".//brid:WallSurface",
+            ".//brid:RoofSurface",
+            ".//brid:OuterCeilingSurface",
+            ".//brid:OuterFloorSurface",
+            ".//brid:ClosureSurface",
+        ],
+    ),
+)
+
+BRIDGE_BOUNDARY_SURFACE = ProcessorDefinition(
+    id="Boundary Surface",
+    target_elements=[
+        "brid:GroundSurface",
+        "brid:WallSurface",
+        "brid:RoofSurface",
+        "brid:OuterCeilingSurface",
+        "brid:OuterFloorSurface",
+        "brid:ClosureSurface",
+    ],
+    attributes=[],
+    lod_detection=LODDetection(
+        lod2=["./brid:lod2MultiSurface"],
+        lod3=["./brid:lod3MultiSurface"],
+        lod4=["./brid:lod4MultiSurface"],
+    ),
+    emissions=Emissions(
+        lod2=Emission(elem_paths=[".//brid:lod2MultiSurface//gml:Polygon"]),
+        lod3=Emission(elem_paths=[".//brid:lod3MultiSurface//gml:Polygon"]),
+        lod4=Emission(elem_paths=[".//brid:lod4MultiSurface//gml:Polygon"]),
+    ),
+)

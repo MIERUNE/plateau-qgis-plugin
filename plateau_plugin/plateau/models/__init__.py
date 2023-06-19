@@ -1,5 +1,6 @@
 from .base import ProcessorRegistory
-from .building import BOUNDARY_SURFACE, BUILDING
+from .bridge import BRIDGE, BRIDGE_BOUNDARY_SURFACE
+from .building import BUILDING, BUILDING_BOUNDARY_SURFACE
 from .cityfurniture import CITY_FURNITURE
 from .landslide import LAND_SLIDE
 from .landuse import LAND_USE
@@ -8,7 +9,9 @@ from .transportation import ROAD, TRAFFIC_AREA
 processors = ProcessorRegistory(
     [
         BUILDING,
-        BOUNDARY_SURFACE,
+        BUILDING_BOUNDARY_SURFACE,
+        BRIDGE,
+        BRIDGE_BOUNDARY_SURFACE,
         ROAD,
         TRAFFIC_AREA,
         CITY_FURNITURE,

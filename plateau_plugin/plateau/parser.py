@@ -50,18 +50,21 @@ def process_cityobj_element(
     has_lods = processor.get_lods(elem)
     emissions_for_lod = processor.emissions_list
     children_for_lod = processor.children_paths_list
-    has_children = False
     new_ancestors = [*ancestors, (processor.id, gml_id)]
+    need_nogeom_table = False
     for lod in (4, 3, 2, 1):
         if not has_lods[lod]:
             continue
 
+        has_children = False
         if paths := children_for_lod[lod]:
             for path in paths:
                 for child in elem.iterfind(path, _NS):
                     yield from process_cityobj_element(child, new_ancestors)
                     has_children = True
 
+        if has_children:
+            need_nogeom_table = True
         else:
             emission = emissions_for_lod[lod]
             if not emission:
@@ -83,7 +86,7 @@ def process_cityobj_element(
                     processor_path=new_ancestors,
                 )
 
-    if has_children:
+    if need_nogeom_table:
         # 子地物を出力したときは、親の情報を含んだジオメトリなしの地物を出力する
         yield CityObject(
             type=to_prefixed_name(elem.tag),

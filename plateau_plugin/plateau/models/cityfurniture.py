@@ -1,6 +1,5 @@
 from .base import (
     Attribute,
-    ChildrenPaths,
     Emission,
     Emissions,
     LODDetection,

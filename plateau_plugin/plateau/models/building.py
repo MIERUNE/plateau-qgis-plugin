@@ -47,12 +47,13 @@ BUILDING = ProcessorDefinition(
             ".//bldg:WallSurface",
             ".//bldg:RoofSurface",
             ".//bldg:OuterCeilingSurface",
+            ".//bldg:OuterFloorSurface",
             ".//bldg:ClosureSurface",
         ],
     ),
 )
 
-BOUNDARY_SURFACE = ProcessorDefinition(
+BUILDING_BOUNDARY_SURFACE = ProcessorDefinition(
     id="Boundary Surface",
     target_elements=[
         "bldg:GroundSurface",
