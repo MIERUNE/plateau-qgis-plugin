@@ -39,4 +39,5 @@ class CityObject:
 
 @dataclass
 class ParseSettings:
-    namespace: Namespace
+    semantic_parts_mode: bool = False
+    only_highest_lod: bool = False

@@ -25,6 +25,7 @@ from qgis.core import (
     # QgsLayerTreeGroup,
     QgsProcessingAlgorithm,
     QgsProcessingException,  # pyright: ignore
+    QgsProcessingParameterBoolean,
     QgsProcessingParameterFile,
     QgsProject,
     QgsVectorLayer,
@@ -33,7 +34,7 @@ from qgis.core import (
 from .geometry import to_qgis_geometry
 from .plateau.models import processors
 from .plateau.parser import FileParser
-from .plateau.types import CityObject, MultiPolygon
+from .plateau.types import CityObject, MultiPolygon, ParseSettings
 
 _TYPE_TO_QT_TYPE = {
     "string": QVariant.String,
@@ -93,8 +94,8 @@ class PlateauProcessingAlrogithm(QgsProcessingAlgorithm):
     """Processing algorithm for converting PLATEAU 3D City models"""
 
     INPUT = "INPUT"
-    SEMANTIC_PARTS = "SEMANTIC_PARTS"
-    # OUTPUT = "OUTPUT"
+    ONLY_HIGHEST_LOD = "ONLY_HIGHEST_LOD"
+    LOAD_SEMANTIC_PARTS = "LOAD_SEMANTIC_PARTS"
 
     def tr(self, string: str):
         return QCoreApplication.translate("Processing", string)
@@ -103,17 +104,24 @@ class PlateauProcessingAlrogithm(QgsProcessingAlgorithm):
         self.addParameter(
             QgsProcessingParameterFile(
                 self.INPUT,
-                self.tr("PLATEAU GMLファイル"),
+                self.tr("PLATEAU GML ファイル"),
                 fileFilter=self.tr("PLATEAU GML ファイル (*.gml)"),
             )
         )
-        # self.addParameter(
-        #     QgsProcessingParameterFeatureSink(
-        #         self.OUTPUT,
-        #         self.tr("出力レイヤ"),
-        #         QgsProcessing.TypeVectorPolygon,
-        #     )
-        # )
+        self.addParameter(
+            QgsProcessingParameterBoolean(
+                self.ONLY_HIGHEST_LOD,
+                self.tr("各地物の最高 LOD のみを読み込む"),
+                defaultValue=True,
+            )
+        )
+        self.addParameter(
+            QgsProcessingParameterBoolean(
+                self.LOAD_SEMANTIC_PARTS,
+                self.tr("部分要素に分けて読み込む"),
+                defaultValue=False,
+            )
+        )
 
     def createInstance(self):
         return PlateauProcessingAlrogithm()
@@ -133,9 +141,17 @@ class PlateauProcessingAlrogithm(QgsProcessingAlgorithm):
     def shortHelpString(self) -> str:
         return self.tr("PLATEAU PLATEAU PLATEAU")
 
-    def processAlgorithm(self, parameters, context, feedback):
-        # Prepare field definition
-        layers = LayerManager()
+    def _make_parser(self, parameters, context) -> FileParser:
+        load_semantic_parts = self.parameterAsBoolean(
+            parameters, self.LOAD_SEMANTIC_PARTS, context
+        )
+        only_highest_lod = self.parameterAsBoolean(
+            parameters, self.ONLY_HIGHEST_LOD, context
+        )
+        settings = ParseSettings(
+            semantic_parts_mode=load_semantic_parts,
+            only_highest_lod=only_highest_lod,
+        )
 
         filename = self.parameterAsFile(parameters, self.INPUT, context)
         if filename is None:
@@ -143,7 +159,13 @@ class PlateauProcessingAlrogithm(QgsProcessingAlgorithm):
                 self.invalidSourceError(parameters, self.INPUT)
             )  # pragma: no cover
 
-        parser = FileParser(filename)
+        return FileParser(filename, settings)
+
+    def processAlgorithm(self, parameters, context, feedback):
+        # Prepare field definition
+        layers = LayerManager()
+
+        parser = self._make_parser(parameters, context)
         total_count = parser.count_toplevel_objects()
         feedback.pushInfo(f"{total_count}個のトップレベル地物が含まれています。")
         feedback.pushInfo("地物を読み込んでいます...")
