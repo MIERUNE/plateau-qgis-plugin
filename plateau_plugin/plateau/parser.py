@@ -71,6 +71,11 @@ class Parser:
                     cl = get_codelist(attr.codelist)
                     v = cl.get(v, v)
                 props[attr.name] = v
+            elif attr.datatype == "double":
+                if not values:
+                    continue
+                v = float(values[0])
+                props[attr.name] = v
             else:
                 raise NotImplementedError(f"Unknown datatype: {attr.datatype}")
 

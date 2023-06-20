@@ -14,7 +14,35 @@ SOLITARY_VEGETATION_OBJECT = ProcessorDefinition(
         lod2=["./veg:lod2Geometry"],
         lod3=["./veg:lod3Geometry"],
     ),
-    attributes=[],
+    attributes=[
+        Attribute(
+            name="class",
+            path="./veg:class",
+            datatype="string",
+            codelist="SolitaryVegetationObject_class",
+        ),
+        Attribute(
+            name="function",
+            path="./veg:function",
+            datatype="string",
+            codelist="SolitaryVegetationObject_function",
+        ),
+        Attribute(
+            name="height",
+            path="./veg:height",
+            datatype="double",
+        ),
+        Attribute(
+            name="trunkDiameter",
+            path="./veg:trunkDiameter",
+            datatype="double",
+        ),
+        Attribute(
+            name="crownDiameter",
+            path="./veg:crownDiameter",
+            datatype="double",
+        ),
+    ],
     emissions=Emissions(
         lod1=Emission(catch_all=["./veg:lod1Geometry//gml:Polygon"]),
         lod2=Emission(catch_all=["./veg:lod2Geometry//gml:Polygon"]),
@@ -30,7 +58,19 @@ PLANT_COVER = ProcessorDefinition(
         lod2=["./veg:lod2MultiSolid", "./veg:lod2MultiSurface"],
         lod3=["./veg:lod3MultiSolid", "./veg:lod3MultiSurface"],
     ),
-    attributes=[],
+    attributes=[
+        Attribute(
+            name="class",
+            path="./veg:class",
+            datatype="string",
+            codelist="PlantCover_class",
+        ),
+        Attribute(
+            name="avarageHeight",
+            path="./veg:averageHeight",
+            datatype="double",
+        ),
+    ],
     emissions=Emissions(
         lod1=Emission(
             catch_all=[
