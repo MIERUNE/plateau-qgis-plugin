@@ -1,5 +1,6 @@
 from collections import OrderedDict
-from typing import Iterable
+from datetime import date
+from typing import Iterable, Sequence
 
 import lxml.etree as et
 
@@ -15,28 +16,45 @@ class Parser:
         self._settings = settings
         self._ns: Namespace = ns
 
-    def process_cityobj_element(
-        self,
-        elem: et._Element,
-        ancestors: list[tuple[str, str]],  # 親地物の (target_element, gml_id)
-    ) -> Iterable[CityObject]:
-        ns = self._ns
-        nsmap = ns.nsmap
-
+    def _get_id_and_name(self, elem: et._Element, nsmap: dict[str, str]):
         gml_id = elem.get("{http://www.opengis.net/gml}id", None)
         gml_name = (
             name_elem.text
             if (name_elem := elem.find("./gml:name", nsmap)) is not None
             else None
         )
-        props = OrderedDict()
-        props["id"] = gml_id
-        props["name"] = gml_name
+        return (gml_id, gml_name)
 
+    def _get_creation_date(self, elem: et._Element, nsmap: dict[str, str]):
+        creation_date = (
+            date.fromisoformat(name_elem.text)
+            if (name_elem := elem.find("./core:creationDate", nsmap)) is not None
+            else None
+        )
+        termination_date = (
+            date.fromisoformat(name_elem.text)
+            if (name_elem := elem.find("./core:terminationDate", nsmap)) is not None
+            else None
+        )
+        return (creation_date, termination_date)
+
+    def process_cityobj_element(
+        self,
+        elem: et._Element,
+        ancestors: Sequence[tuple[str, str]],  # 親地物の (target_element, gml_id)
+    ) -> Iterable[CityObject]:
+        ns = self._ns
+        nsmap = ns.nsmap
+
+        (gml_id, gml_name) = self._get_id_and_name(elem, nsmap)
+        (creation_date, _termination_date) = self._get_creation_date(elem, nsmap)
+
+        # Get processor
         processor = processors.get_processor_by_tag(elem.tag)
         if processor is None:
             return
 
+        props = OrderedDict()
         for attr in processor.attributes:
             values = [e.text for e in elem.iterfind(attr.path, nsmap)]
             if attr.datatype == "[]string":
@@ -57,10 +75,10 @@ class Parser:
                 raise NotImplementedError(f"Unknown datatype: {attr.datatype}")
 
         emissions_for_lod = processor.emissions_list
-        new_ancestors = [*ancestors, (processor.id, gml_id)]
+        new_ancestors = (*ancestors, (processor.id, gml_id))
         has_semantic_parts = False
 
-        if self._settings.semantic_parts_mode and processor.emissions.semantic_parts:
+        if self._settings.load_semantic_parts and processor.emissions.semantic_parts:
             for path in processor.emissions.semantic_parts:
                 for child in elem.iterfind(path, nsmap):
                     yield from self.process_cityobj_element(child, new_ancestors)
@@ -76,7 +94,7 @@ class Parser:
 
             geom_paths = (
                 (emission.direct or emission.catch_all)
-                if self._settings.semantic_parts_mode
+                if self._settings.load_semantic_parts
                 else emission.catch_all
             )
 
@@ -91,6 +109,9 @@ class Parser:
                 yield CityObject(
                     lod=lod,
                     type=ns.to_prefixed_name(elem.tag),
+                    id=gml_id,
+                    name=gml_name,
+                    creation_date=creation_date,
                     properties=props,
                     geometry=geom,
                     processor_path=new_ancestors,
@@ -102,6 +123,9 @@ class Parser:
             # 子地物を出力したときは、親の情報を含んだジオメトリなしの地物を出力する
             yield CityObject(
                 type=ns.to_prefixed_name(elem.tag),
+                id=gml_id,
+                name=gml_name,
+                creation_date=creation_date,
                 lod=None,
                 geometry=None,
                 properties=props,

@@ -16,9 +16,10 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-from typing import Iterable
+import datetime
+from typing import Any, Iterable
 
-from PyQt5.QtCore import QCoreApplication, QVariant
+from PyQt5.QtCore import QCoreApplication, QDate, QVariant
 from qgis.core import (
     QgsFeature,
     QgsField,
@@ -43,6 +44,13 @@ _TYPE_TO_QT_TYPE = {
     "date": QVariant.Date,
     "[]string": QVariant.StringList,
 }
+
+
+def _convert_to_qt_value(v: Any):
+    if isinstance(v, datetime.date):
+        return QDate(v.year, v.month, v.day)
+    else:
+        return v
 
 
 class LayerManager:
@@ -78,6 +86,7 @@ class LayerManager:
             QgsField("id", QVariant.String),
             QgsField("type", QVariant.String),
             QgsField("name", QVariant.String),
+            QgsField("creationDate", QVariant.Date),
         ]
         table_def = processors.get_table_definition(cityobj.processor_path)
         for field in table_def.fields:
@@ -104,8 +113,8 @@ class PlateauProcessingAlrogithm(QgsProcessingAlgorithm):
         self.addParameter(
             QgsProcessingParameterFile(
                 self.INPUT,
-                self.tr("PLATEAU GML ファイル"),
-                fileFilter=self.tr("PLATEAU GML ファイル (*.gml)"),
+                self.tr("PLATEAU CityGML ファイル"),
+                fileFilter=self.tr("PLATEAU CityGML ファイル (*.gml)"),
             )
         )
         self.addParameter(
@@ -149,7 +158,7 @@ class PlateauProcessingAlrogithm(QgsProcessingAlgorithm):
             parameters, self.ONLY_HIGHEST_LOD, context
         )
         settings = ParseSettings(
-            semantic_parts_mode=load_semantic_parts,
+            load_semantic_parts=load_semantic_parts,
             only_highest_lod=only_highest_lod,
         )
 
@@ -177,20 +186,27 @@ class PlateauProcessingAlrogithm(QgsProcessingAlgorithm):
                     return {}
 
                 layer = layers.get_layer(cityobj)
-                fields = layer.dataProvider().fields()
-                dest_feat = QgsFeature(fields)
-                if cityobj.geometry:
-                    dest_geoms = to_qgis_geometry(cityobj.geometry)
-                    dest_feat.setGeometry(dest_geoms)
-                for name, value in cityobj.properties.items():
-                    dest_feat.setAttribute(name, value)
+                dp = layer.dataProvider()
+                dest_feat = QgsFeature(dp.fields())
+                dest_feat.setAttribute("id", cityobj.id)
+                dest_feat.setAttribute("name", cityobj.name)
                 dest_feat.setAttribute("type", cityobj.type)
-                layer.dataProvider().addFeature(dest_feat)
+                dest_feat.setAttribute(
+                    "creationDate",
+                    QDate(cityobj.creation_date) if cityobj.creation_date else None,  # type: ignore
+                )
+                for name, value in cityobj.properties.items():
+                    dest_feat.setAttribute(name, _convert_to_qt_value(value))
 
+                if cityobj.geometry:
+                    dest_feat.setGeometry(to_qgis_geometry(cityobj.geometry))
+
+                dp.addFeature(dest_feat)
                 count += 1
                 if count % 100 == 0:
                     feedback.setProgress(top_level_count / total_count * 100)
                     feedback.pushInfo(f"{count} 個の地物を読み込みました。")
+
         except ValueError:
             feedback.reportError(
                 "ファイルの読み込みに失敗しました。正常なファイルかどうか確認してください。", fatalError=True

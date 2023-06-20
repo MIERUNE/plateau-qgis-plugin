@@ -3070,7 +3070,9 @@
     "6": "20m以上"
   },
   "TransportationComplex_class": {
+    "1000": "private",
     "1020": "civil",
+    "1030": "civil",
     "1040": "road traffic ",
     "1060": "rail traffic",
     "1070": "waterway",
