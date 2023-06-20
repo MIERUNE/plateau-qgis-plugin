@@ -1,14 +1,14 @@
 """災害リスク (土砂災害) モデル (lsld)"""
 
 from .base import (
-    Attribute,
-    Emission,
-    Emissions,
+    FeatureEmission,
+    FeatureEmissions,
     LODDetection,
     ProcessorDefinition,
+    Property,
 )
 
-LAND_SLIDE = ProcessorDefinition(
+SEDIMENT_DISASTER_PRONE_AREA = ProcessorDefinition(
     id="SedimentDisasterProneArea",
     target_elements=[
         "urf2:SedimentDisasterProneArea",
@@ -17,49 +17,60 @@ LAND_SLIDE = ProcessorDefinition(
     lod_detection=LODDetection(
         lod1=["./urf:lod1MultiSurface"],
     ),
-    attributes=[
-        Attribute(
+    properties=[
+        Property(
+            name="validFrom",
+            path="./urf:validFrom",
+            datatype="date",
+        ),
+        Property(
+            name="validFromType",
+            path="./urf:validFromType",
+            datatype="string",
+            codelist="Common_validType",
+        ),
+        Property(
             name="prefecture",
             path="./urf:prefecture",
             datatype="string",
             codelist="Common_prefecture",
         ),
-        Attribute(
+        Property(
             name="location",
             path="./urf:location",
             datatype="string",
         ),
-        Attribute(
+        Property(
             name="disasterType",
             path="./urf:disasterType",
             datatype="string",
             codelist="SedimentDisasterProneArea_disasterType",
         ),
-        Attribute(
+        Property(
             name="areaType",
             path="./urf:areaType",
             datatype="string",
             codelist="SedimentDisasterProneArea_areaType",
         ),
-        Attribute(
+        Property(
             name="status",
             path="./urf:status",
             datatype="string",
             codelist="SedimentDisasterProneArea_status",
         ),
-        Attribute(
+        Property(
             name="zoneName",
             path="./urf:zoneName",
             datatype="string",
         ),
-        Attribute(
+        Property(
             name="zoneNumber",
             path="./urf:zoneNumber",
             datatype="string",
         ),
     ],
-    emissions=Emissions(
-        lod1=Emission(
+    emissions=FeatureEmissions(
+        lod1=FeatureEmission(
             catch_all=[
                 "./urf:lod1MultiSurface//gml:Polygon",
             ]

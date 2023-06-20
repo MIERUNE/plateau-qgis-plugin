@@ -10,6 +10,7 @@ BASE_NS = {
     "brid": "http://www.opengis.net/citygml/bridge/2.0",
     "dem": "http://www.opengis.net/citygml/relief/2.0",
     "frn": "http://www.opengis.net/citygml/cityfurniture/2.0",
+    "gen": "http://www.opengis.net/citygml/generics/2.0",
     "grp": "http://www.opengis.net/citygml/cityobjectgroup/2.0",
     "luse": "http://www.opengis.net/citygml/landuse/2.0",
     "tran": "http://www.opengis.net/citygml/transportation/2.0",
@@ -25,6 +26,11 @@ BASE_NS = {
 
 
 class Namespace:
+    """PLATEAU関連の XML Namespaces や、その標準的な prefix を管理する
+
+    特に、uro, urf のバージョン (2 or 3) が配布物ごとに異なることに対応する役目をする。
+    """
+
     def __init__(self, update: dict):
         self.nsmap: dict[str, str] = dict(**BASE_NS, **update)
         self.inverted = {v: k for k, v in self.nsmap.items()}

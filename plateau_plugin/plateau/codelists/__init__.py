@@ -1,7 +1,8 @@
 import json
 from pathlib import Path
+from typing import Optional
 
-_codelists = None
+_codelists: Optional[dict[str, dict[str, str]]] = None
 
 
 def get_codelist(name: str) -> dict[str, str]:
@@ -10,4 +11,5 @@ def get_codelist(name: str) -> dict[str, str]:
         with open((Path(__file__).parent / "codelists.json").resolve()) as f:
             _codelists = json.load(f)
 
+    assert _codelists is not None
     return _codelists[name]

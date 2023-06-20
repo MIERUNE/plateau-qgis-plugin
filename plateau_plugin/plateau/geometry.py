@@ -9,6 +9,7 @@ from .types import MultiPolygon
 def parse_multipolygon(
     element: et._Element, polygon_paths: Iterable[str], nsmap: dict[str, str]
 ) -> Optional[MultiPolygon]:
+    """指定された gml:Polygon へのパスをもとに MultiPolgon を構成して返す"""
     polygons = []
     for polygon_path in polygon_paths:
         for polygon in element.iterfind(polygon_path, nsmap):

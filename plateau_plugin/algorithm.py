@@ -41,6 +41,7 @@ _TYPE_TO_QT_TYPE = {
     "string": QVariant.String,
     "double": QVariant.Double,
     "integer": QVariant.Int,
+    "boolean": QVariant.Bool,
     "date": QVariant.Date,
     "[]string": QVariant.StringList,
 }
@@ -87,6 +88,7 @@ class LayerManager:
             QgsField("type", QVariant.String),
             QgsField("name", QVariant.String),
             QgsField("creationDate", QVariant.Date),
+            QgsField("terminationDate", QVariant.Date),
         ]
         table_def = processors.get_table_definition(cityobj.processor_path)
         for field in table_def.fields:
@@ -193,6 +195,10 @@ class PlateauProcessingAlrogithm(QgsProcessingAlgorithm):
                 dest_feat.setAttribute("type", cityobj.type)
                 dest_feat.setAttribute(
                     "creationDate",
+                    QDate(cityobj.creation_date) if cityobj.creation_date else None,  # type: ignore
+                )
+                dest_feat.setAttribute(
+                    "terminationDate",
                     QDate(cityobj.creation_date) if cityobj.creation_date else None,  # type: ignore
                 )
                 for name, value in cityobj.properties.items():

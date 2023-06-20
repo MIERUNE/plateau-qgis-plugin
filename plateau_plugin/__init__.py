@@ -22,6 +22,6 @@ from .plugin import PlateauPlugin
 
 
 def classFactory(iface: QgisInterface):
-    """entrypoint for QGIS plugin"""
+    """The entrypoint for QGIS plugin"""
 
     return PlateauPlugin(iface)

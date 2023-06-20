@@ -1,9 +1,9 @@
 from .base import (
-    Attribute,
-    Emission,
-    Emissions,
+    FeatureEmission,
+    FeatureEmissions,
     LODDetection,
     ProcessorDefinition,
+    Property,
 )
 
 CITY_FURNITURE = ProcessorDefinition(
@@ -14,28 +14,34 @@ CITY_FURNITURE = ProcessorDefinition(
         lod2=["./frn:lod2Geometry"],
         lod3=["./frn:lod3Geometry"],
     ),
-    attributes=[
-        Attribute(
+    properties=[
+        Property(
             name="class",
             path="./frn:class",
             datatype="string",
             codelist="CityFurniture_class",
         ),
-        Attribute(
+        Property(
             name="function",
             path="./frn:function",
             datatype="[]string",
             codelist="CityFurniture_function",
         ),
-        Attribute(
+        Property(
             name="usage",
             path="./frn:usage",
             datatype="[]string",
         ),
     ],
-    emissions=Emissions(
-        lod1=Emission(catch_all=["./frn:lod1Geometry/gml:MultiSurface//gml:Polygon"]),
-        lod2=Emission(catch_all=["./frn:lod2Geometry/gml:MultiSurface//gml:Polygon"]),
-        lod3=Emission(catch_all=["./frn:lod3Geometry/gml:MultiSurface//gml:Polygon"]),
+    emissions=FeatureEmissions(
+        lod1=FeatureEmission(
+            catch_all=["./frn:lod1Geometry/gml:MultiSurface//gml:Polygon"]
+        ),
+        lod2=FeatureEmission(
+            catch_all=["./frn:lod2Geometry/gml:MultiSurface//gml:Polygon"]
+        ),
+        lod3=FeatureEmission(
+            catch_all=["./frn:lod3Geometry/gml:MultiSurface//gml:Polygon"]
+        ),
     ),
 )

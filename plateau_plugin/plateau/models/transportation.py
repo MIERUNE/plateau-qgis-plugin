@@ -1,9 +1,9 @@
 from .base import (
-    Attribute,
-    Emission,
-    Emissions,
+    FeatureEmission,
+    FeatureEmissions,
     LODDetection,
     ProcessorDefinition,
+    Property,
 )
 
 ROAD = ProcessorDefinition(
@@ -15,40 +15,100 @@ ROAD = ProcessorDefinition(
         lod3=["./tran:lod3MultiSurface"],
         lod4=["./tran:lod4MultiSurface"],
     ),
-    attributes=[
-        Attribute(
+    properties=[
+        Property(
             name="class",
             path="./tran:class",
             datatype="string",
             codelist="TransportationComplex_class",
         ),
-        Attribute(
+        Property(
             name="function",
             path="./tran:function",
             datatype="[]string",
             codelist="Road_function",
         ),
-        Attribute(
+        Property(
             name="usage",
             path="./tran:usage",
             datatype="[]string",
             codelist="Road_usage",
         ),
+        # uro:RoadDataQualityAttribute
+        Property(
+            name="uro:srcScale",
+            path="./uro:roadDataQualityAttribute/uro:RoadDataQualityAttribute/uro:srcScale",
+            datatype="[]string",
+            codelist="RoadDataQualityAttribute_srcScale",
+        ),
+        Property(
+            name="uro:geometrySrcDesc",
+            path="./uro:roadDataQualityAttribute/uro:RoadDataQualityAttribute/uro:geometrySrcDesc",
+            datatype="[]string",
+            codelist="RoadDataQualityAttribute_geometrySrcDesc",
+        ),
+        Property(
+            name="uro:thematicSrcDesc",
+            path="./uro:roadDataQualityAttribute/uro:RoadDataQualityAttribute/uro:thematicSrcDesc",
+            datatype="[]string",
+            codelist="RoadDataQualityAttribute_thematicSrcDesc",
+        ),
+        Property(
+            name="uro:appearanceSrcDesc",
+            path="./uro:roadDataQualityAttribute/uro:RoadDataQualityAttribute/uro:appearanceSrcDesc",
+            datatype="[]string",
+            codelist="RoadDataQualityAttribute_appearanceSrcDesc",
+        ),
+        Property(
+            name="uro:appearanceSrcDesc",
+            path="./uro:roadDataQualityAttribute/uro:RoadDataQualityAttribute/uro:appearanceSrcDesc",
+            datatype="[]string",
+            codelist="RoadDataQualityAttribute_appearanceSrcDesc",
+        ),
+        Property(
+            name="uro:lodType",
+            path="./uro:roadDataQualityAttribute/uro:RoadDataQualityAttribute/uro:appearanceSrcDesc",
+            datatype="[]string",
+            codelist="Road_lodType",
+        ),
+        # uro:RoadStructureAttribute
+        Property(
+            name="uro:width",
+            path="./uro:roadStructureAttribute/uro:RoadStructureAttribute/uro:width",
+            datatype="double",
+        ),
+        Property(
+            name="uro:widthType",
+            path="./uro:roadStructureAttribute/uro:RoadStructureAttribute/uro:widthType",
+            datatype="string",
+            codelist="RoadStructureAttribute_widthType",
+        ),
+        Property(
+            name="uro:numberOfLanes",
+            path="./uro:roadStructureAttribute/uro:RoadStructureAttribute/uro:numberOfLanes",
+            datatype="integer",
+        ),
+        Property(
+            name="uro:sectionType",
+            path="./uro:roadStructureAttribute/uro:RoadStructureAttribute/uro:sectionType",
+            datatype="string",
+            codelist="RoadStructureAttribute_sectionType",
+        ),
     ],
-    emissions=Emissions(
-        lod1=Emission(
+    emissions=FeatureEmissions(
+        lod1=FeatureEmission(
             catch_all=["./tran:lod1MultiSurface//gml:Polygon"],
             direct=["./tran:lod1MultiSurface//gml:Polygon"],
         ),
-        lod2=Emission(
+        lod2=FeatureEmission(
             catch_all=["./tran:*//tran:lod2MultiSurface//gml:Polygon"],
             direct=["./tran:lod2MultiSurface//gml:Polygon"],
         ),
-        lod3=Emission(
+        lod3=FeatureEmission(
             catch_all=["./tran:*//tran:lod3MultiSurface//gml:Polygon"],
             direct=["./tran:lod3MultiSurface//gml:Polygon"],
         ),
-        lod4=Emission(
+        lod4=FeatureEmission(
             catch_all=["./tran:*//tran:lod4MultiSurface//gml:Polygon"],
             direct=["./tran:lod4MultiSurface//gml:Polygon"],
         ),
@@ -59,22 +119,139 @@ ROAD = ProcessorDefinition(
     ),
 )
 
-# Road > TrafficArea および Road > AuxiliaryTrafficArea を扱う
+RAILWAY = ProcessorDefinition(
+    id="Railway",
+    target_elements=["tran:Railway"],
+    lod_detection=LODDetection(
+        lod1=["./tran:lod1MultiSurface"],
+        lod2=["./tran:lod2MultiSurface"],
+        lod3=["./tran:lod3MultiSurface"],
+        lod4=["./tran:lod4MultiSurface"],
+    ),
+    properties=[
+        Property(
+            name="class",
+            path="./tran:class",
+            datatype="string",
+            codelist="TransportationComplex_class",
+        ),
+        Property(
+            name="function",
+            path="./tran:function",
+            datatype="[]string",
+            codelist="Railway_function",
+        ),
+        # uro:RailwayRouteAttribute
+        Property(
+            name="operatorType",
+            path="./uro:railwayRouteAttribute/uro:RailwayRouteAttribute/uro:operatorType",
+            datatype="string",
+            codelist="RailwayRouteAttribute_operatorType",
+        ),
+        Property(
+            name="operator",
+            path="./uro:railwayRouteAttribute/uro:RailwayRouteAttribute/uro:operator",
+            datatype="string",
+        ),
+        Property(
+            name="alternativeName",
+            path="./uro:railwayRouteAttribute/uro:RailwayRouteAttribute/uro:alternativeName",
+            datatype="[]string",
+        ),
+        Property(
+            name="startStation",
+            path="./uro:railwayRouteAttribute/uro:RailwayRouteAttribute/uro:startStation",
+            datatype="string",
+        ),
+        Property(
+            name="endStation",
+            path="./uro:railwayRouteAttribute/uro:RailwayRouteAttribute/uro:endStation",
+            datatype="string",
+        ),
+    ],
+    emissions=FeatureEmissions(
+        lod1=FeatureEmission(
+            catch_all=["./tran:lod1MultiSurface//gml:Polygon"],
+            direct=["./tran:lod1MultiSurface//gml:Polygon"],
+        ),
+        lod2=FeatureEmission(
+            catch_all=["./tran:*//tran:lod2MultiSurface//gml:Polygon"],
+            direct=["./tran:lod2MultiSurface//gml:Polygon"],
+        ),
+        lod3=FeatureEmission(
+            catch_all=["./tran:*//tran:lod3MultiSurface//gml:Polygon"],
+            direct=["./tran:lod3MultiSurface//gml:Polygon"],
+        ),
+        lod4=FeatureEmission(
+            catch_all=["./tran:*//tran:lod4MultiSurface//gml:Polygon"],
+            direct=["./tran:lod4MultiSurface//gml:Polygon"],
+        ),
+        semantic_parts=[
+            "./tran:trafficArea/tran:TrafficArea",
+            "./tran:auxiliaryTrafficArea/tran:AuxiliaryTrafficArea",
+        ],
+    ),
+)
+
+# Road > TrafficArea
+# Road > AuxiliaryTrafficArea
+# Railway > TrafficArea
+# Railway > AuxiliaryTrafficArea
 TRAFFIC_AREA = ProcessorDefinition(
-    id="Traffic Area",
+    id="TrafficArea",
     target_elements=["tran:TrafficArea", "tran:AuxiliaryTrafficArea"],
-    attributes=[
-        Attribute(
+    properties=[
+        Property(
             name="function",
             path="./tran:function",
             datatype="[]string",
             codelist="TrafficArea_function",
         ),
-        Attribute(
+        Property(
             name="surfaceMaterial",
             path="./tran:surfaceMaterial",
             datatype="string",
             codelist="TrafficArea_surfaceMaterial",
+        ),
+        # uro (Road)
+        Property(
+            name="uro:numberOfLanes",
+            path="./uro:trafficAreaStructureAttribute/uro:TrafficAreaStructureAttribute/uro:numberOfLanes",
+            datatype="integer",
+        ),
+        # uro (Railway)
+        Property(
+            name="uro:routeName",
+            path="./uro:railwayTrackAttribute/uro:RailwayTrackAttribute/uro:routeName",
+            datatype="string",
+        ),
+        Property(
+            name="uro:directionType",
+            path="./uro:railwayTrackAttribute/uro:RailwayTrackAttribute/uro:directionType",
+            datatype="string",
+            codelist="RailwayTrackAttribute_directionType",
+        ),
+        Property(
+            name="uro:trackType",
+            path="./uro:railwayTrackAttribute/uro:RailwayTrackAttribute/uro:trackType",
+            datatype="string",
+            codelist="RailwayTrackAttribute_trackType",
+        ),
+        Property(
+            name="uro:startPost",
+            path="./uro:railwayTrackAttribute/uro:RailwayTrackAttribute/uro:startPost",
+            datatype="string",
+        ),
+        Property(
+            name="uro:endPost",
+            path="./uro:railwayTrackAttribute/uro:RailwayTrackAttribute/uro:endPost",
+            datatype="string",
+        ),
+        Property(
+            name="uro:alignmentType",
+            path="./uro:railwayTrackAttribute/uro:RailwayTrackAttribute/uro:alignmentType",
+            datatype="string",
+            codelist="RailwayTrackAttribute_alignmentType",
         ),
     ],
     lod_detection=LODDetection(
@@ -82,9 +259,9 @@ TRAFFIC_AREA = ProcessorDefinition(
         lod3=["./tran:lod3MultiSurface"],
         lod4=["./tran:lod4MultiSurface"],
     ),
-    emissions=Emissions(
-        lod2=Emission(catch_all=["./tran:lod2MultiSurface//gml:Polygon"]),
-        lod3=Emission(catch_all=["./tran:lod3MultiSurface//gml:Polygon"]),
-        lod4=Emission(catch_all=["./tran:lod4MultiSurface//gml:Polygon"]),
+    emissions=FeatureEmissions(
+        lod2=FeatureEmission(catch_all=["./tran:lod2MultiSurface//gml:Polygon"]),
+        lod3=FeatureEmission(catch_all=["./tran:lod3MultiSurface//gml:Polygon"]),
+        lod4=FeatureEmission(catch_all=["./tran:lod4MultiSurface//gml:Polygon"]),
     ),
 )

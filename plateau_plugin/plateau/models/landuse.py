@@ -1,9 +1,9 @@
 from .base import (
-    Attribute,
-    Emission,
-    Emissions,
+    FeatureEmission,
+    FeatureEmissions,
     LODDetection,
     ProcessorDefinition,
+    Property,
 )
 
 LAND_USE = ProcessorDefinition(
@@ -14,22 +14,22 @@ LAND_USE = ProcessorDefinition(
     lod_detection=LODDetection(
         lod1=["./luse:lod1MultiSurface"],
     ),
-    attributes=[
-        Attribute(
+    properties=[
+        Property(
             name="class",
             path="./luse:class",
             datatype="string",
             codelist="Common_landUseType",
         ),
-        Attribute(
+        Property(
             name="usage",
             path="./luse:usage",
             datatype="string",
             codelist="LandUse_usage",
         ),
     ],
-    emissions=Emissions(
-        lod1=Emission(
+    emissions=FeatureEmissions(
+        lod1=FeatureEmission(
             catch_all=[
                 "./luse:lod1MultiSurface//gml:Polygon",
             ]

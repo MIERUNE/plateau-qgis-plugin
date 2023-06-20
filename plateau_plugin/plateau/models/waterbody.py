@@ -1,9 +1,9 @@
 from .base import (
-    Attribute,
-    Emission,
-    Emissions,
+    FeatureEmission,
+    FeatureEmissions,
     LODDetection,
     ProcessorDefinition,
+    Property,
 )
 
 WATER_BODY = ProcessorDefinition(
@@ -16,26 +16,32 @@ WATER_BODY = ProcessorDefinition(
         lod2=["./wtr:lod2Solid"],
         lod3=["./wtr:lod3Solid"],
     ),
-    attributes=[
-        Attribute(
+    properties=[
+        Property(
             name="class",
             path="./wtr:class",
             datatype="string",
             codelist="WaterBody_class",
         ),
+        Property(
+            name="function",
+            path="./wtr:function",
+            datatype="[]string",
+            codelist="WaterBody_function",
+        ),
     ],
-    emissions=Emissions(
-        lod1=Emission(
+    emissions=FeatureEmissions(
+        lod1=FeatureEmission(
             catch_all=[
                 "./wtr:lod1MultiSurface//gml:Polygon",
             ]
         ),
-        lod2=Emission(
+        lod2=FeatureEmission(
             catch_all=[
                 ".//wtr:lod2MultiSurface//gml:Polygon",
             ]
         ),
-        lod3=Emission(
+        lod3=FeatureEmission(
             catch_all=[
                 ".//wtr:lod3MultiSurface//gml:Polygon",
             ]

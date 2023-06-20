@@ -1,9 +1,9 @@
 from .base import (
-    Attribute,
-    Emission,
-    Emissions,
+    FeatureEmission,
+    FeatureEmissions,
     LODDetection,
     ProcessorDefinition,
+    Property,
 )
 
 BRIDGE = ProcessorDefinition(
@@ -15,23 +15,38 @@ BRIDGE = ProcessorDefinition(
         lod3=["./brid:lod3Solid", "./brid:lod3MultiSurface"],
         lod4=["./brid:lod4Solid", "./brid:lod4MultiSurface"],
     ),
-    attributes=[
-        Attribute(
+    properties=[
+        Property(
             name="class",
             path="./brid:class",
             datatype="string",
             codelist="Bridge_class",
         ),
-        Attribute(
+        Property(
             name="function",
             path="./brid:function",
             datatype="[]string",
             codelist="Bridge_function",
         ),
+        Property(
+            name="yearOfConstruction",
+            path="./brid:yearOfConstruction",
+            datatype="integer",
+        ),
+        Property(
+            name="yearOfDemolition",
+            path="./brid:yearOfDemolition",
+            datatype="integer",
+        ),
+        Property(
+            name="isMovable",
+            path="./brid:isMovable",
+            datatype="boolean",
+        ),
     ],
-    emissions=Emissions(
-        lod1=Emission(catch_all=["./brid:lod1Solid//gml:Polygon"]),
-        lod2=Emission(
+    emissions=FeatureEmissions(
+        lod1=FeatureEmission(catch_all=["./brid:lod1Solid//gml:Polygon"]),
+        lod2=FeatureEmission(
             catch_all=[
                 ".//brid:lod2MultiSurface//gml:Polygon",
                 ".//brid:lod2Geometry//gml:Polygon",
@@ -41,7 +56,7 @@ BRIDGE = ProcessorDefinition(
                 "./brid:lod2Geometry//gml:Polygon",
             ],
         ),
-        lod3=Emission(
+        lod3=FeatureEmission(
             catch_all=[
                 ".//brid:lod3MultiSurface//gml:Polygon",
                 ".//brid:lod3Geometry//gml:Polygon",
@@ -65,7 +80,7 @@ BRIDGE = ProcessorDefinition(
 )
 
 BRIDGE_BOUNDARY_SURFACE = ProcessorDefinition(
-    id="Boundary Surface",
+    id="brid:_BoundarySurface",
     target_elements=[
         "brid:GroundSurface",
         "brid:WallSurface",
@@ -74,26 +89,26 @@ BRIDGE_BOUNDARY_SURFACE = ProcessorDefinition(
         "brid:OuterFloorSurface",
         "brid:ClosureSurface",
     ],
-    attributes=[],
+    properties=[],
     lod_detection=LODDetection(
         lod2=["./brid:lod2MultiSurface"],
         lod3=["./brid:lod3MultiSurface"],
         lod4=["./brid:lod4MultiSurface"],
     ),
-    emissions=Emissions(
-        lod2=Emission(
+    emissions=FeatureEmissions(
+        lod2=FeatureEmission(
             catch_all=[
                 ".//brid:lod2MultiSurface//gml:Polygon",
                 ".//brid:lod2Geometry//gml:Polygon",
             ]
         ),
-        lod3=Emission(
+        lod3=FeatureEmission(
             catch_all=[
                 ".//brid:lod3MultiSurface//gml:Polygon",
                 ".//brid:lod3Geometry//gml:Polygon",
             ]
         ),
-        lod4=Emission(
+        lod4=FeatureEmission(
             catch_all=[
                 ".//brid:lod4MultiSurface//gml:Polygon",
                 ".//brid:lod4Geometry//gml:Polygon",
@@ -107,16 +122,23 @@ BRIDGE_CONSTRUCTION_ELEMENT = ProcessorDefinition(
     target_elements=[
         "brid:BridgeConstructionElement",
     ],
-    attributes=[],
+    properties=[
+        Property(
+            name="function",
+            path="./brid:function",
+            datatype="[]string",
+            codelist="BridgeConstructionElement_function",
+        ),
+    ],
     lod_detection=LODDetection(
         lod2=["./brid:lod2Geometry"],
         lod3=["./brid:lod3Geometry"],
         lod4=["./brid:lod4Geometry"],
     ),
-    emissions=Emissions(
-        lod2=Emission(catch_all=[".//brid:lod2Geometry//gml:Polygon"]),
-        lod3=Emission(catch_all=[".//brid:lod3Geometry//gml:Polygon"]),
-        lod4=Emission(catch_all=[".//brid:lod4Geometry//gml:Polygon"]),
+    emissions=FeatureEmissions(
+        lod2=FeatureEmission(catch_all=[".//brid:lod2Geometry//gml:Polygon"]),
+        lod3=FeatureEmission(catch_all=[".//brid:lod3Geometry//gml:Polygon"]),
+        lod4=FeatureEmission(catch_all=[".//brid:lod4Geometry//gml:Polygon"]),
     ),
 )
 
@@ -125,15 +147,32 @@ BRIDGE_INSTALLATION = ProcessorDefinition(
     target_elements=[
         "brid:BridgeInstallation",
     ],
-    attributes=[],
+    properties=[
+        Property(
+            name="class",
+            path="./brid:class",
+            datatype="string",
+        ),
+        Property(
+            name="function",
+            path="./brid:function",
+            datatype="[]string",
+            codelist="BridgeInstallation_function",
+        ),
+        Property(
+            name="usage",
+            path="./brid:usage",
+            datatype="[]string",
+        ),
+    ],
     lod_detection=LODDetection(
         lod2=["./brid:lod2Geometry"],
         lod3=["./brid:lod3Geometry"],
         lod4=["./brid:lod4Geometry"],
     ),
-    emissions=Emissions(
-        lod2=Emission(catch_all=[".//brid:lod2Geometry//gml:Polygon"]),
-        lod3=Emission(catch_all=[".//brid:lod3Geometry//gml:Polygon"]),
-        lod4=Emission(catch_all=[".//brid:lod4Geometry//gml:Polygon"]),
+    emissions=FeatureEmissions(
+        lod2=FeatureEmission(catch_all=[".//brid:lod2Geometry//gml:Polygon"]),
+        lod3=FeatureEmission(catch_all=[".//brid:lod3Geometry//gml:Polygon"]),
+        lod4=FeatureEmission(catch_all=[".//brid:lod4Geometry//gml:Polygon"]),
     ),
 )

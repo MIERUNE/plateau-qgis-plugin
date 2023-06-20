@@ -34,7 +34,8 @@ class CityObject:
     id: str
     name: Optional[str]
     creation_date: Optional[date]
-    properties: OrderedDict[str, Any]  # この地物のプロパティ
+    termination_date: Optional[date]
+    properties: OrderedDict[str, Any]
     geometry: Geometry
     processor_path: Sequence[
         tuple[str, str]

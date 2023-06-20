@@ -1,16 +1,26 @@
 import re
 from dataclasses import dataclass
 from functools import cached_property
-from typing import Iterable, Literal, Optional
+from typing import Iterable, Literal, Optional, Sequence
 
 import lxml.etree as et
 
 from ..namespaces import BASE_NS
 
+PropertyDatatype = Literal[
+    "string",
+    "[]string",
+    "integer",
+    "double",
+    "datetime",
+    "boolean",
+    "date",
+]
+
 
 @dataclass
 class LODDetection:
-    """各LODの存在を確認するための XML Paths を列挙する"""
+    """各LODの存在を判定するための XML Paths を列挙する"""
 
     lod0: Optional[list[str]] = None
     lod1: Optional[list[str]] = None
@@ -21,36 +31,40 @@ class LODDetection:
 
 
 @dataclass
-class Emission:
+class FeatureEmission:
     catch_all: list[str]
+    """この地物の階層下にある全ジオメトリを収集するための element path (部分要素に分けずに読み込む場合に使う) """
+
     direct: Optional[list[str]] = None
+    """この地物の直下にあるジオメトリを収集するための element path"""
+
     geometry_loader: Literal["polygons"] = "polygons"
 
 
 @dataclass
-class Emissions:
-    """LODごとの地物の出力について記述する"""
+class FeatureEmissions:
+    """地物の出力について記述する"""
 
-    lod0: Optional[Emission] = None
-    lod1: Optional[Emission] = None
-    lod2: Optional[Emission] = None
-    lod3: Optional[Emission] = None
-    lod4: Optional[Emission] = None
+    lod0: Optional[FeatureEmission] = None
+    lod1: Optional[FeatureEmission] = None
+    lod2: Optional[FeatureEmission] = None
+    lod3: Optional[FeatureEmission] = None
+    lod4: Optional[FeatureEmission] = None
     semantic_parts: Optional[list[str]] = None
 
 
 @dataclass
-class Attribute:
+class Property:
     name: str
     path: str
-    datatype: Literal["string", "integer", "double", "datetime", "[]string"]
+    datatype: PropertyDatatype
     codelist: Optional[str] = None
 
 
 @dataclass
 class FieldDefinition:
     name: str
-    datatype: Literal["string", "integer", "double", "datetime", "[]string"]
+    datatype: PropertyDatatype
 
 
 @dataclass
@@ -62,15 +76,18 @@ class TableDefinition:
 class ProcessorDefinition:
     id: str
     target_elements: list[str]  # "tran:Road"
-    lod_detection: LODDetection
-    attributes: list[Attribute]
-    emissions: Emissions
+    lod_detection: LODDetection  # LODを判定するための element path
+    properties: list[Property]  # 取得したい属性 (プロパティ) の定義
+    emissions: FeatureEmissions  # 地物の出力についての定義
 
-    def get_lods(self, elem: et._Element, nsmap: dict[str, str]):
+    def get_lods(self, elem: et._Element, nsmap: dict[str, str]) -> tuple[bool, ...]:
+        """
+        どの LOD が存在するかを返す。例: LOD1と2のとき → (False, True, True, False, False)
+        """
         det = self.lod_detection
         if det.lod_n:
             lod = int(elem.find(det.lod_n, BASE_NS).text)
-            return [lod == i for i in range(5)]
+            return tuple(lod == i for i in range(5))
         return (
             bool(det.lod0 and any(elem.find(p, nsmap) is not None for p in det.lod0)),
             bool(det.lod1 and any(elem.find(p, nsmap) is not None for p in det.lod1)),
@@ -80,7 +97,7 @@ class ProcessorDefinition:
         )
 
     @cached_property
-    def emissions_list(self) -> tuple[Optional[Emission], ...]:
+    def emissions_list(self) -> tuple[Optional[FeatureEmission], ...]:
         emissions = self.emissions
         return (
             emissions.lod0,
@@ -92,6 +109,8 @@ class ProcessorDefinition:
 
 
 class ProcessorRegistory:
+    """地物を処理する Processor を登録しておくレジストリ"""
+
     def __init__(self, processors: Optional[Iterable[ProcessorDefinition]] = None):
         self._tag_map = {}
         self._id_map = {}
@@ -100,27 +119,39 @@ class ProcessorRegistory:
                 self.register_processor(processor)
 
     def register_processor(self, processor: ProcessorDefinition):
+        """Processor を登録する"""
+        assert (
+            processor.id not in self._id_map
+        ), f"Processor id {processor.id} is already registered"
+
         self._id_map[processor.id] = processor
         for prefixed_name in processor.target_elements:
             qualified_name = re.sub(
                 r"^(.+?):()", lambda m: "{" + BASE_NS[m.group(1)] + "}", prefixed_name
             )
+            assert prefixed_name not in self._tag_map
             self._tag_map[prefixed_name] = processor
+            assert qualified_name not in self._tag_map
             self._tag_map[qualified_name] = processor
 
     def get_processor_by_tag(self, target_tag: str) -> Optional[ProcessorDefinition]:
+        """XMLの要素名をもとに Processor を取得する"""
         return self._tag_map.get(target_tag)
 
     def get_processor_by_id(self, _id: str) -> ProcessorDefinition:
+        """Processor の id をもとに Processor を取得する"""
         return self._id_map[_id]
 
-    def get_table_definition(self, processor_path: list[tuple[str, str]]):
+    def get_table_definition(self, processor_path: Sequence[tuple[str, str]]):
         processor = self.get_processor_by_id(processor_path[-1][0])
         fields = [
             FieldDefinition("id", "string"),
+            FieldDefinition("type", "string"),
             FieldDefinition("name", "string"),
+            FieldDefinition("creationDate", "date"),
+            FieldDefinition("terminationDate", "date"),
         ]
-        for attr in processor.attributes:
+        for attr in processor.properties:
             fields.append(FieldDefinition(attr.name, attr.datatype))
 
         return TableDefinition(fields=fields)

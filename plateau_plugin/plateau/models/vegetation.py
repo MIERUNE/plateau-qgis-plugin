@@ -1,9 +1,9 @@
 from .base import (
-    Attribute,
-    Emission,
-    Emissions,
+    FeatureEmission,
+    FeatureEmissions,
     LODDetection,
     ProcessorDefinition,
+    Property,
 )
 
 SOLITARY_VEGETATION_OBJECT = ProcessorDefinition(
@@ -14,39 +14,39 @@ SOLITARY_VEGETATION_OBJECT = ProcessorDefinition(
         lod2=["./veg:lod2Geometry"],
         lod3=["./veg:lod3Geometry"],
     ),
-    attributes=[
-        Attribute(
+    properties=[
+        Property(
             name="class",
             path="./veg:class",
             datatype="string",
             codelist="SolitaryVegetationObject_class",
         ),
-        Attribute(
+        Property(
             name="function",
             path="./veg:function",
             datatype="string",
             codelist="SolitaryVegetationObject_function",
         ),
-        Attribute(
+        Property(
             name="height",
             path="./veg:height",
             datatype="double",
         ),
-        Attribute(
+        Property(
             name="trunkDiameter",
             path="./veg:trunkDiameter",
             datatype="double",
         ),
-        Attribute(
+        Property(
             name="crownDiameter",
             path="./veg:crownDiameter",
             datatype="double",
         ),
     ],
-    emissions=Emissions(
-        lod1=Emission(catch_all=["./veg:lod1Geometry//gml:Polygon"]),
-        lod2=Emission(catch_all=["./veg:lod2Geometry//gml:Polygon"]),
-        lod3=Emission(catch_all=["./veg:lod3Geometry//gml:Polygon"]),
+    emissions=FeatureEmissions(
+        lod1=FeatureEmission(catch_all=["./veg:lod1Geometry//gml:Polygon"]),
+        lod2=FeatureEmission(catch_all=["./veg:lod2Geometry//gml:Polygon"]),
+        lod3=FeatureEmission(catch_all=["./veg:lod3Geometry//gml:Polygon"]),
     ),
 )
 
@@ -58,33 +58,33 @@ PLANT_COVER = ProcessorDefinition(
         lod2=["./veg:lod2MultiSolid", "./veg:lod2MultiSurface"],
         lod3=["./veg:lod3MultiSolid", "./veg:lod3MultiSurface"],
     ),
-    attributes=[
-        Attribute(
+    properties=[
+        Property(
             name="class",
             path="./veg:class",
             datatype="string",
             codelist="PlantCover_class",
         ),
-        Attribute(
+        Property(
             name="avarageHeight",
             path="./veg:averageHeight",
             datatype="double",
         ),
     ],
-    emissions=Emissions(
-        lod1=Emission(
+    emissions=FeatureEmissions(
+        lod1=FeatureEmission(
             catch_all=[
                 "./veg:lod1MultiSolid//gml:Polygon",
                 "./veg:lod1MultiSurface//gml:Polygon",
             ]
         ),
-        lod2=Emission(
+        lod2=FeatureEmission(
             catch_all=[
                 "./veg:lod1MultiSolid//gml:Polygon",
                 "./veg:lod2MultiSurface//gml:Polygon",
             ]
         ),
-        lod3=Emission(
+        lod3=FeatureEmission(
             catch_all=[
                 "./veg:lod1MultiSolid//gml:Polygon",
                 "./veg:lod3MultiSurface//gml:Polygon",

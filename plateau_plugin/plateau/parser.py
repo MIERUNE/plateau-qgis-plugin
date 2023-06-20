@@ -1,14 +1,17 @@
 from collections import OrderedDict
 from datetime import date
-from typing import Iterable, Sequence
+from typing import Any, Iterable, Sequence
 
 import lxml.etree as et
 
 from .codelists import get_codelist
 from .geometry import parse_multipolygon
 from .models import processors
+from .models.base import ProcessorDefinition
 from .namespaces import Namespace
 from .types import CityObject, ParseSettings
+
+_BOOLEAN_VALUES = frozenset({"true", "True", "1"})
 
 
 class Parser:
@@ -38,24 +41,11 @@ class Parser:
         )
         return (creation_date, termination_date)
 
-    def process_cityobj_element(
-        self,
-        elem: et._Element,
-        ancestors: Sequence[tuple[str, str]],  # 親地物の (target_element, gml_id)
-    ) -> Iterable[CityObject]:
-        ns = self._ns
-        nsmap = ns.nsmap
-
-        (gml_id, gml_name) = self._get_id_and_name(elem, nsmap)
-        (creation_date, _termination_date) = self._get_creation_date(elem, nsmap)
-
-        # Get processor
-        processor = processors.get_processor_by_tag(elem.tag)
-        if processor is None:
-            return
-
+    def _load_props(
+        self, processor: ProcessorDefinition, elem: et._Element, nsmap: dict[str, str]
+    ) -> OrderedDict[str, Any]:
         props = OrderedDict()
-        for attr in processor.attributes:
+        for attr in processor.properties:
             values = [e.text for e in elem.iterfind(attr.path, nsmap)]
             if attr.datatype == "[]string":
                 values = [str(v) for v in values]
@@ -76,20 +66,50 @@ class Parser:
                     continue
                 v = float(values[0])
                 props[attr.name] = v
+            elif attr.datatype == "integer":
+                if not values:
+                    continue
+                v = int(values[0])
+                props[attr.name] = v
+            elif attr.datatype == "boolean":
+                if not values:
+                    continue
+                v = bool(values[0] in _BOOLEAN_VALUES)
+                props[attr.name] = v
             else:
                 raise NotImplementedError(f"Unknown datatype: {attr.datatype}")
+        return props
 
-        emissions_for_lod = processor.emissions_list
+    def process_cityobj_element(
+        self,
+        elem: et._Element,
+        ancestors: Sequence[tuple[str, str]],  # 親地物の (target_element, gml_id)
+    ) -> Iterable[CityObject]:
+        ns = self._ns
+        nsmap = ns.nsmap
+
+        (gml_id, gml_name) = self._get_id_and_name(elem, nsmap)
+        (creation_date, _termination_date) = self._get_creation_date(elem, nsmap)
+
+        # この要素のための Processor を得る
+        processor = processors.get_processor_by_tag(elem.tag)
+        if processor is None:
+            return
+
+        # 部分要素を個別に読む設定の場合は、部分要素を探索する
         new_ancestors = (*ancestors, (processor.id, gml_id))
-        has_semantic_parts = False
-
         if self._settings.load_semantic_parts and processor.emissions.semantic_parts:
             for path in processor.emissions.semantic_parts:
                 for child in elem.iterfind(path, nsmap):
                     yield from self.process_cityobj_element(child, new_ancestors)
                     has_semantic_parts = True
 
+        # 属性 (プロパティ) の値を収集する
+        props = self._load_props(processor, elem, nsmap)
+
+        emissions_for_lod = processor.emissions_list
         has_lods = processor.get_lods(elem, nsmap)
+        has_semantic_parts = False
         for lod in (4, 3, 2, 1):
             if not has_lods[lod]:
                 continue
@@ -117,6 +137,7 @@ class Parser:
                     id=gml_id,
                     name=gml_name,
                     creation_date=creation_date,
+                    termination_date=_termination_date,
                     properties=props,
                     geometry=geom,
                     processor_path=new_ancestors,
@@ -131,6 +152,7 @@ class Parser:
                 id=gml_id,
                 name=gml_name,
                 creation_date=creation_date,
+                termination_date=_termination_date,
                 lod=None,
                 geometry=None,
                 properties=props,
@@ -143,7 +165,8 @@ class FileParser:
         self._doc = et.parse(filename, None)
         self._settings = settings
 
-        # Detect i-UR versions
+        # ドキュメントで使われている i-UR のバージョンを検出して
+        # uro: と urf: 接頭辞のXML名前空間に自動で対応する
         self._ns = Namespace.from_document_nsmap(self._doc.getroot().nsmap)
 
     def count_toplevel_objects(self):
