@@ -64,7 +64,48 @@ BUILDING = ProcessorDefinition(
                 ),
             ],
         ),
-        # uro
+        # uro:BuildingDataQualityAttribute
+        PropertyGroup(
+            base_element="./uro:buildingDataQualityAttribute/uro:BuildingDataQualityAttribute",
+            properties=[
+                Property(
+                    name="uro:srcScale",
+                    path="./uro:srcScale",
+                    datatype="[]string",
+                    codelist="BuildingDataQualityAttribute_srcScale",
+                ),
+                Property(
+                    name="uro:geometrySrcDesc",
+                    path="./uro:geometrySrcDesc",
+                    datatype="[]string",
+                    codelist="BuildingDataQualityAttribute_geometrySrcDesc",
+                ),
+                Property(
+                    name="uro:thematicSrcDesc",
+                    path="./uro:thematicSrcDesc",
+                    datatype="[]string",
+                    codelist="BuildingDataQualityAttribute_thematicSrcDesc",
+                ),
+                Property(
+                    name="uro:appearanceSrcDesc",
+                    path="./uro:appearanceSrcDesc",
+                    datatype="[]string",
+                    codelist="BuildingDataQualityAttribute_appearanceSrcDesc",
+                ),
+                Property(
+                    name="uro:lod1HeightType",
+                    path="./uro:lod1HeightType",
+                    datatype="string",
+                    codelist="BuildingDataQualityAttribute_lod1HeightType",
+                ),
+                Property(
+                    name="uro:lodType",
+                    path="./uro:appearanceSrcDesc",
+                    datatype="[]string",
+                ),
+            ],
+        ),
+        # uro:BuildingDetailAttribute
         PropertyGroup(
             base_element="./uro:buildingDetailAttribute/uro:BuildingDetailAttribute",
             properties=[
@@ -186,16 +227,39 @@ BUILDING = ProcessorDefinition(
                 ),
             ],
         ),
+        # uro:buildingIDAttribute
+        PropertyGroup(
+            base_element="./uro:buildingIDAttribute/uro:BuildingIDAttribute",
+            properties=[
+                Property(
+                    name="uro:buildingID",
+                    path="./uro:buildingID",
+                    datatype="string",
+                ),
+                Property(
+                    name="uro:prefecture",
+                    path="./uro:prefecture",
+                    datatype="string",
+                    codelist="Common_prefecture",
+                ),
+                Property(
+                    name="uro:city",
+                    path="./uro:city",
+                    datatype="string",
+                    codelist="Common_localPublicAuthorities",
+                ),
+            ],
+        ),
     ],
     emissions=FeatureEmissions(
-        lod1=FeatureEmission(catch_all=[".//bldg:lod1Solid//gml:Polygon"]),
+        lod1=FeatureEmission(collect_all=[".//bldg:lod1Solid//gml:Polygon"]),
         lod2=FeatureEmission(
-            catch_all=[".//bldg:lod2MultiSurface//gml:Polygon"],
-            direct=["./bldg:lod2MultiSurface//gml:Polygon"],
+            collect_all=[".//bldg:lod2MultiSurface//gml:Polygon"],
+            only_direct=["./bldg:lod2MultiSurface//gml:Polygon"],
         ),
         lod3=FeatureEmission(
-            catch_all=[".//bldg:lod3MultiSurface//gml:Polygon"],
-            direct=["./bldg:lod3MultiSurface//gml:Polygon"],
+            collect_all=[".//bldg:lod3MultiSurface//gml:Polygon"],
+            only_direct=["./bldg:lod3MultiSurface//gml:Polygon"],
         ),
         semantic_parts=[
             ".//bldg:GroundSurface",
@@ -225,8 +289,8 @@ BUILDING_BOUNDARY_SURFACE = ProcessorDefinition(
         lod4=["./bldg:lod4MultiSurface"],
     ),
     emissions=FeatureEmissions(
-        lod2=FeatureEmission(catch_all=[".//bldg:lod2MultiSurface//gml:Polygon"]),
-        lod3=FeatureEmission(catch_all=[".//bldg:lod3MultiSurface//gml:Polygon"]),
-        lod4=FeatureEmission(catch_all=[".//bldg:lod4MultiSurface//gml:Polygon"]),
+        lod2=FeatureEmission(collect_all=[".//bldg:lod2MultiSurface//gml:Polygon"]),
+        lod3=FeatureEmission(collect_all=[".//bldg:lod3MultiSurface//gml:Polygon"]),
+        lod4=FeatureEmission(collect_all=[".//bldg:lod4MultiSurface//gml:Polygon"]),
     ),
 )

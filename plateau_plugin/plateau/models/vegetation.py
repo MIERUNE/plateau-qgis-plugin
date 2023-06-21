@@ -47,12 +47,42 @@ SOLITARY_VEGETATION_OBJECT = ProcessorDefinition(
                     datatype="double",
                 ),
             ],
-        )
+        ),
+        # uro:VegetationDataQualityAttribute
+        PropertyGroup(
+            base_element="./uro:vegetationDataQualityAttribute/uro:VegetationDataQualityAttribute",
+            properties=[
+                Property(
+                    name="uro:srcScale",
+                    path="./uro:srcScale",
+                    datatype="[]string",
+                    codelist="VegetationDataQualityAttribute_srcScale",
+                ),
+                Property(
+                    name="uro:geometrySrcDesc",
+                    path="./uro:geometrySrcDesc",
+                    datatype="[]string",
+                    codelist="VegetationDataQualityAttribute_GeometrySrcDesc",
+                ),
+                Property(
+                    name="uro:thematicSrcDesc",
+                    path="./uro:thematicSrcDesc",
+                    datatype="[]string",
+                    codelist="VegetationDataQualityAttribute_thematicSrcDesc",
+                ),
+                Property(
+                    name="uro:appearanceSrcDesc",
+                    path="./uro:appearanceSrcDesc",
+                    datatype="[]string",
+                    codelist="VegetationDataQualityAttribute_appearanceSrcDesc",
+                ),
+            ],
+        ),
     ],
     emissions=FeatureEmissions(
-        lod1=FeatureEmission(catch_all=["./veg:lod1Geometry//gml:Polygon"]),
-        lod2=FeatureEmission(catch_all=["./veg:lod2Geometry//gml:Polygon"]),
-        lod3=FeatureEmission(catch_all=["./veg:lod3Geometry//gml:Polygon"]),
+        lod1=FeatureEmission(collect_all=["./veg:lod1Geometry//gml:Polygon"]),
+        lod2=FeatureEmission(collect_all=["./veg:lod2Geometry//gml:Polygon"]),
+        lod3=FeatureEmission(collect_all=["./veg:lod3Geometry//gml:Polygon"]),
     ),
 )
 
@@ -84,19 +114,19 @@ PLANT_COVER = ProcessorDefinition(
     ],
     emissions=FeatureEmissions(
         lod1=FeatureEmission(
-            catch_all=[
+            collect_all=[
                 "./veg:lod1MultiSolid//gml:Polygon",
                 "./veg:lod1MultiSurface//gml:Polygon",
             ]
         ),
         lod2=FeatureEmission(
-            catch_all=[
+            collect_all=[
                 "./veg:lod1MultiSolid//gml:Polygon",
                 "./veg:lod2MultiSurface//gml:Polygon",
             ]
         ),
         lod3=FeatureEmission(
-            catch_all=[
+            collect_all=[
                 "./veg:lod1MultiSolid//gml:Polygon",
                 "./veg:lod3MultiSurface//gml:Polygon",
             ]

@@ -123,9 +123,9 @@ class Parser:
                 continue
 
             geom_paths = (
-                (emission.direct or emission.catch_all)
+                (emission.only_direct or emission.collect_all)
                 if self._settings.load_semantic_parts
-                else emission.catch_all
+                else emission.collect_all
             )
 
             if emission.geometry_loader == "polygons":

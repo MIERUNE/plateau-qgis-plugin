@@ -69,12 +69,6 @@ ROAD = ProcessorDefinition(
                     codelist="RoadDataQualityAttribute_appearanceSrcDesc",
                 ),
                 Property(
-                    name="uro:appearanceSrcDesc",
-                    path="./uro:appearanceSrcDesc",
-                    datatype="[]string",
-                    codelist="RoadDataQualityAttribute_appearanceSrcDesc",
-                ),
-                Property(
                     name="uro:lodType",
                     path="./uro:appearanceSrcDesc",
                     datatype="[]string",
@@ -113,20 +107,20 @@ ROAD = ProcessorDefinition(
     ],
     emissions=FeatureEmissions(
         lod1=FeatureEmission(
-            catch_all=["./tran:lod1MultiSurface//gml:Polygon"],
-            direct=["./tran:lod1MultiSurface//gml:Polygon"],
+            collect_all=["./tran:lod1MultiSurface//gml:Polygon"],
+            only_direct=["./tran:lod1MultiSurface//gml:Polygon"],
         ),
         lod2=FeatureEmission(
-            catch_all=["./tran:*//tran:lod2MultiSurface//gml:Polygon"],
-            direct=["./tran:lod2MultiSurface//gml:Polygon"],
+            collect_all=["./tran:*//tran:lod2MultiSurface//gml:Polygon"],
+            only_direct=["./tran:lod2MultiSurface//gml:Polygon"],
         ),
         lod3=FeatureEmission(
-            catch_all=["./tran:*//tran:lod3MultiSurface//gml:Polygon"],
-            direct=["./tran:lod3MultiSurface//gml:Polygon"],
+            collect_all=["./tran:*//tran:lod3MultiSurface//gml:Polygon"],
+            only_direct=["./tran:lod3MultiSurface//gml:Polygon"],
         ),
         lod4=FeatureEmission(
-            catch_all=["./tran:*//tran:lod4MultiSurface//gml:Polygon"],
-            direct=["./tran:lod4MultiSurface//gml:Polygon"],
+            collect_all=["./tran:*//tran:lod4MultiSurface//gml:Polygon"],
+            only_direct=["./tran:lod4MultiSurface//gml:Polygon"],
         ),
         semantic_parts=[
             "./tran:trafficArea/tran:TrafficArea",
@@ -197,20 +191,20 @@ RAILWAY = ProcessorDefinition(
     ],
     emissions=FeatureEmissions(
         lod1=FeatureEmission(
-            catch_all=["./tran:lod1MultiSurface//gml:Polygon"],
-            direct=["./tran:lod1MultiSurface//gml:Polygon"],
+            collect_all=["./tran:lod1MultiSurface//gml:Polygon"],
+            only_direct=["./tran:lod1MultiSurface//gml:Polygon"],
         ),
         lod2=FeatureEmission(
-            catch_all=["./tran:*//tran:lod2MultiSurface//gml:Polygon"],
-            direct=["./tran:lod2MultiSurface//gml:Polygon"],
+            collect_all=["./tran:*//tran:lod2MultiSurface//gml:Polygon"],
+            only_direct=["./tran:lod2MultiSurface//gml:Polygon"],
         ),
         lod3=FeatureEmission(
-            catch_all=["./tran:*//tran:lod3MultiSurface//gml:Polygon"],
-            direct=["./tran:lod3MultiSurface//gml:Polygon"],
+            collect_all=["./tran:*//tran:lod3MultiSurface//gml:Polygon"],
+            only_direct=["./tran:lod3MultiSurface//gml:Polygon"],
         ),
         lod4=FeatureEmission(
-            catch_all=["./tran:*//tran:lod4MultiSurface//gml:Polygon"],
-            direct=["./tran:lod4MultiSurface//gml:Polygon"],
+            collect_all=["./tran:*//tran:lod4MultiSurface//gml:Polygon"],
+            only_direct=["./tran:lod4MultiSurface//gml:Polygon"],
         ),
         semantic_parts=[
             "./tran:trafficArea/tran:TrafficArea",
@@ -219,10 +213,8 @@ RAILWAY = ProcessorDefinition(
     ),
 )
 
-# Road > TrafficArea
-# Road > AuxiliaryTrafficArea
-# Railway > TrafficArea
-# Railway > AuxiliaryTrafficArea
+# TrafficArea, AuxiliaryTrafficArea を扱う
+# これらは Road, Railway, Track, Square (いずれもLOD2-4) の子として使われる
 TRAFFIC_AREA = ProcessorDefinition(
     id="TrafficArea",
     target_elements=["tran:TrafficArea", "tran:AuxiliaryTrafficArea"],
@@ -301,8 +293,8 @@ TRAFFIC_AREA = ProcessorDefinition(
         lod4=["./tran:lod4MultiSurface"],
     ),
     emissions=FeatureEmissions(
-        lod2=FeatureEmission(catch_all=["./tran:lod2MultiSurface//gml:Polygon"]),
-        lod3=FeatureEmission(catch_all=["./tran:lod3MultiSurface//gml:Polygon"]),
-        lod4=FeatureEmission(catch_all=["./tran:lod4MultiSurface//gml:Polygon"]),
+        lod2=FeatureEmission(collect_all=["./tran:lod2MultiSurface//gml:Polygon"]),
+        lod3=FeatureEmission(collect_all=["./tran:lod3MultiSurface//gml:Polygon"]),
+        lod4=FeatureEmission(collect_all=["./tran:lod4MultiSurface//gml:Polygon"]),
     ),
 )

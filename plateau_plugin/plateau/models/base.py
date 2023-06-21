@@ -32,10 +32,10 @@ class LODDetection:
 
 @dataclass
 class FeatureEmission:
-    catch_all: list[str]
+    collect_all: list[str]
     """この地物の階層下にある全ジオメトリを収集するための element path (部分要素に分けずに読み込む場合に使う) """
 
-    direct: Optional[list[str]] = None
+    only_direct: Optional[list[str]] = None
     """この地物の直下にあるジオメトリを収集するための element path"""
 
     geometry_loader: Literal["polygons"] = "polygons"
@@ -63,7 +63,11 @@ class Property:
 
 @dataclass
 class PropertyGroup:
+    """属性抽出をグルーピングする"""
+
     base_element: Optional[str]
+    """属性抽出の起点とする要素へのpath。None の場合は地物自体を起点とする。"""
+
     properties: list[Property]
     # mode: Literal["flatten", "map"] = "flatten"
 
@@ -86,7 +90,11 @@ class TableDefinition:
 @dataclass
 class ProcessorDefinition:
     id: str
-    target_elements: list[str]  # "tran:Road"
+    """このProcessorのID"""
+
+    target_elements: list[str]
+    """対象とする地物要素 (e.g. "tran:Road", "tran:TrafficArea", "bldg:WallSurface")"""
+
     lod_detection: LODDetection  # LODを判定するための element path
     property_groups: list[PropertyGroup]  # 取得したい属性 (プロパティ) の定義
     emissions: FeatureEmissions  # 地物の出力についての定義

@@ -37,17 +37,46 @@ CITY_FURNITURE = ProcessorDefinition(
                     datatype="[]string",
                 ),
             ],
-        )
+        ),
+        # uro:CityFurnitureDataQualityAttribute
+        PropertyGroup(
+            base_element="./uro:cityFurnitureDataQualityAttribute/uro:CityFurnitureDataQualityAttribute",
+            properties=[
+                Property(
+                    name="uro:srcScale",
+                    path="./uro:srcScale",
+                    datatype="[]string",
+                    codelist="CityFurnitureDataQualityAttribute_srcScale",
+                ),
+                Property(
+                    name="uro:geometrySrcDesc",
+                    path="./uro:geometrySrcDesc",
+                    datatype="[]string",
+                    codelist="CityFurnitureDataQualityAttribute_geometrySrcDesc",
+                ),
+                Property(
+                    name="uro:thematicSrcDesc",
+                    path="./uro:thematicSrcDesc",
+                    datatype="[]string",
+                    codelist="CityFurnitureDataQualityAttribute_thematicSrcDesc",
+                ),
+                Property(
+                    name="uro:appearanceSrcDesc",
+                    path="./uro:appearanceSrcDesc",
+                    datatype="[]string",
+                    codelist="CityFurnitureDataQualityAttribute_appearanceSrcDesc",
+                ),
+                Property(
+                    name="uro:lodType",
+                    path="./uro:appearanceSrcDesc",
+                    datatype="[]string",
+                ),
+            ],
+        ),
     ],
     emissions=FeatureEmissions(
-        lod1=FeatureEmission(
-            catch_all=["./frn:lod1Geometry/gml:MultiSurface//gml:Polygon"]
-        ),
-        lod2=FeatureEmission(
-            catch_all=["./frn:lod2Geometry/gml:MultiSurface//gml:Polygon"]
-        ),
-        lod3=FeatureEmission(
-            catch_all=["./frn:lod3Geometry/gml:MultiSurface//gml:Polygon"]
-        ),
+        lod1=FeatureEmission(collect_all=["./frn:lod1Geometry//gml:Polygon"]),
+        lod2=FeatureEmission(collect_all=["./frn:lod2Geometry//gml:Polygon"]),
+        lod3=FeatureEmission(collect_all=["./frn:lod3Geometry//gml:Polygon"]),
     ),
 )

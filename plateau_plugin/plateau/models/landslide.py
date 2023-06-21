@@ -77,7 +77,7 @@ SEDIMENT_DISASTER_PRONE_AREA = ProcessorDefinition(
     ],
     emissions=FeatureEmissions(
         lod1=FeatureEmission(
-            catch_all=[
+            collect_all=[
                 "./urf:lod1MultiSurface//gml:Polygon",
             ]
         ),

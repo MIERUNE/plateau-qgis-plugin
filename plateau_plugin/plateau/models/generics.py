@@ -3,8 +3,6 @@ from .base import (
     FeatureEmissions,
     LODDetection,
     ProcessorDefinition,
-    Property,
-    PropertyGroup,
 )
 
 GENERIC_CITY_OBJECT = ProcessorDefinition(
@@ -18,9 +16,9 @@ GENERIC_CITY_OBJECT = ProcessorDefinition(
     ),
     property_groups=[],
     emissions=FeatureEmissions(
-        lod0=FeatureEmission(catch_all=["./gen:lod0Geometry//gml:Polygon"]),
-        lod1=FeatureEmission(catch_all=["./gen:lod1Geometry//gml:Polygon"]),
-        lod2=FeatureEmission(catch_all=["./gen:lod2Geometry//gml:Polygon"]),
-        lod3=FeatureEmission(catch_all=["./gen:lod3Geometry//gml:Polygon"]),
+        lod0=FeatureEmission(collect_all=["./gen:lod0Geometry//gml:Polygon"]),
+        lod1=FeatureEmission(collect_all=["./gen:lod1Geometry//gml:Polygon"]),
+        lod2=FeatureEmission(collect_all=["./gen:lod2Geometry//gml:Polygon"]),
+        lod3=FeatureEmission(collect_all=["./gen:lod3Geometry//gml:Polygon"]),
     ),
 )

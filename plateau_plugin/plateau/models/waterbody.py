@@ -38,17 +38,17 @@ WATER_BODY = ProcessorDefinition(
     ],
     emissions=FeatureEmissions(
         lod1=FeatureEmission(
-            catch_all=[
+            collect_all=[
                 "./wtr:lod1MultiSurface//gml:Polygon",
             ]
         ),
         lod2=FeatureEmission(
-            catch_all=[
+            collect_all=[
                 ".//wtr:lod2MultiSurface//gml:Polygon",
             ]
         ),
         lod3=FeatureEmission(
-            catch_all=[
+            collect_all=[
                 ".//wtr:lod3MultiSurface//gml:Polygon",
             ]
         ),
