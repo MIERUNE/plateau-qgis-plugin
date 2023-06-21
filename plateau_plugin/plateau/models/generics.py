@@ -4,6 +4,7 @@ from .base import (
     LODDetection,
     ProcessorDefinition,
     Property,
+    PropertyGroup,
 )
 
 GENERIC_CITY_OBJECT = ProcessorDefinition(
@@ -15,7 +16,7 @@ GENERIC_CITY_OBJECT = ProcessorDefinition(
         lod2=["./gen:lod2Geometry"],
         lod3=["./gen:lod3Geometry"],
     ),
-    properties=[],
+    property_groups=[],
     emissions=FeatureEmissions(
         lod0=FeatureEmission(catch_all=["./gen:lod0Geometry//gml:Polygon"]),
         lod1=FeatureEmission(catch_all=["./gen:lod1Geometry//gml:Polygon"]),

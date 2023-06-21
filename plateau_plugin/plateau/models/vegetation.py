@@ -4,6 +4,7 @@ from .base import (
     LODDetection,
     ProcessorDefinition,
     Property,
+    PropertyGroup,
 )
 
 SOLITARY_VEGETATION_OBJECT = ProcessorDefinition(
@@ -14,34 +15,39 @@ SOLITARY_VEGETATION_OBJECT = ProcessorDefinition(
         lod2=["./veg:lod2Geometry"],
         lod3=["./veg:lod3Geometry"],
     ),
-    properties=[
-        Property(
-            name="class",
-            path="./veg:class",
-            datatype="string",
-            codelist="SolitaryVegetationObject_class",
-        ),
-        Property(
-            name="function",
-            path="./veg:function",
-            datatype="string",
-            codelist="SolitaryVegetationObject_function",
-        ),
-        Property(
-            name="height",
-            path="./veg:height",
-            datatype="double",
-        ),
-        Property(
-            name="trunkDiameter",
-            path="./veg:trunkDiameter",
-            datatype="double",
-        ),
-        Property(
-            name="crownDiameter",
-            path="./veg:crownDiameter",
-            datatype="double",
-        ),
+    property_groups=[
+        PropertyGroup(
+            base_element=None,
+            properties=[
+                Property(
+                    name="class",
+                    path="./veg:class",
+                    datatype="string",
+                    codelist="SolitaryVegetationObject_class",
+                ),
+                Property(
+                    name="function",
+                    path="./veg:function",
+                    datatype="string",
+                    codelist="SolitaryVegetationObject_function",
+                ),
+                Property(
+                    name="height",
+                    path="./veg:height",
+                    datatype="double",
+                ),
+                Property(
+                    name="trunkDiameter",
+                    path="./veg:trunkDiameter",
+                    datatype="double",
+                ),
+                Property(
+                    name="crownDiameter",
+                    path="./veg:crownDiameter",
+                    datatype="double",
+                ),
+            ],
+        )
     ],
     emissions=FeatureEmissions(
         lod1=FeatureEmission(catch_all=["./veg:lod1Geometry//gml:Polygon"]),
@@ -58,18 +64,23 @@ PLANT_COVER = ProcessorDefinition(
         lod2=["./veg:lod2MultiSolid", "./veg:lod2MultiSurface"],
         lod3=["./veg:lod3MultiSolid", "./veg:lod3MultiSurface"],
     ),
-    properties=[
-        Property(
-            name="class",
-            path="./veg:class",
-            datatype="string",
-            codelist="PlantCover_class",
-        ),
-        Property(
-            name="avarageHeight",
-            path="./veg:averageHeight",
-            datatype="double",
-        ),
+    property_groups=[
+        PropertyGroup(
+            base_element=None,
+            properties=[
+                Property(
+                    name="class",
+                    path="./veg:class",
+                    datatype="string",
+                    codelist="PlantCover_class",
+                ),
+                Property(
+                    name="avarageHeight",
+                    path="./veg:averageHeight",
+                    datatype="double",
+                ),
+            ],
+        )
     ],
     emissions=FeatureEmissions(
         lod1=FeatureEmission(

@@ -4,6 +4,7 @@ from .base import (
     LODDetection,
     ProcessorDefinition,
     Property,
+    PropertyGroup,
 )
 
 LAND_USE = ProcessorDefinition(
@@ -14,19 +15,24 @@ LAND_USE = ProcessorDefinition(
     lod_detection=LODDetection(
         lod1=["./luse:lod1MultiSurface"],
     ),
-    properties=[
-        Property(
-            name="class",
-            path="./luse:class",
-            datatype="string",
-            codelist="Common_landUseType",
-        ),
-        Property(
-            name="usage",
-            path="./luse:usage",
-            datatype="string",
-            codelist="LandUse_usage",
-        ),
+    property_groups=[
+        PropertyGroup(
+            base_element=None,
+            properties=[
+                Property(
+                    name="class",
+                    path="./luse:class",
+                    datatype="string",
+                    codelist="Common_landUseType",
+                ),
+                Property(
+                    name="usage",
+                    path="./luse:usage",
+                    datatype="string",
+                    codelist="LandUse_usage",
+                ),
+            ],
+        )
     ],
     emissions=FeatureEmissions(
         lod1=FeatureEmission(

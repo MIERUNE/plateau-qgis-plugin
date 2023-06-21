@@ -4,6 +4,7 @@ from .base import (
     LODDetection,
     ProcessorDefinition,
     Property,
+    PropertyGroup,
 )
 
 BRIDGE = ProcessorDefinition(
@@ -15,34 +16,39 @@ BRIDGE = ProcessorDefinition(
         lod3=["./brid:lod3Solid", "./brid:lod3MultiSurface"],
         lod4=["./brid:lod4Solid", "./brid:lod4MultiSurface"],
     ),
-    properties=[
-        Property(
-            name="class",
-            path="./brid:class",
-            datatype="string",
-            codelist="Bridge_class",
-        ),
-        Property(
-            name="function",
-            path="./brid:function",
-            datatype="[]string",
-            codelist="Bridge_function",
-        ),
-        Property(
-            name="yearOfConstruction",
-            path="./brid:yearOfConstruction",
-            datatype="integer",
-        ),
-        Property(
-            name="yearOfDemolition",
-            path="./brid:yearOfDemolition",
-            datatype="integer",
-        ),
-        Property(
-            name="isMovable",
-            path="./brid:isMovable",
-            datatype="boolean",
-        ),
+    property_groups=[
+        PropertyGroup(
+            base_element=None,
+            properties=[
+                Property(
+                    name="class",
+                    path="./brid:class",
+                    datatype="string",
+                    codelist="Bridge_class",
+                ),
+                Property(
+                    name="function",
+                    path="./brid:function",
+                    datatype="[]string",
+                    codelist="Bridge_function",
+                ),
+                Property(
+                    name="yearOfConstruction",
+                    path="./brid:yearOfConstruction",
+                    datatype="integer",
+                ),
+                Property(
+                    name="yearOfDemolition",
+                    path="./brid:yearOfDemolition",
+                    datatype="integer",
+                ),
+                Property(
+                    name="isMovable",
+                    path="./brid:isMovable",
+                    datatype="boolean",
+                ),
+            ],
+        )
     ],
     emissions=FeatureEmissions(
         lod1=FeatureEmission(catch_all=["./brid:lod1Solid//gml:Polygon"]),
@@ -89,7 +95,7 @@ BRIDGE_BOUNDARY_SURFACE = ProcessorDefinition(
         "brid:OuterFloorSurface",
         "brid:ClosureSurface",
     ],
-    properties=[],
+    property_groups=[],
     lod_detection=LODDetection(
         lod2=["./brid:lod2MultiSurface"],
         lod3=["./brid:lod3MultiSurface"],
@@ -122,13 +128,18 @@ BRIDGE_CONSTRUCTION_ELEMENT = ProcessorDefinition(
     target_elements=[
         "brid:BridgeConstructionElement",
     ],
-    properties=[
-        Property(
-            name="function",
-            path="./brid:function",
-            datatype="[]string",
-            codelist="BridgeConstructionElement_function",
-        ),
+    property_groups=[
+        PropertyGroup(
+            base_element=None,
+            properties=[
+                Property(
+                    name="function",
+                    path="./brid:function",
+                    datatype="[]string",
+                    codelist="BridgeConstructionElement_function",
+                ),
+            ],
+        )
     ],
     lod_detection=LODDetection(
         lod2=["./brid:lod2Geometry"],
@@ -147,23 +158,28 @@ BRIDGE_INSTALLATION = ProcessorDefinition(
     target_elements=[
         "brid:BridgeInstallation",
     ],
-    properties=[
-        Property(
-            name="class",
-            path="./brid:class",
-            datatype="string",
-        ),
-        Property(
-            name="function",
-            path="./brid:function",
-            datatype="[]string",
-            codelist="BridgeInstallation_function",
-        ),
-        Property(
-            name="usage",
-            path="./brid:usage",
-            datatype="[]string",
-        ),
+    property_groups=[
+        PropertyGroup(
+            base_element=None,
+            properties=[
+                Property(
+                    name="class",
+                    path="./brid:class",
+                    datatype="string",
+                ),
+                Property(
+                    name="function",
+                    path="./brid:function",
+                    datatype="[]string",
+                    codelist="BridgeInstallation_function",
+                ),
+                Property(
+                    name="usage",
+                    path="./brid:usage",
+                    datatype="[]string",
+                ),
+            ],
+        )
     ],
     lod_detection=LODDetection(
         lod2=["./brid:lod2Geometry"],

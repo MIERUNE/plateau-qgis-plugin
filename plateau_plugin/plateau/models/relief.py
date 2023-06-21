@@ -6,6 +6,7 @@ from .base import (
     LODDetection,
     ProcessorDefinition,
     Property,
+    PropertyGroup,
 )
 
 RELIEF = ProcessorDefinition(
@@ -14,7 +15,7 @@ RELIEF = ProcessorDefinition(
     lod_detection=LODDetection(
         lod_n="dem:lod",
     ),
-    properties=[],
+    property_groups=[],
     emissions=FeatureEmissions(
         # NOTE: ひとまず TIN のみに対応する
         lod1=FeatureEmission(

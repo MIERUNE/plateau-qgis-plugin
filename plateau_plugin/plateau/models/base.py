@@ -62,13 +62,24 @@ class Property:
 
 
 @dataclass
+class PropertyGroup:
+    base_element: Optional[str]
+    properties: list[Property]
+    # mode: Literal["flatten", "map"] = "flatten"
+
+
+@dataclass
 class FieldDefinition:
+    """QGIS 等にテーブルを作る際のフィールド定義"""
+
     name: str
     datatype: PropertyDatatype
 
 
 @dataclass
 class TableDefinition:
+    """QGIS 等にテーブルを作る際のテーブル定義"""
+
     fields: list[FieldDefinition]
 
 
@@ -77,7 +88,7 @@ class ProcessorDefinition:
     id: str
     target_elements: list[str]  # "tran:Road"
     lod_detection: LODDetection  # LODを判定するための element path
-    properties: list[Property]  # 取得したい属性 (プロパティ) の定義
+    property_groups: list[PropertyGroup]  # 取得したい属性 (プロパティ) の定義
     emissions: FeatureEmissions  # 地物の出力についての定義
 
     def get_lods(self, elem: et._Element, nsmap: dict[str, str]) -> tuple[bool, ...]:
@@ -151,7 +162,8 @@ class ProcessorRegistory:
             FieldDefinition("creationDate", "date"),
             FieldDefinition("terminationDate", "date"),
         ]
-        for attr in processor.properties:
-            fields.append(FieldDefinition(attr.name, attr.datatype))
+        for group in processor.property_groups:
+            for prop in group.properties:
+                fields.append(FieldDefinition(prop.name, prop.datatype))
 
         return TableDefinition(fields=fields)

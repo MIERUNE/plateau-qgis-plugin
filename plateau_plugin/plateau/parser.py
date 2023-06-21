@@ -1,6 +1,6 @@
 from collections import OrderedDict
 from datetime import date
-from typing import Any, Iterable, Sequence
+from typing import Any, Iterable, Optional, Sequence
 
 import lxml.etree as et
 
@@ -18,8 +18,10 @@ class Parser:
     def __init__(self, settings: ParseSettings, ns: Namespace) -> None:
         self._settings = settings
         self._ns: Namespace = ns
+        self._nsmap: dict[str, str] = ns.nsmap
 
-    def _get_id_and_name(self, elem: et._Element, nsmap: dict[str, str]):
+    def _get_id_and_name(self, elem: et._Element):
+        nsmap = self._nsmap
         gml_id = elem.get("{http://www.opengis.net/gml}id", None)
         gml_name = (
             name_elem.text
@@ -28,7 +30,8 @@ class Parser:
         )
         return (gml_id, gml_name)
 
-    def _get_creation_date(self, elem: et._Element, nsmap: dict[str, str]):
+    def _get_creation_date(self, elem: et._Element):
+        nsmap = self._nsmap
         creation_date = (
             date.fromisoformat(name_elem.text)
             if (name_elem := elem.find("./core:creationDate", nsmap)) is not None
@@ -42,42 +45,44 @@ class Parser:
         return (creation_date, termination_date)
 
     def _load_props(
-        self, processor: ProcessorDefinition, elem: et._Element, nsmap: dict[str, str]
+        self, processor: ProcessorDefinition, feature_elem: et._Element
     ) -> OrderedDict[str, Any]:
+        nsmap = self._nsmap
         props = OrderedDict()
-        for attr in processor.properties:
-            values = [e.text for e in elem.iterfind(attr.path, nsmap)]
-            if attr.datatype == "[]string":
-                values = [str(v) for v in values]
-                if attr.codelist:
-                    cl = get_codelist(attr.codelist)
-                    values = [cl.get(v, v) for v in values]
-                props[attr.name] = values
-            elif attr.datatype == "string":
-                if not values:
-                    continue
-                v = str(values[0])
-                if attr.codelist:
-                    cl = get_codelist(attr.codelist)
-                    v = cl.get(v, v)
-                props[attr.name] = v
-            elif attr.datatype == "double":
-                if not values:
-                    continue
-                v = float(values[0])
-                props[attr.name] = v
-            elif attr.datatype == "integer":
-                if not values:
-                    continue
-                v = int(values[0])
-                props[attr.name] = v
-            elif attr.datatype == "boolean":
-                if not values:
-                    continue
-                v = bool(values[0] in _BOOLEAN_VALUES)
-                props[attr.name] = v
+        for group in processor.property_groups:
+            if group.base_element is None:
+                base_elem = feature_elem
             else:
-                raise NotImplementedError(f"Unknown datatype: {attr.datatype}")
+                base_elem = feature_elem.find(group.base_element, nsmap)
+                if base_elem is None:
+                    continue
+
+            for prop in group.properties:
+                if prop.datatype == "[]string":
+                    values = [str(e.text) for e in base_elem.iterfind(prop.path, nsmap)]
+                    if prop.codelist:
+                        cl = get_codelist(prop.codelist)
+                        values = [cl.get(v, v) for v in values]
+                    props[prop.name] = values
+                else:
+                    if (child_elem := base_elem.find(prop.path, nsmap)) is not None:
+                        value = child_elem.text
+                    else:
+                        continue
+                    if prop.datatype == "string":
+                        v = str(value)
+                        if prop.codelist:
+                            cl = get_codelist(prop.codelist)
+                            v = cl.get(v, v)
+                        props[prop.name] = v
+                    elif prop.datatype == "double":
+                        props[prop.name] = float(value)
+                    elif prop.datatype == "integer":
+                        props[prop.name] = int(value)
+                    elif prop.datatype == "boolean":
+                        props[prop.name] = bool(value in _BOOLEAN_VALUES)
+                    else:
+                        raise NotImplementedError(f"Unknown datatype: {prop.datatype}")
         return props
 
     def process_cityobj_element(
@@ -88,8 +93,8 @@ class Parser:
         ns = self._ns
         nsmap = ns.nsmap
 
-        (gml_id, gml_name) = self._get_id_and_name(elem, nsmap)
-        (creation_date, _termination_date) = self._get_creation_date(elem, nsmap)
+        (gml_id, gml_name) = self._get_id_and_name(elem)
+        (creation_date, _termination_date) = self._get_creation_date(elem)
 
         # この要素のための Processor を得る
         processor = processors.get_processor_by_tag(elem.tag)
@@ -105,7 +110,7 @@ class Parser:
                     has_semantic_parts = True
 
         # 属性 (プロパティ) の値を収集する
-        props = self._load_props(processor, elem, nsmap)
+        props = self._load_props(processor, elem)
 
         emissions_for_lod = processor.emissions_list
         has_lods = processor.get_lods(elem, nsmap)

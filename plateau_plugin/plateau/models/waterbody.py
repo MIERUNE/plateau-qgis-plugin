@@ -4,6 +4,7 @@ from .base import (
     LODDetection,
     ProcessorDefinition,
     Property,
+    PropertyGroup,
 )
 
 WATER_BODY = ProcessorDefinition(
@@ -16,19 +17,24 @@ WATER_BODY = ProcessorDefinition(
         lod2=["./wtr:lod2Solid"],
         lod3=["./wtr:lod3Solid"],
     ),
-    properties=[
-        Property(
-            name="class",
-            path="./wtr:class",
-            datatype="string",
-            codelist="WaterBody_class",
-        ),
-        Property(
-            name="function",
-            path="./wtr:function",
-            datatype="[]string",
-            codelist="WaterBody_function",
-        ),
+    property_groups=[
+        PropertyGroup(
+            base_element=None,
+            properties=[
+                Property(
+                    name="class",
+                    path="./wtr:class",
+                    datatype="string",
+                    codelist="WaterBody_class",
+                ),
+                Property(
+                    name="function",
+                    path="./wtr:function",
+                    datatype="[]string",
+                    codelist="WaterBody_function",
+                ),
+            ],
+        )
     ],
     emissions=FeatureEmissions(
         lod1=FeatureEmission(

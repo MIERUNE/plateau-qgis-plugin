@@ -6,6 +6,7 @@ from .base import (
     LODDetection,
     ProcessorDefinition,
     Property,
+    PropertyGroup,
 )
 
 SEDIMENT_DISASTER_PRONE_AREA = ProcessorDefinition(
@@ -17,57 +18,62 @@ SEDIMENT_DISASTER_PRONE_AREA = ProcessorDefinition(
     lod_detection=LODDetection(
         lod1=["./urf:lod1MultiSurface"],
     ),
-    properties=[
-        Property(
-            name="validFrom",
-            path="./urf:validFrom",
-            datatype="date",
-        ),
-        Property(
-            name="validFromType",
-            path="./urf:validFromType",
-            datatype="string",
-            codelist="Common_validType",
-        ),
-        Property(
-            name="prefecture",
-            path="./urf:prefecture",
-            datatype="string",
-            codelist="Common_prefecture",
-        ),
-        Property(
-            name="location",
-            path="./urf:location",
-            datatype="string",
-        ),
-        Property(
-            name="disasterType",
-            path="./urf:disasterType",
-            datatype="string",
-            codelist="SedimentDisasterProneArea_disasterType",
-        ),
-        Property(
-            name="areaType",
-            path="./urf:areaType",
-            datatype="string",
-            codelist="SedimentDisasterProneArea_areaType",
-        ),
-        Property(
-            name="status",
-            path="./urf:status",
-            datatype="string",
-            codelist="SedimentDisasterProneArea_status",
-        ),
-        Property(
-            name="zoneName",
-            path="./urf:zoneName",
-            datatype="string",
-        ),
-        Property(
-            name="zoneNumber",
-            path="./urf:zoneNumber",
-            datatype="string",
-        ),
+    property_groups=[
+        PropertyGroup(
+            base_element=None,
+            properties=[
+                Property(
+                    name="validFrom",
+                    path="./urf:validFrom",
+                    datatype="date",
+                ),
+                Property(
+                    name="validFromType",
+                    path="./urf:validFromType",
+                    datatype="string",
+                    codelist="Common_validType",
+                ),
+                Property(
+                    name="prefecture",
+                    path="./urf:prefecture",
+                    datatype="string",
+                    codelist="Common_prefecture",
+                ),
+                Property(
+                    name="location",
+                    path="./urf:location",
+                    datatype="string",
+                ),
+                Property(
+                    name="disasterType",
+                    path="./urf:disasterType",
+                    datatype="string",
+                    codelist="SedimentDisasterProneArea_disasterType",
+                ),
+                Property(
+                    name="areaType",
+                    path="./urf:areaType",
+                    datatype="string",
+                    codelist="SedimentDisasterProneArea_areaType",
+                ),
+                Property(
+                    name="status",
+                    path="./urf:status",
+                    datatype="string",
+                    codelist="SedimentDisasterProneArea_status",
+                ),
+                Property(
+                    name="zoneName",
+                    path="./urf:zoneName",
+                    datatype="string",
+                ),
+                Property(
+                    name="zoneNumber",
+                    path="./urf:zoneNumber",
+                    datatype="string",
+                ),
+            ],
+        )
     ],
     emissions=FeatureEmissions(
         lod1=FeatureEmission(

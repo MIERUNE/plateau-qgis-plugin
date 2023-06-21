@@ -4,6 +4,7 @@ from .base import (
     LODDetection,
     ProcessorDefinition,
     Property,
+    PropertyGroup,
 )
 
 CITY_FURNITURE = ProcessorDefinition(
@@ -14,24 +15,29 @@ CITY_FURNITURE = ProcessorDefinition(
         lod2=["./frn:lod2Geometry"],
         lod3=["./frn:lod3Geometry"],
     ),
-    properties=[
-        Property(
-            name="class",
-            path="./frn:class",
-            datatype="string",
-            codelist="CityFurniture_class",
-        ),
-        Property(
-            name="function",
-            path="./frn:function",
-            datatype="[]string",
-            codelist="CityFurniture_function",
-        ),
-        Property(
-            name="usage",
-            path="./frn:usage",
-            datatype="[]string",
-        ),
+    property_groups=[
+        PropertyGroup(
+            base_element=None,
+            properties=[
+                Property(
+                    name="class",
+                    path="./frn:class",
+                    datatype="string",
+                    codelist="CityFurniture_class",
+                ),
+                Property(
+                    name="function",
+                    path="./frn:function",
+                    datatype="[]string",
+                    codelist="CityFurniture_function",
+                ),
+                Property(
+                    name="usage",
+                    path="./frn:usage",
+                    datatype="[]string",
+                ),
+            ],
+        )
     ],
     emissions=FeatureEmissions(
         lod1=FeatureEmission(
