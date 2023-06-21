@@ -1,6 +1,6 @@
 from collections import OrderedDict
 from datetime import date
-from typing import Any, Iterable, Optional, Sequence
+from typing import Any, Iterable, Sequence
 
 import lxml.etree as et
 
@@ -101,12 +101,15 @@ class Parser:
         if processor is None:
             return
 
-        # 部分要素を個別に読む設定の場合は、部分要素を探索する
+        # 部分要素 (子地物) を個別に読む設定の場合は、部分要素を探索する
+        has_semantic_parts = False
         new_ancestors = (*ancestors, (processor.id, gml_id))
         if self._settings.load_semantic_parts and processor.emissions.semantic_parts:
             for path in processor.emissions.semantic_parts:
-                for child in elem.iterfind(path, nsmap):
-                    yield from self.process_cityobj_element(child, new_ancestors)
+                for child_cityobj in elem.iterfind(path, nsmap):
+                    yield from self.process_cityobj_element(
+                        child_cityobj, new_ancestors
+                    )
                     has_semantic_parts = True
 
         # 属性 (プロパティ) の値を収集する
@@ -114,7 +117,6 @@ class Parser:
 
         emissions_for_lod = processor.emissions_list
         has_lods = processor.get_lods(elem, nsmap)
-        has_semantic_parts = False
         for lod in (4, 3, 2, 1):
             if not has_lods[lod]:
                 continue
