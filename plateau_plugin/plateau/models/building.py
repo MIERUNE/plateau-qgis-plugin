@@ -43,6 +43,11 @@ BUILDING = ProcessorDefinition(
             path="./bldg:measuredHeight",
             datatype="double",
         ),
+        # Property(
+        #     name="address",
+        #     path="./bldg:address",
+        #     datatype="string",  # xAL をどう読むか
+        # ),
         Property(
             name="storeysAboveGround",
             path="./bldg:storeysAboveGround",
@@ -53,11 +58,123 @@ BUILDING = ProcessorDefinition(
             path="./bldg:storeysBelowGround",
             datatype="integer",
         ),
-        # Property(
-        #     name="address",
-        #     path="./bldg:address",
-        #     datatype="string",  # xAL をどう読むか
-        # ),
+        # uro
+        Property(
+            name="uro:serialNumberOfBuildingCertification",
+            path="./uro:buildingDetailAttribute/uro:BuildingDetailAttribute/uro:serialNumberOfBuildingCertification",
+            datatype="string",
+        ),
+        Property(
+            name="uro:siteArea",
+            path="./uro:buildingDetailAttribute/uro:BuildingDetailAttribute/uro:siteArea",
+            datatype="double",
+        ),
+        Property(
+            name="uro:totalFloorArea",
+            path="./uro:buildingDetailAttribute/uro:BuildingDetailAttribute/uro:totalFloorArea",
+            datatype="double",
+        ),
+        Property(
+            name="uro:buildingFootprintArea",
+            path="./uro:buildingDetailAttribute/uro:BuildingDetailAttribute/uro:buildingFootprintArea",
+            datatype="double",
+        ),
+        Property(
+            name="uro:buildingRoofEdgeArea",
+            path="./uro:buildingDetailAttribute/uro:BuildingDetailAttribute/uro:buildingRoofEdgeArea",
+            datatype="double",
+        ),
+        Property(
+            name="uro:developmentArea",
+            path="./uro:buildingDetailAttribute/uro:BuildingDetailAttribute/uro:developmentArea",
+            datatype="double",
+        ),
+        Property(
+            name="uro:buildingStructureType",
+            path="./uro:buildingDetailAttribute/uro:BuildingDetailAttribute/uro:buildingStructureType",
+            datatype="string",
+            codelist="BuildingDetailAttribute_buildingStructureType",
+        ),
+        Property(
+            name="uro:buildingStructureOrgType",
+            path="./uro:buildingDetailAttribute/uro:BuildingDetailAttribute/uro:buildingStructureOrgType",
+            datatype="string",
+            # codelist="(custom)",
+        ),
+        Property(
+            name="uro:fireproofStructureType",
+            path="./uro:buildingDetailAttribute/uro:BuildingDetailAttribute/uro:fireproofStructureType",
+            datatype="string",
+            codelist="BuildingDetailAttribute_fireproofStructureType",
+        ),
+        Property(
+            name="uro:urbanPlanType",
+            path="./uro:buildingDetailAttribute/uro:BuildingDetailAttribute/uro:urbanPlanType",
+            datatype="string",
+            codelist="BuildingDetailAttribute_urbanPlanType",
+        ),
+        Property(
+            name="uro:areaClassificationType",
+            path="./uro:buildingDetailAttribute/uro:BuildingDetailAttribute/uro:areaClassificationType",
+            datatype="string",
+            codelist="Common_areaClassificationType",
+        ),
+        Property(
+            name="uro:districtsAndZonesType",
+            path="./uro:buildingDetailAttribute/uro:BuildingDetailAttribute/uro:districtsAndZonesType",
+            datatype="string",
+            codelist="Common_districtsAndZonesType",
+        ),
+        Property(
+            name="uro:majorUsage",
+            path="./uro:buildingDetailAttribute/uro:BuildingDetailAttribute/uro:majorUsage",
+            datatype="string",
+        ),
+        Property(
+            name="uro:majorUsage2",
+            path="./uro:buildingDetailAttribute/uro:BuildingDetailAttribute/uro:majorUsage2",
+            datatype="string",
+        ),
+        Property(
+            name="uro:buildingCoverageRate",
+            path="./uro:buildingDetailAttribute/uro:BuildingDetailAttribute/uro:buildingCoverageRate",
+            datatype="double",
+        ),
+        Property(
+            name="uro:floorAreaRate",
+            path="./uro:buildingDetailAttribute/uro:BuildingDetailAttribute/uro:floorAreaRate",
+            datatype="double",
+        ),
+        Property(
+            name="uro:specifiedBuildingCoverageRate",
+            path="./uro:buildingDetailAttribute/uro:BuildingDetailAttribute/uro:specifiedBuildingCoverageRate",
+            datatype="double",
+        ),
+        Property(
+            name="uro:specifiedFloorAreaRate",
+            path="./uro:buildingDetailAttribute/uro:BuildingDetailAttribute/uro:specifiedFloorAreaRate",
+            datatype="double",
+        ),
+        Property(
+            name="uro:standardFloorAreaRate",
+            path="./uro:buildingDetailAttribute/uro:BuildingDetailAttribute/uro:standardFloorAreaRate",
+            datatype="double",
+        ),
+        Property(
+            name="uro:buidingHeight",
+            path="./uro:buildingDetailAttribute/uro:BuildingDetailAttribute/uro:buidingHeight",
+            datatype="double",
+        ),
+        Property(
+            name="uro:eaveHeight",
+            path="./uro:buildingDetailAttribute/uro:BuildingDetailAttribute/uro:eaveHeight",
+            datatype="double",
+        ),
+        Property(
+            name="uro:surveyYear",
+            path="./uro:buildingDetailAttribute/uro:BuildingDetailAttribute/uro:surveyYear",
+            datatype="integer",
+        ),
     ],
     emissions=FeatureEmissions(
         lod1=FeatureEmission(catch_all=[".//bldg:lod1Solid//gml:Polygon"]),
