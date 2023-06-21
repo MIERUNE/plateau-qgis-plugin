@@ -1,3 +1,5 @@
+"""都市設備モデル"""
+
 from .base import (
     FeatureEmission,
     FeatureEmissions,

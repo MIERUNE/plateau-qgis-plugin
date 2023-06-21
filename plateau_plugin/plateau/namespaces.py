@@ -26,7 +26,7 @@ BASE_NS = {
 
 
 class Namespace:
-    """PLATEAU関連の XML Namespaces や、その標準的な prefix を管理する
+    """PLATEAU関連の XML Namespaces や、それらの標準的な prefix を管理する
 
     特に、uro, urf のバージョン (2 or 3) が配布物ごとに異なることに対応する役目をする。
     """
@@ -37,6 +37,10 @@ class Namespace:
 
     @classmethod
     def from_document_nsmap(cls, src_nsmap: dict[str, str]) -> "Namespace":
+        """XML文書をもとに、接頭辞と名前空間の対応を作成する
+
+        特に、与えられた文書において uro および urf 接頭辞が実際に指しているXML名前空間を特定する
+        """
         _ns_update = {}
         for ns in src_nsmap.values():
             if ns.startswith("https://www.geospatial.jp/iur/uro/"):
@@ -46,11 +50,19 @@ class Namespace:
         return cls(_ns_update)
 
     def to_qualified_name(self, prefixed_name: str) -> str:
+        """接頭辞を使ったタグ名を、名前空間を使ったタグ名に変換する
+
+        gml:Polygon -> {http://www.opengis.net/gml}Polygon
+        """
         return re.sub(
             r"^(.+?):()", lambda m: "{" + self.nsmap[m.group(1)] + "}", prefixed_name
         )
 
     def to_prefixed_name(self, qualified_name: str) -> str:
+        """名前空間を使ったタグ名を、接頭辞を使ったタグ名に変換する
+
+        {http://www.opengis.net/gml}Polygon -> gml:Polygon
+        """
         return re.sub(
             r"^{([^}]+)}", lambda m: f"{self.inverted[m.group(1)]}:", qualified_name
         )

@@ -1,3 +1,5 @@
+"""橋梁モデル"""
+
 from .base import (
     FeatureEmission,
     FeatureEmissions,

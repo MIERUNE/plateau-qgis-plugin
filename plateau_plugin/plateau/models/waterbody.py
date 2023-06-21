@@ -1,3 +1,5 @@
+"""水辺モデル および 災害リスク (浸水) モデル"""
+
 from .base import (
     FeatureEmission,
     FeatureEmissions,

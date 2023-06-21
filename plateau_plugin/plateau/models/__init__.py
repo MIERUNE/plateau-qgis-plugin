@@ -8,9 +8,9 @@ from .bridge import (
 from .building import BUILDING, BUILDING_BOUNDARY_SURFACE
 from .cityfurniture import CITY_FURNITURE
 from .generics import GENERIC_CITY_OBJECT
-from .landslide import SEDIMENT_DISASTER_PRONE_AREA
 from .landuse import LAND_USE
 from .relief import RELIEF
+from .sediment import SEDIMENT_DISASTER_PRONE_AREA
 from .transportation import RAILWAY, ROAD, TRAFFIC_AREA
 from .vegetation import PLANT_COVER, SOLITARY_VEGETATION_OBJECT
 from .waterbody import WATER_BODY
@@ -42,7 +42,7 @@ processors = ProcessorRegistory(
         WATER_BODY,
         # generics
         GENERIC_CITY_OBJECT,
-        # urf
+        # urf (sediment disaster)
         SEDIMENT_DISASTER_PRONE_AREA,
     ]
 )

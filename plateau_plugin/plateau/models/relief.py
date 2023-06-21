@@ -1,4 +1,4 @@
-"""Relief (dem)"""
+"""地形モデル"""
 
 from .base import (
     FeatureEmission,

@@ -1,3 +1,5 @@
+"""土地利用モデル"""
+
 from .base import (
     FeatureEmission,
     FeatureEmissions,

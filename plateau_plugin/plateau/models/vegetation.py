@@ -1,3 +1,5 @@
+"""植生モデル"""
+
 from .base import (
     FeatureEmission,
     FeatureEmissions,

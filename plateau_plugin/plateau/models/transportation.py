@@ -1,3 +1,5 @@
+"""交通モデル (道路、鉄道、徒歩道、広場、航路)"""
+
 from .base import (
     FeatureEmission,
     FeatureEmissions,

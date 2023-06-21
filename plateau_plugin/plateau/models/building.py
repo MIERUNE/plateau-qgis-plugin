@@ -1,3 +1,5 @@
+"""建築物モデル"""
+
 from .base import (
     FeatureEmission,
     FeatureEmissions,

@@ -1,3 +1,5 @@
+"""汎用都市オブジェクトモデル"""
+
 from .base import (
     FeatureEmission,
     FeatureEmissions,
