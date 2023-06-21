@@ -3,13 +3,13 @@
 from .base import (
     FeatureEmission,
     FeatureEmissions,
+    FeatureProcessingDefinition,
     LODDetection,
-    ProcessorDefinition,
     Property,
     PropertyGroup,
 )
 
-BRIDGE = ProcessorDefinition(
+BRIDGE = FeatureProcessingDefinition(
     id="Bridge",
     target_elements=["brid:Bridge"],
     lod_detection=LODDetection(
@@ -87,7 +87,7 @@ BRIDGE = ProcessorDefinition(
     ),
 )
 
-BRIDGE_BOUNDARY_SURFACE = ProcessorDefinition(
+BRIDGE_BOUNDARY_SURFACE = FeatureProcessingDefinition(
     id="brid:_BoundarySurface",
     target_elements=[
         "brid:GroundSurface",
@@ -125,7 +125,7 @@ BRIDGE_BOUNDARY_SURFACE = ProcessorDefinition(
     ),
 )
 
-BRIDGE_CONSTRUCTION_ELEMENT = ProcessorDefinition(
+BRIDGE_CONSTRUCTION_ELEMENT = FeatureProcessingDefinition(
     id="Construction Element",
     target_elements=[
         "brid:BridgeConstructionElement",
@@ -155,7 +155,7 @@ BRIDGE_CONSTRUCTION_ELEMENT = ProcessorDefinition(
     ),
 )
 
-BRIDGE_INSTALLATION = ProcessorDefinition(
+BRIDGE_INSTALLATION = FeatureProcessingDefinition(
     id="Installation",
     target_elements=[
         "brid:BridgeInstallation",

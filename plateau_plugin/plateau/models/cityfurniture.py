@@ -3,13 +3,13 @@
 from .base import (
     FeatureEmission,
     FeatureEmissions,
+    FeatureProcessingDefinition,
     LODDetection,
-    ProcessorDefinition,
     Property,
     PropertyGroup,
 )
 
-CITY_FURNITURE = ProcessorDefinition(
+CITY_FURNITURE = FeatureProcessingDefinition(
     id="CityFurniture",
     target_elements=["frn:CityFurniture"],
     lod_detection=LODDetection(

@@ -3,13 +3,13 @@
 from .base import (
     FeatureEmission,
     FeatureEmissions,
+    FeatureProcessingDefinition,
     LODDetection,
-    ProcessorDefinition,
     Property,
     PropertyGroup,
 )
 
-SOLITARY_VEGETATION_OBJECT = ProcessorDefinition(
+SOLITARY_VEGETATION_OBJECT = FeatureProcessingDefinition(
     id="SolitaryVegetationObject",
     target_elements=["veg:SolitaryVegetationObject"],
     lod_detection=LODDetection(
@@ -88,7 +88,7 @@ SOLITARY_VEGETATION_OBJECT = ProcessorDefinition(
     ),
 )
 
-PLANT_COVER = ProcessorDefinition(
+PLANT_COVER = FeatureProcessingDefinition(
     id="PlantCover",
     target_elements=["veg:PlantCover"],
     lod_detection=LODDetection(

@@ -3,11 +3,11 @@
 from .base import (
     FeatureEmission,
     FeatureEmissions,
+    FeatureProcessingDefinition,
     LODDetection,
-    ProcessorDefinition,
 )
 
-GENERIC_CITY_OBJECT = ProcessorDefinition(
+GENERIC_CITY_OBJECT = FeatureProcessingDefinition(
     id="GenericCityObject",
     target_elements=["gen:GenericCityObject"],
     lod_detection=LODDetection(

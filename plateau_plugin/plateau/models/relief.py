@@ -3,13 +3,11 @@
 from .base import (
     FeatureEmission,
     FeatureEmissions,
+    FeatureProcessingDefinition,
     LODDetection,
-    ProcessorDefinition,
-    Property,
-    PropertyGroup,
 )
 
-RELIEF = ProcessorDefinition(
+RELIEF = FeatureProcessingDefinition(
     id="ReliefFeature",
     target_elements=["dem:ReliefFeature"],
     lod_detection=LODDetection(

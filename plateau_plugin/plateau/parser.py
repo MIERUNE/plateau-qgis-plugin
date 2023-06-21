@@ -7,7 +7,7 @@ import lxml.etree as et
 from .codelists import get_codelist
 from .geometry import parse_multipolygon
 from .models import processors
-from .models.base import ProcessorDefinition
+from .models.base import FeatureProcessingDefinition
 from .namespaces import Namespace
 from .types import CityObject, ParseSettings
 
@@ -45,7 +45,7 @@ class Parser:
         return (creation_date, termination_date)
 
     def _load_props(
-        self, processor: ProcessorDefinition, feature_elem: et._Element
+        self, processor: FeatureProcessingDefinition, feature_elem: et._Element
     ) -> OrderedDict[str, Any]:
         nsmap = self._nsmap
         props = OrderedDict()
@@ -107,6 +107,7 @@ class Parser:
         if self._settings.load_semantic_parts and processor.emissions.semantic_parts:
             for path in processor.emissions.semantic_parts:
                 for child_cityobj in elem.iterfind(path, nsmap):
+                    # 子地物の Processor に処理を委ねる
                     yield from self.process_cityobj_element(
                         child_cityobj, new_ancestors
                     )
@@ -115,8 +116,9 @@ class Parser:
         # 属性 (プロパティ) の値を収集する
         props = self._load_props(processor, elem)
 
+        # ジオメトリを読んで出力する
         emissions_for_lod = processor.emissions_list
-        has_lods = processor.get_lods(elem, nsmap)
+        has_lods = processor.detect_lods(elem, nsmap)
         for lod in (4, 3, 2, 1):
             if not has_lods[lod]:
                 continue

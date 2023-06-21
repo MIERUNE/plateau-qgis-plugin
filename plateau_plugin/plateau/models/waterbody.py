@@ -3,13 +3,13 @@
 from .base import (
     FeatureEmission,
     FeatureEmissions,
+    FeatureProcessingDefinition,
     LODDetection,
-    ProcessorDefinition,
     Property,
     PropertyGroup,
 )
 
-WATER_BODY = ProcessorDefinition(
+WATER_BODY = FeatureProcessingDefinition(
     id="WaterBody",
     target_elements=[
         "wtr:WaterBody",

@@ -66,7 +66,7 @@ class PropertyGroup:
     """属性抽出をグルーピングする"""
 
     base_element: Optional[str]
-    """属性抽出の起点とする要素へのpath。None の場合は地物自体を起点とする。"""
+    """属性抽出の起点とするXML要素へのpath。None の場合はこの地物自体を起点とする。"""
 
     properties: list[Property]
     # mode: Literal["flatten", "map"] = "flatten"
@@ -88,18 +88,20 @@ class TableDefinition:
 
 
 @dataclass
-class ProcessorDefinition:
+class FeatureProcessingDefinition:
+    """各地物の処理方法を定める"""
+
     id: str
     """このProcessorのID"""
 
     target_elements: list[str]
-    """対象とする地物要素 (e.g. "tran:Road", "tran:TrafficArea", "bldg:WallSurface")"""
+    """処理対象とする地物要素 (e.g. "tran:Road", "tran:TrafficArea", "bldg:WallSurface")"""
 
-    lod_detection: LODDetection  # LODを判定するための element path
+    lod_detection: LODDetection  # 各 LOD の有無を判定するための element paths
     property_groups: list[PropertyGroup]  # 取得したい属性 (プロパティ) の定義
-    emissions: FeatureEmissions  # 地物の出力についての定義
+    emissions: FeatureEmissions  # ジオメトリの抽出についての定義
 
-    def get_lods(self, elem: et._Element, nsmap: dict[str, str]) -> tuple[bool, ...]:
+    def detect_lods(self, elem: et._Element, nsmap: dict[str, str]) -> tuple[bool, ...]:
         """
         どの LOD が存在するかを返す。例: LOD1と2のとき → (False, True, True, False, False)
         """
@@ -128,16 +130,18 @@ class ProcessorDefinition:
 
 
 class ProcessorRegistory:
-    """地物を処理する Processor を登録しておくレジストリ"""
+    """地物を処理する Processors を登録しておくレジストリ"""
 
-    def __init__(self, processors: Optional[Iterable[ProcessorDefinition]] = None):
+    def __init__(
+        self, processors: Optional[Iterable[FeatureProcessingDefinition]] = None
+    ):
         self._tag_map = {}
         self._id_map = {}
         if processors:
             for processor in processors:
                 self.register_processor(processor)
 
-    def register_processor(self, processor: ProcessorDefinition):
+    def register_processor(self, processor: FeatureProcessingDefinition):
         """Processor を登録する"""
         assert (
             processor.id not in self._id_map
@@ -153,11 +157,13 @@ class ProcessorRegistory:
             assert qualified_name not in self._tag_map
             self._tag_map[qualified_name] = processor
 
-    def get_processor_by_tag(self, target_tag: str) -> Optional[ProcessorDefinition]:
+    def get_processor_by_tag(
+        self, target_tag: str
+    ) -> Optional[FeatureProcessingDefinition]:
         """XMLの要素名をもとに Processor を取得する"""
         return self._tag_map.get(target_tag)
 
-    def get_processor_by_id(self, _id: str) -> ProcessorDefinition:
+    def get_processor_by_id(self, _id: str) -> FeatureProcessingDefinition:
         """Processor の id をもとに Processor を取得する"""
         return self._id_map[_id]
 

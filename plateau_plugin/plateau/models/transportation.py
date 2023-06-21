@@ -3,13 +3,13 @@
 from .base import (
     FeatureEmission,
     FeatureEmissions,
+    FeatureProcessingDefinition,
     LODDetection,
-    ProcessorDefinition,
     Property,
     PropertyGroup,
 )
 
-ROAD = ProcessorDefinition(
+ROAD = FeatureProcessingDefinition(
     id="Road",
     target_elements=["tran:Road"],
     lod_detection=LODDetection(
@@ -131,7 +131,7 @@ ROAD = ProcessorDefinition(
     ),
 )
 
-RAILWAY = ProcessorDefinition(
+RAILWAY = FeatureProcessingDefinition(
     id="Railway",
     target_elements=["tran:Railway"],
     lod_detection=LODDetection(
@@ -217,7 +217,7 @@ RAILWAY = ProcessorDefinition(
 
 # TrafficArea, AuxiliaryTrafficArea を扱う
 # これらは Road, Railway, Track, Square (いずれもLOD2-4) の子として使われる
-TRAFFIC_AREA = ProcessorDefinition(
+TRAFFIC_AREA = FeatureProcessingDefinition(
     id="TrafficArea",
     target_elements=["tran:TrafficArea", "tran:AuxiliaryTrafficArea"],
     property_groups=[

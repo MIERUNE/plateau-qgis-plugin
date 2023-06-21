@@ -3,13 +3,13 @@
 from .base import (
     FeatureEmission,
     FeatureEmissions,
+    FeatureProcessingDefinition,
     LODDetection,
-    ProcessorDefinition,
     Property,
     PropertyGroup,
 )
 
-SEDIMENT_DISASTER_PRONE_AREA = ProcessorDefinition(
+SEDIMENT_DISASTER_PRONE_AREA = FeatureProcessingDefinition(
     id="SedimentDisasterProneArea",
     target_elements=[
         "urf2:SedimentDisasterProneArea",

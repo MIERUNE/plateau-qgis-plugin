@@ -3,13 +3,13 @@
 from .base import (
     FeatureEmission,
     FeatureEmissions,
+    FeatureProcessingDefinition,
     LODDetection,
-    ProcessorDefinition,
     Property,
     PropertyGroup,
 )
 
-LAND_USE = ProcessorDefinition(
+LAND_USE = FeatureProcessingDefinition(
     id="LandUse",
     target_elements=[
         "luse:LandUse",

@@ -3,13 +3,13 @@
 from .base import (
     FeatureEmission,
     FeatureEmissions,
+    FeatureProcessingDefinition,
     LODDetection,
-    ProcessorDefinition,
     Property,
     PropertyGroup,
 )
 
-BUILDING = ProcessorDefinition(
+BUILDING = FeatureProcessingDefinition(
     id="Building",
     target_elements=["bldg:Building"],
     lod_detection=LODDetection(
@@ -52,7 +52,7 @@ BUILDING = ProcessorDefinition(
                 # Property(
                 #     name="address",
                 #     path="./bldg:address",
-                #     datatype="string",  # xAL をどう読むか
+                #     datatype="string",  # TODO: xAL をどう読むか
                 # ),
                 Property(
                     name="storeysAboveGround",
@@ -274,7 +274,7 @@ BUILDING = ProcessorDefinition(
     ),
 )
 
-BUILDING_BOUNDARY_SURFACE = ProcessorDefinition(
+BUILDING_BOUNDARY_SURFACE = FeatureProcessingDefinition(
     id="bldg:_BoundarySurface",
     target_elements=[
         "bldg:GroundSurface",
