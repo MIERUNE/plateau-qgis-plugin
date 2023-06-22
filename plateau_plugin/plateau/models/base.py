@@ -118,7 +118,7 @@ class FeatureProcessingDefinition:
         )
 
     @cached_property
-    def emissions_list(self) -> tuple[Optional[FeatureEmission], ...]:
+    def emission_list(self) -> tuple[Optional[FeatureEmission], ...]:
         emissions = self.emissions
         return (
             emissions.lod0,

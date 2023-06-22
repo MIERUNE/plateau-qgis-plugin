@@ -5,7 +5,13 @@ from .bridge import (
     BRIDGE_CONSTRUCTION_ELEMENT,
     BRIDGE_INSTALLATION,
 )
-from .building import BUILDING, BUILDING_BOUNDARY_SURFACE
+from .building import (
+    BUILDING,
+    BUILDING_BOUNDARY_SURFACE,
+    BUILDING_INSTALLATION,
+    BUILDING_INT_INSTALLATION,
+    BUILDING_OPENING,
+)
 from .cityfurniture import CITY_FURNITURE
 from .generics import GENERIC_CITY_OBJECT
 from .landuse import LAND_USE
@@ -20,6 +26,9 @@ processors = ProcessorRegistory(
         # buliding
         BUILDING,
         BUILDING_BOUNDARY_SURFACE,
+        BUILDING_INSTALLATION,
+        BUILDING_INT_INSTALLATION,
+        BUILDING_OPENING,
         # bridge
         BRIDGE,
         BRIDGE_BOUNDARY_SURFACE,

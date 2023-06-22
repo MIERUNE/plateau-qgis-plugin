@@ -1,6 +1,7 @@
 from collections import OrderedDict
+from dataclasses import dataclass
 from datetime import date
-from typing import Any, Iterable, Sequence
+from typing import Any, Iterable, Optional, Sequence
 
 import lxml.etree as et
 
@@ -9,9 +10,18 @@ from .geometry import parse_multipolygon
 from .models import processors
 from .models.base import FeatureProcessingDefinition
 from .namespaces import Namespace
-from .types import CityObject, ParseSettings
+from .types import CityObject
 
-_BOOLEAN_VALUES = frozenset({"true", "True", "1"})
+_BOOLEAN_TRUE_STRINGS = frozenset({"true", "True", "1"})
+
+
+@dataclass
+class ParseSettings:
+    load_semantic_parts: bool = False
+    """部分要素 (e.g. Road の細分化の TrafficArea) に分けて読み込むかどうか"""
+
+    only_highest_lod: bool = False
+    """各地物の最高の LOD だけ出力するかどうか"""
 
 
 class Parser:
@@ -21,6 +31,7 @@ class Parser:
         self._nsmap: dict[str, str] = ns.nsmap
 
     def _get_id_and_name(self, elem: et._Element):
+        """@gml:id と gml:name (あれば) を読む"""
         nsmap = self._nsmap
         gml_id = elem.get("{http://www.opengis.net/gml}id", None)
         gml_name = (
@@ -30,7 +41,10 @@ class Parser:
         )
         return (gml_id, gml_name)
 
-    def _get_creation_date(self, elem: et._Element):
+    def _get_basic_dates(
+        self, elem: et._Element
+    ) -> tuple[Optional[date], Optional[date]]:
+        """core:creationDate (あれば) と core:terminationDate (あれば) を読む"""
         nsmap = self._nsmap
         creation_date = (
             date.fromisoformat(name_elem.text)
@@ -80,7 +94,7 @@ class Parser:
                     elif prop.datatype == "integer":
                         props[prop.name] = int(value)
                     elif prop.datatype == "boolean":
-                        props[prop.name] = bool(value in _BOOLEAN_VALUES)
+                        props[prop.name] = bool(value in _BOOLEAN_TRUE_STRINGS)
                     else:
                         raise NotImplementedError(f"Unknown datatype: {prop.datatype}")
         return props
@@ -94,14 +108,14 @@ class Parser:
         nsmap = ns.nsmap
 
         (gml_id, gml_name) = self._get_id_and_name(elem)
-        (creation_date, _termination_date) = self._get_creation_date(elem)
+        (creation_date, termination_date) = self._get_basic_dates(elem)
 
         # この要素のための Processor を得る
         processor = processors.get_processor_by_tag(elem.tag)
         if processor is None:
             return
 
-        # 部分要素 (子地物) を個別に読む設定の場合は、部分要素を探索する
+        # 子地物 (部分要素) を個別に読み込む設定の場合は、子地物を探索する
         has_semantic_parts = False
         new_ancestors = (*ancestors, (processor.id, gml_id))
         if self._settings.load_semantic_parts and processor.emissions.semantic_parts:
@@ -117,21 +131,21 @@ class Parser:
         props = self._load_props(processor, elem)
 
         # ジオメトリを読んで出力する
-        emissions_for_lod = processor.emissions_list
+        emission_for_lods = processor.emission_list
         has_lods = processor.detect_lods(elem, nsmap)
         for lod in (4, 3, 2, 1):
             if not has_lods[lod]:
                 continue
 
-            if (emission := emissions_for_lod[lod]) is None:
+            emission = emission_for_lods[lod]
+            if emission is None:
                 continue
 
             geom_paths = (
-                (emission.only_direct or emission.collect_all)
+                emission.only_direct or emission.collect_all
                 if self._settings.load_semantic_parts
                 else emission.collect_all
             )
-
             if emission.geometry_loader == "polygons":
                 geom = parse_multipolygon(elem, geom_paths, nsmap)
             else:
@@ -146,12 +160,13 @@ class Parser:
                     id=gml_id,
                     name=gml_name,
                     creation_date=creation_date,
-                    termination_date=_termination_date,
+                    termination_date=termination_date,
                     properties=props,
                     geometry=geom,
                     processor_path=new_ancestors,
                 )
-                if self._settings.only_highest_lod:  # 各地物の最高のLODだけ出力する場合
+                if self._settings.only_highest_lod:
+                    # 各地物の最高 LOD だけ出力する場合はここで離脱
                     break
 
         if has_semantic_parts:
@@ -161,7 +176,7 @@ class Parser:
                 id=gml_id,
                 name=gml_name,
                 creation_date=creation_date,
-                termination_date=_termination_date,
+                termination_date=termination_date,
                 lod=None,
                 geometry=None,
                 properties=props,
@@ -175,15 +190,18 @@ class FileParser:
         self._settings = settings
 
         # ドキュメントで使われている i-UR のバージョンを検出して
-        # uro: と urf: 接頭辞のXML名前空間に自動で対応する
+        # uro: と urf: 接頭辞が指すXML名前空間を自動で決定する
         self._ns = Namespace.from_document_nsmap(self._doc.getroot().nsmap)
 
-    def count_toplevel_objects(self):
+    def count_toplevel_cityobjs(self) -> int:
+        """ファイルに含まれるトップレベルの地物の数を返す"""
         return sum(
             1 for _ in self._doc.iterfind("./core:cityObjectMember", self._ns.nsmap)
         )
 
-    def iter_city_objects(self) -> Iterable[tuple[int, CityObject]]:
+    def iter_cityobjs(self) -> Iterable[tuple[int, CityObject]]:
+        """ファイルに含まれる地物の数を返す"""
+
         parser = Parser(self._settings, ns=self._ns)
         toplevel_count = 0
         for city_object in self._doc.iterfind(

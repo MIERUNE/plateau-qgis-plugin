@@ -3,7 +3,9 @@
 import re
 
 BASE_NS = {
+    # GML
     "gml": "http://www.opengis.net/gml",
+    # CityGML 2.0
     "core": "http://www.opengis.net/citygml/2.0",
     "app": "http://www.opengis.net/citygml/appearance/2.0",
     "bldg": "http://www.opengis.net/citygml/building/2.0",
@@ -17,12 +19,13 @@ BASE_NS = {
     "veg": "http://www.opengis.net/citygml/vegetation/2.0",
     "wtr": "http://www.opengis.net/citygml/waterbody/2.0",
     "tun": "http://www.opengis.net/citygml/tunnel/2.0",
+    # i-UR
     "uro2": "https://www.geospatial.jp/iur/uro/2.0",
     "urf2": "https://www.geospatial.jp/iur/urf/2.0",
     "uro3": "https://www.geospatial.jp/iur/uro/3.0",
     "urf3": "https://www.geospatial.jp/iur/urf/3.0",
 }
-"""XML Namespaces"""
+"""XML Namespaces used in PLATEAU 3D City Models"""
 
 
 class Namespace:
@@ -39,7 +42,7 @@ class Namespace:
     def from_document_nsmap(cls, src_nsmap: dict[str, str]) -> "Namespace":
         """XML文書をもとに、接頭辞と名前空間の対応を作成する
 
-        特に、与えられた文書において uro および urf 接頭辞が実際に指しているXML名前空間を特定する
+        特に、与えられた文書において uro および urf 接頭辞が指すべきXML名前空間を特定する
         """
         _ns_update = {}
         for ns in src_nsmap.values():

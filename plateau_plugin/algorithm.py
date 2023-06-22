@@ -34,8 +34,8 @@ from qgis.core import (
 
 from .geometry import to_qgis_geometry
 from .plateau.models import processors
-from .plateau.parser import FileParser
-from .plateau.types import CityObject, MultiPolygon, ParseSettings
+from .plateau.parser import FileParser, ParseSettings
+from .plateau.types import CityObject, MultiPolygon
 
 _TYPE_TO_QT_TYPE = {
     "string": QVariant.String,
@@ -55,22 +55,42 @@ def _convert_to_qt_value(v: Any):
 
 
 class LayerManager:
-    """地物の種類とLODをもとにふさわしい出力レイヤを取得する"""
+    """地物の種類とLODをもとにふさわしい出力先レイヤを返すためのユーティリティ"""
 
     def __init__(self):
         self._layers: dict[str, QgsVectorLayer] = {}
 
     def get_layer(self, cityobj: CityObject) -> QgsVectorLayer:
+        """地物の種類とLODをもとにふさわしい出力レイヤを取得する"""
+
         # layer name
         layer_name = " / ".join(p[0] for p in cityobj.processor_path)
         if cityobj.lod is not None:
             layer_name += f" (LOD{cityobj.lod})"
 
+        # if already exists
         if (layer := self._layers.get(layer_name)) is not None:
-            # already exists
             return layer
 
-        # prepare new layer
+        # setup attributes
+        attributes = [
+            QgsField("id", QVariant.String),
+        ]
+        if len(cityobj.processor_path) > 1:
+            attributes.append(QgsField("parent", QVariant.String))
+        attributes.extend(
+            [
+                QgsField("type", QVariant.String),
+                QgsField("name", QVariant.String),
+                QgsField("creationDate", QVariant.Date),
+                QgsField("terminationDate", QVariant.Date),
+            ]
+        )
+        table_def = processors.get_table_definition(cityobj.processor_path)
+        for field in table_def.fields:
+            attributes.append(QgsField(field.name, _TYPE_TO_QT_TYPE[field.datatype]))
+
+        # make a new layer
         if isinstance(cityobj.geometry, MultiPolygon):
             layer_path = "MultiPolygonZ?crs=epsg:6697"
         elif cityobj.geometry is None:
@@ -82,18 +102,8 @@ class LayerManager:
             layer_name,
             "memory",
         )
-        provider = layer.dataProvider()
-        attributes = [
-            QgsField("id", QVariant.String),
-            QgsField("type", QVariant.String),
-            QgsField("name", QVariant.String),
-            QgsField("creationDate", QVariant.Date),
-            QgsField("terminationDate", QVariant.Date),
-        ]
-        table_def = processors.get_table_definition(cityobj.processor_path)
-        for field in table_def.fields:
-            attributes.append(QgsField(field.name, _TYPE_TO_QT_TYPE[field.datatype]))
-        provider.addAttributes(attributes)
+        dp = layer.dataProvider()
+        dp.addAttributes(attributes)
         self._layers[layer_name] = layer
         return layer
 
@@ -102,7 +112,7 @@ class LayerManager:
 
 
 class PlateauProcessingAlrogithm(QgsProcessingAlgorithm):
-    """Processing algorithm for converting PLATEAU 3D City models"""
+    """Processing algorithm for loading PLATEAU 3D City models into QGIS"""
 
     INPUT = "INPUT"
     ONLY_HIGHEST_LOD = "ONLY_HIGHEST_LOD"
@@ -147,12 +157,13 @@ class PlateauProcessingAlrogithm(QgsProcessingAlgorithm):
         return None
 
     def displayName(self):
-        return self.tr("3D都市モデルを読み込む")
+        return self.tr("PLATEAU 3D都市モデルを読み込む")
 
     def shortHelpString(self) -> str:
         return self.tr("PLATEAU PLATEAU PLATEAU")
 
     def _make_parser(self, parameters, context) -> FileParser:
+        """プロセシングの設定をもとにパーサを作る"""
         load_semantic_parts = self.parameterAsBoolean(
             parameters, self.LOAD_SEMANTIC_PARTS, context
         )
@@ -177,37 +188,44 @@ class PlateauProcessingAlrogithm(QgsProcessingAlgorithm):
         layers = LayerManager()
 
         parser = self._make_parser(parameters, context)
-        total_count = parser.count_toplevel_objects()
+        total_count = parser.count_toplevel_cityobjs()
         feedback.pushInfo(f"{total_count}個のトップレベル地物が含まれています。")
         feedback.pushInfo("地物を読み込んでいます...")
         top_level_count = 0
         count = 0
         try:
-            for top_level_count, cityobj in parser.iter_city_objects():
+            for top_level_count, cityobj in parser.iter_cityobjs():
                 if feedback.isCanceled():
                     return {}
 
                 layer = layers.get_layer(cityobj)
-                dp = layer.dataProvider()
-                dest_feat = QgsFeature(dp.fields())
-                dest_feat.setAttribute("id", cityobj.id)
-                dest_feat.setAttribute("name", cityobj.name)
-                dest_feat.setAttribute("type", cityobj.type)
-                dest_feat.setAttribute(
+                provider = layer.dataProvider()
+                feature = QgsFeature(provider.fields())
+
+                # Set attributes
+                feature.setAttribute("id", cityobj.id)
+                feature.setAttribute("type", cityobj.type)
+                feature.setAttribute("name", cityobj.name)
+                feature.setAttribute(
                     "creationDate",
                     QDate(cityobj.creation_date) if cityobj.creation_date else None,  # type: ignore
                 )
-                dest_feat.setAttribute(
+                feature.setAttribute(
                     "terminationDate",
-                    QDate(cityobj.creation_date) if cityobj.creation_date else None,  # type: ignore
+                    QDate(cityobj.creation_date) if cityobj.termination_date else None,  # type: ignore
                 )
+                if len(cityobj.processor_path) > 1:
+                    # 親地物と結合 (join) できるように親地物の ID を持たせる
+                    feature.setAttribute("parent", cityobj.processor_path[-2][1])
+
                 for name, value in cityobj.properties.items():
-                    dest_feat.setAttribute(name, _convert_to_qt_value(value))
+                    feature.setAttribute(name, _convert_to_qt_value(value))
 
+                # Set geometry
                 if cityobj.geometry:
-                    dest_feat.setGeometry(to_qgis_geometry(cityobj.geometry))
+                    feature.setGeometry(to_qgis_geometry(cityobj.geometry))
 
-                dp.addFeature(dest_feat)
+                provider.addFeature(feature)
                 count += 1
                 if count % 100 == 0:
                     feedback.setProgress(top_level_count / total_count * 100)

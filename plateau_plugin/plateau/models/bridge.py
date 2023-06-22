@@ -156,7 +156,7 @@ BRIDGE_CONSTRUCTION_ELEMENT = FeatureProcessingDefinition(
 )
 
 BRIDGE_INSTALLATION = FeatureProcessingDefinition(
-    id="Installation",
+    id="BridgeInstallation",
     target_elements=[
         "brid:BridgeInstallation",
     ],
