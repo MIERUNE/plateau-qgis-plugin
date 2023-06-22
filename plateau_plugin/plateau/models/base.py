@@ -50,7 +50,9 @@ class FeatureEmissions:
     lod2: Optional[FeatureEmission] = None
     lod3: Optional[FeatureEmission] = None
     lod4: Optional[FeatureEmission] = None
+
     semantic_parts: Optional[list[str]] = None
+    """子地物への element paths"""
 
 
 @dataclass

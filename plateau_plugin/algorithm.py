@@ -30,6 +30,7 @@ from qgis.core import (
     QgsProcessingParameterFile,
     QgsProject,
     QgsVectorLayer,
+    QgsVectorLayerJoinInfo,
 )
 
 from .geometry import to_qgis_geometry
@@ -59,18 +60,29 @@ class LayerManager:
 
     def __init__(self):
         self._layers: dict[str, QgsVectorLayer] = {}
+        self._parent_map: dict[str, str] = {}
 
     def get_layer(self, cityobj: CityObject) -> QgsVectorLayer:
         """地物の種類とLODをもとにふさわしい出力レイヤを取得する"""
 
-        # layer name
+        # レイヤ名を決定
+        # TODO: レイヤの名前を識別子として使わないほうがよいだろう
         layer_name = " / ".join(p[0] for p in cityobj.processor_path)
         if cityobj.lod is not None:
             layer_name += f" (LOD{cityobj.lod})"
 
-        # if already exists
         if (layer := self._layers.get(layer_name)) is not None:
+            # if already exists
             return layer
+
+        return self._add_new_layer(layer_name, cityobj)
+
+    def _add_new_layer(self, layer_name: str, cityobj: CityObject) -> QgsVectorLayer:
+        """新たなレイヤを作る"""
+
+        if len(cityobj.processor_path) > 1:
+            parent_layer_name = " / ".join(p[0] for p in cityobj.processor_path[:-1])
+            self._parent_map[layer_name] = parent_layer_name
 
         # setup attributes
         attributes = [
@@ -107,8 +119,31 @@ class LayerManager:
         self._layers[layer_name] = layer
         return layer
 
-    def layers(self) -> Iterable[QgsVectorLayer]:
-        return self._layers.values()
+    def add_to_project(self, feedback):
+        """レイヤをプロジェクトに追加する"""
+        for layer in self._layers.values():
+            layer.updateFields()
+        QgsProject.instance().addMapLayers(self._layers.values(), True)
+        # グループを作る?
+        # QgsProject.instance().addMapLayers(layers.layers(), False)
+        # group = QgsProject.instance().layerTreeRoot().addGroup(Path(filename).stem)
+        self._make_joins(feedback)
+
+    def _make_joins(self, feedback):
+        """子地物->親地物のテーブル結合を生成する"""
+        for layer_id, parent_id in self._parent_map.items():
+            layer = self._layers.get(layer_id)
+            parent_layer = self._layers.get(parent_id)
+            feedback.pushInfo(f"Joining {layer} to {parent_layer}")
+            if layer is None or parent_layer is None:
+                continue
+            join = QgsVectorLayerJoinInfo()
+            join.setJoinLayerId(parent_layer.id())
+            join.setJoinLayer(parent_layer)
+            join.setJoinFieldName("id")
+            join.setTargetFieldName("parent")
+            join.setUsingMemoryCache(True)
+            layer.addJoin(join)
 
 
 class PlateauProcessingAlrogithm(QgsProcessingAlgorithm):
@@ -237,12 +272,6 @@ class PlateauProcessingAlrogithm(QgsProcessingAlgorithm):
             )
 
         feedback.pushInfo(f"{count} 個の地物を読み込みました。")
-
-        for layer in layers.layers():
-            layer.updateFields()
-
-        QgsProject.instance().addMapLayers(layers.layers(), True)
-        # QgsProject.instance().addMapLayers(layers.layers(), False)
-        # group = QgsProject.instance().layerTreeRoot().addGroup(Path(filename).stem)
+        layers.add_to_project(feedback)
 
         return {}

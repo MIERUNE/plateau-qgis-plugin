@@ -4,6 +4,8 @@ from .bridge import (
     BRIDGE_BOUNDARY_SURFACE,
     BRIDGE_CONSTRUCTION_ELEMENT,
     BRIDGE_INSTALLATION,
+    BRIDGE_INT_INSTALLATION,
+    BRIDGE_OPENING,
 )
 from .building import (
     BUILDING,
@@ -34,6 +36,8 @@ processors = ProcessorRegistory(
         BRIDGE_BOUNDARY_SURFACE,
         BRIDGE_CONSTRUCTION_ELEMENT,
         BRIDGE_INSTALLATION,
+        BRIDGE_INT_INSTALLATION,
+        BRIDGE_OPENING,
         # transportation
         ROAD,
         RAILWAY,
@@ -51,7 +55,7 @@ processors = ProcessorRegistory(
         WATER_BODY,
         # generics
         GENERIC_CITY_OBJECT,
-        # urf (sediment disaster)
+        # urf - sediment disaster
         SEDIMENT_DISASTER_PRONE_AREA,
     ]
 )

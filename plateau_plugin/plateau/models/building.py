@@ -331,8 +331,8 @@ BUILDING_BOUNDARY_SURFACE = FeatureProcessingDefinition(
             only_direct=["./bldg:lod4MultiSurface//gml:Polygon"],
         ),
         semantic_parts=[
-            ".//bldg:Door",
-            ".//bldg:Window",
+            "./bldg:opening/bldg:Door",
+            "./bldg:opening/bldg:Window",
         ],
     ),
 )

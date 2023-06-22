@@ -81,8 +81,12 @@ BRIDGE = FeatureProcessingDefinition(
             ".//brid:OuterCeilingSurface",
             ".//brid:OuterFloorSurface",
             ".//brid:ClosureSurface",
-            ".//brid:BridgeConstructionElement",
+            ".//brid:CeilingSurface",
+            ".//brid:InteriorWallSurface",
+            ".//brid:FloorSurface",
             ".//brid:BridgeInstallation",
+            ".//brid:IntBridgeInstallation",
+            ".//brid:BridgeConstructionElement",
         ],
     ),
 )
@@ -96,6 +100,9 @@ BRIDGE_BOUNDARY_SURFACE = FeatureProcessingDefinition(
         "brid:OuterCeilingSurface",
         "brid:OuterFloorSurface",
         "brid:ClosureSurface",
+        "brid:InteriorWallSurface",
+        "brid:CeilingSurface",
+        "brid:FloorSurface",
     ],
     property_groups=[],
     lod_detection=LODDetection(
@@ -122,11 +129,32 @@ BRIDGE_BOUNDARY_SURFACE = FeatureProcessingDefinition(
                 ".//brid:lod4Geometry//gml:Polygon",
             ]
         ),
+        semantic_parts=[
+            "./brid:opening/brid:Door",
+            "./brid:opening/brid:Window",
+        ],
+    ),
+)
+
+BRIDGE_OPENING = FeatureProcessingDefinition(
+    id="brid:_Opening",
+    target_elements=[
+        "brid:Window",
+        "brid:Door",
+    ],
+    property_groups=[],
+    lod_detection=LODDetection(
+        lod3=["./brid:lod3MultiSurface"],
+        lod4=["./brid:lod4MultiSurface"],
+    ),
+    emissions=FeatureEmissions(
+        lod3=FeatureEmission(collect_all=[".//brid:lod3MultiSurface//gml:Polygon"]),
+        lod4=FeatureEmission(collect_all=[".//brid:lod4MultiSurface//gml:Polygon"]),
     ),
 )
 
 BRIDGE_CONSTRUCTION_ELEMENT = FeatureProcessingDefinition(
-    id="Construction Element",
+    id="BridgeConstructionElement",
     target_elements=[
         "brid:BridgeConstructionElement",
     ],
@@ -179,6 +207,42 @@ BRIDGE_INSTALLATION = FeatureProcessingDefinition(
                     name="usage",
                     path="./brid:usage",
                     datatype="[]string",
+                ),
+            ],
+        )
+    ],
+    lod_detection=LODDetection(
+        lod2=["./brid:lod2Geometry"],
+        lod3=["./brid:lod3Geometry"],
+        lod4=["./brid:lod4Geometry"],
+    ),
+    emissions=FeatureEmissions(
+        lod2=FeatureEmission(collect_all=[".//brid:lod2Geometry//gml:Polygon"]),
+        lod3=FeatureEmission(collect_all=[".//brid:lod3Geometry//gml:Polygon"]),
+        lod4=FeatureEmission(collect_all=[".//brid:lod4Geometry//gml:Polygon"]),
+    ),
+)
+
+
+BRIDGE_INT_INSTALLATION = FeatureProcessingDefinition(
+    id="IntBridgeInstallation",
+    target_elements=[
+        "brid:IntBridgeInstallation",
+    ],
+    property_groups=[
+        PropertyGroup(
+            base_element=None,
+            properties=[
+                Property(
+                    name="class",
+                    path="./brid:class",
+                    datatype="string",
+                ),
+                Property(
+                    name="function",
+                    path="./brid:function",
+                    datatype="[]string",
+                    codelist="IntBridgeInstallation_function",
                 ),
             ],
         )
