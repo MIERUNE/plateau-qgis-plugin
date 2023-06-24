@@ -512,7 +512,9 @@
   },
   "RiverFloodingRiskAttribute_scale": {
     "1": "L1（計画規模）",
-    "2": "L2（想定最大規模）"
+    "2": "L2（想定最大規模）",
+    "L1": "L1（計画規模）",
+    "L2": "L2（想定最大規模）"
   },
   "SpecialUseDistrict_usage": {
     "1": "特別工業地区",

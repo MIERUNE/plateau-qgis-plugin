@@ -113,15 +113,15 @@ ROAD = FeatureProcessingDefinition(
             only_direct=["./tran:lod1MultiSurface//gml:Polygon"],
         ),
         lod2=FeatureEmission(
-            collect_all=["./tran:*//tran:lod2MultiSurface//gml:Polygon"],
+            collect_all=[".//tran:lod2MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod2MultiSurface//gml:Polygon"],
         ),
         lod3=FeatureEmission(
-            collect_all=["./tran:*//tran:lod3MultiSurface//gml:Polygon"],
+            collect_all=[".//tran:lod3MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod3MultiSurface//gml:Polygon"],
         ),
         lod4=FeatureEmission(
-            collect_all=["./tran:*//tran:lod4MultiSurface//gml:Polygon"],
+            collect_all=[".//tran:lod4MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod4MultiSurface//gml:Polygon"],
         ),
         semantic_parts=[

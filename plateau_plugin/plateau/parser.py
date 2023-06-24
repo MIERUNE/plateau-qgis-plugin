@@ -133,7 +133,7 @@ class Parser:
         # ジオメトリを読んで出力する
         emission_for_lods = processor.emission_list
         has_lods = processor.detect_lods(elem, nsmap)
-        for lod in (4, 3, 2, 1):
+        for lod in (4, 3, 2, 1, 0):
             if not has_lods[lod]:
                 continue
 

@@ -75,6 +75,11 @@ CITY_FURNITURE = FeatureProcessingDefinition(
                 ),
             ],
         ),
+        # TODO: uro:cityFurnitureDetailAttribute (入れ子)
+        # TODO: uro:frnFacilityTypeAttribute (入れ子)
+        # TODO: uro:frnFacilityIdAttribute (入れ子、Polymorphic)
+        # TODO: uro:frnFacilityAttribute (入れ子)
+        # TODO: uro:frnDmAttribute (入れ子)
     ],
     emissions=FeatureEmissions(
         lod1=FeatureEmission(collect_all=["./frn:lod1Geometry//gml:Polygon"]),

@@ -48,7 +48,15 @@ class Namespace:
         for ns in src_nsmap.values():
             if ns.startswith("https://www.geospatial.jp/iur/uro/"):
                 _ns_update["uro"] = ns
-            if ns.startswith("https://www.geospatial.jp/iur/urf/"):
+            elif ns.startswith("https://www.geospatial.jp/iur/urf/"):
+                _ns_update["urf"] = ns
+            elif ns.startswith(
+                "http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/uro/"
+            ):
+                _ns_update["uro"] = ns
+            elif ns.startswith(
+                "http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/urf/"
+            ):
                 _ns_update["urf"] = ns
         return cls(_ns_update)
 

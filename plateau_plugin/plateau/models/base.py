@@ -178,8 +178,14 @@ class ProcessorRegistory:
             FieldDefinition("creationDate", "date"),
             FieldDefinition("terminationDate", "date"),
         ]
+        closed: dict[str, str] = {}
         for group in processor.property_groups:
             for prop in group.properties:
-                fields.append(FieldDefinition(prop.name, prop.datatype))
+                if prop.name not in closed:
+                    fields.append(FieldDefinition(prop.name, prop.datatype))
+                    closed[prop.name] = prop.datatype
+                else:
+                    # 同名のフィールドが既にある場合は、型が一致しているか確認する
+                    assert closed[prop.name] == prop.datatype
 
         return TableDefinition(fields=fields)
