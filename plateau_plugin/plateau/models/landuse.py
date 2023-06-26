@@ -1,4 +1,4 @@
-"""土地利用モデル"""
+"""土地利用モデル (./luse/)"""
 
 from .base import (
     FeatureEmission,

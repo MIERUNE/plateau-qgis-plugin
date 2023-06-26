@@ -1,4 +1,4 @@
-"""水辺モデル および 災害リスク (浸水) モデル"""
+"""水辺モデル (./wtr/) および 災害リスク (浸水) モデル (./fld/, ./htd/, ./ifld/, ./tnm/)"""
 
 from .base import (
     FeatureEmission,

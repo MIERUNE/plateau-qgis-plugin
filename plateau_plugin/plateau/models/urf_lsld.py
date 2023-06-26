@@ -1,4 +1,4 @@
-"""災害リスク (土砂災害) モデル"""
+"""災害リスク (土砂災害) モデル (./lsld/)"""
 
 from .base import (
     FeatureEmission,

@@ -1,4 +1,4 @@
-"""植生モデル"""
+"""植生モデル (./veg/)"""
 
 from .base import (
     FeatureEmission,
@@ -7,6 +7,36 @@ from .base import (
     LODDetection,
     Property,
     PropertyGroup,
+)
+
+_uro_vegetation_data_quality_attribute = PropertyGroup(
+    base_element="./uro:vegetationDataQualityAttribute/uro:VegetationDataQualityAttribute",
+    properties=[
+        Property(
+            name="uro:srcScale",
+            path="./uro:srcScale",
+            datatype="[]string",
+            codelist="VegetationDataQualityAttribute_srcScale",
+        ),
+        Property(
+            name="uro:geometrySrcDesc",
+            path="./uro:geometrySrcDesc",
+            datatype="[]string",
+            codelist="VegetationDataQualityAttribute_GeometrySrcDesc",
+        ),
+        Property(
+            name="uro:thematicSrcDesc",
+            path="./uro:thematicSrcDesc",
+            datatype="[]string",
+            codelist="VegetationDataQualityAttribute_thematicSrcDesc",
+        ),
+        Property(
+            name="uro:appearanceSrcDesc",
+            path="./uro:appearanceSrcDesc",
+            datatype="[]string",
+            codelist="VegetationDataQualityAttribute_appearanceSrcDesc",
+        ),
+    ],
 )
 
 SOLITARY_VEGETATION_OBJECT = FeatureProcessingDefinition(
@@ -51,35 +81,12 @@ SOLITARY_VEGETATION_OBJECT = FeatureProcessingDefinition(
             ],
         ),
         # uro:VegetationDataQualityAttribute
-        PropertyGroup(
-            base_element="./uro:vegetationDataQualityAttribute/uro:VegetationDataQualityAttribute",
-            properties=[
-                Property(
-                    name="uro:srcScale",
-                    path="./uro:srcScale",
-                    datatype="[]string",
-                    codelist="VegetationDataQualityAttribute_srcScale",
-                ),
-                Property(
-                    name="uro:geometrySrcDesc",
-                    path="./uro:geometrySrcDesc",
-                    datatype="[]string",
-                    codelist="VegetationDataQualityAttribute_GeometrySrcDesc",
-                ),
-                Property(
-                    name="uro:thematicSrcDesc",
-                    path="./uro:thematicSrcDesc",
-                    datatype="[]string",
-                    codelist="VegetationDataQualityAttribute_thematicSrcDesc",
-                ),
-                Property(
-                    name="uro:appearanceSrcDesc",
-                    path="./uro:appearanceSrcDesc",
-                    datatype="[]string",
-                    codelist="VegetationDataQualityAttribute_appearanceSrcDesc",
-                ),
-            ],
-        ),
+        _uro_vegetation_data_quality_attribute,
+        # TODO:
+        # uro:vegFacilityTypeAttribute
+        # uro:vegFacilityIdAttribute
+        # uro:vegFacilityAttribute
+        # uro:vegDmAttribute
     ],
     emissions=FeatureEmissions(
         lod1=FeatureEmission(collect_all=["./veg:lod1Geometry//gml:Polygon"]),
@@ -112,7 +119,9 @@ PLANT_COVER = FeatureProcessingDefinition(
                     datatype="double",
                 ),
             ],
-        )
+        ),
+        # uro:VegetationDataQualityAttribute
+        _uro_vegetation_data_quality_attribute,
     ],
     emissions=FeatureEmissions(
         lod1=FeatureEmission(

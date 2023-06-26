@@ -1,4 +1,4 @@
-"""都市設備モデル"""
+"""都市設備モデル (./fur/)"""
 
 from .base import (
     FeatureEmission,

@@ -1,4 +1,4 @@
-"""橋梁モデル"""
+"""橋梁モデル (./brid/)"""
 
 from .base import (
     FeatureEmission,

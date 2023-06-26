@@ -1,4 +1,4 @@
-"""建築物モデル"""
+"""建築物モデル (./bldg/)"""
 
 from .base import (
     FeatureEmission,

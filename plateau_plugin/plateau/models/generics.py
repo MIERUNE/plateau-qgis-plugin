@@ -1,4 +1,4 @@
-"""汎用都市オブジェクトモデル"""
+"""汎用都市オブジェクトモデル (./gen/)"""
 
 from .base import (
     FeatureEmission,

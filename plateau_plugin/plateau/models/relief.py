@@ -1,4 +1,4 @@
-"""地形モデル"""
+"""地形モデル (./dem/)"""
 
 from .base import (
     FeatureEmission,
