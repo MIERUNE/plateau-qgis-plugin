@@ -2,14 +2,65 @@ import json
 from pathlib import Path
 from typing import Optional
 
-_codelists: Optional[dict[str, dict[str, str]]] = None
+from lxml import etree as et
+
+from ..namespaces import BASE_NS as _NS
 
 
-def get_codelist(name: str) -> dict[str, str]:
-    global _codelists
-    if _codelists is None:
-        with open((Path(__file__).parent / "codelists.json").resolve()) as f:
-            _codelists = json.load(f)
+class CodelistStore:
+    def __init__(self, base_path: Path):
+        self._base_path = base_path
+        self._cached: dict[str, Optional[dict[str, str]]] = {}
+        self._predefined: dict[str, dict[str, str]] = {}
 
-    assert _codelists is not None
-    return _codelists[name]
+    def lookup(
+        self, predefined_name: Optional[str], path: Optional[str], code: str
+    ) -> str:
+        """事前定義されたコードリストまたは codelists ディレクトリ内のコードリストからコードを検索する"""
+
+        # キャッシュされたコードリストがあればそこから取得する
+        if path in self._cached:
+            if (cache := self._cached[path]) is not None:
+                return cache.get(code, code)
+            return code
+
+        # 事前定義されたコードリストから取得を試みる
+        predefined = {}
+        if predefined_name and (v := self._get_predefined(predefined_name).get(code)):
+            return v
+
+        if not path:
+            return code
+
+        # コードリストファイルからの取得を試みる
+        # 取得結果はキャッシュすること
+        cached = self._load_dictionary(predefined, path)
+        return cached.get(code, code)
+
+    def _load_dictionary(self, predefined: dict[str, str], path: str) -> dict[str, str]:
+        """コードリスト (XML) を読み込む"""
+        try:
+            path_to_codes = (self._base_path / path).resolve()
+            doc = et.parse(str(path_to_codes), None)
+        except OSError:
+            self._cached[str(path)] = predefined
+            return predefined
+        else:
+            dictionary = {
+                **predefined,
+            }
+            for entry in doc.iterfind(".//gml:dictionaryEntry", _NS):
+                for definition in entry.iterfind(".//gml:Definition", _NS):
+                    desc = definition.find("./gml:description", _NS).text
+                    name = definition.find("./gml:name", _NS).text
+                    dictionary[name] = desc.replace("\u3000", " ").strip()
+            self._cached[str(path)] = dictionary
+            return dictionary
+
+    def _get_predefined(self, name: str) -> dict[str, str]:
+        """事前定義されたコードリスト一覧からコードリストを取得する"""
+        if not self._predefined:
+            with open((Path(__file__).parent / "codelists.json").resolve()) as f:
+                self._predefined = json.load(f)
+
+        return self._predefined[name]

@@ -19,7 +19,8 @@ from .generics import GENERIC_CITY_OBJECT
 from .landuse import LAND_USE
 from .relief import RELIEF
 from .transportation import RAILWAY, ROAD, TRAFFIC_AREA
-from .urf_lsld import SEDIMENT_DISASTER_PRONE_AREA
+from .urf_lsld import URF_SEDIMENT_DISASTER_PRONE_AREA
+from .urf_zone import URF_ZONE
 from .vegetation import PLANT_COVER, SOLITARY_VEGETATION_OBJECT
 from .waterbody import WATER_BODY
 
@@ -56,6 +57,8 @@ processors = ProcessorRegistory(
         # generics
         GENERIC_CITY_OBJECT,
         # urf - sediment disaster
-        SEDIMENT_DISASTER_PRONE_AREA,
+        URF_SEDIMENT_DISASTER_PRONE_AREA,
+        # urf - Zone
+        URF_ZONE,
     ]
 )

@@ -26,13 +26,13 @@ BRIDGE = FeatureProcessingDefinition(
                     name="class",
                     path="./brid:class",
                     datatype="string",
-                    codelist="Bridge_class",
+                    predefined_codelist="Bridge_class",
                 ),
                 Property(
                     name="function",
                     path="./brid:function",
                     datatype="[]string",
-                    codelist="Bridge_function",
+                    predefined_codelist="Bridge_function",
                 ),
                 Property(
                     name="yearOfConstruction",
@@ -166,7 +166,7 @@ BRIDGE_CONSTRUCTION_ELEMENT = FeatureProcessingDefinition(
                     name="function",
                     path="./brid:function",
                     datatype="[]string",
-                    codelist="BridgeConstructionElement_function",
+                    predefined_codelist="BridgeConstructionElement_function",
                 ),
             ],
         )
@@ -201,7 +201,7 @@ BRIDGE_INSTALLATION = FeatureProcessingDefinition(
                     name="function",
                     path="./brid:function",
                     datatype="[]string",
-                    codelist="BridgeInstallation_function",
+                    predefined_codelist="BridgeInstallation_function",
                 ),
                 Property(
                     name="usage",
@@ -242,7 +242,7 @@ BRIDGE_INT_INSTALLATION = FeatureProcessingDefinition(
                     name="function",
                     path="./brid:function",
                     datatype="[]string",
-                    codelist="IntBridgeInstallation_function",
+                    predefined_codelist="IntBridgeInstallation_function",
                 ),
             ],
         )

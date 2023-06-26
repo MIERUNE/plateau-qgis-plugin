@@ -60,7 +60,7 @@ class Property:
     name: str
     path: str
     datatype: PropertyDatatype
-    codelist: Optional[str] = None
+    predefined_codelist: Optional[str] = None
 
 
 @dataclass

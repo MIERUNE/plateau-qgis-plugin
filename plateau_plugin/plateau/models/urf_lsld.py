@@ -9,7 +9,7 @@ from .base import (
     PropertyGroup,
 )
 
-SEDIMENT_DISASTER_PRONE_AREA = FeatureProcessingDefinition(
+URF_SEDIMENT_DISASTER_PRONE_AREA = FeatureProcessingDefinition(
     id="SedimentDisasterProneArea",
     target_elements=[
         "urf2:SedimentDisasterProneArea",
@@ -31,13 +31,13 @@ SEDIMENT_DISASTER_PRONE_AREA = FeatureProcessingDefinition(
                     name="validFromType",
                     path="./urf:validFromType",
                     datatype="string",
-                    codelist="Common_validType",
+                    predefined_codelist="Common_validType",
                 ),
                 Property(
                     name="prefecture",
                     path="./urf:prefecture",
                     datatype="string",
-                    codelist="Common_prefecture",
+                    predefined_codelist="Common_prefecture",
                 ),
                 Property(
                     name="location",
@@ -48,19 +48,19 @@ SEDIMENT_DISASTER_PRONE_AREA = FeatureProcessingDefinition(
                     name="disasterType",
                     path="./urf:disasterType",
                     datatype="string",
-                    codelist="SedimentDisasterProneArea_disasterType",
+                    predefined_codelist="SedimentDisasterProneArea_disasterType",
                 ),
                 Property(
                     name="areaType",
                     path="./urf:areaType",
                     datatype="string",
-                    codelist="SedimentDisasterProneArea_areaType",
+                    predefined_codelist="SedimentDisasterProneArea_areaType",
                 ),
                 Property(
                     name="status",
                     path="./urf:status",
                     datatype="string",
-                    codelist="SedimentDisasterProneArea_status",
+                    predefined_codelist="SedimentDisasterProneArea_status",
                 ),
                 Property(
                     name="zoneName",

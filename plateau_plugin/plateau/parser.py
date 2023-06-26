@@ -1,11 +1,12 @@
 from collections import OrderedDict
 from dataclasses import dataclass
 from datetime import date
+from pathlib import Path
 from typing import Any, Iterable, Optional, Sequence
 
 import lxml.etree as et
 
-from .codelists import get_codelist
+from .codelists import CodelistStore
 from .geometry import parse_multipolygon
 from .models import processors
 from .models.base import FeatureProcessingDefinition
@@ -25,10 +26,13 @@ class ParseSettings:
 
 
 class Parser:
-    def __init__(self, settings: ParseSettings, ns: Namespace) -> None:
+    def __init__(
+        self, settings: ParseSettings, ns: Namespace, codelist_store: CodelistStore
+    ) -> None:
         self._settings = settings
         self._ns: Namespace = ns
         self._nsmap: dict[str, str] = ns.nsmap
+        self._codelist_store = codelist_store
 
     def _get_id_and_name(self, elem: et._Element):
         """@gml:id と gml:name (あれば) を読む"""
@@ -63,6 +67,8 @@ class Parser:
     ) -> OrderedDict[str, Any]:
         nsmap = self._nsmap
         props = OrderedDict()
+        codelist_lookup = self._codelist_store.lookup
+
         for group in processor.property_groups:
             if group.base_element is None:
                 base_elem = feature_elem
@@ -72,22 +78,26 @@ class Parser:
                     continue
 
             for prop in group.properties:
+                assert prop.name in prop.path, f"{prop.name} not in {prop.path}"
                 if prop.datatype == "[]string":
                     values = [str(e.text) for e in base_elem.iterfind(prop.path, nsmap)]
-                    if prop.codelist:
-                        cl = get_codelist(prop.codelist)
-                        values = [cl.get(v, v) for v in values]
+                    if prop.predefined_codelist:
+                        values = [
+                            codelist_lookup(prop.predefined_codelist, None, v)
+                            for v in values
+                        ]
                     props[prop.name] = values
                 else:
                     if (child_elem := base_elem.find(prop.path, nsmap)) is not None:
                         value = child_elem.text
                     else:
                         continue
+
                     if prop.datatype == "string":
                         v = str(value)
-                        if prop.codelist:
-                            cl = get_codelist(prop.codelist)
-                            v = cl.get(v, v)
+                        path = child_elem.get("codeSpace")
+                        if prop.predefined_codelist or path:
+                            v = codelist_lookup(prop.predefined_codelist, path, v)
                         props[prop.name] = v
                     elif prop.datatype == "double":
                         props[prop.name] = float(value)
@@ -95,6 +105,8 @@ class Parser:
                         props[prop.name] = int(value)
                     elif prop.datatype == "boolean":
                         props[prop.name] = bool(value in _BOOLEAN_TRUE_STRINGS)
+                    elif prop.datatype == "date":
+                        props[prop.name] = date.fromisoformat(value)
                     else:
                         raise NotImplementedError(f"Unknown datatype: {prop.datatype}")
         return props
@@ -186,6 +198,7 @@ class Parser:
 
 class FileParser:
     def __init__(self, filename: str, settings: ParseSettings):
+        self._base_dir = Path(filename).parent
         self._doc = et.parse(filename, None)
         self._settings = settings
 
@@ -202,7 +215,8 @@ class FileParser:
     def iter_cityobjs(self) -> Iterable[tuple[int, CityObject]]:
         """ファイルに含まれる地物の数を返す"""
 
-        parser = Parser(self._settings, ns=self._ns)
+        codelists = CodelistStore(self._base_dir)
+        parser = Parser(self._settings, ns=self._ns, codelist_store=codelists)
         toplevel_count = 0
         for city_object in self._doc.iterfind(
             "./core:cityObjectMember/*", self._ns.nsmap

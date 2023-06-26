@@ -27,13 +27,13 @@ WATER_BODY = FeatureProcessingDefinition(
                     name="class",
                     path="./wtr:class",
                     datatype="string",
-                    codelist="WaterBody_class",
+                    predefined_codelist="WaterBody_class",
                 ),
                 Property(
                     name="function",
                     path="./wtr:function",
                     datatype="[]string",
-                    codelist="WaterBody_function",
+                    predefined_codelist="WaterBody_function",
                 ),
             ],
         ),
@@ -50,7 +50,7 @@ WATER_BODY = FeatureProcessingDefinition(
                     name="uro:rank",
                     path="./uro:WaterBodyRiverFloodingRiskAttribute/uro:rank",
                     datatype="string",
-                    codelist="RiverFloodingRiskAttribute_rank",
+                    predefined_codelist="RiverFloodingRiskAttribute_rank",
                 ),
                 Property(
                     name="uro:rankOrg",
@@ -66,13 +66,13 @@ WATER_BODY = FeatureProcessingDefinition(
                     name="uro:adminType",
                     path="./uro:WaterBodyRiverFloodingRiskAttribute/uro:adminType",
                     datatype="string",
-                    codelist="RiverFloodingRiskAttribute_adminType",
+                    predefined_codelist="RiverFloodingRiskAttribute_adminType",
                 ),
                 Property(
                     name="uro:scale",
                     path="./uro:WaterBodyRiverFloodingRiskAttribute/uro:scale",
                     datatype="string",
-                    codelist="RiverFloodingRiskAttribute_scale",
+                    predefined_codelist="RiverFloodingRiskAttribute_scale",
                 ),
                 # uro:WaterBodyHighTideRiskAttribute
                 Property(
@@ -84,7 +84,7 @@ WATER_BODY = FeatureProcessingDefinition(
                     name="uro:rank",
                     path="./uro:WaterBodyHighTideRiskAttribute/uro:rank",
                     datatype="string",
-                    codelist="HighTideRiskAttribute_rank",
+                    predefined_codelist="HighTideRiskAttribute_rank",
                 ),
                 Property(
                     name="uro:rankOrg",
@@ -106,7 +106,7 @@ WATER_BODY = FeatureProcessingDefinition(
                     name="uro:rank",
                     path="./uro:WaterBodyTsunamiRiskAttribute/uro:rank",
                     datatype="string",
-                    codelist="TsunamiRiskAttribute_rank",
+                    predefined_codelist="TsunamiRiskAttribute_rank",
                 ),
                 Property(
                     name="uro:rankOrg",
@@ -128,7 +128,7 @@ WATER_BODY = FeatureProcessingDefinition(
                     name="uro:rank",
                     path="./uro:WaterBodyHighTideRiskAttribute/uro:rank",
                     datatype="string",
-                    codelist="HighTideRiskAttribute_rank",
+                    predefined_codelist="HighTideRiskAttribute_rank",
                 ),
                 Property(
                     name="uro:rankOrg",
@@ -145,13 +145,13 @@ WATER_BODY = FeatureProcessingDefinition(
                     name="uro:description",
                     path="./uro:WaterBodyInlandFloodingRiskAttribute/uro:description",
                     datatype="string",
-                    codelist="InlandFloodingRiskAttribute_description",
+                    predefined_codelist="InlandFloodingRiskAttribute_description",
                 ),
                 Property(
                     name="uro:rank",
                     path="./uro:WaterBodyInlandFloodingRiskAttribute/uro:rank",
                     datatype="string",
-                    codelist="InlandFloodingRiskAttribute_rank",
+                    predefined_codelist="InlandFloodingRiskAttribute_rank",
                 ),
                 Property(
                     name="uro:rankOrg",
