@@ -1,3 +1,9 @@
+"""
+テスト実行用 __main__.py
+
+python3 -m plateau /path/to/21201_gifu-shi_2022_citygml_1_op/udx/fld/natl/kisogawa_ibigawa/53360501_fld_6697_l2_op.gml
+"""
+
 import sys
 
 from .parser import FileParser, ParseSettings

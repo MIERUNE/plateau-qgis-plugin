@@ -49,11 +49,6 @@ BUILDING = FeatureProcessingDefinition(
                     path="./bldg:measuredHeight",
                     datatype="double",
                 ),
-                # Property(
-                #     name="address",
-                #     path="./bldg:address",
-                #     datatype="string",  # TODO: xAL をどう読むか
-                # ),
                 Property(
                     name="storeysAboveGround",
                     path="./bldg:storeysAboveGround",
@@ -64,46 +59,43 @@ BUILDING = FeatureProcessingDefinition(
                     path="./bldg:storeysBelowGround",
                     datatype="integer",
                 ),
+                # Property(
+                #     name="address",
+                #     path="./bldg:address",
+                #     datatype="string",  # TODO: xAL をどう読むか
+                # ),
             ],
         ),
-        # uro:BuildingDataQualityAttribute
+        # uro:buildingIDAttribute
         PropertyGroup(
-            base_element="./uro:buildingDataQualityAttribute/uro:BuildingDataQualityAttribute",
+            base_element="./uro:buildingIDAttribute/uro:BuildingIDAttribute",
             properties=[
                 Property(
-                    name="uro:srcScale",
-                    path="./uro:srcScale",
-                    datatype="[]string",
-                    predefined_codelist="BuildingDataQualityAttribute_srcScale",
-                ),
-                Property(
-                    name="uro:geometrySrcDesc",
-                    path="./uro:geometrySrcDesc",
-                    datatype="[]string",
-                    predefined_codelist="BuildingDataQualityAttribute_geometrySrcDesc",
-                ),
-                Property(
-                    name="uro:thematicSrcDesc",
-                    path="./uro:thematicSrcDesc",
-                    datatype="[]string",
-                    predefined_codelist="BuildingDataQualityAttribute_thematicSrcDesc",
-                ),
-                Property(
-                    name="uro:appearanceSrcDesc",
-                    path="./uro:appearanceSrcDesc",
-                    datatype="[]string",
-                    predefined_codelist="BuildingDataQualityAttribute_appearanceSrcDesc",
-                ),
-                Property(
-                    name="uro:lod1HeightType",
-                    path="./uro:lod1HeightType",
+                    name="uro:buildingID",
+                    path="./uro:buildingID",
                     datatype="string",
-                    predefined_codelist="BuildingDataQualityAttribute_lod1HeightType",
                 ),
                 Property(
-                    name="uro:lodType",
-                    path="./uro:lodType",
-                    datatype="[]string",
+                    name="uro:branchID",
+                    path="./uro:branchID",
+                    datatype="integer",
+                ),
+                Property(
+                    name="uro:partID",
+                    path="./uro:partID",
+                    datatype="integer",
+                ),
+                Property(
+                    name="uro:prefecture",
+                    path="./uro:prefecture",
+                    datatype="string",
+                    predefined_codelist="Common_prefecture",
+                ),
+                Property(
+                    name="uro:city",
+                    path="./uro:city",
+                    datatype="string",
+                    predefined_codelist="Common_localPublicAuthorities",
                 ),
             ],
         ),
@@ -151,7 +143,6 @@ BUILDING = FeatureProcessingDefinition(
                     name="uro:buildingStructureOrgType",
                     path="./uro:buildingStructureOrgType",
                     datatype="string",
-                    # codelist="(custom)",
                 ),
                 Property(
                     name="uro:fireproofStructureType",
@@ -178,6 +169,17 @@ BUILDING = FeatureProcessingDefinition(
                     predefined_codelist="Common_districtsAndZonesType",
                 ),
                 Property(
+                    name="uro:landUseType",
+                    path="./uro:landUseType",
+                    datatype="string",
+                    predefined_codelist="Common_landUseType",
+                ),
+                Property(
+                    name="uro:reference",
+                    path="./uro:reference",
+                    datatype="string",
+                ),
+                Property(
                     name="uro:majorUsage",
                     path="./uro:majorUsage",
                     datatype="string",
@@ -186,6 +188,67 @@ BUILDING = FeatureProcessingDefinition(
                     name="uro:majorUsage2",
                     path="./uro:majorUsage2",
                     datatype="string",
+                ),
+                Property(
+                    name="uro:orgUsage",
+                    path="./uro:orgUsage",
+                    datatype="string",
+                ),
+                Property(
+                    name="uro:orgUsage2",
+                    path="./uro:orgUsage2",
+                    datatype="string",
+                ),
+                Property(
+                    name="uro:detailedUsage",
+                    path="./uro:detailedUsage",
+                    datatype="string",
+                ),
+                Property(
+                    name="uro:detailedUsage2",
+                    path="./uro:detailedUsage2",
+                    datatype="string",
+                ),
+                Property(
+                    name="uro:detailedUsage3",
+                    path="./uro:detailedUsage3",
+                    datatype="string",
+                ),
+                Property(
+                    name="uro:groundFloorUsage",
+                    path="./uro:groundFloorUsage",
+                    datatype="string",
+                ),
+                Property(
+                    name="uro:secondFloorUsage",
+                    path="./uro:secondFloorUsage",
+                    datatype="string",
+                ),
+                Property(
+                    name="uro:thirdFloorUsage",
+                    path="./uro:thirdFloorUsage",
+                    datatype="string",
+                ),
+                Property(
+                    name="uro:basementUsage",
+                    path="./uro:basementUsage",
+                    datatype="string",
+                ),
+                Property(
+                    name="uro:basementFirstUsage",
+                    path="./uro:basementFirstUsage",
+                    datatype="string",
+                ),
+                Property(
+                    name="uro:basementSecondUsage",
+                    path="./uro:basementSecondUsage",
+                    datatype="string",
+                ),
+                Property(
+                    name="uro:vacancy",
+                    path="./uro:vacancy",
+                    datatype="string",
+                    predefined_codelist="BuildingDetailAttribute_vacancy",
                 ),
                 Property(
                     name="uro:buildingCoverageRate",
@@ -229,29 +292,156 @@ BUILDING = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        # uro:buildingIDAttribute
+        # uro:largeCustomerFacilityAttribute
         PropertyGroup(
-            base_element="./uro:buildingIDAttribute/uro:BuildingIDAttribute",
+            base_element="./uro:largeCustomerFacilityAttribute/uro:LargeCustomerFacilityAttribute",
             properties=[
                 Property(
-                    name="uro:buildingID",
-                    path="./uro:buildingID",
+                    name="uro:class",
+                    path="./uro:class",
+                    datatype="string",
+                    predefined_codelist="LargeCustomerFacilityAttribute_class",
+                ),
+                Property(
+                    name="uro:name",
+                    path="./uro:name",
                     datatype="string",
                 ),
                 Property(
-                    name="uro:prefecture",
-                    path="./uro:prefecture",
-                    datatype="string",
-                    predefined_codelist="Common_prefecture",
+                    name="uro:capacity",
+                    path="./uro:capacity",
+                    datatype="integer",
                 ),
                 Property(
-                    name="uro:city",
-                    path="./uro:city",
+                    name="uro:owner",
+                    path="./uro:owner",
                     datatype="string",
-                    predefined_codelist="Common_localPublicAuthorities",
+                ),
+                Property(
+                    name="uro:totalFloorArea",
+                    path="./uro:totalFloorArea",
+                    datatype="double",
+                ),
+                Property(
+                    name="uro:totalStoreFloorArea",
+                    path="./uro:totalStoreFloorArea",
+                    datatype="double",
+                ),
+                Property(
+                    name="uro:inauguralDate",
+                    path="./uro:inauguralDate",
+                    datatype="date",
+                ),
+                Property(
+                    name="uro:yearOpened",
+                    path="./uro:yearOpened",
+                    datatype="integer",
+                ),
+                Property(
+                    name="uro:yearClosed",
+                    path="./uro:yearClosed",
+                    datatype="integer",
+                ),
+                Property(
+                    name="uro:keyTenants",
+                    path="./uro:keyTenants",
+                    datatype="string",
+                ),
+                Property(
+                    name="uro:availability",
+                    path="./uro:availability",
+                    datatype="boolean",
+                ),
+                Property(
+                    name="uro:urbanPlanType",
+                    path="./uro:urbanPlanType",
+                    datatype="string",
+                    predefined_codelist="Common_urbanPlanType",
+                ),
+                Property(
+                    name="uro:areaClassificationType",
+                    path="./uro:areaClassificationType",
+                    datatype="string",
+                    predefined_codelist="Common_areaClassificationType",
+                ),
+                Property(
+                    name="uro:districtsAndZonesType",
+                    path="./uro:districtsAndZonesType",
+                    datatype="[]string",
+                    predefined_codelist="Common_districtsAndZonesType",
+                ),
+                Property(
+                    name="uro:landUseType",
+                    path="./uro:landUseType",
+                    datatype="[]string",
+                    predefined_codelist="Common_landUseType",
+                ),
+                Property(
+                    name="uro:reference",
+                    path="./uro:reference",
+                    datatype="string",
+                ),
+                Property(
+                    name="uro:note",
+                    path="./uro:note",
+                    datatype="string",
+                ),
+                Property(
+                    name="uro:surveyYear",
+                    path="./uro:surveyYear",
+                    datatype="integer",
                 ),
             ],
         ),
+        # uro:BuildingDataQualityAttribute
+        PropertyGroup(
+            base_element="./uro:buildingDataQualityAttribute/uro:BuildingDataQualityAttribute",
+            properties=[
+                Property(
+                    name="uro:srcScale",
+                    path="./uro:srcScale",
+                    datatype="[]string",
+                    predefined_codelist="BuildingDataQualityAttribute_srcScale",
+                ),
+                Property(
+                    name="uro:geometrySrcDesc",
+                    path="./uro:geometrySrcDesc",
+                    datatype="[]string",
+                    predefined_codelist="BuildingDataQualityAttribute_geometrySrcDesc",
+                ),
+                Property(
+                    name="uro:thematicSrcDesc",
+                    path="./uro:thematicSrcDesc",
+                    datatype="[]string",
+                    predefined_codelist="BuildingDataQualityAttribute_thematicSrcDesc",
+                ),
+                Property(
+                    name="uro:appearanceSrcDesc",
+                    path="./uro:appearanceSrcDesc",
+                    datatype="[]string",
+                    predefined_codelist="BuildingDataQualityAttribute_appearanceSrcDesc",
+                ),
+                Property(
+                    name="uro:lod1HeightType",
+                    path="./uro:lod1HeightType",
+                    datatype="string",
+                    predefined_codelist="BuildingDataQualityAttribute_lod1HeightType",
+                ),
+                Property(
+                    name="uro:lodType",
+                    path="./uro:lodType",
+                    datatype="[]string",
+                ),
+            ],
+        ),
+        # TODO: uro:keyValuePairAttribute
+        # TODO: uro:buildingDisasterRiskAttribute
+        # (TODO: uro:ifcBuildingAttribute)
+        # (TODO: uro:indoorBuildingAttribute)
+        # TODO: uro:bldgFacilityTypeAttribute
+        # TODO: uro:bldgFacilityIdAttribute
+        # TODO: uro:bldgFacilityAttribute
+        # TODO: uro:bldgDmAttribute
     ],
     emissions=FeatureEmissions(
         lod1=FeatureEmission(collect_all=[".//bldg:lod1Solid//gml:Polygon"]),
