@@ -186,6 +186,8 @@ class ProcessorRegistory:
                     closed[prop.name] = prop.datatype
                 else:
                     # 同名のフィールドが既にある場合は、型が一致しているか確認する
-                    assert closed[prop.name] == prop.datatype
+                    assert (
+                        closed[prop.name] == prop.datatype
+                    ), f"{prop.name}, {closed[prop.name]} != {prop.datatype}"
 
         return TableDefinition(fields=fields)

@@ -165,7 +165,7 @@ BUILDING = FeatureProcessingDefinition(
                 Property(
                     name="uro:districtsAndZonesType",
                     path="./uro:districtsAndZonesType",
-                    datatype="string",
+                    datatype="[]string",
                     predefined_codelist="Common_districtsAndZonesType",
                 ),
                 Property(
@@ -373,7 +373,7 @@ BUILDING = FeatureProcessingDefinition(
                 Property(
                     name="uro:landUseType",
                     path="./uro:landUseType",
-                    datatype="[]string",
+                    datatype="string",
                     predefined_codelist="Common_landUseType",
                 ),
                 Property(
