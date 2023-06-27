@@ -38,11 +38,13 @@ class Parser:
         """@gml:id と gml:name (あれば) を読む"""
         nsmap = self._nsmap
         gml_id = elem.get("{http://www.opengis.net/gml}id", None)
-        gml_name = (
-            name_elem.text
-            if (name_elem := elem.find("./gml:name", nsmap)) is not None
-            else None
-        )
+        if (name_elem := elem.find("./gml:name", nsmap)) is not None:
+            gml_name = name_elem.text
+            if path := name_elem.get("codeSpace"):
+                gml_name = self._codelist_store.lookup(None, path, gml_name)
+        else:
+            gml_name = None
+
         return (gml_id, gml_name)
 
     def _get_basic_dates(
