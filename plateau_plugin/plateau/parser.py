@@ -82,12 +82,13 @@ class Parser:
             for prop in group.properties:
                 assert prop.name in prop.path, f"{prop.name} not in {prop.path}"
                 if prop.datatype == "[]string":
-                    values = [str(e.text) for e in base_elem.iterfind(prop.path, nsmap)]
-                    if prop.predefined_codelist:
-                        values = [
-                            codelist_lookup(prop.predefined_codelist, None, v)
-                            for v in values
-                        ]
+                    values = []
+                    for child_elem in base_elem.iterfind(prop.path, nsmap):
+                        v = child_elem.text
+                        path = child_elem.get("codeSpace")
+                        if prop.predefined_codelist or path:
+                            v = codelist_lookup(prop.predefined_codelist, path, v)
+                        values.append(v)
                     props[prop.name] = values
                 else:
                     if (child_elem := base_elem.find(prop.path, nsmap)) is not None:

@@ -82,11 +82,11 @@ SOLITARY_VEGETATION_OBJECT = FeatureProcessingDefinition(
         ),
         # uro:VegetationDataQualityAttribute
         _uro_vegetation_data_quality_attribute,
-        # TODO:
-        # uro:vegFacilityTypeAttribute
-        # uro:vegFacilityIdAttribute
-        # uro:vegFacilityAttribute
-        # uro:vegDmAttribute
+        #
+        # TODO: uro:vegFacilityTypeAttribute
+        # TODO: uro:vegFacilityIdAttribute
+        # TODO: uro:vegFacilityAttribute
+        # TODO: uro:vegDmAttribute
     ],
     emissions=FeatureEmissions(
         lod1=FeatureEmission(collect_all=["./veg:lod1Geometry//gml:Polygon"]),

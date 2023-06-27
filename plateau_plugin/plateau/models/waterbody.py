@@ -177,6 +177,7 @@ WATER_BODY = FeatureProcessingDefinition(
                 ".//wtr:lod3MultiSurface//gml:Polygon",
             ]
         ),
+        # TODO: semantic_parts
         # semantic_parts=[
         #      ".//wtr:WaterSurface",
         #      ".//wtr:WaterGroundSurface",

@@ -147,6 +147,9 @@ LAND_USE = FeatureProcessingDefinition(
                 ),
             ],
         ),
+        # TODO: uro:luseFacilityTypeAttribute
+        # TODO: uro:luseFacilityIdAttribute
+        # TODO: uro:luseFacilityAttribute
     ],
     emissions=FeatureEmissions(
         lod0=FeatureEmission(
