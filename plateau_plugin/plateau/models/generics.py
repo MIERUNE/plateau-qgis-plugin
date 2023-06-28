@@ -5,6 +5,8 @@ from .base import (
     FeatureEmissions,
     FeatureProcessingDefinition,
     LODDetection,
+    Property,
+    PropertyGroup,
 )
 
 GENERIC_CITY_OBJECT = FeatureProcessingDefinition(
@@ -16,7 +18,28 @@ GENERIC_CITY_OBJECT = FeatureProcessingDefinition(
         lod2=["./gen:lod2Geometry"],
         lod3=["./gen:lod3Geometry"],
     ),
-    property_groups=[],
+    property_groups=[
+        PropertyGroup(
+            base_element=None,
+            properties=[
+                Property(
+                    name="class",
+                    path="./gen:class",
+                    datatype="string",
+                ),
+                Property(
+                    name="function",
+                    path="./gen:function",
+                    datatype="[]string",
+                ),
+                Property(
+                    name="usage",
+                    path="./gen:usage",
+                    datatype="[]string",
+                ),
+            ],
+        )
+    ],
     emissions=FeatureEmissions(
         lod0=FeatureEmission(collect_all=["./gen:lod0Geometry//gml:Polygon"]),
         lod1=FeatureEmission(collect_all=["./gen:lod1Geometry//gml:Polygon"]),

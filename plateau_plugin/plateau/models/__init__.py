@@ -3,6 +3,7 @@ from .bridge import (
     BRIDGE,
     BRIDGE_BOUNDARY_SURFACE,
     BRIDGE_CONSTRUCTION_ELEMENT,
+    BRIDGE_FURNITURE,
     BRIDGE_INSTALLATION,
     BRIDGE_INT_INSTALLATION,
     BRIDGE_OPENING,
@@ -10,6 +11,7 @@ from .bridge import (
 from .building import (
     BUILDING,
     BUILDING_BOUNDARY_SURFACE,
+    BUILDING_FURNITURE,
     BUILDING_INSTALLATION,
     BUILDING_INT_INSTALLATION,
     BUILDING_OPENING,
@@ -32,6 +34,7 @@ processors = ProcessorRegistory(
         BUILDING_INSTALLATION,
         BUILDING_INT_INSTALLATION,
         BUILDING_OPENING,
+        BUILDING_FURNITURE,
         # bridge
         BRIDGE,
         BRIDGE_BOUNDARY_SURFACE,
@@ -39,6 +42,7 @@ processors = ProcessorRegistory(
         BRIDGE_INSTALLATION,
         BRIDGE_INT_INSTALLATION,
         BRIDGE_OPENING,
+        BRIDGE_FURNITURE,
         # transportation
         ROAD,
         RAILWAY,

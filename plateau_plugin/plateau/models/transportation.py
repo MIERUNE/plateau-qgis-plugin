@@ -11,6 +11,40 @@ from .base import (
     Property,
     PropertyGroup,
 )
+from .common import facility_id_attribute_attrs
+
+_transportation_data_quality_attribute = [
+    Property(
+        name="srcScale",
+        path="./uro:srcScale",
+        datatype="[]string",
+        predefined_codelist="RoadDataQualityAttribute_srcScale",
+    ),
+    Property(
+        name="geometrySrcDesc",
+        path="./uro:geometrySrcDesc",
+        datatype="[]string",
+        predefined_codelist="RoadDataQualityAttribute_geometrySrcDesc",
+    ),
+    Property(
+        name="thematicSrcDesc",
+        path="./uro:thematicSrcDesc",
+        datatype="[]string",
+        predefined_codelist="RoadDataQualityAttribute_thematicSrcDesc",
+    ),
+    Property(
+        name="appearanceSrcDesc",
+        path="./uro:appearanceSrcDesc",
+        datatype="[]string",
+        predefined_codelist="RoadDataQualityAttribute_appearanceSrcDesc",
+    ),
+    Property(
+        name="lodType",
+        path="./uro:lodType",
+        datatype="[]string",
+        predefined_codelist="Road_lodType",
+    ),
+]
 
 ROAD = FeatureProcessingDefinition(
     id="Road",
@@ -45,70 +79,119 @@ ROAD = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        # uro:RoadDataQualityAttribute
-        PropertyGroup(
-            base_element="./uro:roadDataQualityAttribute/uro:RoadDataQualityAttribute",
-            properties=[
-                Property(
-                    name="uro:srcScale",
-                    path="./uro:srcScale",
-                    datatype="[]string",
-                    predefined_codelist="RoadDataQualityAttribute_srcScale",
-                ),
-                Property(
-                    name="uro:geometrySrcDesc",
-                    path="./uro:geometrySrcDesc",
-                    datatype="[]string",
-                    predefined_codelist="RoadDataQualityAttribute_geometrySrcDesc",
-                ),
-                Property(
-                    name="uro:thematicSrcDesc",
-                    path="./uro:thematicSrcDesc",
-                    datatype="[]string",
-                    predefined_codelist="RoadDataQualityAttribute_thematicSrcDesc",
-                ),
-                Property(
-                    name="uro:appearanceSrcDesc",
-                    path="./uro:appearanceSrcDesc",
-                    datatype="[]string",
-                    predefined_codelist="RoadDataQualityAttribute_appearanceSrcDesc",
-                ),
-                Property(
-                    name="uro:lodType",
-                    path="./uro:lodType",
-                    datatype="[]string",
-                    predefined_codelist="Road_lodType",
-                ),
-            ],
-        ),
-        # uro:RoadStructureAttribute
         PropertyGroup(
             base_element="./uro:roadStructureAttribute/uro:RoadStructureAttribute",
             properties=[
                 Property(
-                    name="uro:width",
+                    name="width",
                     path="./uro:width",
                     datatype="double",
                 ),
                 Property(
-                    name="uro:widthType",
+                    name="widthType",
                     path="./uro:widthType",
                     datatype="string",
                     predefined_codelist="RoadStructureAttribute_widthType",
                 ),
                 Property(
-                    name="uro:numberOfLanes",
+                    name="numberOfLanes",
                     path="./uro:numberOfLanes",
                     datatype="integer",
                 ),
                 Property(
-                    name="uro:sectionType",
+                    name="sectionType",
                     path="./uro:sectionType",
                     datatype="string",
                     predefined_codelist="RoadStructureAttribute_sectionType",
                 ),
             ],
         ),
+        PropertyGroup(
+            base_element="./uro:tranFacilityIdAttribute/uro:FacilityIdAttribute",
+            properties=facility_id_attribute_attrs,
+        ),
+        PropertyGroup(
+            base_element="./uro:trafficVolumeAttribute/uro:TrafficVolumeAttribute",
+            properties=[
+                Property(
+                    name="averageInboundTravelSpeedInCongestion",
+                    path="./uro:averageInboundTravelSpeedInCongestion",
+                    datatype="double",
+                ),
+                Property(
+                    name="averageInboundTravelSpeedNotCongestion",
+                    path="./uro:averageInboundTravelSpeedNotCongestion",
+                    datatype="double",
+                ),
+                Property(
+                    name="averageOutboundTravelSpeedInCongestion",
+                    path="./uro:averageOutboundTravelSpeedInCongestion",
+                    datatype="double",
+                ),
+                Property(
+                    name="averageOutboundTravelSpeedNotCongestion",
+                    path="./uro:averageOutboundTravelSpeedNotCongestion",
+                    datatype="double",
+                ),
+                Property(
+                    name="averageTravelSpeedInCongestion",
+                    path="./uro:averageTravelSpeedInCongestion",
+                    datatype="double",
+                ),
+                Property(
+                    name="congestionRate",
+                    path="./uro:congestionRate",
+                    datatype="double",
+                ),
+                Property(
+                    name="largeVehicleRate",
+                    path="./uro:largeVehicleRate",
+                    datatype="double",
+                ),
+                Property(
+                    name="observationPointName",
+                    path="./uro:observationPointName",
+                    datatype="string",
+                ),
+                Property(
+                    name="reference",
+                    path="./uro:reference",
+                    datatype="string",
+                ),
+                Property(
+                    name="routeName",
+                    path="./uro:routeName",
+                    datatype="string",
+                ),
+                Property(
+                    name="sectionID",
+                    path="./uro:sectionID",
+                    datatype="string",
+                ),
+                Property(
+                    name="surveyYear",
+                    path="./uro:surveyYear",
+                    datatype="integer",
+                ),
+                Property(
+                    name="weekday12hourTrafficVolume",
+                    path="./uro:weekday12hourTrafficVolume",
+                    datatype="integer",
+                ),
+                Property(
+                    name="weekday24hourTrafficVolume",
+                    path="./uro:weekday24hourTrafficVolume",
+                    datatype="integer",
+                ),
+            ],
+        ),
+        PropertyGroup(
+            base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
+            properties=_transportation_data_quality_attribute,
+        )
+        # TODO: uro:tranFacilityTypeAttribute
+        # TODO: uro:tranFacilityAttribute
+        # TODO: uro:tranDmAttribute
     ],
     emissions=FeatureEmissions(
         lod1=FeatureEmission(
@@ -161,7 +244,6 @@ RAILWAY = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        # uro:RailwayRouteAttribute
         PropertyGroup(
             base_element="./uro:railwayRouteAttribute/uro:RailwayRouteAttribute",
             properties=[
@@ -193,6 +275,13 @@ RAILWAY = FeatureProcessingDefinition(
                 ),
             ],
         ),
+        PropertyGroup(
+            base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
+            properties=_transportation_data_quality_attribute,
+        )
+        # TODO: uro:tranFacilityTypeAttribute
+        # TODO: uro:tranFacilityAttribute
+        # TODO: uro:tranDmAttribute
     ],
     emissions=FeatureEmissions(
         lod1=FeatureEmission(
@@ -200,15 +289,15 @@ RAILWAY = FeatureProcessingDefinition(
             only_direct=["./tran:lod1MultiSurface//gml:Polygon"],
         ),
         lod2=FeatureEmission(
-            collect_all=["./tran:*//tran:lod2MultiSurface//gml:Polygon"],
+            collect_all=[".//tran:lod2MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod2MultiSurface//gml:Polygon"],
         ),
         lod3=FeatureEmission(
-            collect_all=["./tran:*//tran:lod3MultiSurface//gml:Polygon"],
+            collect_all=[".//tran:lod3MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod3MultiSurface//gml:Polygon"],
         ),
         lod4=FeatureEmission(
-            collect_all=["./tran:*//tran:lod4MultiSurface//gml:Polygon"],
+            collect_all=[".//tran:lod4MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod4MultiSurface//gml:Polygon"],
         ),
         semantic_parts=[
@@ -246,7 +335,7 @@ TRAFFIC_AREA = FeatureProcessingDefinition(
             base_element="./uro:trafficAreaStructureAttribute/uro:TrafficAreaStructureAttribute",
             properties=[
                 Property(
-                    name="uro:numberOfLanes",
+                    name="numberOfLanes",
                     path="./uro:numberOfLanes",
                     datatype="integer",
                 ),
@@ -257,34 +346,34 @@ TRAFFIC_AREA = FeatureProcessingDefinition(
             base_element="./uro:railwayTrackAttribute/uro:RailwayTrackAttribute",
             properties=[
                 Property(
-                    name="uro:routeName",
+                    name="routeName",
                     path="./uro:routeName",
                     datatype="string",
                 ),
                 Property(
-                    name="uro:directionType",
+                    name="directionType",
                     path="./uro:directionType",
                     datatype="string",
                     predefined_codelist="RailwayTrackAttribute_directionType",
                 ),
                 Property(
-                    name="uro:trackType",
+                    name="trackType",
                     path="./uro:trackType",
                     datatype="string",
                     predefined_codelist="RailwayTrackAttribute_trackType",
                 ),
                 Property(
-                    name="uro:startPost",
+                    name="startPost",
                     path="./uro:startPost",
                     datatype="string",
                 ),
                 Property(
-                    name="uro:endPost",
+                    name="endPost",
                     path="./uro:endPost",
                     datatype="string",
                 ),
                 Property(
-                    name="uro:alignmentType",
+                    name="alignmentType",
                     path="./uro:alignmentType",
                     datatype="string",
                     predefined_codelist="RailwayTrackAttribute_alignmentType",

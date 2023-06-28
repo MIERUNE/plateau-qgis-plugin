@@ -8,30 +8,31 @@ from .base import (
     Property,
     PropertyGroup,
 )
+from .common import facility_id_attribute_attrs
 
 _uro_vegetation_data_quality_attribute = PropertyGroup(
     base_element="./uro:vegetationDataQualityAttribute/uro:VegetationDataQualityAttribute",
     properties=[
         Property(
-            name="uro:srcScale",
+            name="srcScale",
             path="./uro:srcScale",
             datatype="[]string",
             predefined_codelist="VegetationDataQualityAttribute_srcScale",
         ),
         Property(
-            name="uro:geometrySrcDesc",
+            name="geometrySrcDesc",
             path="./uro:geometrySrcDesc",
             datatype="[]string",
             predefined_codelist="VegetationDataQualityAttribute_GeometrySrcDesc",
         ),
         Property(
-            name="uro:thematicSrcDesc",
+            name="thematicSrcDesc",
             path="./uro:thematicSrcDesc",
             datatype="[]string",
             predefined_codelist="VegetationDataQualityAttribute_thematicSrcDesc",
         ),
         Property(
-            name="uro:appearanceSrcDesc",
+            name="appearanceSrcDesc",
             path="./uro:appearanceSrcDesc",
             datatype="[]string",
             predefined_codelist="VegetationDataQualityAttribute_appearanceSrcDesc",
@@ -80,11 +81,12 @@ SOLITARY_VEGETATION_OBJECT = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        # uro:VegetationDataQualityAttribute
         _uro_vegetation_data_quality_attribute,
-        #
+        PropertyGroup(
+            base_element="./uro:vegFacilityIdAttribute/uro:FacilityIdAttribute",
+            properties=facility_id_attribute_attrs,
+        ),
         # TODO: uro:vegFacilityTypeAttribute
-        # TODO: uro:vegFacilityIdAttribute
         # TODO: uro:vegFacilityAttribute
         # TODO: uro:vegDmAttribute
     ],
@@ -120,8 +122,14 @@ PLANT_COVER = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        # uro:VegetationDataQualityAttribute
         _uro_vegetation_data_quality_attribute,
+        PropertyGroup(
+            base_element="./uro:vegFacilityIdAttribute/uro:FacilityIdAttribute",
+            properties=facility_id_attribute_attrs,
+        ),
+        # TODO: uro:vegFacilityTypeAttribute
+        # TODO: uro:vegFacilityAttribute
+        # TODO: uro:vegDmAttribute
     ],
     emissions=FeatureEmissions(
         lod1=FeatureEmission(

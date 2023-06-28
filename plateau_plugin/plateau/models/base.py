@@ -68,9 +68,9 @@ class PropertyGroup:
     """属性抽出をグルーピングする"""
 
     base_element: Optional[str]
-    """属性抽出の起点とするXML要素へのpath。None の場合はこの地物自体を起点とする。"""
+    """属性抽出の起点とするXML要素への element path。None の場合はこの地物自体を起点とする。"""
 
-    properties: list[Property]
+    properties: Sequence[Property]
     # mode: Literal["flatten", "map"] = "flatten"
 
 

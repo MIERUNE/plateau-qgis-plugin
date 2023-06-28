@@ -8,6 +8,7 @@ from .base import (
     Property,
     PropertyGroup,
 )
+from .common import facility_id_attribute_attrs
 
 CITY_FURNITURE = FeatureProcessingDefinition(
     id="CityFurniture",
@@ -45,41 +46,59 @@ CITY_FURNITURE = FeatureProcessingDefinition(
             base_element="./uro:cityFurnitureDataQualityAttribute/uro:CityFurnitureDataQualityAttribute",
             properties=[
                 Property(
-                    name="uro:srcScale",
+                    name="srcScale",
                     path="./uro:srcScale",
                     datatype="[]string",
                     predefined_codelist="CityFurnitureDataQualityAttribute_srcScale",
                 ),
                 Property(
-                    name="uro:geometrySrcDesc",
+                    name="geometrySrcDesc",
                     path="./uro:geometrySrcDesc",
                     datatype="[]string",
                     predefined_codelist="CityFurnitureDataQualityAttribute_geometrySrcDesc",
                 ),
                 Property(
-                    name="uro:thematicSrcDesc",
+                    name="thematicSrcDesc",
                     path="./uro:thematicSrcDesc",
                     datatype="[]string",
                     predefined_codelist="CityFurnitureDataQualityAttribute_thematicSrcDesc",
                 ),
                 Property(
-                    name="uro:appearanceSrcDesc",
+                    name="appearanceSrcDesc",
                     path="./uro:appearanceSrcDesc",
                     datatype="[]string",
                     predefined_codelist="CityFurnitureDataQualityAttribute_appearanceSrcDesc",
                 ),
                 Property(
-                    name="uro:lodType",
+                    name="lodType",
                     path="./uro:lodType",
                     datatype="[]string",
                 ),
             ],
         ),
-        # TODO: uro:cityFurnitureDetailAttribute (入れ子)
-        # TODO: uro:frnFacilityTypeAttribute (入れ子)
-        # TODO: uro:frnFacilityIdAttribute (入れ子、Polymorphic)
-        # TODO: uro:frnFacilityAttribute (入れ子)
-        # TODO: uro:frnDmAttribute (入れ子)
+        # FIXME: cityFurnitureDetailAttribute は多重度が[0..*] (入れ子)
+        PropertyGroup(
+            base_element="./uro:cityFurnitureDetailAttribute/uro:CityFurnitureDetailAttribute",
+            properties=[
+                Property(
+                    name="facilityType",
+                    path="./uro:facilityType",
+                    datatype="string",
+                ),
+                Property(
+                    name="description",
+                    path="./uro:description",
+                    datatype="string",
+                ),
+            ],
+        ),
+        PropertyGroup(
+            base_element="./uro:frnFacilityIdAttribute/uro:FacilityIdAttribute",
+            properties=facility_id_attribute_attrs,
+        ),
+        # TODO: uro:frnFacilityTypeAttribute
+        # TODO: uro:frnFacilityAttribute
+        # TODO: uro:frnDmAttribute
     ],
     emissions=FeatureEmissions(
         lod1=FeatureEmission(collect_all=["./frn:lod1Geometry//gml:Polygon"]),

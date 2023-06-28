@@ -8,6 +8,7 @@ from .base import (
     Property,
     PropertyGroup,
 )
+from .common import facility_id_attribute_attrs
 
 LAND_USE = FeatureProcessingDefinition(
     id="LandUse",
@@ -45,111 +46,132 @@ LAND_USE = FeatureProcessingDefinition(
                     datatype="string",
                 ),
                 Property(
-                    name="uro:orgLandUse",
+                    name="orgLandUse",
                     path="./uro:orgLandUse",
                     datatype="string",
                 ),
                 Property(
-                    name="uro:nominalArea",
+                    name="nominalArea",
                     path="./uro:nominalArea",
                     datatype="double",
                 ),
                 Property(
-                    name="uro:ownerType",
+                    name="ownerType",
                     path="./uro:ownerType",
                     datatype="string",
                     predefined_codelist="Common_ownerType",
                 ),
                 Property(
-                    name="uro:owner",
+                    name="owner",
                     path="./uro:owner",
                     datatype="string",
                 ),
                 Property(
-                    name="uro:areaInSquareMeter",
+                    name="areaInSquareMeter",
                     path="./uro:areaInSquareMeter",
                     datatype="double",
                 ),
                 Property(
-                    name="uro:areaInHa",
+                    name="areaInHa",
                     path="./uro:areaInHa",
                     datatype="double",
                 ),
                 Property(
-                    name="uro:buildingCoverageRate",
+                    name="buildingCoverageRate",
                     path="./uro:buildingCoverageRate",
                     datatype="double",
                 ),
                 Property(
-                    name="uro:floorAreaRate",
+                    name="floorAreaRate",
                     path="./uro:floorAreaRate",
                     datatype="double",
                 ),
                 Property(
-                    name="uro:specifiedBuildingCoverageRate",
+                    name="specifiedBuildingCoverageRate",
                     path="./uro:specifiedBuildingCoverageRate",
                     datatype="double",
                 ),
                 Property(
-                    name="uro:specifiedFloorAreaRate",
+                    name="specifiedFloorAreaRate",
                     path="./uro:specifiedFloorAreaRate",
                     datatype="double",
                 ),
                 Property(
-                    name="uro:standardFloorAreaRate",
+                    name="standardFloorAreaRate",
                     path="./uro:standardFloorAreaRate",
                     datatype="double",
                 ),
                 Property(
-                    name="uro:urbanPlanType",
+                    name="urbanPlanType",
                     path="./uro:urbanPlanType",
                     datatype="string",
                     predefined_codelist="Common_urbanPlanType",
                 ),
                 Property(
-                    name="uro:areaClassificationType",
+                    name="areaClassificationType",
                     path="./uro:areaClassificationType",
                     datatype="string",
                     predefined_codelist="Common_areaClassificationType",
                 ),
                 Property(
-                    name="uro:districtsAndZonesType",
+                    name="districtsAndZonesType",
                     path="./uro:districtsAndZonesType",
                     datatype="[]string",
                     predefined_codelist="Common_districtsAndZonesType",
                 ),
                 Property(
-                    name="uro:prefecture",
+                    name="prefecture",
                     path="./uro:prefecture",
                     datatype="string",
                     predefined_codelist="Common_prefecture",
                 ),
                 Property(
-                    name="uro:city",
+                    name="city",
                     path="./uro:city",
                     datatype="string",
                     predefined_codelist="Common_localPublicAuthorities",
                 ),
                 Property(
-                    name="uro:reference",
+                    name="reference",
                     path="./uro:reference",
                     datatype="string",
                 ),
                 Property(
-                    name="uro:note",
+                    name="note",
                     path="./uro:note",
                     datatype="string",
                 ),
                 Property(
-                    name="uro:surveyYear",
+                    name="surveyYear",
                     path="./uro:surveyYear",
                     datatype="integer",
                 ),
             ],
         ),
-        # TODO: uro:luseFacilityTypeAttribute
-        # TODO: uro:luseFacilityIdAttribute
+        PropertyGroup(
+            base_element="./uro:luseFacilityIdAttribute/uro:FacilityIdAttribute",
+            properties=facility_id_attribute_attrs,
+        ),
+        # TODO: uro:luseFacilityTypeAttribute (入れ子)
+        # PropertyGroup(
+        #     base_element="./uro:luseFacilityTypeAttribute/uro:FacilityTypeAttribute",
+        #     properties=[
+        #         Property(
+        #             name="class",
+        #             path="./uro:class",
+        #             datatype="string",
+        #             predefined_codelist=None,
+        #         ),
+        #         Property(
+        #             name="function",
+        #             path="./uro:function",
+        #             datatype="[]string",
+        #             predefined_codelist=None,
+        #         ),
+        #     ],
+        # ),
         # TODO: uro:luseFacilityAttribute
+        # TODO: uro:luseDmAttribute (?)
     ],
     emissions=FeatureEmissions(
         lod0=FeatureEmission(

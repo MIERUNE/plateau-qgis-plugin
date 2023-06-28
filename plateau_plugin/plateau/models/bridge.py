@@ -8,6 +8,7 @@ from .base import (
     Property,
     PropertyGroup,
 )
+from .common import facility_id_attribute_attrs
 
 BRIDGE = FeatureProcessingDefinition(
     id="Bridge",
@@ -134,24 +135,24 @@ BRIDGE = FeatureProcessingDefinition(
             base_element="./uro:bridStructureAttribute/uro:BridgeStructureAttribute",
             properties=[
                 Property(
-                    name="uro:bridgeType",
+                    name="bridgeType",
                     path="./uro:bridgeType",
                     datatype="string",
                     predefined_codelist="BridgeStructureAttribute_bridgeType",
                 ),
                 Property(
-                    name="uro:escalator",
+                    name="escalator",
                     path="./uro:escalator",
                     datatype="boolean",
                 ),
                 Property(
-                    name="uro:material",
+                    name="material",
                     path="./uro:material",
                     datatype="string",
                     predefined_codelist="BridgeStructureAttribute_material",
                 ),
                 Property(
-                    name="uro:slopeType",
+                    name="slopeType",
                     path="./uro:slopeType",
                     datatype="string",
                     predefined_codelist="ConstructionStructureAttribute_slopeType",
@@ -162,13 +163,13 @@ BRIDGE = FeatureProcessingDefinition(
             base_element="./uro:bridFunctionalAttribute/uro:BridgeFunctionalAttribute",
             properties=[
                 Property(
-                    name="uro:directionType",
+                    name="directionType",
                     path="./uro:directionType",
                     datatype="string",
                     predefined_codelist=None,
                 ),
                 Property(
-                    name="uro:userType",
+                    name="userType",
                     path="./uro:userType",
                     datatype="string",
                     predefined_codelist=None,
@@ -179,32 +180,84 @@ BRIDGE = FeatureProcessingDefinition(
             base_element="./uro:bridRiskAssessmentAttribute/uro:ConstructionRiskAssessmentAttribute",
             properties=[
                 Property(
-                    name="uro:referenceDate",
+                    name="referenceDate",
                     path="./uro:referenceDate",
                     datatype="date",
                 ),
                 Property(
-                    name="uro:riskType",
+                    name="riskType",
                     path="./uro:riskType",
                     datatype="string",
                     predefined_codelist="ConstructionRiskAssessmentAttribute_riskType",
                 ),
                 Property(
-                    name="uro:status",
+                    name="status",
                     path="./uro:status",
                     datatype="string",
                     predefined_codelist="ConstructionRiskAssessmentAttribute_status",
                 ),
                 Property(
-                    name="uro:surveyYear",
+                    name="surveyYear",
                     path="./uro:surveyYear",
                     datatype="integer",
                 ),
             ],
         ),
-        # TODO: uro:bridDataQualityAttribute
-        # TODO: uro:bridFacilityIdAttribute
-        # TODO: uro:bridDisasterRiskAttribute
+        PropertyGroup(
+            base_element="./uro:bridDataQualityAttribute/uro:ConstructionDataQualityAttribute",
+            properties=[
+                Property(
+                    name="appearanceSrcDesc",
+                    path="./uro:appearanceSrcDesc",
+                    datatype="[]string",
+                    predefined_codelist="DataQualityAttribute_appearanceSrcDesc",
+                ),
+                Property(
+                    name="dataAcquisition",
+                    path="./uro:dataAcquisition",
+                    datatype="string",
+                ),
+                Property(
+                    name="geometrySrcDesc",
+                    path="./uro:geometrySrcDesc",
+                    datatype="[]string",
+                    predefined_codelist="DataQualityAttribute_geometrySrcDesc",
+                ),
+                Property(
+                    name="lod1HeightType",
+                    path="./uro:lod1HeightType",
+                    datatype="string",
+                    predefined_codelist="DataQualityAttribute_lod1HeightType",
+                ),
+                Property(
+                    name="lodType",
+                    path="./uro:lodType",
+                    datatype="[]string",
+                ),
+                Property(
+                    name="photoScale",
+                    path="./uro:photoScale",
+                    datatype="integer",
+                ),
+                Property(
+                    name="srcScale",
+                    path="./uro:srcScale",
+                    datatype="string",
+                    predefined_codelist="DataQualityAttribute_srcScale",
+                ),
+                Property(
+                    name="thematicSrcDesc",
+                    path="./uro:thematicSrcDesc",
+                    datatype="[]string",
+                    predefined_codelist="DataQualityAttribute_thematicSrcDesc",
+                ),
+            ],
+        ),
+        PropertyGroup(
+            base_element="./uro:bridFacilityIdAttribute/uro:FacilityIdAttribute",
+            properties=facility_id_attribute_attrs,
+        ),
+        # TODO: uro:bridDisasterRiskAttribute (入れ子、polymorhpic)
         # TODO: uro:bridFacilityTypeAttribute
         # TODO: uro:bridFacilityAttribute
         # TODO: uro:bridDmAttribute
@@ -244,6 +297,7 @@ BRIDGE = FeatureProcessingDefinition(
             ".//brid:BridgeInstallation",
             ".//brid:IntBridgeInstallation",
             ".//brid:BridgeConstructionElement",
+            ".//brid:BridgeFurniture",
         ],
     ),
 )
@@ -412,6 +466,33 @@ BRIDGE_INT_INSTALLATION = FeatureProcessingDefinition(
     emissions=FeatureEmissions(
         lod2=FeatureEmission(collect_all=[".//brid:lod2Geometry//gml:Polygon"]),
         lod3=FeatureEmission(collect_all=[".//brid:lod3Geometry//gml:Polygon"]),
+        lod4=FeatureEmission(collect_all=[".//brid:lod4Geometry//gml:Polygon"]),
+    ),
+)
+
+
+BRIDGE_FURNITURE = FeatureProcessingDefinition(
+    id="BridgeFurniture",
+    target_elements=[
+        "brid:BridgeFurniture",
+    ],
+    property_groups=[
+        PropertyGroup(
+            base_element=None,
+            properties=[
+                Property(
+                    name="function",
+                    path="./brid:function",
+                    datatype="[]string",
+                    predefined_codelist="BridgeFurniture_function",
+                ),
+            ],
+        ),
+    ],
+    lod_detection=LODDetection(
+        lod4=["./brid:lod4Geometry"],
+    ),
+    emissions=FeatureEmissions(
         lod4=FeatureEmission(collect_all=[".//brid:lod4Geometry//gml:Polygon"]),
     ),
 )
