@@ -23,6 +23,7 @@ from .relief import RELIEF
 from .transportation import RAILWAY, ROAD, TRAFFIC_AREA
 from .urf_lsld import URF_SEDIMENT_DISASTER_PRONE_AREA
 from .urf_zone import URF_ZONE
+from .uro_ubld import UNDERGROUND_BUILDING
 from .vegetation import PLANT_COVER, SOLITARY_VEGETATION_OBJECT
 from .waterbody import WATER_BODY
 
@@ -60,6 +61,8 @@ processors = ProcessorRegistory(
         WATER_BODY,
         # generics
         GENERIC_CITY_OBJECT,
+        # uro - underground building
+        UNDERGROUND_BUILDING,
         # urf - sediment disaster
         URF_SEDIMENT_DISASTER_PRONE_AREA,
         # urf - Zone
