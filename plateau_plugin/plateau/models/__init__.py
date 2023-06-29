@@ -37,7 +37,7 @@ from .uro_other_construction import (
     OTHER_CONSTRUCTION_INSTALLATION,
 )
 from .uro_underground_building import UNDERGROUND_BUILDING
-from .uro_underground_furniture import UNDERGROUND_CITY_FURNITURE
+from .uro_utility_network import UTILITY_LINK, UTILITY_NODE, UTILITY_NODE_CONTAINER
 from .vegetation import PLANT_COVER, SOLITARY_VEGETATION_OBJECT
 from .waterbody import WATER_BODY, WATER_BOUNDARY_SURFACE
 
@@ -93,7 +93,9 @@ processors = ProcessorRegistory(
         # uro - underground building
         UNDERGROUND_BUILDING,
         # uro - underground city furniture
-        UNDERGROUND_CITY_FURNITURE,
+        UTILITY_LINK,
+        UTILITY_NODE,
+        UTILITY_NODE_CONTAINER,
         # urf - sediment disaster
         URF_SEDIMENT_DISASTER_PRONE_AREA,
         # urf - Zone
