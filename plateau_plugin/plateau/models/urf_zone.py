@@ -1,5 +1,8 @@
 """区域モデル (./area/)、都市計画決定情報モデル (./urf/)"""
 
+# TODO: 都市計画決定情報の大分類にもとづいてレイヤを分けるのがよいか?
+# 現状は、都市計画決定情報の全地物を1つのレイヤにまとめている
+
 from .base import (
     FeatureEmission,
     FeatureEmissions,

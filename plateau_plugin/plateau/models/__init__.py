@@ -20,12 +20,26 @@ from .cityfurniture import CITY_FURNITURE
 from .generics import GENERIC_CITY_OBJECT
 from .landuse import LAND_USE
 from .relief import RELIEF
-from .transportation import RAILWAY, ROAD, TRAFFIC_AREA
-from .urf_lsld import URF_SEDIMENT_DISASTER_PRONE_AREA
+from .transportation import RAILWAY, ROAD, SQUARE, TRACK, TRAFFIC_AREA, WATERWAY
+from .tunnel import (
+    TUNNEL,
+    TUNNEL_BOUNDARY_SURFACE,
+    TUNNEL_FURNITURE,
+    TUNNEL_INSTALLATION,
+    TUNNEL_INT_INSTALLATION,
+    TUNNEL_OPENING,
+)
+from .urf_landslide import URF_SEDIMENT_DISASTER_PRONE_AREA
 from .urf_zone import URF_ZONE
-from .uro_ubld import UNDERGROUND_BUILDING
+from .uro_other_construction import (
+    OTHER_CONSTRUCTION,
+    OTHER_CONSTRUCTION_BOUNDARY_SURFACE,
+    OTHER_CONSTRUCTION_INSTALLATION,
+)
+from .uro_underground_building import UNDERGROUND_BUILDING
+from .uro_underground_furniture import UNDERGROUND_CITY_FURNITURE
 from .vegetation import PLANT_COVER, SOLITARY_VEGETATION_OBJECT
-from .waterbody import WATER_BODY
+from .waterbody import WATER_BODY, WATER_BOUNDARY_SURFACE
 
 processors = ProcessorRegistory(
     [
@@ -47,7 +61,17 @@ processors = ProcessorRegistory(
         # transportation
         ROAD,
         RAILWAY,
+        TRACK,
+        SQUARE,
+        WATERWAY,
         TRAFFIC_AREA,
+        # tunnel
+        TUNNEL,
+        TUNNEL_BOUNDARY_SURFACE,
+        TUNNEL_FURNITURE,
+        TUNNEL_INSTALLATION,
+        TUNNEL_INT_INSTALLATION,
+        TUNNEL_OPENING,
         # cityfurniture
         CITY_FURNITURE,
         # vegetation
@@ -59,10 +83,17 @@ processors = ProcessorRegistory(
         RELIEF,
         # waterbody
         WATER_BODY,
+        WATER_BOUNDARY_SURFACE,
         # generics
         GENERIC_CITY_OBJECT,
+        # uro - other construction
+        OTHER_CONSTRUCTION,
+        OTHER_CONSTRUCTION_BOUNDARY_SURFACE,
+        OTHER_CONSTRUCTION_INSTALLATION,
         # uro - underground building
         UNDERGROUND_BUILDING,
+        # uro - underground city furniture
+        UNDERGROUND_CITY_FURNITURE,
         # urf - sediment disaster
         URF_SEDIMENT_DISASTER_PRONE_AREA,
         # urf - Zone

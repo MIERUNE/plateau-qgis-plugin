@@ -1,7 +1,6 @@
-"""交通モデル 道路 (./tran/) 鉄道 (./rwy/) 徒歩道 (./trk/) 広場 (./squr/) 航路 (./wwy/)
+"""交通モデル 道路 (./tran/) 鉄道 (./rwy/) 徒歩道 (./trk/) 広場 (./squr/) 航路 (./wwy/)"""
 
-ただし 徒歩道・広場・航路 については、仕様上定められているものの、具体的な事例は存在しない。
-"""
+# FIXME: 徒歩道、広場、航路の属性値
 
 from .base import (
     FeatureEmission,
@@ -273,6 +272,219 @@ RAILWAY = FeatureProcessingDefinition(
                     path="./uro:endStation",
                     datatype="string",
                 ),
+            ],
+        ),
+        PropertyGroup(
+            base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
+            properties=_transportation_data_quality_attribute,
+        )
+        # TODO: uro:tranFacilityTypeAttribute
+        # TODO: uro:tranFacilityAttribute
+        # TODO: uro:tranDmAttribute
+    ],
+    emissions=FeatureEmissions(
+        lod1=FeatureEmission(
+            collect_all=["./tran:lod1MultiSurface//gml:Polygon"],
+            only_direct=["./tran:lod1MultiSurface//gml:Polygon"],
+        ),
+        lod2=FeatureEmission(
+            collect_all=[".//tran:lod2MultiSurface//gml:Polygon"],
+            only_direct=["./tran:lod2MultiSurface//gml:Polygon"],
+        ),
+        lod3=FeatureEmission(
+            collect_all=[".//tran:lod3MultiSurface//gml:Polygon"],
+            only_direct=["./tran:lod3MultiSurface//gml:Polygon"],
+        ),
+        lod4=FeatureEmission(
+            collect_all=[".//tran:lod4MultiSurface//gml:Polygon"],
+            only_direct=["./tran:lod4MultiSurface//gml:Polygon"],
+        ),
+        semantic_parts=[
+            "./tran:trafficArea/tran:TrafficArea",
+            "./tran:auxiliaryTrafficArea/tran:AuxiliaryTrafficArea",
+        ],
+    ),
+)
+
+# FIXME: 属性値はまだ整備していない
+TRACK = FeatureProcessingDefinition(
+    id="Track",
+    target_elements=["tran:Track"],
+    lod_detection=LODDetection(
+        lod1=["./tran:lod1MultiSurface"],
+        lod2=["./tran:lod2MultiSurface"],
+        lod3=["./tran:lod3MultiSurface"],
+        lod4=["./tran:lod4MultiSurface"],
+    ),
+    property_groups=[
+        PropertyGroup(
+            base_element=None,
+            properties=[
+                Property(
+                    name="class",
+                    path="./tran:class",
+                    datatype="string",
+                    predefined_codelist="TransportationComplex_class",
+                ),
+                Property(
+                    name="function",
+                    path="./tran:function",
+                    datatype="[]string",
+                    predefined_codelist="Track_function",
+                ),
+            ],
+        ),
+        PropertyGroup(
+            base_element="./uro:trackAttribute/uro:TrackAttribute",
+            properties=[
+                # TODO
+            ],
+        ),
+        PropertyGroup(
+            base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
+            properties=_transportation_data_quality_attribute,
+        )
+        # TODO: uro:tranFacilityTypeAttribute
+        # TODO: uro:tranFacilityAttribute
+        # TODO: uro:tranDmAttribute
+    ],
+    emissions=FeatureEmissions(
+        lod1=FeatureEmission(
+            collect_all=["./tran:lod1MultiSurface//gml:Polygon"],
+            only_direct=["./tran:lod1MultiSurface//gml:Polygon"],
+        ),
+        lod2=FeatureEmission(
+            collect_all=[".//tran:lod2MultiSurface//gml:Polygon"],
+            only_direct=["./tran:lod2MultiSurface//gml:Polygon"],
+        ),
+        lod3=FeatureEmission(
+            collect_all=[".//tran:lod3MultiSurface//gml:Polygon"],
+            only_direct=["./tran:lod3MultiSurface//gml:Polygon"],
+        ),
+        lod4=FeatureEmission(
+            collect_all=[".//tran:lod4MultiSurface//gml:Polygon"],
+            only_direct=["./tran:lod4MultiSurface//gml:Polygon"],
+        ),
+        semantic_parts=[
+            "./tran:trafficArea/tran:TrafficArea",
+            "./tran:auxiliaryTrafficArea/tran:AuxiliaryTrafficArea",
+        ],
+    ),
+)
+
+# FIXME: 属性値はまだ整備していない
+SQUARE = FeatureProcessingDefinition(
+    id="Square",
+    target_elements=["tran:Square"],
+    lod_detection=LODDetection(
+        lod1=["./tran:lod1MultiSurface"],
+        lod2=["./tran:lod2MultiSurface"],
+        lod3=["./tran:lod3MultiSurface"],
+        lod4=["./tran:lod4MultiSurface"],
+    ),
+    property_groups=[
+        PropertyGroup(
+            base_element=None,
+            properties=[
+                Property(
+                    name="class",
+                    path="./tran:class",
+                    datatype="string",
+                    predefined_codelist="TransportationComplex_class",
+                ),
+                Property(
+                    name="function",
+                    path="./tran:function",
+                    datatype="[]string",
+                    predefined_codelist="Square_function",
+                ),
+            ],
+        ),
+        PropertyGroup(
+            base_element="./uro:railwayRouteAttribute/uro:SquareUrbanPlanAttribute",
+            properties=[
+                # TODO
+            ],
+        ),
+        PropertyGroup(
+            base_element="./uro:railwayRouteAttribute/uro:StationSquareAttribute",
+            properties=[
+                # TODO
+            ],
+        ),
+        PropertyGroup(
+            base_element="./uro:railwayRouteAttribute/uro:TerminalAttribute",
+            properties=[
+                # TODO
+            ],
+        ),
+        PropertyGroup(
+            base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
+            properties=_transportation_data_quality_attribute,
+        )
+        # TODO: uro:tranFacilityTypeAttribute
+        # TODO: uro:tranFacilityAttribute
+        # TODO: uro:tranDmAttribute
+    ],
+    emissions=FeatureEmissions(
+        lod1=FeatureEmission(
+            collect_all=["./tran:lod1MultiSurface//gml:Polygon"],
+            only_direct=["./tran:lod1MultiSurface//gml:Polygon"],
+        ),
+        lod2=FeatureEmission(
+            collect_all=[".//tran:lod2MultiSurface//gml:Polygon"],
+            only_direct=["./tran:lod2MultiSurface//gml:Polygon"],
+        ),
+        lod3=FeatureEmission(
+            collect_all=[".//tran:lod3MultiSurface//gml:Polygon"],
+            only_direct=["./tran:lod3MultiSurface//gml:Polygon"],
+        ),
+        lod4=FeatureEmission(
+            collect_all=[".//tran:lod4MultiSurface//gml:Polygon"],
+            only_direct=["./tran:lod4MultiSurface//gml:Polygon"],
+        ),
+        semantic_parts=[
+            "./tran:trafficArea/tran:TrafficArea",
+            "./tran:auxiliaryTrafficArea/tran:AuxiliaryTrafficArea",
+        ],
+    ),
+)
+
+# FIXME: 属性値はまだ整備していない
+WATERWAY = FeatureProcessingDefinition(
+    id="Waterway",
+    target_elements=[
+        "uro2:Waterway",
+        "uro3:Waterway",
+    ],
+    lod_detection=LODDetection(
+        lod1=["./tran:lod1MultiSurface"],
+        lod2=["./tran:lod2MultiSurface"],
+        lod3=["./tran:lod3MultiSurface"],
+        lod4=["./tran:lod4MultiSurface"],
+    ),
+    property_groups=[
+        PropertyGroup(
+            base_element=None,
+            properties=[
+                Property(
+                    name="class",
+                    path="./tran:class",
+                    datatype="string",
+                    predefined_codelist="TransportationComplex_class",
+                ),
+                Property(
+                    name="function",
+                    path="./tran:function",
+                    datatype="[]string",
+                    predefined_codelist="Waterway_function",
+                ),
+            ],
+        ),
+        PropertyGroup(
+            base_element="./uro:watewayDetailAttribute/uro:WaterwayDetailAttribute",
+            properties=[
+                # TODO
             ],
         ),
         PropertyGroup(

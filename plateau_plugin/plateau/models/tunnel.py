@@ -1,7 +1,7 @@
-"""地下街モデル (./ubld/)
+"""トンネルモデル (./tun/)"""
 
-仕様上定められているものの、具体的なデータがまだ存在しない。
-"""
+# FIXME:
+# TODO: 以下、bldg:Building 用の定義をコピペしただけなので、内容は要検証
 
 from .base import (
     FeatureEmission,
@@ -13,17 +13,14 @@ from .base import (
 )
 from .common import facility_id_attribute_attrs
 
-UNDERGROUND_BUILDING = FeatureProcessingDefinition(
-    id="UndergroundBuilding",
-    target_elements=[
-        "uro2:UndergroundBuilding",
-        "uro3:UndergroundBuilding",
-    ],
+TUNNEL = FeatureProcessingDefinition(
+    id="Tunnel",
+    target_elements=["tun:Tunnel"],
     lod_detection=LODDetection(
-        lod1=["./bldg:lod1Solid"],
-        lod2=["./bldg:lod2Solid"],
-        lod3=["./bldg:lod3Solid"],
-        lod4=["./bldg:lod4Solid", "./bldg:lod4MultiSurface"],
+        lod1=["./tun:lod1Solid"],
+        lod2=["./tun:lod2Solid"],
+        lod3=["./tun:lod3Solid"],
+        lod4=["./tun:lod4Solid", "./tun:lod4MultiSurface"],
     ),
     property_groups=[
         PropertyGroup(
@@ -31,54 +28,54 @@ UNDERGROUND_BUILDING = FeatureProcessingDefinition(
             properties=[
                 Property(
                     name="usage",
-                    path="./bldg:usage",
+                    path="./tun:usage",
                     datatype="[]string",
-                    predefined_codelist="Building_usage",
+                    predefined_codelist="Tunnel_usage",
                 ),
                 Property(
                     name="yearOfConstruction",
-                    path="./bldg:yearOfConstruction",
+                    path="./tun:yearOfConstruction",
                     datatype="integer",
                 ),
                 Property(
                     name="yearOfDemolition",
-                    path="./bldg:yearOfDemolition",
+                    path="./tun:yearOfDemolition",
                     datatype="integer",
                 ),
                 Property(
                     name="roofType",
-                    path="./bldg:roofType",
+                    path="./tun:roofType",
                     datatype="string",
-                    predefined_codelist="Building_roofType",
+                    predefined_codelist="Tunnel_roofType",
                 ),
                 Property(
                     name="measuredHeight",
-                    path="./bldg:measuredHeight",
+                    path="./tun:measuredHeight",
                     datatype="double",
                 ),
                 Property(
                     name="storeysAboveGround",
-                    path="./bldg:storeysAboveGround",
+                    path="./tun:storeysAboveGround",
                     datatype="integer",
                 ),
                 Property(
                     name="storeysBelowGround",
-                    path="./bldg:storeysBelowGround",
+                    path="./tun:storeysBelowGround",
                     datatype="integer",
                 ),
                 # Property(
                 #     name="address",
-                #     path="./bldg:address",
+                #     path="./tun:address",
                 #     datatype="string",  # TODO: xAL をどう読むか
                 # ),
             ],
         ),
         PropertyGroup(
-            base_element="./uro:buildingIDAttribute/uro:BuildingIDAttribute",
+            base_element="./uro:tunnelIDAttribute/uro:TunnelIDAttribute",
             properties=[
                 Property(
-                    name="buildingID",
-                    path="./uro:buildingID",
+                    name="tunnelID",
+                    path="./uro:tunnelID",
                     datatype="string",
                 ),
                 Property(
@@ -106,11 +103,11 @@ UNDERGROUND_BUILDING = FeatureProcessingDefinition(
             ],
         ),
         PropertyGroup(
-            base_element="./uro:buildingDetailAttribute/uro:BuildingDetailAttribute",
+            base_element="./uro:tunnelDetailAttribute/uro:TunnelDetailAttribute",
             properties=[
                 Property(
-                    name="serialNumberOfBuildingCertification",
-                    path="./uro:serialNumberOfBuildingCertification",
+                    name="serialNumberOfTunnelCertification",
+                    path="./uro:serialNumberOfTunnelCertification",
                     datatype="string",
                 ),
                 Property(
@@ -124,13 +121,13 @@ UNDERGROUND_BUILDING = FeatureProcessingDefinition(
                     datatype="double",
                 ),
                 Property(
-                    name="buildingFootprintArea",
-                    path="./uro:buildingFootprintArea",
+                    name="tunnelFootprintArea",
+                    path="./uro:tunnelFootprintArea",
                     datatype="double",
                 ),
                 Property(
-                    name="buildingRoofEdgeArea",
-                    path="./uro:buildingRoofEdgeArea",
+                    name="tunnelRoofEdgeArea",
+                    path="./uro:tunnelRoofEdgeArea",
                     datatype="double",
                 ),
                 Property(
@@ -139,27 +136,27 @@ UNDERGROUND_BUILDING = FeatureProcessingDefinition(
                     datatype="double",
                 ),
                 Property(
-                    name="buildingStructureType",
-                    path="./uro:buildingStructureType",
+                    name="tunnelStructureType",
+                    path="./uro:tunnelStructureType",
                     datatype="string",
-                    predefined_codelist="BuildingDetailAttribute_buildingStructureType",
+                    predefined_codelist="TunnelDetailAttribute_tunnelStructureType",
                 ),
                 Property(
-                    name="buildingStructureOrgType",
-                    path="./uro:buildingStructureOrgType",
+                    name="tunnelStructureOrgType",
+                    path="./uro:tunnelStructureOrgType",
                     datatype="string",
                 ),
                 Property(
                     name="fireproofStructureType",
                     path="./uro:fireproofStructureType",
                     datatype="string",
-                    predefined_codelist="BuildingDetailAttribute_fireproofStructureType",
+                    predefined_codelist="TunnelDetailAttribute_fireproofStructureType",
                 ),
                 Property(
                     name="urbanPlanType",
                     path="./uro:urbanPlanType",
                     datatype="string",
-                    predefined_codelist="BuildingDetailAttribute_urbanPlanType",
+                    predefined_codelist="TunnelDetailAttribute_urbanPlanType",
                 ),
                 Property(
                     name="areaClassificationType",
@@ -253,11 +250,11 @@ UNDERGROUND_BUILDING = FeatureProcessingDefinition(
                     name="vacancy",
                     path="./uro:vacancy",
                     datatype="string",
-                    predefined_codelist="BuildingDetailAttribute_vacancy",
+                    predefined_codelist="TunnelDetailAttribute_vacancy",
                 ),
                 Property(
-                    name="buildingCoverageRate",
-                    path="./uro:buildingCoverageRate",
+                    name="tunnelCoverageRate",
+                    path="./uro:tunnelCoverageRate",
                     datatype="double",
                 ),
                 Property(
@@ -266,8 +263,8 @@ UNDERGROUND_BUILDING = FeatureProcessingDefinition(
                     datatype="double",
                 ),
                 Property(
-                    name="specifiedBuildingCoverageRate",
-                    path="./uro:specifiedBuildingCoverageRate",
+                    name="specifiedTunnelCoverageRate",
+                    path="./uro:specifiedTunnelCoverageRate",
                     datatype="double",
                 ),
                 Property(
@@ -281,7 +278,7 @@ UNDERGROUND_BUILDING = FeatureProcessingDefinition(
                     datatype="double",
                 ),
                 Property(
-                    name="buidingHeight",
+                    name="tunnelHeight",
                     path="./uro:buidingHeight",
                     datatype="double",
                 ),
@@ -398,37 +395,37 @@ UNDERGROUND_BUILDING = FeatureProcessingDefinition(
             ],
         ),
         PropertyGroup(
-            base_element="./uro:buildingDataQualityAttribute/uro:BuildingDataQualityAttribute",
+            base_element="./uro:tunnelDataQualityAttribute/uro:TunnelDataQualityAttribute",
             properties=[
                 Property(
                     name="srcScale",
                     path="./uro:srcScale",
                     datatype="[]string",
-                    predefined_codelist="BuildingDataQualityAttribute_srcScale",
+                    predefined_codelist="TunnelDataQualityAttribute_srcScale",
                 ),
                 Property(
                     name="geometrySrcDesc",
                     path="./uro:geometrySrcDesc",
                     datatype="[]string",
-                    predefined_codelist="BuildingDataQualityAttribute_geometrySrcDesc",
+                    predefined_codelist="TunnelDataQualityAttribute_geometrySrcDesc",
                 ),
                 Property(
                     name="thematicSrcDesc",
                     path="./uro:thematicSrcDesc",
                     datatype="[]string",
-                    predefined_codelist="BuildingDataQualityAttribute_thematicSrcDesc",
+                    predefined_codelist="TunnelDataQualityAttribute_thematicSrcDesc",
                 ),
                 Property(
                     name="appearanceSrcDesc",
                     path="./uro:appearanceSrcDesc",
                     datatype="[]string",
-                    predefined_codelist="BuildingDataQualityAttribute_appearanceSrcDesc",
+                    predefined_codelist="TunnelDataQualityAttribute_appearanceSrcDesc",
                 ),
                 Property(
                     name="lod1HeightType",
                     path="./uro:lod1HeightType",
                     datatype="string",
-                    predefined_codelist="BuildingDataQualityAttribute_lod1HeightType",
+                    predefined_codelist="TunnelDataQualityAttribute_lod1HeightType",
                 ),
                 Property(
                     name="lodType",
@@ -438,61 +435,212 @@ UNDERGROUND_BUILDING = FeatureProcessingDefinition(
             ],
         ),
         PropertyGroup(
-            base_element="./uro:bldgFacilityIdAttribute/uro:FacilityIdAttribute",
+            base_element="./uro:tunFacilityIdAttribute/uro:FacilityIdAttribute",
             properties=facility_id_attribute_attrs,
         ),
-        # TODO: 以上、bldg:Building 用の定義をコピペしただけなので、内容は要検証
-        #
-        # TODO: uro:buildingDisasterRiskAttribute (入れ子, polymorpohic)
+        # TODO: uro:tunnelDisasterRiskAttribute (入れ子, polymorpohic)
         # TODO: uro:keyValuePairAttribute
-        # (TODO: uro:ifcBuildingAttribute)
-        # TODO: uro:indoorBuildingAttribute
-        # TODO: uro:bldgFacilityTypeAttribute
-        # TODO: uro:bldgFacilityAttribute
-        # TODO: uro:bldgDmAttribute
+        # (TODO: uro:ifcTunnelAttribute)
+        # TODO: uro:indoorTunnelAttribute
+        # TODO: uro:tunFacilityTypeAttribute
+        # TODO: uro:tunFacilityAttribute
+        # TODO: uro:tunDmAttribute
     ],
     emissions=FeatureEmissions(
-        lod1=FeatureEmission(collect_all=[".//bldg:lod1Solid//gml:Polygon"]),
+        lod1=FeatureEmission(collect_all=[".//tun:lod1Solid//gml:Polygon"]),
         lod2=FeatureEmission(
             collect_all=[
-                ".//bldg:lod2MultiSurface//gml:Polygon",
-                ".//bldg:lod2Geometry//gml:Polygon",
+                ".//tun:lod2MultiSurface//gml:Polygon",
+                ".//tun:lod2Geometry//gml:Polygon",
             ],
-            only_direct=["./bldg:lod2Solid//gml:Polygon"],
+            only_direct=["./tun:lod2Solid//gml:Polygon"],
         ),
         lod3=FeatureEmission(
             collect_all=[
-                ".//bldg:lod3MultiSurface//gml:Polygon",
-                ".//bldg:lod3Geometry//gml:Polygon",
-                ".//bldg:lod3Solid//gml:Polygon",
+                ".//tun:lod3MultiSurface//gml:Polygon",
+                ".//tun:lod3Geometry//gml:Polygon",
+                ".//tun:lod3Solid//gml:Polygon",
             ],
-            only_direct=["./bldg:lod3Solid//gml:Polygon"],
+            only_direct=["./tun:lod3Solid//gml:Polygon"],
         ),
         lod4=FeatureEmission(
             collect_all=[
-                ".//bldg:lod4MultiSurface//gml:Polygon",
-                ".//bldg:lod4Geometry//gml:Polygon",
-                ".//bldg:lod4Solid//gml:Polygon",
+                ".//tun:lod4MultiSurface//gml:Polygon",
+                ".//tun:lod4Geometry//gml:Polygon",
+                ".//tun:lod4Solid//gml:Polygon",
             ],
             only_direct=[
-                "./bldg:lod4MultiSurface//gml:Polygon",
-                "./bldg:lod4Solid//gml:Polygon",
+                "./tun:lod4MultiSurface//gml:Polygon",
+                "./tun:lod4Solid//gml:Polygon",
             ],
         ),
         semantic_parts=[
-            ".//bldg:GroundSurface",
-            ".//bldg:WallSurface",
-            ".//bldg:RoofSurface",
-            ".//bldg:OuterCeilingSurface",
-            ".//bldg:OuterFloorSurface",
-            ".//bldg:ClosureSurface",
-            ".//bldg:CeilingSurface",
-            ".//bldg:InteriorWallSurface",
-            ".//bldg:FloorSurface",
-            ".//bldg:BuildingInstallation",
-            ".//bldg:IntBuildingInstallation",
-            ".//bldg:BuildingFurniture",
-            # TODO: 現状、 bldg:Room と bldg:BuildingPart の概念は考慮していない
+            ".//tun:GroundSurface",
+            ".//tun:WallSurface",
+            ".//tun:RoofSurface",
+            ".//tun:OuterCeilingSurface",
+            ".//tun:OuterFloorSurface",
+            ".//tun:ClosureSurface",
+            ".//tun:CeilingSurface",
+            ".//tun:InteriorWallSurface",
+            ".//tun:FloorSurface",
+            ".//tun:TunnelInstallation",
+            ".//tun:IntTunnelInstallation",
+            ".//tun:TunnelFurniture",
+            # TODO: 現状、tun:HollowSpace と tun:TunnelPart の概念は考慮していない
         ],
+    ),
+)
+
+TUNNEL_BOUNDARY_SURFACE = FeatureProcessingDefinition(
+    id="tun:_BoundarySurface",
+    target_elements=[
+        "tun:GroundSurface",
+        "tun:WallSurface",
+        "tun:RoofSurface",
+        "tun:OuterCeilingSurface",
+        "tun:OuterFloorSurface",
+        "tun:ClosureSurface",
+        "tun:CeilingSurface",
+        "tun:InteriorWallSurface",
+        "tun:FloorSurface",
+    ],
+    property_groups=[],
+    lod_detection=LODDetection(
+        lod2=["./tun:lod2MultiSurface"],
+        lod3=["./tun:lod3MultiSurface"],
+        lod4=["./tun:lod4MultiSurface"],
+    ),
+    emissions=FeatureEmissions(
+        lod2=FeatureEmission(
+            collect_all=[".//tun:lod2MultiSurface//gml:Polygon"],
+            only_direct=["./tun:lod2MultiSurface//gml:Polygon"],
+        ),
+        lod3=FeatureEmission(
+            collect_all=[".//tun:lod3MultiSurface//gml:Polygon"],
+            only_direct=["./tun:lod3MultiSurface//gml:Polygon"],
+        ),
+        lod4=FeatureEmission(
+            collect_all=[".//tun:lod4MultiSurface//gml:Polygon"],
+            only_direct=["./tun:lod4MultiSurface//gml:Polygon"],
+        ),
+        semantic_parts=[
+            "./tun:opening/tun:Door",
+            "./tun:opening/tun:Window",
+        ],
+    ),
+)
+
+TUNNEL_OPENING = FeatureProcessingDefinition(
+    id="tun:_Opening",
+    target_elements=[
+        "tun:Window",
+        "tun:Door",
+    ],
+    property_groups=[
+        # TODO: uro:indoorOpeningAttribute
+    ],
+    lod_detection=LODDetection(
+        lod3=["./tun:lod3MultiSurface"],
+        lod4=["./tun:lod4MultiSurface"],
+    ),
+    emissions=FeatureEmissions(
+        lod3=FeatureEmission(collect_all=[".//tun:lod3MultiSurface//gml:Polygon"]),
+        lod4=FeatureEmission(collect_all=[".//tun:lod4MultiSurface//gml:Polygon"]),
+    ),
+)
+
+TUNNEL_INSTALLATION = FeatureProcessingDefinition(
+    id="TunnelInstallation",
+    target_elements=[
+        "tun:TunnelInstallation",
+    ],
+    property_groups=[
+        PropertyGroup(
+            base_element=None,
+            properties=[
+                Property(
+                    name="function",
+                    path="./tun:function",
+                    datatype="[]string",
+                    predefined_codelist="TunnelInstallation_function",
+                ),
+            ],
+        )
+    ],
+    lod_detection=LODDetection(
+        lod2=["./tun:lod2Geometry"],
+        lod3=["./tun:lod3Geometry"],
+        lod4=["./tun:lod4Geometry"],
+    ),
+    emissions=FeatureEmissions(
+        lod2=FeatureEmission(collect_all=[".//tun:lod2Geometry//gml:Polygon"]),
+        lod3=FeatureEmission(collect_all=[".//tun:lod3Geometry//gml:Polygon"]),
+        lod4=FeatureEmission(collect_all=[".//tun:lod4Geometry//gml:Polygon"]),
+    ),
+)
+
+TUNNEL_INT_INSTALLATION = FeatureProcessingDefinition(
+    id="IntTunnelInstallation",
+    target_elements=[
+        "tun:IntTunnelInstallation",
+    ],
+    property_groups=[
+        PropertyGroup(
+            base_element=None,
+            properties=[
+                Property(
+                    name="function",
+                    path="./tun:function",
+                    datatype="[]string",
+                    predefined_codelist="TunnelInstallation_function",
+                ),
+            ],
+        ),
+        # TODO: uro:indoorInstallationAttribute
+    ],
+    lod_detection=LODDetection(
+        lod2=["./tun:lod2Geometry"],
+        lod3=["./tun:lod3Geometry"],
+        lod4=["./tun:lod4Geometry"],
+    ),
+    emissions=FeatureEmissions(
+        lod2=FeatureEmission(collect_all=[".//tun:lod2Geometry//gml:Polygon"]),
+        lod3=FeatureEmission(collect_all=[".//tun:lod3Geometry//gml:Polygon"]),
+        lod4=FeatureEmission(collect_all=[".//tun:lod4Geometry//gml:Polygon"]),
+    ),
+)
+
+
+TUNNEL_FURNITURE = FeatureProcessingDefinition(
+    id="TunnelFurniture",
+    target_elements=[
+        "tun:TunnelFurniture",
+    ],
+    property_groups=[
+        PropertyGroup(
+            base_element=None,
+            properties=[
+                Property(
+                    name="class",
+                    path="./tun:class",
+                    datatype="string",
+                    predefined_codelist="TunnelFurniture_class",
+                ),
+                Property(
+                    name="function",
+                    path="./tun:function",
+                    datatype="[]string",
+                    predefined_codelist="TunnelFurniture_function",
+                ),
+            ],
+        ),
+        # TODO: uro:indoorFurnitureAttribute
+    ],
+    lod_detection=LODDetection(
+        lod4=["./tun:lod4Geometry"],
+    ),
+    emissions=FeatureEmissions(
+        lod4=FeatureEmission(collect_all=[".//tun:lod4Geometry//gml:Polygon"]),
     ),
 )

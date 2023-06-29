@@ -1,6 +1,8 @@
+"""様々なモデルで共通して使われる定義"""
+
 from .base import Property
 
-# uro:FacilityIdAttribute の属性
+# uro:FacilityIdAttribute の属性セット
 facility_id_attribute_attrs = [
     Property(
         name="fa:alternativeName",

@@ -248,23 +248,57 @@ WATER_BODY = FeatureProcessingDefinition(
         lod1=FeatureEmission(
             collect_all=[
                 "./wtr:lod1MultiSurface//gml:Polygon",
-            ]
+            ],
+            only_direct=[
+                "./wtr:lod1MultiSurface//gml:Polygon",
+            ],
         ),
         lod2=FeatureEmission(
             collect_all=[
-                ".//wtr:lod2MultiSurface//gml:Polygon",
+                ".//wtr:lod2Surface//gml:Polygon",
+            ],
+            only_direct=[
+                "./wtr:lod2Surface//gml:Polygon",
+            ],
+        ),
+        lod3=FeatureEmission(
+            collect_all=[
+                ".//wtr:lod3Surface//gml:Polygon",
+            ],
+            only_direct=[
+                "./wtr:lod3Surface//gml:Polygon",
+            ],
+        ),
+        semantic_parts=[
+            ".//wtr:WaterSurface",
+            ".//wtr:WaterGroundSurface",
+            ".//wtr:WaterClosureSurface",
+        ],
+    ),
+)
+
+WATER_BOUNDARY_SURFACE = FeatureProcessingDefinition(
+    id="WaterBoundarySurface",
+    target_elements=[
+        "wtr:WaterSurface",
+        "wtr:WaterGroundSurface",
+        "wtr:WaterClosureSurface",
+    ],
+    lod_detection=LODDetection(
+        lod2=["./wtr:lod2Surface"],
+        lod3=["./wtr:lod3Surface"],
+    ),
+    property_groups=[],
+    emissions=FeatureEmissions(
+        lod2=FeatureEmission(
+            collect_all=[
+                "./wtr:lod2Surface//gml:Polygon",
             ]
         ),
         lod3=FeatureEmission(
             collect_all=[
-                ".//wtr:lod3MultiSurface//gml:Polygon",
+                "./wtr:lod3Surface//gml:Polygon",
             ]
         ),
-        # TODO: semantic_parts
-        # semantic_parts=[
-        #      ".//wtr:WaterSurface",
-        #      ".//wtr:WaterGroundSurface",
-        #      ".//wtr:WaterClosureSurface",
-        # ]
     ),
 )
