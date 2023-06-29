@@ -6,9 +6,12 @@ python3 -m plateau /path/to/21201_gifu-shi_2022_citygml_1_op/udx/fld/natl/kisoga
 
 import sys
 
+from .models import processors
 from .parser import FileParser, ParseSettings
 
 if __name__ == "__main__":
+    processors.validate_processors()
+
     settings = ParseSettings(load_semantic_parts=True)
     parser = FileParser(sys.argv[1], settings)
     for count, cityobj in parser.iter_cityobjs():

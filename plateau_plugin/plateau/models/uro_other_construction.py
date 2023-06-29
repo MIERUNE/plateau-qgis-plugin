@@ -8,7 +8,7 @@ from .base import (
     FeatureProcessingDefinition,
     LODDetection,
 )
-from .common import facility_id_attribute_attrs
+from .common import river_facility_id_attribute_attrs
 
 
 def _make_prefix_variants(prefixed_names: list[str]) -> list[str]:
@@ -115,8 +115,8 @@ OTHER_CONSTRUCTION = FeatureProcessingDefinition(
             ],
         ),
         AttributeGroup(
-            base_element="./uro:consFacilityIdAttribute/uro:FacilityIdAttribute",
-            attributes=facility_id_attribute_attrs,
+            base_element="./uro:consFacilityIdAttribute/uro:RiverFacilityIdAttribute",
+            attributes=river_facility_id_attribute_attrs,
         ),
         AttributeGroup(
             base_element="./uro:consBaseAttribute/uro:ConstructionBaseAttribute",
@@ -363,11 +363,7 @@ OTHER_CONSTRUCTION_BOUNDARY_SURFACE = FeatureProcessingDefinition(
 
 OTHER_CONSTRUCTION_INSTALLATION = FeatureProcessingDefinition(
     id="ConstructionInstallation",
-    target_elements=_make_prefix_variants(
-        [
-            "uro:ConstructionInstallation",
-        ]
-    ),
+    target_elements=_make_prefix_variants(["uro:ConstructionInstallation"]),
     attribute_groups=[
         AttributeGroup(
             base_element=None,

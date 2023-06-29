@@ -135,6 +135,11 @@ BRIDGE = FeatureProcessingDefinition(
             base_element="./uro:bridStructureAttribute/uro:BridgeStructureAttribute",
             attributes=[
                 Attribute(
+                    name="area",
+                    path="./uro:area",
+                    datatype="double",
+                ),
+                Attribute(
                     name="bridgeType",
                     path="./uro:bridgeType",
                     datatype="string",
@@ -144,6 +149,16 @@ BRIDGE = FeatureProcessingDefinition(
                     name="escalator",
                     path="./uro:escalator",
                     datatype="boolean",
+                ),
+                Attribute(
+                    name="heightRestriction",
+                    path="./uro:heightRestriction",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="length",
+                    path="./uro:length",
+                    datatype="double",
                 ),
                 Attribute(
                     name="material",
@@ -156,6 +171,26 @@ BRIDGE = FeatureProcessingDefinition(
                     path="./uro:slopeType",
                     datatype="string",
                     predefined_codelist="ConstructionStructureAttribute_slopeType",
+                ),
+                Attribute(
+                    name="underGirderHeight",
+                    path="./uro:underGirderHeight",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="weightRestriction",
+                    path="./uro:weightRestriction",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="width",
+                    path="./uro:width",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="widthRestriction",
+                    path="./uro:widthRestriction",
+                    datatype="double",
                 ),
             ],
         ),
@@ -453,7 +488,7 @@ BRIDGE_INT_INSTALLATION = FeatureProcessingDefinition(
                     name="function",
                     path="./brid:function",
                     datatype="[]string",
-                    predefined_codelist="IntBridgeInstallation_function",
+                    predefined_codelist=None,
                 ),
             ],
         )
@@ -484,7 +519,7 @@ BRIDGE_FURNITURE = FeatureProcessingDefinition(
                     name="function",
                     path="./brid:function",
                     datatype="[]string",
-                    predefined_codelist="BridgeFurniture_function",
+                    predefined_codelist=None,
                 ),
             ],
         ),

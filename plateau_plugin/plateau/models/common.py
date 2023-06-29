@@ -3,7 +3,6 @@
 from .base import Attribute
 
 # uro:FacilityIdAttribute の属性セット
-# (RiverFacilityIdAttribute の属性を常に含める必要はあるのか)
 facility_id_attribute_attrs = [
     Attribute(
         name="facilityID:alternativeName",
@@ -19,7 +18,7 @@ facility_id_attribute_attrs = [
         name="facilityID:city",
         path="./uro:city",
         datatype="[]string",
-        predefined_codelist=None,
+        predefined_codelist="Common_localPublicAuthorities",
     ),
     Attribute(
         name="facilityID:endPost",
@@ -29,8 +28,45 @@ facility_id_attribute_attrs = [
     Attribute(
         name="facilityID:id",
         path="./uro:id",
+        datatype="[]string",
+    ),
+    Attribute(
+        name="facilityID:partId",
+        path="./uro:partId",
         datatype="string",
     ),
+    Attribute(
+        name="facilityID:prefecture",
+        path="./uro:prefecture",
+        datatype="[]string",
+        predefined_codelist="Common_localPublicAuthorities",
+    ),
+    Attribute(
+        name="facilityID:route",
+        path="./uro:route",
+        datatype="string",
+    ),
+    Attribute(
+        name="facilityID:startLat",
+        path="./uro:startLat",
+        datatype="double",
+    ),
+    Attribute(
+        name="facilityID:startLong",
+        path="./uro:startLong",
+        datatype="double",
+    ),
+    Attribute(
+        name="facilityID:startPost",
+        path="./uro:startPost",
+        datatype="string",
+    ),
+]
+
+# uro:RiverFacilityIdAttribute の属性セット
+# (uro:FacilityIdAttribute の拡張)
+river_facility_id_attribute_attrs = [
+    *facility_id_attribute_attrs,  # uro:FacilityIdAttribute を拡張する
     Attribute(
         name="facilityID:leftDistance",
         path="./uro:leftDistance",
@@ -60,17 +96,6 @@ facility_id_attribute_attrs = [
         name="facilityID:leftUpstreamPost",
         path="./uro:leftUpstreamPost",
         datatype="double",
-    ),
-    Attribute(
-        name="facilityID:partId",
-        path="./uro:partId",
-        datatype="string",
-    ),
-    Attribute(
-        name="facilityID:prefecture",
-        path="./uro:prefecture",
-        datatype="[]string",
-        predefined_codelist=None,
     ),
     Attribute(
         name="facilityID:rightDistance",
@@ -105,38 +130,17 @@ facility_id_attribute_attrs = [
     Attribute(
         name="facilityID:riverCode",
         path="./uro:riverCode",
-        datatype="string",
+        datatype="[]string",
     ),
     Attribute(
         name="facilityID:riverName",
         path="./uro:riverName",
-        datatype="string",
-        predefined_codelist=None,
-    ),
-    Attribute(
-        name="facilityID:route",
-        path="./uro:route",
         datatype="string",
     ),
     Attribute(
         name="facilityID:sideType",
         path="./uro:sideType",
         datatype="string",
-        predefined_codelist=None,
-    ),
-    Attribute(
-        name="facilityID:startLat",
-        path="./uro:startLat",
-        datatype="double",
-    ),
-    Attribute(
-        name="facilityID:startLong",
-        path="./uro:startLong",
-        datatype="double",
-    ),
-    Attribute(
-        name="facilityID:startPost",
-        path="./uro:startPost",
-        datatype="string",
+        predefined_codelist="RiverFacilityIdAttribute_sideType",
     ),
 ]

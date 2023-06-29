@@ -26,7 +26,7 @@ class CodelistStore:
 
         # 事前定義されたコードリストから取得を試みる
         predefined = {}
-        if predefined_name and (v := self._get_predefined(predefined_name).get(code)):
+        if predefined_name and (v := self.get_predefined(predefined_name).get(code)):
             return v
 
         if not path:
@@ -57,7 +57,7 @@ class CodelistStore:
             self._cached[str(path)] = dictionary
             return dictionary
 
-    def _get_predefined(self, name: str) -> dict[str, str]:
+    def get_predefined(self, name: str) -> dict[str, str]:
         """事前定義されたコードリスト一覧からコードリストを取得する"""
         if not self._predefined:
             with open((Path(__file__).parent / "codelists.json").resolve()) as f:

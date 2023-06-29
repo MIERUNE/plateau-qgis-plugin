@@ -137,8 +137,8 @@ class ProcessorRegistory:
     def __init__(
         self, processors: Optional[Iterable[FeatureProcessingDefinition]] = None
     ):
-        self._tag_map = {}
-        self._id_map = {}
+        self._tag_map: dict[str, FeatureProcessingDefinition] = {}
+        self._id_map: dict[str, FeatureProcessingDefinition] = {}
         if processors:
             for processor in processors:
                 self.register_processor(processor)
@@ -191,3 +191,16 @@ class ProcessorRegistory:
                     ), f"{prop.name}, {closed[prop.name]} != {prop.datatype}"
 
         return TableDefinition(fields=fields)
+
+    def validate_processors(self):
+        from pathlib import Path
+
+        from ..codelists import CodelistStore
+
+        codelists = CodelistStore(Path("./"))
+
+        for processor in self._id_map.values():
+            for group in processor.attribute_groups:
+                for prop in group.attributes:
+                    if prop.predefined_codelist:
+                        codelists.get_predefined(prop.predefined_codelist)

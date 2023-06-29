@@ -144,7 +144,7 @@ UNDERGROUND_BUILDING = FeatureProcessingDefinition(
                     name="urbanPlanType",
                     path="./uro:urbanPlanType",
                     datatype="string",
-                    predefined_codelist="BuildingDetailAttribute_urbanPlanType",
+                    predefined_codelist=None,
                 ),
                 Attribute(
                     name="areaClassificationType",
@@ -424,8 +424,8 @@ UNDERGROUND_BUILDING = FeatureProcessingDefinition(
         ),
         # TODO: uro:buildingDisasterRiskAttribute (入れ子, polymorpohic)
         # TODO: uro:keyValuePairAttribute
-        # (TODO: uro:ifcBuildingAttribute)
         # TODO: uro:indoorBuildingAttribute
+        # (TODO: uro:ifcBuildingAttribute)
     ],
     emissions=FeatureEmissions(
         lod1=FeatureEmission(collect_all=[".//bldg:lod1Solid//gml:Polygon"]),

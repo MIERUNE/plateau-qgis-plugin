@@ -153,23 +153,6 @@ LAND_USE = FeatureProcessingDefinition(
             attributes=facility_id_attribute_attrs,
         ),
         # TODO: uro:luseFacilityTypeAttribute (入れ子)
-        # PropertyGroup(
-        #     base_element="./uro:luseFacilityTypeAttribute/uro:FacilityTypeAttribute",
-        #     attributes=[
-        #         Property(
-        #             name="class",
-        #             path="./uro:class",
-        #             datatype="string",
-        #             predefined_codelist=None,
-        #         ),
-        #         Property(
-        #             name="function",
-        #             path="./uro:function",
-        #             datatype="[]string",
-        #             predefined_codelist=None,
-        #         ),
-        #     ],
-        # ),
         # TODO: uro:luseFacilityAttribute
         # TODO: uro:luseDmAttribute (?)
     ],

@@ -179,13 +179,13 @@ ROAD = FeatureProcessingDefinition(
             ],
         ),
         AttributeGroup(
+            base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
+            attributes=_transportation_data_quality_attribute,
+        ),
+        AttributeGroup(
             base_element="./uro:tranFacilityIdAttribute/uro:FacilityIdAttribute",
             attributes=facility_id_attribute_attrs,
         ),
-        AttributeGroup(
-            base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
-            attributes=_transportation_data_quality_attribute,
-        )
         # TODO: uro:tranFacilityTypeAttribute
         # TODO: uro:tranFacilityAttribute
         # TODO: uro:tranDmAttribute
@@ -273,13 +273,13 @@ RAILWAY = FeatureProcessingDefinition(
             ],
         ),
         AttributeGroup(
+            base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
+            attributes=_transportation_data_quality_attribute,
+        ),
+        AttributeGroup(
             base_element="./uro:tranFacilityIdAttribute/uro:FacilityIdAttribute",
             attributes=facility_id_attribute_attrs,
         ),
-        AttributeGroup(
-            base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
-            attributes=_transportation_data_quality_attribute,
-        )
         # TODO: uro:tranFacilityTypeAttribute
         # TODO: uro:tranFacilityAttribute
         # TODO: uro:tranDmAttribute
@@ -379,13 +379,13 @@ TRACK = FeatureProcessingDefinition(
             ],
         ),
         AttributeGroup(
+            base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
+            attributes=_transportation_data_quality_attribute,
+        ),
+        AttributeGroup(
             base_element="./uro:tranFacilityIdAttribute/uro:FacilityIdAttribute",
             attributes=facility_id_attribute_attrs,
         ),
-        AttributeGroup(
-            base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
-            attributes=_transportation_data_quality_attribute,
-        )
         # TODO: uro:tranFacilityTypeAttribute
         # TODO: uro:tranFacilityAttribute
         # TODO: uro:tranDmAttribute
@@ -581,25 +581,25 @@ SQUARE = FeatureProcessingDefinition(
             ],
         ),
         AttributeGroup(
-            base_element="./uro:railwayRouteAttribute/uro:SquareUrbanPlanAttribute",
+            base_element="./uro:squareUrbanPlanAttribute/uro:SquareUrbanPlanAttribute",
             attributes=_square_urban_plan_attribute_attrs,
         ),
         AttributeGroup(
-            base_element="./uro:railwayRouteAttribute/uro:StationSquareAttribute",
+            base_element="./uro:squareUrbanPlanAttribute/uro:StationSquareAttribute",
             attributes=_square_urban_plan_attribute_attrs,
         ),
         AttributeGroup(
-            base_element="./uro:railwayRouteAttribute/uro:TerminalAttribute",
+            base_element="./uro:squareUrbanPlanAttribute/uro:TerminalAttribute",
             attributes=_square_urban_plan_attribute_attrs,
+        ),
+        AttributeGroup(
+            base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
+            attributes=_transportation_data_quality_attribute,
         ),
         AttributeGroup(
             base_element="./uro:tranFacilityIdAttribute/uro:FacilityIdAttribute",
             attributes=facility_id_attribute_attrs,
         ),
-        AttributeGroup(
-            base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
-            attributes=_transportation_data_quality_attribute,
-        )
         # TODO: uro:tranFacilityTypeAttribute
         # TODO: uro:tranFacilityAttribute
         # TODO: uro:tranDmAttribute
@@ -710,13 +710,13 @@ WATERWAY = FeatureProcessingDefinition(
             ],
         ),
         AttributeGroup(
+            base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
+            attributes=_transportation_data_quality_attribute,
+        ),
+        AttributeGroup(
             base_element="./uro:tranFacilityIdAttribute/uro:FacilityIdAttribute",
             attributes=facility_id_attribute_attrs,
         ),
-        AttributeGroup(
-            base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
-            attributes=_transportation_data_quality_attribute,
-        )
         # TODO: uro:tranFacilityTypeAttribute
         # TODO: uro:tranFacilityAttribute
         # TODO: uro:tranDmAttribute

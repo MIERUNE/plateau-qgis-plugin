@@ -39,134 +39,149 @@ WATER_BODY = FeatureProcessingDefinition(
             ],
         ),
         AttributeGroup(
-            base_element="./uro:floodingRiskAttribute",
+            base_element="./uro:floodingRiskAttribute/uro:WaterBodyRiverFloodingRiskAttribute",
             attributes=[
-                # uro:WaterBodyRiverFloodingRiskAttribute
                 Attribute(
                     name="description",
-                    path="./uro:WaterBodyRiverFloodingRiskAttribute/uro:description",
+                    path="./uro:description",
                     datatype="string",
                 ),
                 Attribute(
                     name="rank",
-                    path="./uro:WaterBodyRiverFloodingRiskAttribute/uro:rank",
+                    path="./uro:rank",
                     datatype="string",
                     predefined_codelist="RiverFloodingRiskAttribute_rank",
                 ),
                 Attribute(
                     name="rankOrg",
-                    path="./uro:WaterBodyRiverFloodingRiskAttribute/uro:rankOrg",
+                    path="./uro:rankOrg",
                     datatype="string",
                 ),
                 Attribute(
                     name="depth",
-                    path="./uro:WaterBodyRiverFloodingRiskAttribute/uro:depth",
+                    path="./uro:depth",
                     datatype="double",
                 ),
                 Attribute(
                     name="adminType",
-                    path="./uro:WaterBodyRiverFloodingRiskAttribute/uro:adminType",
+                    path="./uro:adminType",
                     datatype="string",
                     predefined_codelist="RiverFloodingRiskAttribute_adminType",
                 ),
                 Attribute(
                     name="scale",
-                    path="./uro:WaterBodyRiverFloodingRiskAttribute/uro:scale",
+                    path="./uro:scale",
                     datatype="string",
                     predefined_codelist="RiverFloodingRiskAttribute_scale",
                 ),
                 Attribute(
                     name="duration",
-                    path="./uro:WaterBodyRiverFloodingRiskAttribute/uro:duration",
+                    path="./uro:duration",
                     datatype="double",
                 ),
-                # uro:WaterBodyHighTideRiskAttribute
+            ],
+        ),
+        AttributeGroup(
+            base_element="./uro:floodingRiskAttribute/uro:WaterBodyHighTideRiskAttribute",
+            attributes=[
                 Attribute(
                     name="description",
-                    path="./uro:WaterBodyHighTideRiskAttribute/uro:description",
+                    path="./uro:description",
                     datatype="string",
                 ),
                 Attribute(
                     name="rank",
-                    path="./uro:WaterBodyHighTideRiskAttribute/uro:rank",
+                    path="./uro:rank",
                     datatype="string",
                     predefined_codelist="HighTideRiskAttribute_rank",
                 ),
                 Attribute(
                     name="rankOrg",
-                    path="./uro:WaterBodyHighTideRiskAttribute/uro:rankOrg",
+                    path="./uro:rankOrg",
                     datatype="string",
                 ),
                 Attribute(
                     name="depth",
-                    path="./uro:WaterBodyHighTideRiskAttribute/uro:depth",
+                    path="./uro:depth",
                     datatype="double",
                 ),
-                # uro:WaterBodyTsunamiRiskAttribute
+            ],
+        ),
+        AttributeGroup(
+            base_element="./uro:floodingRiskAttribute/uro:WaterBodyTsunamiRiskAttribute",
+            attributes=[
                 Attribute(
                     name="description",
-                    path="./uro:WaterBodyTsunamiRiskAttribute/uro:description",
+                    path="./uro:description",
                     datatype="string",
                 ),
                 Attribute(
                     name="rank",
-                    path="./uro:WaterBodyTsunamiRiskAttribute/uro:rank",
+                    path="./uro:rank",
                     datatype="string",
                     predefined_codelist="TsunamiRiskAttribute_rank",
                 ),
                 Attribute(
                     name="rankOrg",
-                    path="./uro:WaterBodyTsunamiRiskAttribute/uro:rankOrg",
+                    path="./uro:rankOrg",
                     datatype="string",
                 ),
                 Attribute(
                     name="depth",
-                    path="./uro:WaterBodyTsunamiRiskAttribute/uro:depth",
+                    path="./uro:depth",
                     datatype="double",
                 ),
-                # uro:WaterBodyHighTideRiskAttribute
+            ],
+        ),
+        AttributeGroup(
+            base_element="./uro:floodingRiskAttribute/uro:WaterBodyHighTideRiskAttribute",
+            attributes=[
                 Attribute(
                     name="description",
-                    path="./uro:WaterBodyHighTideRiskAttribute/uro:description",
+                    path="./uro:description",
                     datatype="string",
                 ),
                 Attribute(
                     name="rank",
-                    path="./uro:WaterBodyHighTideRiskAttribute/uro:rank",
+                    path="./uro:rank",
                     datatype="string",
                     predefined_codelist="HighTideRiskAttribute_rank",
                 ),
                 Attribute(
                     name="rankOrg",
-                    path="./uro:WaterBodyHighTideRiskAttribute/uro:rankOrg",
+                    path="./uro:rankOrg",
                     datatype="string",
                 ),
                 Attribute(
                     name="depth",
-                    path="./uro:WaterBodyHighTideRiskAttribute/uro:depth",
+                    path="./uro:depth",
                     datatype="double",
                 ),
-                # uro:WaterBodyInlandFloodingRiskAttribute
+            ],
+        ),
+        AttributeGroup(
+            base_element="./uro:floodingRiskAttribute/uro:WaterBodyInlandFloodingRiskAttribute",
+            attributes=[
                 Attribute(
                     name="description",
-                    path="./uro:WaterBodyInlandFloodingRiskAttribute/uro:description",
+                    path="./uro:description",
                     datatype="string",
-                    predefined_codelist="InlandFloodingRiskAttribute_description",
+                    predefined_codelist=None,
                 ),
                 Attribute(
                     name="rank",
-                    path="./uro:WaterBodyInlandFloodingRiskAttribute/uro:rank",
+                    path="./uro:rank",
                     datatype="string",
                     predefined_codelist="InlandFloodingRiskAttribute_rank",
                 ),
                 Attribute(
                     name="rankOrg",
-                    path="./uro:WaterBodyInlandFloodingRiskAttribute/uro:rankOrg",
+                    path="./uro:rankOrg",
                     datatype="string",
                 ),
                 Attribute(
                     name="depth",
-                    path="./uro:WaterBodyInlandFloodingRiskAttribute/uro:depth",
+                    path="./uro:depth",
                     datatype="double",
                 ),
             ],

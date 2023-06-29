@@ -153,7 +153,7 @@ BUILDING = FeatureProcessingDefinition(
                     name="urbanPlanType",
                     path="./uro:urbanPlanType",
                     datatype="string",
-                    predefined_codelist="BuildingDetailAttribute_urbanPlanType",
+                    predefined_codelist=None,
                 ),
                 Attribute(
                     name="areaClassificationType",
