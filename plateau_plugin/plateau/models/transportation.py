@@ -106,10 +106,6 @@ ROAD = FeatureProcessingDefinition(
             ],
         ),
         PropertyGroup(
-            base_element="./uro:tranFacilityIdAttribute/uro:FacilityIdAttribute",
-            properties=facility_id_attribute_attrs,
-        ),
-        PropertyGroup(
             base_element="./uro:trafficVolumeAttribute/uro:TrafficVolumeAttribute",
             properties=[
                 Property(
@@ -183,6 +179,10 @@ ROAD = FeatureProcessingDefinition(
                     datatype="integer",
                 ),
             ],
+        ),
+        PropertyGroup(
+            base_element="./uro:tranFacilityIdAttribute/uro:FacilityIdAttribute",
+            properties=facility_id_attribute_attrs,
         ),
         PropertyGroup(
             base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
@@ -275,6 +275,10 @@ RAILWAY = FeatureProcessingDefinition(
             ],
         ),
         PropertyGroup(
+            base_element="./uro:tranFacilityIdAttribute/uro:FacilityIdAttribute",
+            properties=facility_id_attribute_attrs,
+        ),
+        PropertyGroup(
             base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
             properties=_transportation_data_quality_attribute,
         )
@@ -306,7 +310,6 @@ RAILWAY = FeatureProcessingDefinition(
     ),
 )
 
-# FIXME: 属性値はまだ整備していない
 TRACK = FeatureProcessingDefinition(
     id="Track",
     target_elements=["tran:Track"],
@@ -337,8 +340,49 @@ TRACK = FeatureProcessingDefinition(
         PropertyGroup(
             base_element="./uro:trackAttribute/uro:TrackAttribute",
             properties=[
-                # TODO
+                Property(
+                    name="adminType",
+                    path="./uro:adminType",
+                    datatype="string",
+                    predefined_codelist="TrackAttribute_adminType",
+                ),
+                Property(
+                    name="alternativeName",
+                    path="./uro:alternativeName",
+                    datatype="[]string",
+                ),
+                Property(
+                    name="isTollRoad",
+                    path="./uro:isTollRoad",
+                    datatype="boolean",
+                ),
+                Property(
+                    name="relativeLevel",
+                    path="./uro:relativeLevel",
+                    datatype="integer",
+                ),
+                Property(
+                    name="separator",
+                    path="./uro:separator",
+                    datatype="double",
+                ),
+                Property(
+                    name="structureType",
+                    path="./uro:structureType",
+                    datatype="string",
+                    predefined_codelist="TrackAttribute_structureType",
+                ),
+                Property(
+                    name="widthType",
+                    path="./uro:widthType",
+                    datatype="string",
+                    predefined_codelist="TrackAttribute_widthType",
+                ),
             ],
+        ),
+        PropertyGroup(
+            base_element="./uro:tranFacilityIdAttribute/uro:FacilityIdAttribute",
+            properties=facility_id_attribute_attrs,
         ),
         PropertyGroup(
             base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
@@ -372,7 +416,145 @@ TRACK = FeatureProcessingDefinition(
     ),
 )
 
-# FIXME: 属性値はまだ整備していない
+_square_urban_plan_attribute_attrs = [
+    Property(
+        name="areaCompleted",
+        path="./uro:areaCompleted",
+        datatype="double",
+    ),
+    Property(
+        name="areaImproved",
+        path="./uro:areaImproved",
+        datatype="double",
+    ),
+    Property(
+        name="areaInService",
+        path="./uro:areaInService",
+        datatype="double",
+    ),
+    Property(
+        name="areaPlanned",
+        path="./uro:areaPlanned",
+        datatype="double",
+    ),
+    Property(
+        name="city",
+        path="./uro:city",
+        datatype="string",
+        predefined_codelist="Common_localPublicAuthorities",
+    ),
+    Property(
+        name="dateOfDecision",
+        path="./uro:dateOfDecision",
+        datatype="date",
+    ),
+    Property(
+        name="dateOfRevision",
+        path="./uro:dateOfRevision",
+        datatype="date",
+    ),
+    Property(
+        name="enforcer",
+        path="./uro:enforcer",
+        datatype="[]string",
+    ),
+    Property(
+        name="isAuthorized",
+        path="./uro:isAuthorized",
+        datatype="boolean",
+    ),
+    Property(
+        name="isCompleted",
+        path="./uro:isCompleted",
+        datatype="boolean",
+    ),
+    Property(
+        name="note",
+        path="./uro:note",
+        datatype="string",
+    ),
+    Property(
+        name="numberOfBerthsInService",
+        path="./uro:numberOfBerthsInService",
+        datatype="integer",
+    ),
+    Property(
+        name="numberOfBerthsPlanned",
+        path="./uro:numberOfBerthsPlanned",
+        datatype="integer",
+    ),
+    Property(
+        name="prefecture",
+        path="./uro:prefecture",
+        datatype="string",
+        predefined_codelist="Common_localPublicAuthorities",
+    ),
+    Property(
+        name="projectEndDate",
+        path="./uro:projectEndDate",
+        datatype="date",
+    ),
+    Property(
+        name="projectStartDate",
+        path="./uro:projectStartDate",
+        datatype="date",
+    ),
+    Property(
+        name="purpose",
+        path="./uro:purpose",
+        datatype="string",
+    ),
+    Property(
+        name="railwayType",
+        path="./uro:railwayType",
+        datatype="[]string",
+        predefined_codelist=None,
+    ),
+    Property(
+        name="remarks",
+        path="./uro:remarks",
+        datatype="string",
+    ),
+    Property(
+        name="route",
+        path="./uro:route",
+        datatype="[]string",
+    ),
+    Property(
+        name="station",
+        path="./uro:station",
+        datatype="[]string",
+    ),
+    Property(
+        name="status",
+        path="./uro:status",
+        datatype="string",
+        predefined_codelist=None,
+    ),
+    Property(
+        name="structure",
+        path="./uro:structure",
+        datatype="string",
+    ),
+    Property(
+        name="terminalType",
+        path="./uro:terminalType",
+        datatype="string",
+        predefined_codelist=None,
+    ),
+    Property(
+        name="urbanPlanningAreaName",
+        path="./uro:urbanPlanningAreaName",
+        datatype="string",
+    ),
+    Property(
+        name="userType",
+        path="./uro:userType",
+        datatype="string",
+        predefined_codelist=None,
+    ),
+]
+
 SQUARE = FeatureProcessingDefinition(
     id="Square",
     target_elements=["tran:Square"],
@@ -402,21 +584,19 @@ SQUARE = FeatureProcessingDefinition(
         ),
         PropertyGroup(
             base_element="./uro:railwayRouteAttribute/uro:SquareUrbanPlanAttribute",
-            properties=[
-                # TODO
-            ],
+            properties=_square_urban_plan_attribute_attrs,
         ),
         PropertyGroup(
             base_element="./uro:railwayRouteAttribute/uro:StationSquareAttribute",
-            properties=[
-                # TODO
-            ],
+            properties=_square_urban_plan_attribute_attrs,
         ),
         PropertyGroup(
             base_element="./uro:railwayRouteAttribute/uro:TerminalAttribute",
-            properties=[
-                # TODO
-            ],
+            properties=_square_urban_plan_attribute_attrs,
+        ),
+        PropertyGroup(
+            base_element="./uro:tranFacilityIdAttribute/uro:FacilityIdAttribute",
+            properties=facility_id_attribute_attrs,
         ),
         PropertyGroup(
             base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
@@ -450,7 +630,6 @@ SQUARE = FeatureProcessingDefinition(
     ),
 )
 
-# FIXME: 属性値はまだ整備していない
 WATERWAY = FeatureProcessingDefinition(
     id="Waterway",
     target_elements=[
@@ -484,8 +663,57 @@ WATERWAY = FeatureProcessingDefinition(
         PropertyGroup(
             base_element="./uro:watewayDetailAttribute/uro:WaterwayDetailAttribute",
             properties=[
-                # TODO
+                Property(
+                    name="length",
+                    path="./uro:length",
+                    datatype="double",
+                ),
+                Property(
+                    name="maximumWidth",
+                    path="./uro:maximumWidth",
+                    datatype="double",
+                ),
+                Property(
+                    name="minimumWidth",
+                    path="./uro:minimumWidth",
+                    datatype="double",
+                ),
+                Property(
+                    name="navigation",
+                    path="./uro:navigation",
+                    datatype="string",
+                ),
+                Property(
+                    name="plannedDepth",
+                    path="./uro:plannedDepth",
+                    datatype="double",
+                ),
+                Property(
+                    name="routeDirection",
+                    path="./uro:routeDirection",
+                    datatype="string",
+                    predefined_codelist=None,
+                ),
+                Property(
+                    name="routeID",
+                    path="./uro:routeID",
+                    datatype="integer",
+                ),
+                Property(
+                    name="speedLimit",
+                    path="./uro:speedLimit",
+                    datatype="double",
+                ),
+                Property(
+                    name="targetShipType",
+                    path="./uro:targetShipType",
+                    datatype="[]string",
+                ),
             ],
+        ),
+        PropertyGroup(
+            base_element="./uro:tranFacilityIdAttribute/uro:FacilityIdAttribute",
+            properties=facility_id_attribute_attrs,
         ),
         PropertyGroup(
             base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
