@@ -1,8 +1,5 @@
 """地下街モデル (./ubld/)"""
 
-# FIXME:
-# TODO: 以下、bldg:Building 用の定義をコピペしただけなので、内容は要検証
-
 from .base import (
     FeatureEmission,
     FeatureEmissions,
@@ -11,7 +8,6 @@ from .base import (
     Property,
     PropertyGroup,
 )
-from .common import facility_id_attribute_attrs
 
 UNDERGROUND_BUILDING = FeatureProcessingDefinition(
     id="UndergroundBuilding",
@@ -46,26 +42,15 @@ UNDERGROUND_BUILDING = FeatureProcessingDefinition(
                     datatype="integer",
                 ),
                 Property(
-                    name="roofType",
-                    path="./bldg:roofType",
-                    datatype="string",
-                    predefined_codelist="Building_roofType",
-                ),
-                Property(
-                    name="measuredHeight",
-                    path="./bldg:measuredHeight",
-                    datatype="double",
-                ),
-                Property(
-                    name="storeysAboveGround",
-                    path="./bldg:storeysAboveGround",
-                    datatype="integer",
-                ),
-                Property(
                     name="storeysBelowGround",
                     path="./bldg:storeysBelowGround",
                     datatype="integer",
                 ),
+                # Property(
+                #     name="storeyHeightsBelowGround",
+                #     path="./bldg:storeyHeightsBelowGround",
+                #     datatype="[]double",  # TODO: どのように対応するか
+                # ),
                 # Property(
                 #     name="address",
                 #     path="./bldg:address",
@@ -437,17 +422,10 @@ UNDERGROUND_BUILDING = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        PropertyGroup(
-            base_element="./uro:bldgFacilityIdAttribute/uro:FacilityIdAttribute",
-            properties=facility_id_attribute_attrs,
-        ),
         # TODO: uro:buildingDisasterRiskAttribute (入れ子, polymorpohic)
         # TODO: uro:keyValuePairAttribute
         # (TODO: uro:ifcBuildingAttribute)
         # TODO: uro:indoorBuildingAttribute
-        # TODO: uro:bldgFacilityTypeAttribute
-        # TODO: uro:bldgFacilityAttribute
-        # TODO: uro:bldgDmAttribute
     ],
     emissions=FeatureEmissions(
         lod1=FeatureEmission(collect_all=[".//bldg:lod1Solid//gml:Polygon"]),
