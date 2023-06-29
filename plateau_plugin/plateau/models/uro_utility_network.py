@@ -219,6 +219,16 @@ UTILITY_NODE_CONTAINER = FeatureProcessingDefinition(
                     path="./uro:innerDiamiterShort",
                     datatype="double",
                 ),
+                Attribute(
+                    name="outerDiamiterLong",
+                    path="./uro:outerDiamiterLong",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="outerDiamiterShort",
+                    path="./uro:outerDiamiterShort",
+                    datatype="double",
+                ),
             ],
         ),
     ],
