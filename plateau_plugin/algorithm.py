@@ -253,7 +253,7 @@ class PlateauProcessingAlrogithm(QgsProcessingAlgorithm):
                     # 親地物と結合 (join) できるように親地物の ID を持たせる
                     feature.setAttribute("parent", cityobj.processor_path[-2][1])
 
-                for name, value in cityobj.properties.items():
+                for name, value in cityobj.attributes.items():
                     feature.setAttribute(name, _convert_to_qt_value(value))
 
                 # Set geometry

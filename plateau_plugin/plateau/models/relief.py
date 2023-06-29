@@ -13,7 +13,7 @@ RELIEF = FeatureProcessingDefinition(
     lod_detection=LODDetection(
         lod_n="dem:lod",
     ),
-    property_groups=[],
+    attribute_groups=[],
     emissions=FeatureEmissions(
         # NOTE: ひとまず TIN のみに対応する
         lod1=FeatureEmission(

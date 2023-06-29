@@ -1,12 +1,12 @@
 """都市設備モデル (./fur/)"""
 
 from .base import (
+    Attribute,
+    AttributeGroup,
     FeatureEmission,
     FeatureEmissions,
     FeatureProcessingDefinition,
     LODDetection,
-    Property,
-    PropertyGroup,
 )
 from .common import facility_id_attribute_attrs
 
@@ -18,23 +18,23 @@ CITY_FURNITURE = FeatureProcessingDefinition(
         lod2=["./frn:lod2Geometry"],
         lod3=["./frn:lod3Geometry"],
     ),
-    property_groups=[
-        PropertyGroup(
+    attribute_groups=[
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="class",
                     path="./frn:class",
                     datatype="string",
                     predefined_codelist="CityFurniture_class",
                 ),
-                Property(
+                Attribute(
                     name="function",
                     path="./frn:function",
                     datatype="[]string",
                     predefined_codelist="CityFurniture_function",
                 ),
-                Property(
+                Attribute(
                     name="usage",
                     path="./frn:usage",
                     datatype="[]string",
@@ -42,34 +42,34 @@ CITY_FURNITURE = FeatureProcessingDefinition(
             ],
         ),
         # uro:CityFurnitureDataQualityAttribute
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:cityFurnitureDataQualityAttribute/uro:CityFurnitureDataQualityAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="srcScale",
                     path="./uro:srcScale",
                     datatype="[]string",
                     predefined_codelist="CityFurnitureDataQualityAttribute_srcScale",
                 ),
-                Property(
+                Attribute(
                     name="geometrySrcDesc",
                     path="./uro:geometrySrcDesc",
                     datatype="[]string",
                     predefined_codelist="CityFurnitureDataQualityAttribute_geometrySrcDesc",
                 ),
-                Property(
+                Attribute(
                     name="thematicSrcDesc",
                     path="./uro:thematicSrcDesc",
                     datatype="[]string",
                     predefined_codelist="CityFurnitureDataQualityAttribute_thematicSrcDesc",
                 ),
-                Property(
+                Attribute(
                     name="appearanceSrcDesc",
                     path="./uro:appearanceSrcDesc",
                     datatype="[]string",
                     predefined_codelist="CityFurnitureDataQualityAttribute_appearanceSrcDesc",
                 ),
-                Property(
+                Attribute(
                     name="lodType",
                     path="./uro:lodType",
                     datatype="[]string",
@@ -77,24 +77,24 @@ CITY_FURNITURE = FeatureProcessingDefinition(
             ],
         ),
         # FIXME: cityFurnitureDetailAttribute は多重度が[0..*] (入れ子) なのでこれは正しくない
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:cityFurnitureDetailAttribute/uro:CityFurnitureDetailAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="facilityType",
                     path="./uro:facilityType",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="description",
                     path="./uro:description",
                     datatype="string",
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:frnFacilityIdAttribute/uro:FacilityIdAttribute",
-            properties=facility_id_attribute_attrs,
+            attributes=facility_id_attribute_attrs,
         ),
         # TODO: uro:frnFacilityTypeAttribute
         # TODO: uro:frnFacilityAttribute

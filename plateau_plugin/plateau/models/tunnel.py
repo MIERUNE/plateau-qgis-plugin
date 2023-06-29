@@ -1,12 +1,12 @@
 """トンネルモデル (./tun/)"""
 
 from .base import (
+    Attribute,
+    AttributeGroup,
     FeatureEmission,
     FeatureEmissions,
     FeatureProcessingDefinition,
     LODDetection,
-    Property,
-    PropertyGroup,
 )
 from .common import facility_id_attribute_attrs
 
@@ -19,177 +19,177 @@ TUNNEL = FeatureProcessingDefinition(
         lod3=["./tun:lod3Solid"],
         lod4=["./tun:lod4Solid", "./tun:lod4MultiSurface"],
     ),
-    property_groups=[
-        PropertyGroup(
+    attribute_groups=[
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="class",
                     path="./tun:class",
                     datatype="string",
                     predefined_codelist="Tunnel_class",
                 ),
-                Property(
+                Attribute(
                     name="function",
                     path="./tun:function",
                     datatype="[]string",
                     predefined_codelist="Tunnel_function",
                 ),
-                Property(
+                Attribute(
                     name="yearOfConstruction",
                     path="./tun:yearOfConstruction",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="yearOfDemolition",
                     path="./tun:yearOfDemolition",
                     datatype="integer",
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:tunBaseAttribute/uro:ConstructionBaseAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="adminOffice",
                     path="./uro:adminOffice",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="adminType",
                     path="./uro:adminType",
                     datatype="string",
                     predefined_codelist="ConstructionBaseAttribute_adminType",
                 ),
-                Property(
+                Attribute(
                     name="administorator",
                     path="./uro:administorator",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="completionYear",
                     path="./uro:completionYear",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="constructionStartYear",
                     path="./uro:constructionStartYear",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="facilityAge",
                     path="./uro:facilityAge",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="installer",
                     path="./uro:installer",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="installerType",
                     path="./uro:installerType",
                     datatype="string",
                     predefined_codelist="ConstructionBaseAttribute_installerType",
                 ),
-                Property(
+                Attribute(
                     name="kana",
                     path="./uro:kana",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="operatorType",
                     path="./uro:operatorType",
                     datatype="string",
                     predefined_codelist=None,
                 ),
-                Property(
+                Attribute(
                     name="purpose",
                     path="./uro:purpose",
                     datatype="string",
                     predefined_codelist="ConstructionBaseAttribute_purpose",
                 ),
-                Property(
+                Attribute(
                     name="specification",
                     path="./uro:specification",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="structureOrdinance",
                     path="./uro:structureOrdinance",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="update",
                     path="./uro:update",
                     datatype="date",
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:tunStructureAttribute/uro:TunnelStructureAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="area",
                     path="./uro:area",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="effectiveHeight",
                     path="./uro:effectiveHeight",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="innerHeight",
                     path="./uro:innerHeight",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="length",
                     path="./uro:length",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="mouthType",
                     path="./uro:mouthType",
                     datatype="string",
                     predefined_codelist="TunnelStructureAttribute_mouthType",
                 ),
-                Property(
+                Attribute(
                     name="slopeType",
                     path="./uro:slopeType",
                     datatype="string",
                     predefined_codelist="ConstructionStructureAttribute_slopeType",
                 ),
-                Property(
+                Attribute(
                     name="tunnelSubtype",
                     path="./uro:tunnelSubtype",
                     datatype="string",
                     predefined_codelist="TunnelStructureAttribute_tunnelSubType",
                 ),
-                Property(
+                Attribute(
                     name="tunnelType",
                     path="./uro:tunnelType",
                     datatype="string",
                     predefined_codelist="TunnelStructureAttribute_tunnelType",
                 ),
-                Property(
+                Attribute(
                     name="width",
                     path="./uro:width",
                     datatype="double",
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:tunFunctionalAttribute/uro:TunnelFunctionalAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="directionType",
                     path="./uro:directionType",
                     datatype="string",
                     predefined_codelist="ConstructionFunctionalAttribute_directionType",
                 ),
-                Property(
+                Attribute(
                     name="userType",
                     path="./uro:userType",
                     datatype="string",
@@ -197,76 +197,76 @@ TUNNEL = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:tunRiskAssessmentAttribute/uro:ConstructionRiskAssessmentAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="referenceDate",
                     path="./uro:referenceDate",
                     datatype="date",
                 ),
-                Property(
+                Attribute(
                     name="riskType",
                     path="./uro:riskType",
                     datatype="[]string",
                     predefined_codelist="ConstructionRiskAssessmentAttribute_riskType",
                 ),
-                Property(
+                Attribute(
                     name="status",
                     path="./uro:status",
                     datatype="[]string",
                     predefined_codelist="ConstructionRiskAssessmentAttribute_status",
                 ),
-                Property(
+                Attribute(
                     name="surveyYear",
                     path="./uro:surveyYear",
                     datatype="integer",
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:tunDataQualityAttribute/uro:ConstructionDataQualityAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="appearanceSrcDesc",
                     path="./uro:appearanceSrcDesc",
                     datatype="[]string",
                     predefined_codelist="DataQualityAttribute_appearanceSrcDesc",
                 ),
-                Property(
+                Attribute(
                     name="dataAcquisition",
                     path="./uro:dataAcquisition",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="geometrySrcDesc",
                     path="./uro:geometrySrcDesc",
                     datatype="[]string",
                     predefined_codelist="DataQualityAttribute_geometrySrcDesc",
                 ),
-                Property(
+                Attribute(
                     name="lod1HeightType",
                     path="./uro:lod1HeightType",
                     datatype="string",
                     predefined_codelist="DataQualityAttribute_lod1HeightType",
                 ),
-                Property(
+                Attribute(
                     name="lodType",
                     path="./uro:lodType",
                     datatype="[]string",
                 ),
-                Property(
+                Attribute(
                     name="photoScale",
                     path="./uro:photoScale",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="srcScale",
                     path="./uro:srcScale",
                     datatype="string",
                     predefined_codelist="DataQualityAttribute_srcScale",
                 ),
-                Property(
+                Attribute(
                     name="thematicSrcDesc",
                     path="./uro:thematicSrcDesc",
                     datatype="[]string",
@@ -274,9 +274,9 @@ TUNNEL = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:tunFacilityIdAttribute/uro:FacilityIdAttribute",
-            properties=facility_id_attribute_attrs,
+            attributes=facility_id_attribute_attrs,
         ),
         # TODO: uro:tunDisasterRiskAttribute (入れ子, polymorpohic)
         # TODO: uro:tunFacilityTypeAttribute
@@ -342,7 +342,7 @@ TUNNEL_BOUNDARY_SURFACE = FeatureProcessingDefinition(
         "tun:InteriorWallSurface",
         "tun:FloorSurface",
     ],
-    property_groups=[],
+    attribute_groups=[],
     lod_detection=LODDetection(
         lod2=["./tun:lod2MultiSurface"],
         lod3=["./tun:lod3MultiSurface"],
@@ -374,7 +374,7 @@ TUNNEL_OPENING = FeatureProcessingDefinition(
         "tun:Window",
         "tun:Door",
     ],
-    property_groups=[],
+    attribute_groups=[],
     lod_detection=LODDetection(
         lod3=["./tun:lod3MultiSurface"],
         lod4=["./tun:lod4MultiSurface"],
@@ -390,11 +390,11 @@ TUNNEL_INSTALLATION = FeatureProcessingDefinition(
     target_elements=[
         "tun:TunnelInstallation",
     ],
-    property_groups=[
-        PropertyGroup(
+    attribute_groups=[
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="function",
                     path="./tun:function",
                     datatype="[]string",
@@ -420,11 +420,11 @@ TUNNEL_INT_INSTALLATION = FeatureProcessingDefinition(
     target_elements=[
         "tun:IntTunnelInstallation",
     ],
-    property_groups=[
-        PropertyGroup(
+    attribute_groups=[
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="function",
                     path="./tun:function",
                     datatype="[]string",
@@ -449,11 +449,11 @@ TUNNEL_FURNITURE = FeatureProcessingDefinition(
     target_elements=[
         "tun:TunnelFurniture",
     ],
-    property_groups=[
-        PropertyGroup(
+    attribute_groups=[
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="function",
                     path="./tun:function",
                     datatype="[]string",

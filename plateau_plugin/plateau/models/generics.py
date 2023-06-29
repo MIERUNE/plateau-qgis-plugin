@@ -1,12 +1,12 @@
 """汎用都市オブジェクトモデル (./gen/)"""
 
 from .base import (
+    Attribute,
+    AttributeGroup,
     FeatureEmission,
     FeatureEmissions,
     FeatureProcessingDefinition,
     LODDetection,
-    Property,
-    PropertyGroup,
 )
 
 GENERIC_CITY_OBJECT = FeatureProcessingDefinition(
@@ -18,21 +18,21 @@ GENERIC_CITY_OBJECT = FeatureProcessingDefinition(
         lod2=["./gen:lod2Geometry"],
         lod3=["./gen:lod3Geometry"],
     ),
-    property_groups=[
-        PropertyGroup(
+    attribute_groups=[
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="class",
                     path="./gen:class",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="function",
                     path="./gen:function",
                     datatype="[]string",
                 ),
-                Property(
+                Attribute(
                     name="usage",
                     path="./gen:usage",
                     datatype="[]string",

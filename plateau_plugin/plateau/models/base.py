@@ -56,7 +56,7 @@ class FeatureEmissions:
 
 
 @dataclass
-class Property:
+class Attribute:
     name: str
     path: str
     datatype: PropertyDatatype
@@ -64,13 +64,13 @@ class Property:
 
 
 @dataclass
-class PropertyGroup:
+class AttributeGroup:
     """属性抽出をグルーピングする"""
 
     base_element: Optional[str]
     """属性抽出の起点とするXML要素への element path。None の場合はこの地物自体を起点とする。"""
 
-    properties: Sequence[Property]
+    attributes: Sequence[Attribute]
     # mode: Literal["flatten", "map"] = "flatten"
 
 
@@ -100,7 +100,7 @@ class FeatureProcessingDefinition:
     """処理対象とする地物要素 (e.g. "tran:Road", "tran:TrafficArea", "bldg:WallSurface")"""
 
     lod_detection: LODDetection  # 各 LOD の有無を判定するための element paths
-    property_groups: list[PropertyGroup]  # 取得したい属性 (プロパティ) の定義
+    attribute_groups: list[AttributeGroup]  # 取得したい属性 (プロパティ) の定義
     emissions: FeatureEmissions  # ジオメトリの抽出についての定義
 
     def detect_lods(self, elem: et._Element, nsmap: dict[str, str]) -> tuple[bool, ...]:
@@ -179,8 +179,8 @@ class ProcessorRegistory:
             FieldDefinition("terminationDate", "date"),
         ]
         closed: dict[str, str] = {}
-        for group in processor.property_groups:
-            for prop in group.properties:
+        for group in processor.attribute_groups:
+            for prop in group.attributes:
                 if prop.name not in closed:
                     fields.append(FieldDefinition(prop.name, prop.datatype))
                     closed[prop.name] = prop.datatype

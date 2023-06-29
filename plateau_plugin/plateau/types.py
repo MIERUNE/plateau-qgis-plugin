@@ -49,7 +49,7 @@ class CityObject:
     termination_date: Optional[date]
     """core:terminationDate"""
 
-    properties: OrderedDict[str, Any]
+    attributes: OrderedDict[str, Any]
     """地物のプロパティ値"""
 
     geometry: Optional[Geometry]

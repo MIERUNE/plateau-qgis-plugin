@@ -1,12 +1,12 @@
 """災害リスク (土砂災害) モデル (./lsld/)"""
 
 from .base import (
+    Attribute,
+    AttributeGroup,
     FeatureEmission,
     FeatureEmissions,
     FeatureProcessingDefinition,
     LODDetection,
-    Property,
-    PropertyGroup,
 )
 
 URF_SEDIMENT_DISASTER_PRONE_AREA = FeatureProcessingDefinition(
@@ -18,56 +18,56 @@ URF_SEDIMENT_DISASTER_PRONE_AREA = FeatureProcessingDefinition(
     lod_detection=LODDetection(
         lod1=["./urf:lod1MultiSurface"],
     ),
-    property_groups=[
-        PropertyGroup(
+    attribute_groups=[
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="validFrom",
                     path="./urf:validFrom",
                     datatype="date",
                 ),
-                Property(
+                Attribute(
                     name="validFromType",
                     path="./urf:validFromType",
                     datatype="string",
                     predefined_codelist="Common_validType",
                 ),
-                Property(
+                Attribute(
                     name="prefecture",
                     path="./urf:prefecture",
                     datatype="string",
                     predefined_codelist="Common_prefecture",
                 ),
-                Property(
+                Attribute(
                     name="location",
                     path="./urf:location",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="disasterType",
                     path="./urf:disasterType",
                     datatype="string",
                     predefined_codelist="SedimentDisasterProneArea_disasterType",
                 ),
-                Property(
+                Attribute(
                     name="areaType",
                     path="./urf:areaType",
                     datatype="string",
                     predefined_codelist="SedimentDisasterProneArea_areaType",
                 ),
-                Property(
+                Attribute(
                     name="status",
                     path="./urf:status",
                     datatype="string",
                     predefined_codelist="SedimentDisasterProneArea_status",
                 ),
-                Property(
+                Attribute(
                     name="zoneName",
                     path="./urf:zoneName",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="zoneNumber",
                     path="./urf:zoneNumber",
                     datatype="string",

@@ -23,12 +23,12 @@ uro:UtilityNode, uro:UtilityNodeContainer, uro:UtilityLink の3種類に分け�
 """
 
 from .base import (
+    Attribute,
+    AttributeGroup,
     FeatureEmission,
     FeatureEmissions,
     FeatureProcessingDefinition,
     LODDetection,
-    Property,
-    PropertyGroup,
 )
 from .common import facility_id_attribute_attrs
 
@@ -44,32 +44,32 @@ def _make_prefix_variants(prefixed_names: list[str]) -> list[str]:
 
 
 _common_property_groups = [
-    PropertyGroup(
+    AttributeGroup(
         base_element=None,
-        properties=[
-            Property(
+        attributes=[
+            Attribute(
                 name="function",
                 path="./frn:function",
                 datatype="[]string",
                 predefined_codelist="CityFurniture_function",
             ),
-            Property(
+            Attribute(
                 name="occupierName",
                 path="./uro:occupierName",
                 datatype="string",
             ),
-            Property(
+            Attribute(
                 name="occupierType",
                 path="./uro:occupierType",
                 datatype="string",
                 predefined_codelist="UtilityNetworkElement_occupierType",
             ),
-            Property(
+            Attribute(
                 name="year",
                 path="./uro:year",
                 datatype="integer",
             ),
-            Property(
+            Attribute(
                 name="yearType",
                 path="./uro:yearType",
                 datatype="string",
@@ -78,34 +78,34 @@ _common_property_groups = [
         ],
     ),
     # uro:CityFurnitureDataQualityAttribute
-    PropertyGroup(
+    AttributeGroup(
         base_element="./uro:cityFurnitureDataQualityAttribute/uro:CityFurnitureDataQualityAttribute",
-        properties=[
-            Property(
+        attributes=[
+            Attribute(
                 name="srcScale",
                 path="./uro:srcScale",
                 datatype="[]string",
                 predefined_codelist="CityFurnitureDataQualityAttribute_srcScale",
             ),
-            Property(
+            Attribute(
                 name="geometrySrcDesc",
                 path="./uro:geometrySrcDesc",
                 datatype="[]string",
                 predefined_codelist="CityFurnitureDataQualityAttribute_geometrySrcDesc",
             ),
-            Property(
+            Attribute(
                 name="thematicSrcDesc",
                 path="./uro:thematicSrcDesc",
                 datatype="[]string",
                 predefined_codelist="CityFurnitureDataQualityAttribute_thematicSrcDesc",
             ),
-            Property(
+            Attribute(
                 name="appearanceSrcDesc",
                 path="./uro:appearanceSrcDesc",
                 datatype="[]string",
                 predefined_codelist="CityFurnitureDataQualityAttribute_appearanceSrcDesc",
             ),
-            Property(
+            Attribute(
                 name="lodType",
                 path="./uro:lodType",
                 datatype="[]string",
@@ -113,24 +113,24 @@ _common_property_groups = [
         ],
     ),
     # FIXME: cityFurnitureDetailAttribute は多重度が[0..*] (入れ子)
-    PropertyGroup(
+    AttributeGroup(
         base_element="./uro:cityFurnitureDetailAttribute/uro:CityFurnitureDetailAttribute",
-        properties=[
-            Property(
+        attributes=[
+            Attribute(
                 name="facilityType",
                 path="./uro:facilityType",
                 datatype="string",
             ),
-            Property(
+            Attribute(
                 name="description",
                 path="./uro:description",
                 datatype="string",
             ),
         ],
     ),
-    PropertyGroup(
+    AttributeGroup(
         base_element="./uro:frnFacilityIdAttribute/uro:FacilityIdAttribute",
-        properties=facility_id_attribute_attrs,
+        attributes=facility_id_attribute_attrs,
     ),
     # TODO: uro:frnFacilityTypeAttribute
     # TODO: uro:frnFacilityAttribute
@@ -150,23 +150,23 @@ UTILITY_NODE = FeatureProcessingDefinition(
         lod2=["./frn:lod2Geometry"],
         lod3=["./frn:lod3Geometry"],
     ),
-    property_groups=[
+    attribute_groups=[
         *_common_property_groups,
-        PropertyGroup(
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="appurtenanceType",
                     path="./uro:appurtenanceType",
                     datatype="string",
                     predefined_codelist="Appurtenance_appurtenanceType",
                 ),
-                Property(
+                Attribute(
                     name="nextLink",
                     path="./uro:nextLink",
                     datatype="[]string",
                 ),
-                Property(
+                Attribute(
                     name="previousLink",
                     path="./uro:previousLink",
                     datatype="[]string",
@@ -194,27 +194,27 @@ UTILITY_NODE_CONTAINER = FeatureProcessingDefinition(
         lod2=["./frn:lod2Geometry"],
         lod3=["./frn:lod3Geometry"],
     ),
-    property_groups=[
+    attribute_groups=[
         *_common_property_groups,
-        PropertyGroup(
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="appurtenance",
                     path="./uro:appurtenance",
                     datatype="[]string",
                 ),
-                Property(
+                Attribute(
                     name="depth",
                     path="./uro:depth",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="innerDiamiterLong",
                     path="./uro:innerDiamiterLong",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="innerDiamiterShort",
                     path="./uro:innerDiamiterShort",
                     datatype="double",
@@ -249,94 +249,94 @@ UTILITY_LINK = FeatureProcessingDefinition(
         lod2=["./frn:lod2Geometry"],
         lod3=["./frn:lod3Geometry"],
     ),
-    property_groups=[
+    attribute_groups=[
         *_common_property_groups,
-        PropertyGroup(
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="cables",
                     path="./uro:cables",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="columns",
                     path="./uro:columns",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="depth",
                     path="./uro:depth",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="endNode",
                     path="./uro:endNode",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="horizontalLength",
                     path="./uro:horizontalLength",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="innerDiamiter",
                     path="./uro:innerDiamiter",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="length",
                     path="./uro:length",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="material",
                     path="./uro:material",
                     datatype="string",
                     predefined_codelist=None,
                 ),
-                Property(
+                Attribute(
                     name="maxDepth",
                     path="./uro:maxDepth",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="minDepth",
                     path="./uro:minDepth",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="offset",
                     path="./uro:offset",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="outerDiamiter",
                     path="./uro:outerDiamiter",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="rows",
                     path="./uro:rows",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="sewerWaterType",
                     path="./uro:sewerWaterType",
                     datatype="string",
                     predefined_codelist=None,
                 ),
-                Property(
+                Attribute(
                     name="sleeveType",
                     path="./uro:sleeveType",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="startNode",
                     path="./uro:startNode",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="width",
                     path="./uro:width",
                     datatype="double",

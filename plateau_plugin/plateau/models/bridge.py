@@ -1,12 +1,12 @@
 """橋梁モデル (./brid/)"""
 
 from .base import (
+    Attribute,
+    AttributeGroup,
     FeatureEmission,
     FeatureEmissions,
     FeatureProcessingDefinition,
     LODDetection,
-    Property,
-    PropertyGroup,
 )
 from .common import facility_id_attribute_attrs
 
@@ -19,139 +19,139 @@ BRIDGE = FeatureProcessingDefinition(
         lod3=["./brid:lod3Solid", "./brid:lod3MultiSurface"],
         lod4=["./brid:lod4Solid", "./brid:lod4MultiSurface"],
     ),
-    property_groups=[
-        PropertyGroup(
+    attribute_groups=[
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="class",
                     path="./brid:class",
                     datatype="string",
                     predefined_codelist="Bridge_class",
                 ),
-                Property(
+                Attribute(
                     name="function",
                     path="./brid:function",
                     datatype="[]string",
                     predefined_codelist="Bridge_function",
                 ),
-                Property(
+                Attribute(
                     name="yearOfConstruction",
                     path="./brid:yearOfConstruction",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="yearOfDemolition",
                     path="./brid:yearOfDemolition",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="isMovable",
                     path="./brid:isMovable",
                     datatype="boolean",
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:bridBaseAttribute/uro:ConstructionBaseAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="adminOffice",
                     path="./uro:adminOffice",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="adminType",
                     path="./uro:adminType",
                     datatype="string",
                     predefined_codelist="ConstructionBaseAttribute_adminType",
                 ),
-                Property(
+                Attribute(
                     name="administorator",
                     path="./uro:administorator",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="completionYear",
                     path="./uro:completionYear",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="constructionStartYear",
                     path="./uro:constructionStartYear",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="facilityAge",
                     path="./uro:facilityAge",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="installer",
                     path="./uro:installer",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="installerType",
                     path="./uro:installerType",
                     datatype="string",
                     predefined_codelist="ConstructionBaseAttribute_installerType",
                 ),
-                Property(
+                Attribute(
                     name="kana",
                     path="./uro:kana",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="operatorType",
                     path="./uro:operatorType",
                     datatype="string",
                     predefined_codelist=None,
                 ),
-                Property(
+                Attribute(
                     name="purpose",
                     path="./uro:purpose",
                     datatype="string",
                     predefined_codelist="ConstructionBaseAttribute_purpose",
                 ),
-                Property(
+                Attribute(
                     name="specification",
                     path="./uro:specification",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="structureOrdinance",
                     path="./uro:structureOrdinance",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="update",
                     path="./uro:update",
                     datatype="date",
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:bridStructureAttribute/uro:BridgeStructureAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="bridgeType",
                     path="./uro:bridgeType",
                     datatype="string",
                     predefined_codelist="BridgeStructureAttribute_bridgeType",
                 ),
-                Property(
+                Attribute(
                     name="escalator",
                     path="./uro:escalator",
                     datatype="boolean",
                 ),
-                Property(
+                Attribute(
                     name="material",
                     path="./uro:material",
                     datatype="string",
                     predefined_codelist="BridgeStructureAttribute_material",
                 ),
-                Property(
+                Attribute(
                     name="slopeType",
                     path="./uro:slopeType",
                     datatype="string",
@@ -159,16 +159,16 @@ BRIDGE = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:bridFunctionalAttribute/uro:BridgeFunctionalAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="directionType",
                     path="./uro:directionType",
                     datatype="string",
                     predefined_codelist=None,
                 ),
-                Property(
+                Attribute(
                     name="userType",
                     path="./uro:userType",
                     datatype="string",
@@ -176,76 +176,76 @@ BRIDGE = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:bridRiskAssessmentAttribute/uro:ConstructionRiskAssessmentAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="referenceDate",
                     path="./uro:referenceDate",
                     datatype="date",
                 ),
-                Property(
+                Attribute(
                     name="riskType",
                     path="./uro:riskType",
                     datatype="string",
                     predefined_codelist="ConstructionRiskAssessmentAttribute_riskType",
                 ),
-                Property(
+                Attribute(
                     name="status",
                     path="./uro:status",
                     datatype="string",
                     predefined_codelist="ConstructionRiskAssessmentAttribute_status",
                 ),
-                Property(
+                Attribute(
                     name="surveyYear",
                     path="./uro:surveyYear",
                     datatype="integer",
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:bridDataQualityAttribute/uro:ConstructionDataQualityAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="appearanceSrcDesc",
                     path="./uro:appearanceSrcDesc",
                     datatype="[]string",
                     predefined_codelist="DataQualityAttribute_appearanceSrcDesc",
                 ),
-                Property(
+                Attribute(
                     name="dataAcquisition",
                     path="./uro:dataAcquisition",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="geometrySrcDesc",
                     path="./uro:geometrySrcDesc",
                     datatype="[]string",
                     predefined_codelist="DataQualityAttribute_geometrySrcDesc",
                 ),
-                Property(
+                Attribute(
                     name="lod1HeightType",
                     path="./uro:lod1HeightType",
                     datatype="string",
                     predefined_codelist="DataQualityAttribute_lod1HeightType",
                 ),
-                Property(
+                Attribute(
                     name="lodType",
                     path="./uro:lodType",
                     datatype="[]string",
                 ),
-                Property(
+                Attribute(
                     name="photoScale",
                     path="./uro:photoScale",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="srcScale",
                     path="./uro:srcScale",
                     datatype="string",
                     predefined_codelist="DataQualityAttribute_srcScale",
                 ),
-                Property(
+                Attribute(
                     name="thematicSrcDesc",
                     path="./uro:thematicSrcDesc",
                     datatype="[]string",
@@ -253,9 +253,9 @@ BRIDGE = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:bridFacilityIdAttribute/uro:FacilityIdAttribute",
-            properties=facility_id_attribute_attrs,
+            attributes=facility_id_attribute_attrs,
         ),
         # TODO: uro:bridDisasterRiskAttribute (入れ子、polymorhpic)
         # TODO: uro:bridFacilityTypeAttribute
@@ -315,7 +315,7 @@ BRIDGE_BOUNDARY_SURFACE = FeatureProcessingDefinition(
         "brid:CeilingSurface",
         "brid:FloorSurface",
     ],
-    property_groups=[],
+    attribute_groups=[],
     lod_detection=LODDetection(
         lod2=["./brid:lod2MultiSurface"],
         lod3=["./brid:lod3MultiSurface"],
@@ -353,7 +353,7 @@ BRIDGE_OPENING = FeatureProcessingDefinition(
         "brid:Window",
         "brid:Door",
     ],
-    property_groups=[],
+    attribute_groups=[],
     lod_detection=LODDetection(
         lod3=["./brid:lod3MultiSurface"],
         lod4=["./brid:lod4MultiSurface"],
@@ -369,11 +369,11 @@ BRIDGE_CONSTRUCTION_ELEMENT = FeatureProcessingDefinition(
     target_elements=[
         "brid:BridgeConstructionElement",
     ],
-    property_groups=[
-        PropertyGroup(
+    attribute_groups=[
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="function",
                     path="./brid:function",
                     datatype="[]string",
@@ -399,22 +399,22 @@ BRIDGE_INSTALLATION = FeatureProcessingDefinition(
     target_elements=[
         "brid:BridgeInstallation",
     ],
-    property_groups=[
-        PropertyGroup(
+    attribute_groups=[
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="class",
                     path="./brid:class",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="function",
                     path="./brid:function",
                     datatype="[]string",
                     predefined_codelist="BridgeInstallation_function",
                 ),
-                Property(
+                Attribute(
                     name="usage",
                     path="./brid:usage",
                     datatype="[]string",
@@ -440,16 +440,16 @@ BRIDGE_INT_INSTALLATION = FeatureProcessingDefinition(
     target_elements=[
         "brid:IntBridgeInstallation",
     ],
-    property_groups=[
-        PropertyGroup(
+    attribute_groups=[
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="class",
                     path="./brid:class",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="function",
                     path="./brid:function",
                     datatype="[]string",
@@ -476,11 +476,11 @@ BRIDGE_FURNITURE = FeatureProcessingDefinition(
     target_elements=[
         "brid:BridgeFurniture",
     ],
-    property_groups=[
-        PropertyGroup(
+    attribute_groups=[
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="function",
                     path="./brid:function",
                     datatype="[]string",

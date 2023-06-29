@@ -14,5 +14,5 @@ if __name__ == "__main__":
     for count, cityobj in parser.iter_cityobjs():
         types = [pname for pname, _pid in cityobj.processor_path]
         print(
-            f"{count} [{' / '.join(types)}] {cityobj.type}, {cityobj.name}, {cityobj.lod}, {cityobj.properties}"
+            f"{count} [{' / '.join(types)}] {cityobj.type}, {cityobj.name}, {cityobj.lod}, {cityobj.attributes}"
         )

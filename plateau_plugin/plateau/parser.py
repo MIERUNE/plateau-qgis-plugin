@@ -71,7 +71,7 @@ class Parser:
         props = OrderedDict()
         codelist_lookup = self._codelist_store.lookup
 
-        for group in processor.property_groups:
+        for group in processor.attribute_groups:
             if group.base_element is None:
                 base_elem = feature_elem
             else:
@@ -79,7 +79,7 @@ class Parser:
                 if base_elem is None:
                     continue
 
-            for prop in group.properties:
+            for prop in group.attributes:
                 assert prop.name in prop.path, f"{prop.name} not in {prop.path}"
                 if prop.datatype == "[]string":
                     values = []
@@ -176,7 +176,7 @@ class Parser:
                     name=gml_name,
                     creation_date=creation_date,
                     termination_date=termination_date,
-                    properties=props,
+                    attributes=props,
                     geometry=geom,
                     processor_path=new_ancestors,
                 )
@@ -194,7 +194,7 @@ class Parser:
                 termination_date=termination_date,
                 lod=None,
                 geometry=None,
-                properties=props,
+                attributes=props,
                 processor_path=new_ancestors,
             )
 

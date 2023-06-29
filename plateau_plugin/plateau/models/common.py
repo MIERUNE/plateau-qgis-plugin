@@ -1,140 +1,140 @@
 """様々なモデルで共通して使われる定義"""
 
-from .base import Property
+from .base import Attribute
 
 # uro:FacilityIdAttribute の属性セット
 # (RiverFacilityIdAttribute の属性を常に含める必要はあるのか)
 facility_id_attribute_attrs = [
-    Property(
+    Attribute(
         name="facilityID:alternativeName",
         path="./uro:alternativeName",
         datatype="[]string",
     ),
-    Property(
+    Attribute(
         name="facilityID:branchId",
         path="./uro:branchId",
         datatype="string",
     ),
-    Property(
+    Attribute(
         name="facilityID:city",
         path="./uro:city",
         datatype="[]string",
         predefined_codelist=None,
     ),
-    Property(
+    Attribute(
         name="facilityID:endPost",
         path="./uro:endPost",
         datatype="string",
     ),
-    Property(
+    Attribute(
         name="facilityID:id",
         path="./uro:id",
         datatype="string",
     ),
-    Property(
+    Attribute(
         name="facilityID:leftDistance",
         path="./uro:leftDistance",
         datatype="double",
     ),
-    Property(
+    Attribute(
         name="facilityID:leftDownstreamDistance",
         path="./uro:leftDownstreamDistance",
         datatype="double",
     ),
-    Property(
+    Attribute(
         name="facilityID:leftDownstreamPost",
         path="./uro:leftDownstreamPost",
         datatype="double",
     ),
-    Property(
+    Attribute(
         name="facilityID:leftPost",
         path="./uro:leftPost",
         datatype="double",
     ),
-    Property(
+    Attribute(
         name="facilityID:leftUpstreamDistance",
         path="./uro:leftUpstreamDistance",
         datatype="double",
     ),
-    Property(
+    Attribute(
         name="facilityID:leftUpstreamPost",
         path="./uro:leftUpstreamPost",
         datatype="double",
     ),
-    Property(
+    Attribute(
         name="facilityID:partId",
         path="./uro:partId",
         datatype="string",
     ),
-    Property(
+    Attribute(
         name="facilityID:prefecture",
         path="./uro:prefecture",
         datatype="[]string",
         predefined_codelist=None,
     ),
-    Property(
+    Attribute(
         name="facilityID:rightDistance",
         path="./uro:rightDistance",
         datatype="double",
     ),
-    Property(
+    Attribute(
         name="facilityID:rightDownstreamDistance",
         path="./uro:rightDownstreamDistance",
         datatype="double",
     ),
-    Property(
+    Attribute(
         name="facilityID:rightDownstreamPost",
         path="./uro:rightDownstreamPost",
         datatype="double",
     ),
-    Property(
+    Attribute(
         name="facilityID:rightPost",
         path="./uro:rightPost",
         datatype="double",
     ),
-    Property(
+    Attribute(
         name="facilityID:rightUpstreamDistance",
         path="./uro:rightUpstreamDistance",
         datatype="double",
     ),
-    Property(
+    Attribute(
         name="facilityID:rightUpstreamPost",
         path="./uro:rightUpstreamPost",
         datatype="double",
     ),
-    Property(
+    Attribute(
         name="facilityID:riverCode",
         path="./uro:riverCode",
         datatype="string",
     ),
-    Property(
+    Attribute(
         name="facilityID:riverName",
         path="./uro:riverName",
         datatype="string",
         predefined_codelist=None,
     ),
-    Property(
+    Attribute(
         name="facilityID:route",
         path="./uro:route",
         datatype="string",
     ),
-    Property(
+    Attribute(
         name="facilityID:sideType",
         path="./uro:sideType",
         datatype="string",
         predefined_codelist=None,
     ),
-    Property(
+    Attribute(
         name="facilityID:startLat",
         path="./uro:startLat",
         datatype="double",
     ),
-    Property(
+    Attribute(
         name="facilityID:startLong",
         path="./uro:startLong",
         datatype="double",
     ),
-    Property(
+    Attribute(
         name="facilityID:startPost",
         path="./uro:startPost",
         datatype="string",

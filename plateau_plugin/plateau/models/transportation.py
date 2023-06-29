@@ -1,41 +1,41 @@
 """交通モデル 道路 (./tran/) 鉄道 (./rwy/) 徒歩道 (./trk/) 広場 (./squr/) 航路 (./wwy/)"""
 
 from .base import (
+    Attribute,
+    AttributeGroup,
     FeatureEmission,
     FeatureEmissions,
     FeatureProcessingDefinition,
     LODDetection,
-    Property,
-    PropertyGroup,
 )
 from .common import facility_id_attribute_attrs
 
 _transportation_data_quality_attribute = [
-    Property(
+    Attribute(
         name="srcScale",
         path="./uro:srcScale",
         datatype="[]string",
         predefined_codelist="RoadDataQualityAttribute_srcScale",
     ),
-    Property(
+    Attribute(
         name="geometrySrcDesc",
         path="./uro:geometrySrcDesc",
         datatype="[]string",
         predefined_codelist="RoadDataQualityAttribute_geometrySrcDesc",
     ),
-    Property(
+    Attribute(
         name="thematicSrcDesc",
         path="./uro:thematicSrcDesc",
         datatype="[]string",
         predefined_codelist="RoadDataQualityAttribute_thematicSrcDesc",
     ),
-    Property(
+    Attribute(
         name="appearanceSrcDesc",
         path="./uro:appearanceSrcDesc",
         datatype="[]string",
         predefined_codelist="RoadDataQualityAttribute_appearanceSrcDesc",
     ),
-    Property(
+    Attribute(
         name="lodType",
         path="./uro:lodType",
         datatype="[]string",
@@ -52,23 +52,23 @@ ROAD = FeatureProcessingDefinition(
         lod3=["./tran:lod3MultiSurface"],
         lod4=["./tran:lod4MultiSurface"],
     ),
-    property_groups=[
-        PropertyGroup(
+    attribute_groups=[
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="class",
                     path="./tran:class",
                     datatype="string",
                     predefined_codelist="TransportationComplex_class",
                 ),
-                Property(
+                Attribute(
                     name="function",
                     path="./tran:function",
                     datatype="[]string",
                     predefined_codelist="Road_function",
                 ),
-                Property(
+                Attribute(
                     name="usage",
                     path="./tran:usage",
                     datatype="[]string",
@@ -76,26 +76,26 @@ ROAD = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:roadStructureAttribute/uro:RoadStructureAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="width",
                     path="./uro:width",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="widthType",
                     path="./uro:widthType",
                     datatype="string",
                     predefined_codelist="RoadStructureAttribute_widthType",
                 ),
-                Property(
+                Attribute(
                     name="numberOfLanes",
                     path="./uro:numberOfLanes",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="sectionType",
                     path="./uro:sectionType",
                     datatype="string",
@@ -103,88 +103,88 @@ ROAD = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:trafficVolumeAttribute/uro:TrafficVolumeAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="averageInboundTravelSpeedInCongestion",
                     path="./uro:averageInboundTravelSpeedInCongestion",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="averageInboundTravelSpeedNotCongestion",
                     path="./uro:averageInboundTravelSpeedNotCongestion",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="averageOutboundTravelSpeedInCongestion",
                     path="./uro:averageOutboundTravelSpeedInCongestion",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="averageOutboundTravelSpeedNotCongestion",
                     path="./uro:averageOutboundTravelSpeedNotCongestion",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="averageTravelSpeedInCongestion",
                     path="./uro:averageTravelSpeedInCongestion",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="congestionRate",
                     path="./uro:congestionRate",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="largeVehicleRate",
                     path="./uro:largeVehicleRate",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="observationPointName",
                     path="./uro:observationPointName",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="reference",
                     path="./uro:reference",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="routeName",
                     path="./uro:routeName",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="sectionID",
                     path="./uro:sectionID",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="surveyYear",
                     path="./uro:surveyYear",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="weekday12hourTrafficVolume",
                     path="./uro:weekday12hourTrafficVolume",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="weekday24hourTrafficVolume",
                     path="./uro:weekday24hourTrafficVolume",
                     datatype="integer",
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:tranFacilityIdAttribute/uro:FacilityIdAttribute",
-            properties=facility_id_attribute_attrs,
+            attributes=facility_id_attribute_attrs,
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
-            properties=_transportation_data_quality_attribute,
+            attributes=_transportation_data_quality_attribute,
         )
         # TODO: uro:tranFacilityTypeAttribute
         # TODO: uro:tranFacilityAttribute
@@ -223,17 +223,17 @@ RAILWAY = FeatureProcessingDefinition(
         lod3=["./tran:lod3MultiSurface"],
         lod4=["./tran:lod4MultiSurface"],
     ),
-    property_groups=[
-        PropertyGroup(
+    attribute_groups=[
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="class",
                     path="./tran:class",
                     datatype="string",
                     predefined_codelist="TransportationComplex_class",
                 ),
-                Property(
+                Attribute(
                     name="function",
                     path="./tran:function",
                     datatype="[]string",
@@ -241,44 +241,44 @@ RAILWAY = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:railwayRouteAttribute/uro:RailwayRouteAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="operatorType",
                     path="./uro:operatorType",
                     datatype="string",
                     predefined_codelist="RailwayRouteAttribute_operatorType",
                 ),
-                Property(
+                Attribute(
                     name="operator",
                     path="./uro:operator",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="alternativeName",
                     path="./uro:alternativeName",
                     datatype="[]string",
                 ),
-                Property(
+                Attribute(
                     name="startStation",
                     path="./uro:startStation",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="endStation",
                     path="./uro:endStation",
                     datatype="string",
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:tranFacilityIdAttribute/uro:FacilityIdAttribute",
-            properties=facility_id_attribute_attrs,
+            attributes=facility_id_attribute_attrs,
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
-            properties=_transportation_data_quality_attribute,
+            attributes=_transportation_data_quality_attribute,
         )
         # TODO: uro:tranFacilityTypeAttribute
         # TODO: uro:tranFacilityAttribute
@@ -317,17 +317,17 @@ TRACK = FeatureProcessingDefinition(
         lod3=["./tran:lod3MultiSurface"],
         lod4=["./tran:lod4MultiSurface"],
     ),
-    property_groups=[
-        PropertyGroup(
+    attribute_groups=[
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="class",
                     path="./tran:class",
                     datatype="string",
                     predefined_codelist="TransportationComplex_class",
                 ),
-                Property(
+                Attribute(
                     name="function",
                     path="./tran:function",
                     datatype="[]string",
@@ -335,42 +335,42 @@ TRACK = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:trackAttribute/uro:TrackAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="adminType",
                     path="./uro:adminType",
                     datatype="string",
                     predefined_codelist="TrackAttribute_adminType",
                 ),
-                Property(
+                Attribute(
                     name="alternativeName",
                     path="./uro:alternativeName",
                     datatype="[]string",
                 ),
-                Property(
+                Attribute(
                     name="isTollRoad",
                     path="./uro:isTollRoad",
                     datatype="boolean",
                 ),
-                Property(
+                Attribute(
                     name="relativeLevel",
                     path="./uro:relativeLevel",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="separator",
                     path="./uro:separator",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="structureType",
                     path="./uro:structureType",
                     datatype="string",
                     predefined_codelist="TrackAttribute_structureType",
                 ),
-                Property(
+                Attribute(
                     name="widthType",
                     path="./uro:widthType",
                     datatype="string",
@@ -378,13 +378,13 @@ TRACK = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:tranFacilityIdAttribute/uro:FacilityIdAttribute",
-            properties=facility_id_attribute_attrs,
+            attributes=facility_id_attribute_attrs,
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
-            properties=_transportation_data_quality_attribute,
+            attributes=_transportation_data_quality_attribute,
         )
         # TODO: uro:tranFacilityTypeAttribute
         # TODO: uro:tranFacilityAttribute
@@ -415,137 +415,137 @@ TRACK = FeatureProcessingDefinition(
 )
 
 _square_urban_plan_attribute_attrs = [
-    Property(
+    Attribute(
         name="areaCompleted",
         path="./uro:areaCompleted",
         datatype="double",
     ),
-    Property(
+    Attribute(
         name="areaImproved",
         path="./uro:areaImproved",
         datatype="double",
     ),
-    Property(
+    Attribute(
         name="areaInService",
         path="./uro:areaInService",
         datatype="double",
     ),
-    Property(
+    Attribute(
         name="areaPlanned",
         path="./uro:areaPlanned",
         datatype="double",
     ),
-    Property(
+    Attribute(
         name="city",
         path="./uro:city",
         datatype="string",
         predefined_codelist="Common_localPublicAuthorities",
     ),
-    Property(
+    Attribute(
         name="dateOfDecision",
         path="./uro:dateOfDecision",
         datatype="date",
     ),
-    Property(
+    Attribute(
         name="dateOfRevision",
         path="./uro:dateOfRevision",
         datatype="date",
     ),
-    Property(
+    Attribute(
         name="enforcer",
         path="./uro:enforcer",
         datatype="[]string",
     ),
-    Property(
+    Attribute(
         name="isAuthorized",
         path="./uro:isAuthorized",
         datatype="boolean",
     ),
-    Property(
+    Attribute(
         name="isCompleted",
         path="./uro:isCompleted",
         datatype="boolean",
     ),
-    Property(
+    Attribute(
         name="note",
         path="./uro:note",
         datatype="string",
     ),
-    Property(
+    Attribute(
         name="numberOfBerthsInService",
         path="./uro:numberOfBerthsInService",
         datatype="integer",
     ),
-    Property(
+    Attribute(
         name="numberOfBerthsPlanned",
         path="./uro:numberOfBerthsPlanned",
         datatype="integer",
     ),
-    Property(
+    Attribute(
         name="prefecture",
         path="./uro:prefecture",
         datatype="string",
         predefined_codelist="Common_localPublicAuthorities",
     ),
-    Property(
+    Attribute(
         name="projectEndDate",
         path="./uro:projectEndDate",
         datatype="date",
     ),
-    Property(
+    Attribute(
         name="projectStartDate",
         path="./uro:projectStartDate",
         datatype="date",
     ),
-    Property(
+    Attribute(
         name="purpose",
         path="./uro:purpose",
         datatype="string",
     ),
-    Property(
+    Attribute(
         name="railwayType",
         path="./uro:railwayType",
         datatype="[]string",
         predefined_codelist=None,
     ),
-    Property(
+    Attribute(
         name="remarks",
         path="./uro:remarks",
         datatype="string",
     ),
-    Property(
+    Attribute(
         name="route",
         path="./uro:route",
         datatype="[]string",
     ),
-    Property(
+    Attribute(
         name="station",
         path="./uro:station",
         datatype="[]string",
     ),
-    Property(
+    Attribute(
         name="status",
         path="./uro:status",
         datatype="string",
         predefined_codelist=None,
     ),
-    Property(
+    Attribute(
         name="structure",
         path="./uro:structure",
         datatype="string",
     ),
-    Property(
+    Attribute(
         name="terminalType",
         path="./uro:terminalType",
         datatype="string",
         predefined_codelist=None,
     ),
-    Property(
+    Attribute(
         name="urbanPlanningAreaName",
         path="./uro:urbanPlanningAreaName",
         datatype="string",
     ),
-    Property(
+    Attribute(
         name="userType",
         path="./uro:userType",
         datatype="string",
@@ -562,17 +562,17 @@ SQUARE = FeatureProcessingDefinition(
         lod3=["./tran:lod3MultiSurface"],
         lod4=["./tran:lod4MultiSurface"],
     ),
-    property_groups=[
-        PropertyGroup(
+    attribute_groups=[
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="class",
                     path="./tran:class",
                     datatype="string",
                     predefined_codelist="TransportationComplex_class",
                 ),
-                Property(
+                Attribute(
                     name="function",
                     path="./tran:function",
                     datatype="[]string",
@@ -580,25 +580,25 @@ SQUARE = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:railwayRouteAttribute/uro:SquareUrbanPlanAttribute",
-            properties=_square_urban_plan_attribute_attrs,
+            attributes=_square_urban_plan_attribute_attrs,
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:railwayRouteAttribute/uro:StationSquareAttribute",
-            properties=_square_urban_plan_attribute_attrs,
+            attributes=_square_urban_plan_attribute_attrs,
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:railwayRouteAttribute/uro:TerminalAttribute",
-            properties=_square_urban_plan_attribute_attrs,
+            attributes=_square_urban_plan_attribute_attrs,
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:tranFacilityIdAttribute/uro:FacilityIdAttribute",
-            properties=facility_id_attribute_attrs,
+            attributes=facility_id_attribute_attrs,
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
-            properties=_transportation_data_quality_attribute,
+            attributes=_transportation_data_quality_attribute,
         )
         # TODO: uro:tranFacilityTypeAttribute
         # TODO: uro:tranFacilityAttribute
@@ -640,17 +640,17 @@ WATERWAY = FeatureProcessingDefinition(
         lod3=["./tran:lod3MultiSurface"],
         lod4=["./tran:lod4MultiSurface"],
     ),
-    property_groups=[
-        PropertyGroup(
+    attribute_groups=[
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="class",
                     path="./tran:class",
                     datatype="string",
                     predefined_codelist="TransportationComplex_class",
                 ),
-                Property(
+                Attribute(
                     name="function",
                     path="./tran:function",
                     datatype="[]string",
@@ -658,64 +658,64 @@ WATERWAY = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:watewayDetailAttribute/uro:WaterwayDetailAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="length",
                     path="./uro:length",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="maximumWidth",
                     path="./uro:maximumWidth",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="minimumWidth",
                     path="./uro:minimumWidth",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="navigation",
                     path="./uro:navigation",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="plannedDepth",
                     path="./uro:plannedDepth",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="routeDirection",
                     path="./uro:routeDirection",
                     datatype="string",
                     predefined_codelist=None,
                 ),
-                Property(
+                Attribute(
                     name="routeID",
                     path="./uro:routeID",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="speedLimit",
                     path="./uro:speedLimit",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="targetShipType",
                     path="./uro:targetShipType",
                     datatype="[]string",
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:tranFacilityIdAttribute/uro:FacilityIdAttribute",
-            properties=facility_id_attribute_attrs,
+            attributes=facility_id_attribute_attrs,
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
-            properties=_transportation_data_quality_attribute,
+            attributes=_transportation_data_quality_attribute,
         )
         # TODO: uro:tranFacilityTypeAttribute
         # TODO: uro:tranFacilityAttribute
@@ -750,17 +750,17 @@ WATERWAY = FeatureProcessingDefinition(
 TRAFFIC_AREA = FeatureProcessingDefinition(
     id="TrafficArea",
     target_elements=["tran:TrafficArea", "tran:AuxiliaryTrafficArea"],
-    property_groups=[
-        PropertyGroup(
+    attribute_groups=[
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="function",
                     path="./tran:function",
                     datatype="[]string",
                     predefined_codelist="TrafficArea_function",
                 ),
-                Property(
+                Attribute(
                     name="surfaceMaterial",
                     path="./tran:surfaceMaterial",
                     datatype="string",
@@ -769,10 +769,10 @@ TRAFFIC_AREA = FeatureProcessingDefinition(
             ],
         ),
         # uro:TrafficAreaStructureAttribute (Road)
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:trafficAreaStructureAttribute/uro:TrafficAreaStructureAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="numberOfLanes",
                     path="./uro:numberOfLanes",
                     datatype="integer",
@@ -780,37 +780,37 @@ TRAFFIC_AREA = FeatureProcessingDefinition(
             ],
         ),
         # uro:RailwayTrackAttribute (Railway)
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:railwayTrackAttribute/uro:RailwayTrackAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="routeName",
                     path="./uro:routeName",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="directionType",
                     path="./uro:directionType",
                     datatype="string",
                     predefined_codelist="RailwayTrackAttribute_directionType",
                 ),
-                Property(
+                Attribute(
                     name="trackType",
                     path="./uro:trackType",
                     datatype="string",
                     predefined_codelist="RailwayTrackAttribute_trackType",
                 ),
-                Property(
+                Attribute(
                     name="startPost",
                     path="./uro:startPost",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="endPost",
                     path="./uro:endPost",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="alignmentType",
                     path="./uro:alignmentType",
                     datatype="string",

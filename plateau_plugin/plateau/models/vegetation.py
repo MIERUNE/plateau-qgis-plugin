@@ -1,37 +1,37 @@
 """植生モデル (./veg/)"""
 
 from .base import (
+    Attribute,
+    AttributeGroup,
     FeatureEmission,
     FeatureEmissions,
     FeatureProcessingDefinition,
     LODDetection,
-    Property,
-    PropertyGroup,
 )
 from .common import facility_id_attribute_attrs
 
-_uro_vegetation_data_quality_attribute = PropertyGroup(
+_uro_vegetation_data_quality_attribute = AttributeGroup(
     base_element="./uro:vegetationDataQualityAttribute/uro:VegetationDataQualityAttribute",
-    properties=[
-        Property(
+    attributes=[
+        Attribute(
             name="srcScale",
             path="./uro:srcScale",
             datatype="[]string",
             predefined_codelist="VegetationDataQualityAttribute_srcScale",
         ),
-        Property(
+        Attribute(
             name="geometrySrcDesc",
             path="./uro:geometrySrcDesc",
             datatype="[]string",
             predefined_codelist="VegetationDataQualityAttribute_GeometrySrcDesc",
         ),
-        Property(
+        Attribute(
             name="thematicSrcDesc",
             path="./uro:thematicSrcDesc",
             datatype="[]string",
             predefined_codelist="VegetationDataQualityAttribute_thematicSrcDesc",
         ),
-        Property(
+        Attribute(
             name="appearanceSrcDesc",
             path="./uro:appearanceSrcDesc",
             datatype="[]string",
@@ -48,33 +48,33 @@ SOLITARY_VEGETATION_OBJECT = FeatureProcessingDefinition(
         lod2=["./veg:lod2Geometry"],
         lod3=["./veg:lod3Geometry"],
     ),
-    property_groups=[
-        PropertyGroup(
+    attribute_groups=[
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="class",
                     path="./veg:class",
                     datatype="string",
                     predefined_codelist="SolitaryVegetationObject_class",
                 ),
-                Property(
+                Attribute(
                     name="function",
                     path="./veg:function",
                     datatype="string",
                     predefined_codelist="SolitaryVegetationObject_function",
                 ),
-                Property(
+                Attribute(
                     name="height",
                     path="./veg:height",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="trunkDiameter",
                     path="./veg:trunkDiameter",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="crownDiameter",
                     path="./veg:crownDiameter",
                     datatype="double",
@@ -82,9 +82,9 @@ SOLITARY_VEGETATION_OBJECT = FeatureProcessingDefinition(
             ],
         ),
         _uro_vegetation_data_quality_attribute,
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:vegFacilityIdAttribute/uro:FacilityIdAttribute",
-            properties=facility_id_attribute_attrs,
+            attributes=facility_id_attribute_attrs,
         ),
         # TODO: uro:vegFacilityTypeAttribute
         # TODO: uro:vegFacilityAttribute
@@ -105,17 +105,17 @@ PLANT_COVER = FeatureProcessingDefinition(
         lod2=["./veg:lod2MultiSolid", "./veg:lod2MultiSurface"],
         lod3=["./veg:lod3MultiSolid", "./veg:lod3MultiSurface"],
     ),
-    property_groups=[
-        PropertyGroup(
+    attribute_groups=[
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="class",
                     path="./veg:class",
                     datatype="string",
                     predefined_codelist="PlantCover_class",
                 ),
-                Property(
+                Attribute(
                     name="avarageHeight",
                     path="./veg:averageHeight",
                     datatype="double",
@@ -123,9 +123,9 @@ PLANT_COVER = FeatureProcessingDefinition(
             ],
         ),
         _uro_vegetation_data_quality_attribute,
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:vegFacilityIdAttribute/uro:FacilityIdAttribute",
-            properties=facility_id_attribute_attrs,
+            attributes=facility_id_attribute_attrs,
         ),
         # TODO: uro:vegFacilityTypeAttribute
         # TODO: uro:vegFacilityAttribute

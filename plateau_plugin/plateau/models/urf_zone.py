@@ -4,12 +4,12 @@
 # 現状は、都市計画決定情報の全地物を1つのレイヤにまとめている
 
 from .base import (
+    Attribute,
+    AttributeGroup,
     FeatureEmission,
     FeatureEmissions,
     FeatureProcessingDefinition,
     LODDetection,
-    Property,
-    PropertyGroup,
 )
 
 
@@ -135,556 +135,556 @@ URF_ZONE = FeatureProcessingDefinition(
     lod_detection=LODDetection(
         lod1=["./urf:lod1MultiSurface"],
     ),
-    property_groups=[
-        # properties inherited from urf:Zone
-        PropertyGroup(
+    attribute_groups=[
+        # attributes inherited from urf:Zone
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="function",
                     path="./urf:function",
                     datatype="[]string",
                     predefined_codelist=None,
                 ),
-                Property(
+                Attribute(
                     name="usage",
                     path="./urf:usage",
                     datatype="[]string",
                     predefined_codelist=None,
                 ),
-                Property(
+                Attribute(
                     name="validFrom",
                     path="./urf:validFrom",
                     datatype="date",
                 ),
-                Property(
+                Attribute(
                     name="validFromType",
                     path="./urf:validFromType",
                     datatype="string",
                     predefined_codelist="Common_validType",
                 ),
-                Property(
+                Attribute(
                     name="validTo",
                     path="./urf:validTo",
                     datatype="date",
                 ),
-                Property(
+                Attribute(
                     name="validToType",
                     path="./urf:validToType",
                     datatype="string",
                     predefined_codelist="Common_validType",
                 ),
-                Property(
+                Attribute(
                     name="expirationFiscalYear",
                     path="./urf:expirationFiscalYear",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="legalGrounds",
                     path="./urf:legalGrounds",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="custodian",
                     path="./urf:custodian",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="notificationNumber",
                     path="./urf:notificationNumber",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="nominalArea",
                     path="./urf:nominalArea",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="prefecture",
                     path="./urf:prefecture",
                     datatype="string",
                     predefined_codelist="Common_prefecture",
                 ),
-                Property(
+                Attribute(
                     name="city",
                     path="./urf:city",
                     datatype="string",
                     predefined_codelist="Common_localPublicAuthorities",
                 ),
-                Property(
+                Attribute(
                     name="reference",
                     path="./urf:reference",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="reason",
                     path="./urf:reason",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="note",
                     path="./urf:note",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="location",
                     path="./urf:location",
                     datatype="string",
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="areaClassificationType",
                     path="./urf:areaClassificationType",
                     datatype="string",
                     predefined_codelist="Common_areaClassificationType",
                 ),
-                Property(
+                Attribute(
                     name="urbanPlanType",
                     path="./urf:urbanPlanType",
                     datatype="string",
                     predefined_codelist="Common_urbanPlanType",
                 ),
-                Property(
+                Attribute(
                     name="areaInTotal",
                     path="./urf:areaInTotal",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="number",
                     path="./urf:number",
                     datatype="string",
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="areaClassification",
                     path="./urf:areaClassification",
                     datatype="string",
                     predefined_codelist="Common_availabilityType",
                 ),
-                Property(
+                Attribute(
                     name="activityRestrictionInFarmland",
                     path="./urf:activityRestrictionInFarmland",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="buildingCoverageRate",
                     path="./urf:buildingCoverageRate",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="buildingDesignRestriction",
                     path="./urf:buildingDesignRestriction",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="buildingLotDevelopment",
                     path="./urf:buildingLotDevelopment",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="buildingRestrictions",
                     path="./urf:buildingRestrictions",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="buildingUsage",
                     path="./urf:buildingUsage",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="cityPopulation",
                     path="./urf:cityPopulation",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="developer",
                     path="./urf:developer",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="developmentPlan",
                     path="./urf:developmentPlan",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="developmentPolicy",
                     path="./urf:developmentPolicy",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="disasterPreventionPublicFacilityAllocation",
                     path="./urf:disasterPreventionPublicFacilityAllocation",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="distributionBusinessPark",
                     path="./urf:distributionBusinessPark",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="districtFacilitiesAllocation",
                     path="./urf:districtFacilitiesAllocation",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="districtsAllocation",
                     path="./urf:districtsAllocation",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="emergencyRecoveryPolicy",
                     path="./urf:emergencyRecoveryPolicy",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="enactmentFiscalYear",
                     path="./urf:enactmentFiscalYear",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="endLocation",
                     path="./urf:endLocation",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="expirationDate",
                     path="./urf:expirationDate",
                     datatype="date",
                 ),
-                Property(
+                Attribute(
                     name="facilitiesAllocation",
                     path="./urf:facilitiesAllocation",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="facilityAllocation",
                     path="./urf:facilityAllocation",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="facilityType",
                     path="./urf:facilityType",
                     datatype="string",
                     predefined_codelist="ZonalDisasterPreventionFacility_facilityType",  # ???
                 ),
-                Property(
+                Attribute(
                     name="floorAreaRate",
                     path="./urf:floorAreaRate",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="guidelinePublicationDate",
                     path="./urf:guidelinePublicationDate",
                     datatype="date",
                 ),
-                Property(
+                Attribute(
                     name="housing",
                     path="./urf:housing",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="housingFacilities",
                     path="./urf:housingFacilities",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="housingTarget",
                     path="./urf:housingTarget",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="implementationBody",
                     path="./urf:implementationBody",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="implementationPeriod",
                     path="./urf:implementationPeriod",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="landForCentralPublicFacilities",
                     path="./urf:landForCentralPublicFacilities",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="landUsePlan",
                     path="./urf:landUsePlan",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="landUsePolicy",
                     path="./urf:landUsePolicy",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="landuseRestrictions",
                     path="./urf:landuseRestrictions",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="maximumBuildingCoverageRate",
                     path="./urf:maximumBuildingCoverageRate",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="maximumBuildingHeight",
                     path="./urf:maximumBuildingHeight",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="maximumFloorAreaRate",
                     path="./urf:maximumFloorAreaRate",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="minimumFloorAreaRate",
                     path="./urf:minimumFloorAreaRate",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="minimumFrontageRate",
                     path="./urf:minimumFrontageRate",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="minimumGreeningRate",
                     path="./urf:minimumGreeningRate",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="numberOfHighRiseHousing",
                     path="./urf:numberOfHighRiseHousing",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="numberOfHousing",
                     path="./urf:numberOfHousing",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="numberOfLowRiseHousing",
                     path="./urf:numberOfLowRiseHousing",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="numberOfMiddleRiseHousing",
                     path="./urf:numberOfMiddleRiseHousing",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="objectives",
                     path="./urf:objectives",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="otherPublicFacilityAllocation",
                     path="./urf:otherPublicFacilityAllocation",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="otherRestrictions",
                     path="./urf:otherRestrictions",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="plan",
                     path="./urf:plan",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="plannedProjectType",
                     path="./urf:plannedProjectType",
                     datatype="string",
                     predefined_codelist="UrbanDevelopmentProject_function",
                 ),
-                Property(
+                Attribute(
                     name="policy",
                     path="./urf:policy",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="policyForAreaClassification",
                     path="./urf:policyForAreaClassification",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="policyForUrbanPlanDecision",
                     path="./urf:policyForUrbanPlanDecision",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="population",
                     path="./urf:population",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="publicAndUtilityFacilities",
                     path="./urf:publicAndUtilityFacilities",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="publicFacilities",
                     path="./urf:publicFacilities",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="publicFacilitiesAllocationPolicy",
                     path="./urf:publicFacilitiesAllocationPolicy",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="publicFacilitiesPlans",
                     path="./urf:publicFacilitiesPlans",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="publicFacilityAllocation",
                     path="./urf:publicFacilityAllocation",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="purposeForUrbanPlan",
                     path="./urf:purposeForUrbanPlan",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="reasonForAreaClassification",
                     path="./urf:reasonForAreaClassification",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="requirement",
                     path="./urf:requirement",
                     datatype="string",
                     predefined_codelist="SpecialGreenSpaceConservationDistrict_requirement",  # ???
                 ),
-                Property(
+                Attribute(
                     name="residentialLandUsePlan",
                     path="./urf:residentialLandUsePlan",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="roadsideDistrictFacilitiesAllocation",
                     path="./urf:roadsideDistrictFacilitiesAllocation",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="ruralDistrictFacilitiesAllocation",
                     path="./urf:ruralDistrictFacilitiesAllocation",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="scheduledExecutor",
                     path="./urf:scheduledExecutor",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="setbackRestrictions",
                     path="./urf:setbackRestrictions",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="setbackSize",
                     path="./urf:setbackSize",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="shadeRegulation",
                     path="./urf:shadeRegulation",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="specificUtilityAndPublicFacilities",
                     path="./urf:specificUtilityAndPublicFacilities",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="specification",
                     path="./urf:specification",
                     datatype="string",
                     predefined_codelist="Common_availabilityType",
                 ),
-                Property(
+                Attribute(
                     name="specifiedZonalDisasterPreventionFacilitiesAllocation",
                     path="./urf:specifiedZonalDisasterPreventionFacilitiesAllocation",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="startLocation",
                     path="./urf:startLocation",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="storeysAboveGround",
                     path="./urf:storeysAboveGround",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="storeysBelowGround",
                     path="./urf:storeysBelowGround",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="structure",
                     path="./urf:structure",
                     datatype="string",
                     predefined_codelist="Waterway_structure",
                 ),
-                Property(
+                Attribute(
                     name="supecificBusinessFacilities",
                     path="./urf:supecificBusinessFacilities",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="totalNumberOfHousing",
                     path="./urf:totalNumberOfHousing",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="unitArea",
                     path="./urf:unitArea",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="urbanGreenSpaceConservation",
                     path="./urf:urbanGreenSpaceConservation",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="useToBeInduced",
                     path="./urf:useToBeInduced",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="utilityFacilities",
                     path="./urf:utilityFacilities",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="viaLocations",
                     path="./urf:viaLocations",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="wallSetbackDistance",
                     path="./urf:wallSetbackDistance",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="zonalDisasterPreventionFacilitiesAllocation",
                     path="./urf:zonalDisasterPreventionFacilitiesAllocation",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="zoneNumber",
                     path="./urf:zoneNumber",
                     datatype="string",
@@ -752,79 +752,79 @@ URF_ZONE = FeatureProcessingDefinition(
                 # ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./urf:parkAttribute/urf:ParkAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="parkTypeNumber",
                     path="./urf:parkTypeNumber",
                     datatype="string",
                     predefined_codelist="ParkAttribute_parkTypeNumber",
                 ),
-                Property(
+                Attribute(
                     name="parkSizeNumber",
                     path="./urf:parkSizeNumber",
                     datatype="string",
                     predefined_codelist="ParkAttribute_parkSizeNumber",
                 ),
-                Property(
+                Attribute(
                     name="parkSerialNumber",
                     path="./urf:parkSerialNumber",
                     datatype="string",
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./urf:parkingPlaceAttribute/urf:ParkingPlaceAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="storeysAboveGround",
                     path="./urf:storeysAboveGround",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="storeysBelowGround",
                     path="./urf:storeysBelowGround",
                     datatype="integer",
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./urf:sewerSystemsAttribute/urf:SewerSystemAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="startLocation",
                     path="./urf:startLocation",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="endLocation",
                     path="./urf:endLocation",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="systemType",
                     path="./urf:systemType",
                     datatype="string",
                     predefined_codelist="SewerSystemAttribute_systemType",
                 ),
-                Property(
+                Attribute(
                     name="drainageArea",
                     path="./urf:drainageArea",
                     datatype="string",
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./urf:urbanRapidTransitRailroadAttribute/urf:UrbanRapidTransitRailroadAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="structureType",
                     path="./urf:structureType",
                     datatype="string",
                     predefined_codelist="TrafficFacility_trafficFacilityStructureType",
                 ),
-                Property(
+                Attribute(
                     name="crossType",
                     path="./urf:crossType",
                     datatype="string",
@@ -838,55 +838,55 @@ URF_ZONE = FeatureProcessingDefinition(
                 # ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./urf:urbanRoadAttribute/urf:UrbanRoadAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="routeTypeNumber",
                     path="./urf:routeTypeNumber",
                     datatype="string",
                     predefined_codelist="UrbanRoadAttribute_routeTypeNumber",
                 ),
-                Property(
+                Attribute(
                     name="routeSizeNumber",
                     path="./urf:routeSizeNumber",
                     datatype="string",
                     predefined_codelist="UrbanRoadAttribute_routeSizeNumber",
                 ),
-                Property(
+                Attribute(
                     name="routeSerialNumber",
                     path="./urf:routeSerialNumber",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="roadType",
                     path="./urf:roadType",
                     datatype="string",
                     predefined_codelist="UrbanRoadAttribute_roadType",
                 ),
-                Property(
+                Attribute(
                     name="numberOfLanes",
                     path="./urf:numberOfLanes",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="roadStructure",
                     path="./urf:roadStructure",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="structureType",
                     path="./urf:structureType",
                     datatype="string",
                     predefined_codelist="TrafficFacility_trafficFacilityStructureType",
                 ),
-                Property(
+                Attribute(
                     name="crossType",
                     path="./urf:crossType",
                     datatype="string",
                     predefined_codelist="TrafficFacility_trafficFacilityCrossingType",
                 ),
-                Property(
+                Attribute(
                     name="trafficPlazas",
                     path="./urf:trafficPlazas",
                     datatype="string",
@@ -900,10 +900,10 @@ URF_ZONE = FeatureProcessingDefinition(
                 # ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./urf:vehicleTerminalAttribute/urf:VehicleTerminalAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="terminalType",
                     path="./urf:terminalType",
                     datatype="string",
@@ -911,15 +911,15 @@ URF_ZONE = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./urf:waterWorksAttribute/urf:WaterWorksAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="startLocation",
                     path="./urf:startLocation",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="endLocation",
                     path="./urf:endLocation",
                     datatype="string",

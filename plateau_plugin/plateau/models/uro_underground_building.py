@@ -1,12 +1,12 @@
 """地下街モデル (./ubld/)"""
 
 from .base import (
+    Attribute,
+    AttributeGroup,
     FeatureEmission,
     FeatureEmissions,
     FeatureProcessingDefinition,
     LODDetection,
-    Property,
-    PropertyGroup,
 )
 
 UNDERGROUND_BUILDING = FeatureProcessingDefinition(
@@ -21,27 +21,27 @@ UNDERGROUND_BUILDING = FeatureProcessingDefinition(
         lod3=["./bldg:lod3Solid"],
         lod4=["./bldg:lod4Solid", "./bldg:lod4MultiSurface"],
     ),
-    property_groups=[
-        PropertyGroup(
+    attribute_groups=[
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="usage",
                     path="./bldg:usage",
                     datatype="[]string",
                     predefined_codelist="Building_usage",
                 ),
-                Property(
+                Attribute(
                     name="yearOfConstruction",
                     path="./bldg:yearOfConstruction",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="yearOfDemolition",
                     path="./bldg:yearOfDemolition",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="storeysBelowGround",
                     path="./bldg:storeysBelowGround",
                     datatype="integer",
@@ -58,31 +58,31 @@ UNDERGROUND_BUILDING = FeatureProcessingDefinition(
                 # ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:buildingIDAttribute/uro:BuildingIDAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="buildingID",
                     path="./uro:buildingID",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="branchID",
                     path="./uro:branchID",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="partID",
                     path="./uro:partID",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="prefecture",
                     path="./uro:prefecture",
                     datatype="string",
                     predefined_codelist="Common_prefecture",
                 ),
-                Property(
+                Attribute(
                     name="city",
                     path="./uro:city",
                     datatype="string",
@@ -90,332 +90,332 @@ UNDERGROUND_BUILDING = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:buildingDetailAttribute/uro:BuildingDetailAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="serialNumberOfBuildingCertification",
                     path="./uro:serialNumberOfBuildingCertification",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="siteArea",
                     path="./uro:siteArea",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="totalFloorArea",
                     path="./uro:totalFloorArea",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="buildingFootprintArea",
                     path="./uro:buildingFootprintArea",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="buildingRoofEdgeArea",
                     path="./uro:buildingRoofEdgeArea",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="developmentArea",
                     path="./uro:developmentArea",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="buildingStructureType",
                     path="./uro:buildingStructureType",
                     datatype="string",
                     predefined_codelist="BuildingDetailAttribute_buildingStructureType",
                 ),
-                Property(
+                Attribute(
                     name="buildingStructureOrgType",
                     path="./uro:buildingStructureOrgType",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="fireproofStructureType",
                     path="./uro:fireproofStructureType",
                     datatype="string",
                     predefined_codelist="BuildingDetailAttribute_fireproofStructureType",
                 ),
-                Property(
+                Attribute(
                     name="urbanPlanType",
                     path="./uro:urbanPlanType",
                     datatype="string",
                     predefined_codelist="BuildingDetailAttribute_urbanPlanType",
                 ),
-                Property(
+                Attribute(
                     name="areaClassificationType",
                     path="./uro:areaClassificationType",
                     datatype="string",
                     predefined_codelist="Common_areaClassificationType",
                 ),
-                Property(
+                Attribute(
                     name="districtsAndZonesType",
                     path="./uro:districtsAndZonesType",
                     datatype="[]string",
                     predefined_codelist="Common_districtsAndZonesType",
                 ),
-                Property(
+                Attribute(
                     name="landUseType",
                     path="./uro:landUseType",
                     datatype="string",
                     predefined_codelist="Common_landUseType",
                 ),
-                Property(
+                Attribute(
                     name="reference",
                     path="./uro:reference",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="majorUsage",
                     path="./uro:majorUsage",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="majorUsage2",
                     path="./uro:majorUsage2",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="orgUsage",
                     path="./uro:orgUsage",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="orgUsage2",
                     path="./uro:orgUsage2",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="detailedUsage",
                     path="./uro:detailedUsage",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="detailedUsage2",
                     path="./uro:detailedUsage2",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="detailedUsage3",
                     path="./uro:detailedUsage3",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="groundFloorUsage",
                     path="./uro:groundFloorUsage",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="secondFloorUsage",
                     path="./uro:secondFloorUsage",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="thirdFloorUsage",
                     path="./uro:thirdFloorUsage",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="basementUsage",
                     path="./uro:basementUsage",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="basementFirstUsage",
                     path="./uro:basementFirstUsage",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="basementSecondUsage",
                     path="./uro:basementSecondUsage",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="vacancy",
                     path="./uro:vacancy",
                     datatype="string",
                     predefined_codelist="BuildingDetailAttribute_vacancy",
                 ),
-                Property(
+                Attribute(
                     name="buildingCoverageRate",
                     path="./uro:buildingCoverageRate",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="floorAreaRate",
                     path="./uro:floorAreaRate",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="specifiedBuildingCoverageRate",
                     path="./uro:specifiedBuildingCoverageRate",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="specifiedFloorAreaRate",
                     path="./uro:specifiedFloorAreaRate",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="standardFloorAreaRate",
                     path="./uro:standardFloorAreaRate",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="buidingHeight",
                     path="./uro:buidingHeight",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="eaveHeight",
                     path="./uro:eaveHeight",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="surveyYear",
                     path="./uro:surveyYear",
                     datatype="integer",
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:largeCustomerFacilityAttribute/uro:LargeCustomerFacilityAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="class",
                     path="./uro:class",
                     datatype="string",
                     predefined_codelist="LargeCustomerFacilityAttribute_class",
                 ),
-                Property(
+                Attribute(
                     name="name",
                     path="./uro:name",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="capacity",
                     path="./uro:capacity",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="owner",
                     path="./uro:owner",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="totalFloorArea",
                     path="./uro:totalFloorArea",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="totalStoreFloorArea",
                     path="./uro:totalStoreFloorArea",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="inauguralDate",
                     path="./uro:inauguralDate",
                     datatype="date",
                 ),
-                Property(
+                Attribute(
                     name="yearOpened",
                     path="./uro:yearOpened",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="yearClosed",
                     path="./uro:yearClosed",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="keyTenants",
                     path="./uro:keyTenants",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="availability",
                     path="./uro:availability",
                     datatype="boolean",
                 ),
-                Property(
+                Attribute(
                     name="urbanPlanType",
                     path="./uro:urbanPlanType",
                     datatype="string",
                     predefined_codelist="Common_urbanPlanType",
                 ),
-                Property(
+                Attribute(
                     name="areaClassificationType",
                     path="./uro:areaClassificationType",
                     datatype="string",
                     predefined_codelist="Common_areaClassificationType",
                 ),
-                Property(
+                Attribute(
                     name="districtsAndZonesType",
                     path="./uro:districtsAndZonesType",
                     datatype="[]string",
                     predefined_codelist="Common_districtsAndZonesType",
                 ),
-                Property(
+                Attribute(
                     name="landUseType",
                     path="./uro:landUseType",
                     datatype="string",
                     predefined_codelist="Common_landUseType",
                 ),
-                Property(
+                Attribute(
                     name="reference",
                     path="./uro:reference",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="note",
                     path="./uro:note",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="surveyYear",
                     path="./uro:surveyYear",
                     datatype="integer",
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:buildingDataQualityAttribute/uro:BuildingDataQualityAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="srcScale",
                     path="./uro:srcScale",
                     datatype="[]string",
                     predefined_codelist="BuildingDataQualityAttribute_srcScale",
                 ),
-                Property(
+                Attribute(
                     name="geometrySrcDesc",
                     path="./uro:geometrySrcDesc",
                     datatype="[]string",
                     predefined_codelist="BuildingDataQualityAttribute_geometrySrcDesc",
                 ),
-                Property(
+                Attribute(
                     name="thematicSrcDesc",
                     path="./uro:thematicSrcDesc",
                     datatype="[]string",
                     predefined_codelist="BuildingDataQualityAttribute_thematicSrcDesc",
                 ),
-                Property(
+                Attribute(
                     name="appearanceSrcDesc",
                     path="./uro:appearanceSrcDesc",
                     datatype="[]string",
                     predefined_codelist="BuildingDataQualityAttribute_appearanceSrcDesc",
                 ),
-                Property(
+                Attribute(
                     name="lod1HeightType",
                     path="./uro:lod1HeightType",
                     datatype="string",
                     predefined_codelist="BuildingDataQualityAttribute_lod1HeightType",
                 ),
-                Property(
+                Attribute(
                     name="lodType",
                     path="./uro:lodType",
                     datatype="[]string",

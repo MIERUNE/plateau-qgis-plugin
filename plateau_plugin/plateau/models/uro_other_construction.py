@@ -1,12 +1,12 @@
 """その他の構造物モデル (./cons/)"""
 
 from .base import (
+    Attribute,
+    AttributeGroup,
     FeatureEmission,
     FeatureEmissions,
     FeatureProcessingDefinition,
     LODDetection,
-    Property,
-    PropertyGroup,
 )
 from .common import facility_id_attribute_attrs
 
@@ -23,54 +23,54 @@ def _make_prefix_variants(prefixed_names: list[str]) -> list[str]:
 
 
 _construction_structure_attribute_attrs = [
-    Property(
+    Attribute(
         name="ceilingHeight",
         path="./uro:ceilingHeight",
         datatype="double",
     ),
-    Property(
+    Attribute(
         name="damCode",
         path="./uro:damCode",
         datatype="string",
         predefined_codelist=None,
     ),
-    Property(
+    Attribute(
         name="depth",
         path="./uro:depth",
         datatype="double",
     ),
-    Property(
+    Attribute(
         name="length",
         path="./uro:length",
         datatype="double",
     ),
-    Property(
+    Attribute(
         name="mainPartLength",
         path="./uro:mainPartLength",
         datatype="double",
     ),
-    Property(
+    Attribute(
         name="structureType",
         path="./uro:structureType",
         datatype="string",
         predefined_codelist="ConstructionStructureAttribute_structureType",
     ),
-    Property(
+    Attribute(
         name="totalWaterStorage",
         path="./uro:totalWaterStorage",
         datatype="double",
     ),
-    Property(
+    Attribute(
         name="volume",
         path="./uro:volume",
         datatype="double",
     ),
-    Property(
+    Attribute(
         name="waveDissipatorLength",
         path="./uro:waveDissipatorLength",
         datatype="double",
     ),
-    Property(
+    Attribute(
         name="width",
         path="./uro:width",
         datatype="double",
@@ -86,173 +86,173 @@ OTHER_CONSTRUCTION = FeatureProcessingDefinition(
         lod2=["./uro:lod2Geometry"],
         lod3=["./uro:lod3Geometry"],
     ),
-    property_groups=[
-        PropertyGroup(
+    attribute_groups=[
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="class",
                     path="./uro:class",
                     datatype="string",
                     predefined_codelist="OtherConstruction_class",
                 ),
-                Property(
+                Attribute(
                     name="function",
                     path="./uro:function",
                     datatype="[]string",
                     predefined_codelist="OtherConstruction_function",
                 ),
-                Property(
+                Attribute(
                     name="dateOfConstruction",
                     path="./uro:dateOfConstruction",
                     datatype="date",
                 ),
-                Property(
+                Attribute(
                     name="conditionOfConstruction",
                     path="./uro:conditionOfConstruction/uro:ConditionOfConstructionValue",
                     datatype="string",
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:consFacilityIdAttribute/uro:FacilityIdAttribute",
-            properties=facility_id_attribute_attrs,
+            attributes=facility_id_attribute_attrs,
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:consBaseAttribute/uro:ConstructionBaseAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="adminOffice",
                     path="./uro:adminOffice",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="adminType",
                     path="./uro:adminType",
                     datatype="string",
                     predefined_codelist="ConstructionBaseAttribute_adminType",
                 ),
-                Property(
+                Attribute(
                     name="administorator",
                     path="./uro:administorator",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="completionYear",
                     path="./uro:completionYear",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="constructionStartYear",
                     path="./uro:constructionStartYear",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="facilityAge",
                     path="./uro:facilityAge",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="installer",
                     path="./uro:installer",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="installerType",
                     path="./uro:installerType",
                     datatype="string",
                     predefined_codelist="ConstructionBaseAttribute_installerType",
                 ),
-                Property(
+                Attribute(
                     name="kana",
                     path="./uro:kana",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="operatorType",
                     path="./uro:operatorType",
                     datatype="string",
                     predefined_codelist=None,
                 ),
-                Property(
+                Attribute(
                     name="purpose",
                     path="./uro:purpose",
                     datatype="string",
                     predefined_codelist="ConstructionBaseAttribute_purpose",
                 ),
-                Property(
+                Attribute(
                     name="specification",
                     path="./uro:specification",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="structureOrdinance",
                     path="./uro:structureOrdinance",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="update",
                     path="./uro:update",
                     datatype="date",
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:consStructureAttribute/uro:ConstructionStructureAttribute",
-            properties=_construction_structure_attribute_attrs,
+            attributes=_construction_structure_attribute_attrs,
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:consStructureAttribute/uro:DamAttribute",
-            properties=_construction_structure_attribute_attrs,
+            attributes=_construction_structure_attribute_attrs,
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:consStructureAttribute/uro:EmbankmentAttribute",
-            properties=_construction_structure_attribute_attrs,
+            attributes=_construction_structure_attribute_attrs,
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:consDataQualityAttribute/uro:ConstructionDataQualityAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="appearanceSrcDesc",
                     path="./uro:appearanceSrcDesc",
                     datatype="[]string",
                     predefined_codelist="DataQualityAttribute_appearanceSrcDesc",
                 ),
-                Property(
+                Attribute(
                     name="dataAcquisition",
                     path="./uro:dataAcquisition",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="geometrySrcDesc",
                     path="./uro:geometrySrcDesc",
                     datatype="[]string",
                     predefined_codelist="DataQualityAttribute_geometrySrcDesc",
                 ),
-                Property(
+                Attribute(
                     name="lod1HeightType",
                     path="./uro:lod1HeightType",
                     datatype="string",
                     predefined_codelist="DataQualityAttribute_lod1HeightType",
                 ),
-                Property(
+                Attribute(
                     name="lodType",
                     path="./uro:lodType",
                     datatype="[]string",
                     predefined_codelist="OtherConstruction_lodType",
                 ),
-                Property(
+                Attribute(
                     name="photoScale",
                     path="./uro:photoScale",
                     datatype="integer",
                 ),
-                Property(
+                Attribute(
                     name="srcScale",
                     path="./uro:srcScale",
                     datatype="string",
                     predefined_codelist="DataQualityAttribute_srcScale",
                 ),
-                Property(
+                Attribute(
                     name="thematicSrcDesc",
                     path="./uro:thematicSrcDesc",
                     datatype="[]string",
@@ -333,7 +333,7 @@ OTHER_CONSTRUCTION_BOUNDARY_SURFACE = FeatureProcessingDefinition(
             "uro:ClosureSurface",
         ]
     ),
-    property_groups=[],
+    attribute_groups=[],
     lod_detection=LODDetection(
         lod2=["./uro:lod2MultiSurface"],
         lod3=["./uro:lod3MultiSurface"],
@@ -368,22 +368,22 @@ OTHER_CONSTRUCTION_INSTALLATION = FeatureProcessingDefinition(
             "uro:ConstructionInstallation",
         ]
     ),
-    property_groups=[
-        PropertyGroup(
+    attribute_groups=[
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="class",
                     path="./uro:class",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="function",
                     path="./uro:function",
                     datatype="[]string",
                     predefined_codelist="ConstructionInstallation_function",
                 ),
-                Property(
+                Attribute(
                     name="usage",
                     path="./uro:usage",
                     datatype="[]string",

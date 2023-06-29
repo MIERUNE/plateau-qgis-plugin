@@ -1,12 +1,12 @@
 """水辺モデル (./wtr/) および 災害リスク (浸水) モデル (./fld/, ./htd/, ./ifld/, ./tnm/)"""
 
 from .base import (
+    Attribute,
+    AttributeGroup,
     FeatureEmission,
     FeatureEmissions,
     FeatureProcessingDefinition,
     LODDetection,
-    Property,
-    PropertyGroup,
 )
 from .common import facility_id_attribute_attrs
 
@@ -20,17 +20,17 @@ WATER_BODY = FeatureProcessingDefinition(
         lod2=["./wtr:lod2Solid"],
         lod3=["./wtr:lod3Solid"],
     ),
-    property_groups=[
-        PropertyGroup(
+    attribute_groups=[
+        AttributeGroup(
             base_element=None,
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="class",
                     path="./wtr:class",
                     datatype="string",
                     predefined_codelist="WaterBody_class",
                 ),
-                Property(
+                Attribute(
                     name="function",
                     path="./wtr:function",  # 浸水リスクモデルで使われる
                     datatype="[]string",
@@ -38,197 +38,197 @@ WATER_BODY = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:floodingRiskAttribute",
-            properties=[
+            attributes=[
                 # uro:WaterBodyRiverFloodingRiskAttribute
-                Property(
+                Attribute(
                     name="description",
                     path="./uro:WaterBodyRiverFloodingRiskAttribute/uro:description",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="rank",
                     path="./uro:WaterBodyRiverFloodingRiskAttribute/uro:rank",
                     datatype="string",
                     predefined_codelist="RiverFloodingRiskAttribute_rank",
                 ),
-                Property(
+                Attribute(
                     name="rankOrg",
                     path="./uro:WaterBodyRiverFloodingRiskAttribute/uro:rankOrg",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="depth",
                     path="./uro:WaterBodyRiverFloodingRiskAttribute/uro:depth",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="adminType",
                     path="./uro:WaterBodyRiverFloodingRiskAttribute/uro:adminType",
                     datatype="string",
                     predefined_codelist="RiverFloodingRiskAttribute_adminType",
                 ),
-                Property(
+                Attribute(
                     name="scale",
                     path="./uro:WaterBodyRiverFloodingRiskAttribute/uro:scale",
                     datatype="string",
                     predefined_codelist="RiverFloodingRiskAttribute_scale",
                 ),
-                Property(
+                Attribute(
                     name="duration",
                     path="./uro:WaterBodyRiverFloodingRiskAttribute/uro:duration",
                     datatype="double",
                 ),
                 # uro:WaterBodyHighTideRiskAttribute
-                Property(
+                Attribute(
                     name="description",
                     path="./uro:WaterBodyHighTideRiskAttribute/uro:description",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="rank",
                     path="./uro:WaterBodyHighTideRiskAttribute/uro:rank",
                     datatype="string",
                     predefined_codelist="HighTideRiskAttribute_rank",
                 ),
-                Property(
+                Attribute(
                     name="rankOrg",
                     path="./uro:WaterBodyHighTideRiskAttribute/uro:rankOrg",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="depth",
                     path="./uro:WaterBodyHighTideRiskAttribute/uro:depth",
                     datatype="double",
                 ),
                 # uro:WaterBodyTsunamiRiskAttribute
-                Property(
+                Attribute(
                     name="description",
                     path="./uro:WaterBodyTsunamiRiskAttribute/uro:description",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="rank",
                     path="./uro:WaterBodyTsunamiRiskAttribute/uro:rank",
                     datatype="string",
                     predefined_codelist="TsunamiRiskAttribute_rank",
                 ),
-                Property(
+                Attribute(
                     name="rankOrg",
                     path="./uro:WaterBodyTsunamiRiskAttribute/uro:rankOrg",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="depth",
                     path="./uro:WaterBodyTsunamiRiskAttribute/uro:depth",
                     datatype="double",
                 ),
                 # uro:WaterBodyHighTideRiskAttribute
-                Property(
+                Attribute(
                     name="description",
                     path="./uro:WaterBodyHighTideRiskAttribute/uro:description",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="rank",
                     path="./uro:WaterBodyHighTideRiskAttribute/uro:rank",
                     datatype="string",
                     predefined_codelist="HighTideRiskAttribute_rank",
                 ),
-                Property(
+                Attribute(
                     name="rankOrg",
                     path="./uro:WaterBodyHighTideRiskAttribute/uro:rankOrg",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="depth",
                     path="./uro:WaterBodyHighTideRiskAttribute/uro:depth",
                     datatype="double",
                 ),
                 # uro:WaterBodyInlandFloodingRiskAttribute
-                Property(
+                Attribute(
                     name="description",
                     path="./uro:WaterBodyInlandFloodingRiskAttribute/uro:description",
                     datatype="string",
                     predefined_codelist="InlandFloodingRiskAttribute_description",
                 ),
-                Property(
+                Attribute(
                     name="rank",
                     path="./uro:WaterBodyInlandFloodingRiskAttribute/uro:rank",
                     datatype="string",
                     predefined_codelist="InlandFloodingRiskAttribute_rank",
                 ),
-                Property(
+                Attribute(
                     name="rankOrg",
                     path="./uro:WaterBodyInlandFloodingRiskAttribute/uro:rankOrg",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="depth",
                     path="./uro:WaterBodyInlandFloodingRiskAttribute/uro:depth",
                     datatype="double",
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:waterBodyDetailAttribute/uro:WaterBodyDetailAttribute",
-            properties=[
-                Property(
+            attributes=[
+                Attribute(
                     name="adminType",
                     path="./uro:adminType",
                     datatype="string",
                     predefined_codelist=None,
                 ),
-                Property(
+                Attribute(
                     name="area",
                     path="./uro:area",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="city",
                     path="./uro:city",
                     datatype="[]string",
                     predefined_codelist="Common_localPublicAuthorities",
                 ),
-                Property(
+                Attribute(
                     name="flowDirection",
                     path="./uro:flowDirection",
                     datatype="boolean",
                 ),
-                Property(
+                Attribute(
                     name="kana",
                     path="./uro:kana",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="maximumDepth",
                     path="./uro:maximumDepth",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="measurementYearMonth",
                     path="./uro:measurementYearMonth",
                     datatype="string",
                 ),
-                Property(
+                Attribute(
                     name="prefecture",
                     path="./uro:prefecture",
                     datatype="[]string",
                     predefined_codelist="Common_localPublicAuthorities",
                 ),
-                Property(
+                Attribute(
                     name="riverCode",
                     path="./uro:riverCode",
                     datatype="string",
                     predefined_codelist=None,
                 ),
-                Property(
+                Attribute(
                     name="waterSurfaceElevation",
                     path="./uro:waterSurfaceElevation",
                     datatype="double",
                 ),
-                Property(
+                Attribute(
                     name="waterSystemCode",
                     path="./uro:waterSystemCode",
                     datatype="string",
@@ -236,9 +236,9 @@ WATER_BODY = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        PropertyGroup(
+        AttributeGroup(
             base_element="./uro:wtrFacilityIdAttribute/uro:FacilityIdAttribute",
-            properties=facility_id_attribute_attrs,
+            attributes=facility_id_attribute_attrs,
         ),
         # TODO: uro:wtrDmAttribute
         # TODO: uro:wtrFacilityTypeAttribute
@@ -288,7 +288,7 @@ WATER_BOUNDARY_SURFACE = FeatureProcessingDefinition(
         lod2=["./wtr:lod2Surface"],
         lod3=["./wtr:lod3Surface"],
     ),
-    property_groups=[],
+    attribute_groups=[],
     emissions=FeatureEmissions(
         lod2=FeatureEmission(
             collect_all=[
