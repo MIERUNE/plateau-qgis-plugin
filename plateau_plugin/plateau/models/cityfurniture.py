@@ -76,7 +76,7 @@ CITY_FURNITURE = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        # FIXME: cityFurnitureDetailAttribute は多重度が[0..*] (入れ子)
+        # FIXME: cityFurnitureDetailAttribute は多重度が[0..*] (入れ子) なのでこれは正しくない
         PropertyGroup(
             base_element="./uro:cityFurnitureDetailAttribute/uro:CityFurnitureDetailAttribute",
             properties=[

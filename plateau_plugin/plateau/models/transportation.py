@@ -1,7 +1,5 @@
 """交通モデル 道路 (./tran/) 鉄道 (./rwy/) 徒歩道 (./trk/) 広場 (./squr/) 航路 (./wwy/)"""
 
-# FIXME: 徒歩道、広場、航路の属性値
-
 from .base import (
     FeatureEmission,
     FeatureEmissions,

@@ -1,8 +1,5 @@
 """トンネルモデル (./tun/)"""
 
-# FIXME:
-# TODO: 以下、bldg:Building 用の定義をコピペしただけなので、内容は要検証
-
 from .base import (
     FeatureEmission,
     FeatureEmissions,
@@ -27,10 +24,16 @@ TUNNEL = FeatureProcessingDefinition(
             base_element=None,
             properties=[
                 Property(
-                    name="usage",
-                    path="./tun:usage",
+                    name="class",
+                    path="./tun:class",
+                    datatype="string",
+                    predefined_codelist="Tunnel_class",
+                ),
+                Property(
+                    name="function",
+                    path="./tun:function",
                     datatype="[]string",
-                    predefined_codelist="Tunnel_usage",
+                    predefined_codelist="Tunnel_function",
                 ),
                 Property(
                     name="yearOfConstruction",
@@ -42,350 +45,177 @@ TUNNEL = FeatureProcessingDefinition(
                     path="./tun:yearOfDemolition",
                     datatype="integer",
                 ),
-                Property(
-                    name="roofType",
-                    path="./tun:roofType",
-                    datatype="string",
-                    predefined_codelist="Tunnel_roofType",
-                ),
-                Property(
-                    name="measuredHeight",
-                    path="./tun:measuredHeight",
-                    datatype="double",
-                ),
-                Property(
-                    name="storeysAboveGround",
-                    path="./tun:storeysAboveGround",
-                    datatype="integer",
-                ),
-                Property(
-                    name="storeysBelowGround",
-                    path="./tun:storeysBelowGround",
-                    datatype="integer",
-                ),
-                # Property(
-                #     name="address",
-                #     path="./tun:address",
-                #     datatype="string",  # TODO: xAL をどう読むか
-                # ),
             ],
         ),
         PropertyGroup(
-            base_element="./uro:tunnelIDAttribute/uro:TunnelIDAttribute",
+            base_element="./uro:tunBaseAttribute/uro:ConstructionBaseAttribute",
             properties=[
                 Property(
-                    name="tunnelID",
-                    path="./uro:tunnelID",
+                    name="adminOffice",
+                    path="./uro:adminOffice",
                     datatype="string",
                 ),
                 Property(
-                    name="branchID",
-                    path="./uro:branchID",
+                    name="adminType",
+                    path="./uro:adminType",
+                    datatype="string",
+                    predefined_codelist="ConstructionBaseAttribute_adminType",
+                ),
+                Property(
+                    name="administorator",
+                    path="./uro:administorator",
+                    datatype="string",
+                ),
+                Property(
+                    name="completionYear",
+                    path="./uro:completionYear",
                     datatype="integer",
                 ),
                 Property(
-                    name="partID",
-                    path="./uro:partID",
+                    name="constructionStartYear",
+                    path="./uro:constructionStartYear",
                     datatype="integer",
                 ),
                 Property(
-                    name="prefecture",
-                    path="./uro:prefecture",
-                    datatype="string",
-                    predefined_codelist="Common_prefecture",
-                ),
-                Property(
-                    name="city",
-                    path="./uro:city",
-                    datatype="string",
-                    predefined_codelist="Common_localPublicAuthorities",
-                ),
-            ],
-        ),
-        PropertyGroup(
-            base_element="./uro:tunnelDetailAttribute/uro:TunnelDetailAttribute",
-            properties=[
-                Property(
-                    name="serialNumberOfTunnelCertification",
-                    path="./uro:serialNumberOfTunnelCertification",
-                    datatype="string",
-                ),
-                Property(
-                    name="siteArea",
-                    path="./uro:siteArea",
-                    datatype="double",
-                ),
-                Property(
-                    name="totalFloorArea",
-                    path="./uro:totalFloorArea",
-                    datatype="double",
-                ),
-                Property(
-                    name="tunnelFootprintArea",
-                    path="./uro:tunnelFootprintArea",
-                    datatype="double",
-                ),
-                Property(
-                    name="tunnelRoofEdgeArea",
-                    path="./uro:tunnelRoofEdgeArea",
-                    datatype="double",
-                ),
-                Property(
-                    name="developmentArea",
-                    path="./uro:developmentArea",
-                    datatype="double",
-                ),
-                Property(
-                    name="tunnelStructureType",
-                    path="./uro:tunnelStructureType",
-                    datatype="string",
-                    predefined_codelist="TunnelDetailAttribute_tunnelStructureType",
-                ),
-                Property(
-                    name="tunnelStructureOrgType",
-                    path="./uro:tunnelStructureOrgType",
-                    datatype="string",
-                ),
-                Property(
-                    name="fireproofStructureType",
-                    path="./uro:fireproofStructureType",
-                    datatype="string",
-                    predefined_codelist="TunnelDetailAttribute_fireproofStructureType",
-                ),
-                Property(
-                    name="urbanPlanType",
-                    path="./uro:urbanPlanType",
-                    datatype="string",
-                    predefined_codelist="TunnelDetailAttribute_urbanPlanType",
-                ),
-                Property(
-                    name="areaClassificationType",
-                    path="./uro:areaClassificationType",
-                    datatype="string",
-                    predefined_codelist="Common_areaClassificationType",
-                ),
-                Property(
-                    name="districtsAndZonesType",
-                    path="./uro:districtsAndZonesType",
-                    datatype="[]string",
-                    predefined_codelist="Common_districtsAndZonesType",
-                ),
-                Property(
-                    name="landUseType",
-                    path="./uro:landUseType",
-                    datatype="string",
-                    predefined_codelist="Common_landUseType",
-                ),
-                Property(
-                    name="reference",
-                    path="./uro:reference",
-                    datatype="string",
-                ),
-                Property(
-                    name="majorUsage",
-                    path="./uro:majorUsage",
-                    datatype="string",
-                ),
-                Property(
-                    name="majorUsage2",
-                    path="./uro:majorUsage2",
-                    datatype="string",
-                ),
-                Property(
-                    name="orgUsage",
-                    path="./uro:orgUsage",
-                    datatype="string",
-                ),
-                Property(
-                    name="orgUsage2",
-                    path="./uro:orgUsage2",
-                    datatype="string",
-                ),
-                Property(
-                    name="detailedUsage",
-                    path="./uro:detailedUsage",
-                    datatype="string",
-                ),
-                Property(
-                    name="detailedUsage2",
-                    path="./uro:detailedUsage2",
-                    datatype="string",
-                ),
-                Property(
-                    name="detailedUsage3",
-                    path="./uro:detailedUsage3",
-                    datatype="string",
-                ),
-                Property(
-                    name="groundFloorUsage",
-                    path="./uro:groundFloorUsage",
-                    datatype="string",
-                ),
-                Property(
-                    name="secondFloorUsage",
-                    path="./uro:secondFloorUsage",
-                    datatype="string",
-                ),
-                Property(
-                    name="thirdFloorUsage",
-                    path="./uro:thirdFloorUsage",
-                    datatype="string",
-                ),
-                Property(
-                    name="basementUsage",
-                    path="./uro:basementUsage",
-                    datatype="string",
-                ),
-                Property(
-                    name="basementFirstUsage",
-                    path="./uro:basementFirstUsage",
-                    datatype="string",
-                ),
-                Property(
-                    name="basementSecondUsage",
-                    path="./uro:basementSecondUsage",
-                    datatype="string",
-                ),
-                Property(
-                    name="vacancy",
-                    path="./uro:vacancy",
-                    datatype="string",
-                    predefined_codelist="TunnelDetailAttribute_vacancy",
-                ),
-                Property(
-                    name="tunnelCoverageRate",
-                    path="./uro:tunnelCoverageRate",
-                    datatype="double",
-                ),
-                Property(
-                    name="floorAreaRate",
-                    path="./uro:floorAreaRate",
-                    datatype="double",
-                ),
-                Property(
-                    name="specifiedTunnelCoverageRate",
-                    path="./uro:specifiedTunnelCoverageRate",
-                    datatype="double",
-                ),
-                Property(
-                    name="specifiedFloorAreaRate",
-                    path="./uro:specifiedFloorAreaRate",
-                    datatype="double",
-                ),
-                Property(
-                    name="standardFloorAreaRate",
-                    path="./uro:standardFloorAreaRate",
-                    datatype="double",
-                ),
-                Property(
-                    name="tunnelHeight",
-                    path="./uro:buidingHeight",
-                    datatype="double",
-                ),
-                Property(
-                    name="eaveHeight",
-                    path="./uro:eaveHeight",
-                    datatype="double",
-                ),
-                Property(
-                    name="surveyYear",
-                    path="./uro:surveyYear",
+                    name="facilityAge",
+                    path="./uro:facilityAge",
                     datatype="integer",
+                ),
+                Property(
+                    name="installer",
+                    path="./uro:installer",
+                    datatype="string",
+                ),
+                Property(
+                    name="installerType",
+                    path="./uro:installerType",
+                    datatype="string",
+                    predefined_codelist="ConstructionBaseAttribute_installerType",
+                ),
+                Property(
+                    name="kana",
+                    path="./uro:kana",
+                    datatype="string",
+                ),
+                Property(
+                    name="operatorType",
+                    path="./uro:operatorType",
+                    datatype="string",
+                    predefined_codelist=None,
+                ),
+                Property(
+                    name="purpose",
+                    path="./uro:purpose",
+                    datatype="string",
+                    predefined_codelist="ConstructionBaseAttribute_purpose",
+                ),
+                Property(
+                    name="specification",
+                    path="./uro:specification",
+                    datatype="string",
+                ),
+                Property(
+                    name="structureOrdinance",
+                    path="./uro:structureOrdinance",
+                    datatype="string",
+                ),
+                Property(
+                    name="update",
+                    path="./uro:update",
+                    datatype="date",
                 ),
             ],
         ),
         PropertyGroup(
-            base_element="./uro:largeCustomerFacilityAttribute/uro:LargeCustomerFacilityAttribute",
+            base_element="./uro:tunStructureAttribute/uro:TunnelStructureAttribute",
             properties=[
                 Property(
-                    name="class",
-                    path="./uro:class",
-                    datatype="string",
-                    predefined_codelist="LargeCustomerFacilityAttribute_class",
-                ),
-                Property(
-                    name="name",
-                    path="./uro:name",
-                    datatype="string",
-                ),
-                Property(
-                    name="capacity",
-                    path="./uro:capacity",
-                    datatype="integer",
-                ),
-                Property(
-                    name="owner",
-                    path="./uro:owner",
-                    datatype="string",
-                ),
-                Property(
-                    name="totalFloorArea",
-                    path="./uro:totalFloorArea",
+                    name="area",
+                    path="./uro:area",
                     datatype="double",
                 ),
                 Property(
-                    name="totalStoreFloorArea",
-                    path="./uro:totalStoreFloorArea",
+                    name="effectiveHeight",
+                    path="./uro:effectiveHeight",
                     datatype="double",
                 ),
                 Property(
-                    name="inauguralDate",
-                    path="./uro:inauguralDate",
+                    name="innerHeight",
+                    path="./uro:innerHeight",
+                    datatype="double",
+                ),
+                Property(
+                    name="length",
+                    path="./uro:length",
+                    datatype="double",
+                ),
+                Property(
+                    name="mouthType",
+                    path="./uro:mouthType",
+                    datatype="string",
+                    predefined_codelist="TunnelStructureAttribute_mouthType",
+                ),
+                Property(
+                    name="slopeType",
+                    path="./uro:slopeType",
+                    datatype="string",
+                    predefined_codelist="ConstructionStructureAttribute_slopeType",
+                ),
+                Property(
+                    name="tunnelSubtype",
+                    path="./uro:tunnelSubtype",
+                    datatype="string",
+                    predefined_codelist="TunnelStructureAttribute_tunnelSubType",
+                ),
+                Property(
+                    name="tunnelType",
+                    path="./uro:tunnelType",
+                    datatype="string",
+                    predefined_codelist="TunnelStructureAttribute_tunnelType",
+                ),
+                Property(
+                    name="width",
+                    path="./uro:width",
+                    datatype="double",
+                ),
+            ],
+        ),
+        PropertyGroup(
+            base_element="./uro:tunFunctionalAttribute/uro:TunnelFunctionalAttribute",
+            properties=[
+                Property(
+                    name="directionType",
+                    path="./uro:directionType",
+                    datatype="string",
+                    predefined_codelist="ConstructionFunctionalAttribute_directionType",
+                ),
+                Property(
+                    name="userType",
+                    path="./uro:userType",
+                    datatype="string",
+                    predefined_codelist="TunnelFunctionalAttribute_userType",
+                ),
+            ],
+        ),
+        PropertyGroup(
+            base_element="./uro:tunRiskAssessmentAttribute/uro:ConstructionRiskAssessmentAttribute",
+            properties=[
+                Property(
+                    name="referenceDate",
+                    path="./uro:referenceDate",
                     datatype="date",
                 ),
                 Property(
-                    name="yearOpened",
-                    path="./uro:yearOpened",
-                    datatype="integer",
-                ),
-                Property(
-                    name="yearClosed",
-                    path="./uro:yearClosed",
-                    datatype="integer",
-                ),
-                Property(
-                    name="keyTenants",
-                    path="./uro:keyTenants",
-                    datatype="string",
-                ),
-                Property(
-                    name="availability",
-                    path="./uro:availability",
-                    datatype="boolean",
-                ),
-                Property(
-                    name="urbanPlanType",
-                    path="./uro:urbanPlanType",
-                    datatype="string",
-                    predefined_codelist="Common_urbanPlanType",
-                ),
-                Property(
-                    name="areaClassificationType",
-                    path="./uro:areaClassificationType",
-                    datatype="string",
-                    predefined_codelist="Common_areaClassificationType",
-                ),
-                Property(
-                    name="districtsAndZonesType",
-                    path="./uro:districtsAndZonesType",
+                    name="riskType",
+                    path="./uro:riskType",
                     datatype="[]string",
-                    predefined_codelist="Common_districtsAndZonesType",
+                    predefined_codelist="ConstructionRiskAssessmentAttribute_riskType",
                 ),
                 Property(
-                    name="landUseType",
-                    path="./uro:landUseType",
-                    datatype="string",
-                    predefined_codelist="Common_landUseType",
-                ),
-                Property(
-                    name="reference",
-                    path="./uro:reference",
-                    datatype="string",
-                ),
-                Property(
-                    name="note",
-                    path="./uro:note",
-                    datatype="string",
+                    name="status",
+                    path="./uro:status",
+                    datatype="[]string",
+                    predefined_codelist="ConstructionRiskAssessmentAttribute_status",
                 ),
                 Property(
                     name="surveyYear",
@@ -395,42 +225,52 @@ TUNNEL = FeatureProcessingDefinition(
             ],
         ),
         PropertyGroup(
-            base_element="./uro:tunnelDataQualityAttribute/uro:TunnelDataQualityAttribute",
+            base_element="./uro:tunDataQualityAttribute/uro:ConstructionDataQualityAttribute",
             properties=[
                 Property(
-                    name="srcScale",
-                    path="./uro:srcScale",
+                    name="appearanceSrcDesc",
+                    path="./uro:appearanceSrcDesc",
                     datatype="[]string",
-                    predefined_codelist="TunnelDataQualityAttribute_srcScale",
+                    predefined_codelist="DataQualityAttribute_appearanceSrcDesc",
+                ),
+                Property(
+                    name="dataAcquisition",
+                    path="./uro:dataAcquisition",
+                    datatype="string",
                 ),
                 Property(
                     name="geometrySrcDesc",
                     path="./uro:geometrySrcDesc",
                     datatype="[]string",
-                    predefined_codelist="TunnelDataQualityAttribute_geometrySrcDesc",
-                ),
-                Property(
-                    name="thematicSrcDesc",
-                    path="./uro:thematicSrcDesc",
-                    datatype="[]string",
-                    predefined_codelist="TunnelDataQualityAttribute_thematicSrcDesc",
-                ),
-                Property(
-                    name="appearanceSrcDesc",
-                    path="./uro:appearanceSrcDesc",
-                    datatype="[]string",
-                    predefined_codelist="TunnelDataQualityAttribute_appearanceSrcDesc",
+                    predefined_codelist="DataQualityAttribute_geometrySrcDesc",
                 ),
                 Property(
                     name="lod1HeightType",
                     path="./uro:lod1HeightType",
                     datatype="string",
-                    predefined_codelist="TunnelDataQualityAttribute_lod1HeightType",
+                    predefined_codelist="DataQualityAttribute_lod1HeightType",
                 ),
                 Property(
                     name="lodType",
                     path="./uro:lodType",
                     datatype="[]string",
+                ),
+                Property(
+                    name="photoScale",
+                    path="./uro:photoScale",
+                    datatype="integer",
+                ),
+                Property(
+                    name="srcScale",
+                    path="./uro:srcScale",
+                    datatype="string",
+                    predefined_codelist="DataQualityAttribute_srcScale",
+                ),
+                Property(
+                    name="thematicSrcDesc",
+                    path="./uro:thematicSrcDesc",
+                    datatype="[]string",
+                    predefined_codelist="DataQualityAttribute_thematicSrcDesc",
                 ),
             ],
         ),
@@ -438,10 +278,7 @@ TUNNEL = FeatureProcessingDefinition(
             base_element="./uro:tunFacilityIdAttribute/uro:FacilityIdAttribute",
             properties=facility_id_attribute_attrs,
         ),
-        # TODO: uro:tunnelDisasterRiskAttribute (入れ子, polymorpohic)
-        # TODO: uro:keyValuePairAttribute
-        # (TODO: uro:ifcTunnelAttribute)
-        # TODO: uro:indoorTunnelAttribute
+        # TODO: uro:tunDisasterRiskAttribute (入れ子, polymorpohic)
         # TODO: uro:tunFacilityTypeAttribute
         # TODO: uro:tunFacilityAttribute
         # TODO: uro:tunDmAttribute
@@ -537,9 +374,7 @@ TUNNEL_OPENING = FeatureProcessingDefinition(
         "tun:Window",
         "tun:Door",
     ],
-    property_groups=[
-        # TODO: uro:indoorOpeningAttribute
-    ],
+    property_groups=[],
     lod_detection=LODDetection(
         lod3=["./tun:lod3MultiSurface"],
         lod4=["./tun:lod4MultiSurface"],
@@ -597,15 +432,12 @@ TUNNEL_INT_INSTALLATION = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        # TODO: uro:indoorInstallationAttribute
     ],
     lod_detection=LODDetection(
-        lod2=["./tun:lod2Geometry"],
         lod3=["./tun:lod3Geometry"],
         lod4=["./tun:lod4Geometry"],
     ),
     emissions=FeatureEmissions(
-        lod2=FeatureEmission(collect_all=[".//tun:lod2Geometry//gml:Polygon"]),
         lod3=FeatureEmission(collect_all=[".//tun:lod3Geometry//gml:Polygon"]),
         lod4=FeatureEmission(collect_all=[".//tun:lod4Geometry//gml:Polygon"]),
     ),
@@ -622,12 +454,6 @@ TUNNEL_FURNITURE = FeatureProcessingDefinition(
             base_element=None,
             properties=[
                 Property(
-                    name="class",
-                    path="./tun:class",
-                    datatype="string",
-                    predefined_codelist="TunnelFurniture_class",
-                ),
-                Property(
                     name="function",
                     path="./tun:function",
                     datatype="[]string",
@@ -635,7 +461,6 @@ TUNNEL_FURNITURE = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        # TODO: uro:indoorFurnitureAttribute
     ],
     lod_detection=LODDetection(
         lod4=["./tun:lod4Geometry"],
