@@ -115,10 +115,6 @@ OTHER_CONSTRUCTION = FeatureProcessingDefinition(
             ],
         ),
         AttributeGroup(
-            base_element="./uro:consFacilityIdAttribute/uro:RiverFacilityIdAttribute",
-            attributes=river_facility_id_attribute_attrs,
-        ),
-        AttributeGroup(
             base_element="./uro:consBaseAttribute/uro:ConstructionBaseAttribute",
             attributes=[
                 Attribute(
@@ -259,6 +255,10 @@ OTHER_CONSTRUCTION = FeatureProcessingDefinition(
                     predefined_codelist="DataQualityAttribute_thematicSrcDesc",
                 ),
             ],
+        ),
+        AttributeGroup(
+            base_element="./uro:consFacilityIdAttribute/uro:RiverFacilityIdAttribute",
+            attributes=river_facility_id_attribute_attrs,
         ),
         # TODO: 入れ子データ
         # Property(

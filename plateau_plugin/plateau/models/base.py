@@ -99,9 +99,14 @@ class FeatureProcessingDefinition:
     target_elements: list[str]
     """処理対象とする地物要素 (e.g. "tran:Road", "tran:TrafficArea", "bldg:WallSurface")"""
 
-    lod_detection: LODDetection  # 各 LOD の有無を判定するための element paths
-    attribute_groups: list[AttributeGroup]  # 取得したい属性 (プロパティ) の定義
-    emissions: FeatureEmissions  # ジオメトリの抽出についての定義
+    lod_detection: LODDetection
+    """各 LOD の有無を判定するための element paths"""
+
+    attribute_groups: list[AttributeGroup]
+    """取得したい属性の定義"""
+
+    emissions: FeatureEmissions
+    """ジオメトリの抽出についての定義"""
 
     def detect_lods(self, elem: et._Element, nsmap: dict[str, str]) -> tuple[bool, ...]:
         """

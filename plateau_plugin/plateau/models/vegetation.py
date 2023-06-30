@@ -116,7 +116,7 @@ PLANT_COVER = FeatureProcessingDefinition(
                     predefined_codelist="PlantCover_class",
                 ),
                 Attribute(
-                    name="avarageHeight",
+                    name="averageHeight",
                     path="./veg:averageHeight",
                     datatype="double",
                 ),
