@@ -46,11 +46,12 @@ UNDERGROUND_BUILDING = FeatureProcessingDefinition(
                     path="./bldg:storeysBelowGround",
                     datatype="integer",
                 ),
-                # Property(
-                #     name="storeyHeightsBelowGround",
-                #     path="./bldg:storeyHeightsBelowGround",
-                #     datatype="[]double",  # TODO: どのように対応するか
-                # ),
+                Attribute(
+                    name="storeyHeightsBelowGround",
+                    path="./bldg:storeyHeightsBelowGround",
+                    datatype="[]string",  # NOTE: 階数分出現しうる
+                    # NOTE: []string でよいかどうか
+                ),
                 # Property(
                 #     name="address",
                 #     path="./bldg:address",

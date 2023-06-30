@@ -1,8 +1,5 @@
 """区域モデル (./area/)、都市計画決定情報モデル (./urf/)"""
 
-# TODO: 都市計画決定情報の大分類にもとづいてレイヤを分けるのがよいか?
-# 現状は、都市計画決定情報の全地物を1つのレイヤにまとめている
-
 from .base import (
     Attribute,
     AttributeGroup,
@@ -23,120 +20,127 @@ def _make_prefix_variants(prefixed_names: list[str]) -> list[str]:
     return names
 
 
-URF_ZONE = FeatureProcessingDefinition(
-    id="urf:Zone",
-    target_elements=_make_prefix_variants(
-        [
-            "urf:AircraftNoiseControlZone",
-            "urf:AreaClassification",
-            "urf:CollectiveFacilitiesForReconstruction",
-            "urf:CollectiveFacilitiesForReconstructionAndRevitalization",
-            "urf:CollectiveFacilitiesForTsunamiDisasterPrevention",
-            "urf:CollectiveGovernmentAndPublicOfficeFacilities",
-            "urf:CollectiveHousingFacilities",
-            "urf:CollectiveUrbanDisasterPreventionFacilities",
-            "urf:ConservationZoneForClustersOfTraditionalStructures",
-            "urf:DisasterPreventionBlockImprovementProject",
-            "urf:DisasterPreventionBlockImprovementZonePlan",
-            "urf:DistributionBusinessPark",
-            "urf:DistributionBusinessZone",
-            "urf:DistrictDevelopmentPlan",
-            "urf:DistrictFacility",
-            "urf:DistrictImprovementPlanForDisasterPreventionBlockImprovementZonePlan",
-            "urf:DistrictImprovementPlanForHistoricSceneryMaintenanceAndImprovementDistrict",
-            "urf:DistrictPlan",
-            "urf:DistrictsAndZones",
-            "urf:EducationalAndCulturalFacility",
-            "urf:ExceptionalFloorAreaRateDistrict",
-            "urf:FirePreventionDistrict",
-            "urf:FireProtectionFacility",
-            "urf:FloodPreventionFacility",
-            "urf:GlobalHubCityDevelopmentProject",
-            "urf:GreenSpaceConservationDistrict",
-            "urf:HeightControlDistrict",
-            "urf:HighLevelUseDistrict",
-            "urf:HighRiseResidentialAttractionDistrict",
-            "urf:HistoricSceneryMaintenanceAndImprovementDistrictPlan",
-            "urf:HousingControlArea",
-            "urf:IndustrialParkDevelopmentProject",
-            "urf:LandReadjustmentProject",
-            "urf:LandReadjustmentPromotionArea",
-            "urf:LandReadjustmentPromotionAreasForCoreBusinessUrbanDevelopment",
-            "urf:LandscapeZone",
-            "urf:MarketsSlaughterhousesCrematoria",
-            "urf:MedicalFacility",
-            "urf:NewHousingAndUrbanDevelopmentProject",
-            "urf:NewUrbanInfrastructureProject",
-            "urf:OpenSpaceForPublicUse",
-            "urf:ParkingPlaceDevelopmentZone",
-            "urf:PortZone",
-            "urf:PrivateUrbanRenewalProjectPlan",
-            "urf:ProductiveGreenZone",
-            "urf:ProjectPromotionArea",
-            "urf:PromotionDistrict",
-            "urf:QuasiUrbanPlanningArea",
-            "urf:ResidenceAttractionArea",
-            "urf:ResidentialBlockConstructionProject",
-            "urf:ResidentialBlockConstructionPromotionArea",
-            "urf:ResidentialEnvironmentImprovementDistrict",
-            "urf:RoadsideDistrictFacility",
-            "urf:RoadsideDistrictImprovementPlan",
-            "urf:RoadsideDistrictPlan",
-            "urf:RuralDistrictFacility",
-            "urf:RuralDistrictImprovementPlan",
-            "urf:RuralDistrictPlan",
-            "urf:SandControlFacility",
-            "urf:ScenicDistrict",
-            "urf:ScheduledAreaForCollectiveGovernmentAndPublicOfficeFacilities",
-            "urf:ScheduledAreaForCollectiveHousingFacilities",
-            "urf:ScheduledAreaForDistributionBusinessPark",
-            "urf:ScheduledAreaForIndustrialParkDevelopmentProjects",
-            "urf:ScheduledAreaForNewHousingAndUrbanDevelopmentProjects",
-            "urf:ScheduledAreaForNewUrbanInfrastructureProjects",
-            "urf:ScheduledAreaForUrbanDevelopmentProject",
-            "urf:SnowProtectionFacility",
-            "urf:SocialWelfareFacility",
-            "urf:SpecialGreenSpaceConservationDistrict",
-            "urf:SpecialUrbanRenaissanceDistrict",
-            "urf:SpecialUseAttractionDistrict",
-            "urf:SpecialUseDistrict",
-            "urf:SpecialUseRestrictionDistrict",
-            "urf:SpecialZoneForPreservationOfHistoricalLandscape",
-            "urf:SpecifiedBlock",
-            "urf:SpecifiedBuildingZoneImprovementPlan",
-            "urf:SpecifiedDisasterPreventionBlockImprovementZone",
-            "urf:SpecifiedUrgentUrbanRenewalArea",
-            "urf:SupplyFacility",
-            "urf:TelecommunicationFacility",
-            "urf:TideFacility",
-            "urf:TrafficFacility",
-            "urf:TreatmentFacility",
-            "urf:TreePlantingDistrict",
-            "urf:UnclassifiedBlankArea",
-            "urf:UnclassifiedUseDistrict",
-            "urf:UnusedLandUsePromotionArea",
-            "urf:UrbanDevelopmentProject",
-            "urf:UrbanDisasterRecoveryPromotionArea",
-            "urf:UrbanFacility",
-            "urf:UrbanFacilityStipulatedByCabinetOrder",
-            "urf:UrbanFunctionAttractionArea",
-            "urf:UrbanPlanningArea",
-            "urf:UrbanRedevelopmentProject",
-            "urf:UrbanRedevelopmentPromotionArea",
-            "urf:UrbanRenewalProject",
-            "urf:UrgentUrbanRenewalArea",
-            "urf:UseDistrict",
-            "urf:Waterway",
-            "urf:WindProtectionFacility",
-            "urf:ZonalDisasterPreventionFacility",
-            "urf:ZoneForPreservationOfHistoricalLandscape",
-        ]
+# urf:Zone の属性
+_base_attributes = [
+    # attributes inherited from urf:Zone
+    AttributeGroup(
+        base_element=None,
+        attributes=[
+            Attribute(
+                name="function",
+                path="./urf:function",
+                datatype="[]string",
+            ),
+            Attribute(
+                name="usage",
+                path="./urf:usage",
+                datatype="[]string",
+            ),
+            Attribute(
+                name="areaClassificationType",
+                path="./urf:areaClassificationType",
+                datatype="string",
+                predefined_codelist="Common_areaClassificationType",
+            ),
+            Attribute(
+                name="city",
+                path="./urf:city",
+                datatype="string",
+                predefined_codelist="Common_localPublicAuthorities",
+            ),
+            Attribute(
+                name="custodian",
+                path="./urf:custodian",
+                datatype="string",
+            ),
+            Attribute(
+                name="enactmentFiscalYear",
+                path="./urf:enactmentFiscalYear",
+                datatype="integer",
+            ),
+            Attribute(
+                name="expirationFiscalYear",
+                path="./urf:expirationFiscalYear",
+                datatype="integer",
+            ),
+            Attribute(
+                name="legalGrounds",
+                path="./urf:legalGrounds",
+                datatype="string",
+            ),
+            Attribute(
+                name="location",
+                path="./urf:location",
+                datatype="string",
+            ),
+            Attribute(
+                name="nominalArea",
+                path="./urf:nominalArea",
+                datatype="double",
+            ),
+            Attribute(
+                name="note",
+                path="./urf:note",
+                datatype="string",
+            ),
+            Attribute(
+                name="notificationNumber",
+                path="./urf:notificationNumber",
+                datatype="string",
+            ),
+            Attribute(
+                name="prefecture",
+                path="./urf:prefecture",
+                datatype="string",
+                predefined_codelist="Common_prefecture",
+            ),
+            Attribute(
+                name="reason",
+                path="./urf:reason",
+                datatype="string",
+            ),
+            Attribute(
+                name="reference",
+                path="./urf:reference",
+                datatype="string",
+            ),
+            Attribute(
+                name="urbanPlanType",
+                path="./urf:urbanPlanType",
+                datatype="string",
+                predefined_codelist="Common_urbanPlanType",
+            ),
+            Attribute(
+                name="validFrom",
+                path="./urf:validFrom",
+                datatype="date",
+            ),
+            Attribute(
+                name="validFromType",
+                path="./urf:validFromType",
+                datatype="string",
+                predefined_codelist="Common_validType",
+            ),
+            Attribute(
+                name="validTo",
+                path="./urf:validTo",
+                datatype="date",
+            ),
+            Attribute(
+                name="validToType",
+                path="./urf:validToType",
+                datatype="string",
+                predefined_codelist="Common_validType",
+            ),
+        ],
     ),
-    lod_detection=LODDetection(
-        lod1=["./urf:lod1MultiSurface"],
-    ),
+]
+
+URF_URBAN_PLANNING_AREA = FeatureProcessingDefinition(
+    id="urf:UrbanPlanningArea",
+    target_elements=_make_prefix_variants(["urf:UrbanPlanningArea"]),
     attribute_groups=[
-        # attributes inherited from urf:Zone
+        *_base_attributes,
         AttributeGroup(
             base_element=None,
             attributes=[
@@ -144,125 +148,8 @@ URF_ZONE = FeatureProcessingDefinition(
                     name="function",
                     path="./urf:function",
                     datatype="[]string",
-                    predefined_codelist=None,
-                ),
-                Attribute(
-                    name="usage",
-                    path="./urf:usage",
-                    datatype="[]string",
-                    predefined_codelist=None,
-                ),
-                Attribute(
-                    name="validFrom",
-                    path="./urf:validFrom",
-                    datatype="date",
-                ),
-                Attribute(
-                    name="validFromType",
-                    path="./urf:validFromType",
-                    datatype="string",
-                    predefined_codelist="Common_validType",
-                ),
-                Attribute(
-                    name="validTo",
-                    path="./urf:validTo",
-                    datatype="date",
-                ),
-                Attribute(
-                    name="validToType",
-                    path="./urf:validToType",
-                    datatype="string",
-                    predefined_codelist="Common_validType",
-                ),
-                Attribute(
-                    name="expirationFiscalYear",
-                    path="./urf:expirationFiscalYear",
-                    datatype="integer",
-                ),
-                Attribute(
-                    name="legalGrounds",
-                    path="./urf:legalGrounds",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="custodian",
-                    path="./urf:custodian",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="notificationNumber",
-                    path="./urf:notificationNumber",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="nominalArea",
-                    path="./urf:nominalArea",
-                    datatype="double",
-                ),
-                Attribute(
-                    name="prefecture",
-                    path="./urf:prefecture",
-                    datatype="string",
-                    predefined_codelist="Common_prefecture",
-                ),
-                Attribute(
-                    name="city",
-                    path="./urf:city",
-                    datatype="string",
-                    predefined_codelist="Common_localPublicAuthorities",
-                ),
-                Attribute(
-                    name="reference",
-                    path="./urf:reference",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="reason",
-                    path="./urf:reason",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="note",
-                    path="./urf:note",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="location",
-                    path="./urf:location",
-                    datatype="string",
-                ),
-            ],
-        ),
-        AttributeGroup(
-            base_element=None,
-            attributes=[
-                Attribute(
-                    name="areaClassificationType",
-                    path="./urf:areaClassificationType",
-                    datatype="string",
-                    predefined_codelist="Common_areaClassificationType",
-                ),
-                Attribute(
-                    name="urbanPlanType",
-                    path="./urf:urbanPlanType",
-                    datatype="string",
                     predefined_codelist="Common_urbanPlanType",
                 ),
-                Attribute(
-                    name="areaInTotal",
-                    path="./urf:areaInTotal",
-                    datatype="double",
-                ),
-                Attribute(
-                    name="number",
-                    path="./urf:number",
-                    datatype="string",
-                ),
-            ],
-        ),
-        AttributeGroup(
-            base_element=None,
-            attributes=[
                 Attribute(
                     name="areaClassification",
                     path="./urf:areaClassification",
@@ -270,9 +157,164 @@ URF_ZONE = FeatureProcessingDefinition(
                     predefined_codelist="Common_availabilityType",
                 ),
                 Attribute(
-                    name="activityRestrictionInFarmland",
-                    path="./urf:activityRestrictionInFarmland",
+                    name="cityArea",
+                    path="./urf:cityArea",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="cityPopulation",
+                    path="./urf:cityPopulation",
+                    datatype="integer",
+                ),
+                Attribute(
+                    name="policyForAreaClassification",
+                    path="./urf:policyForAreaClassification",
                     datatype="string",
+                ),
+                Attribute(
+                    name="policyForUrbanPlanDecision",
+                    path="./urf:policyForUrbanPlanDecision",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="population",
+                    path="./urf:population",
+                    datatype="integer",
+                ),
+                Attribute(
+                    name="purposeForUrbanPlan",
+                    path="./urf:purposeForUrbanPlan",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="reasonForAreaClassification",
+                    path="./urf:reasonForAreaClassification",
+                    datatype="string",
+                ),
+            ],
+        ),
+    ],
+    lod_detection=LODDetection(lod1=["./urf:lod1MultiSurface"]),
+    emissions=FeatureEmissions(
+        lod1=FeatureEmission(collect_all=["./urf:lod1MultiSurface//gml:Polygon"]),
+    ),
+)
+
+URF_QUASI_URBAN_PLANNING_AREA = FeatureProcessingDefinition(
+    id="urf:QuasiUrbanPlanningArea",
+    target_elements=_make_prefix_variants(["urf:QuasiUrbanPlanningArea"]),
+    attribute_groups=[
+        *_base_attributes,
+        AttributeGroup(
+            base_element=None,
+            attributes=[
+                Attribute(
+                    name="function",
+                    path="./urf:function",
+                    datatype="[]string",
+                    predefined_codelist="Common_urbanPlanType",
+                ),
+                Attribute(
+                    name="cityArea",
+                    path="./urf:cityArea",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="cityPopulation",
+                    path="./urf:cityPopulation",
+                    datatype="integer",
+                ),
+                Attribute(
+                    name="population",
+                    path="./urf:population",
+                    datatype="integer",
+                ),
+            ],
+        ),
+    ],
+    lod_detection=LODDetection(lod1=["./urf:lod1MultiSurface"]),
+    emissions=FeatureEmissions(
+        lod1=FeatureEmission(collect_all=["./urf:lod1MultiSurface//gml:Polygon"]),
+    ),
+)
+
+URF_AREA_CLASSIFICATION = FeatureProcessingDefinition(
+    id="urf:AreaClassification",
+    target_elements=_make_prefix_variants(["urf:AreaClassification"]),
+    attribute_groups=[
+        *_base_attributes,
+        AttributeGroup(
+            base_element=None,
+            attributes=[
+                Attribute(
+                    name="function",
+                    path="./urf:function",
+                    datatype="[]string",
+                    predefined_codelist="Common_areaClassificationType",
+                ),
+                Attribute(
+                    name="population",
+                    path="./urf:population",
+                    datatype="integer",
+                ),
+            ],
+        ),
+    ],
+    lod_detection=LODDetection(lod1=["./urf:lod1MultiSurface"]),
+    emissions=FeatureEmissions(
+        lod1=FeatureEmission(collect_all=["./urf:lod1MultiSurface//gml:Polygon"]),
+    ),
+)
+
+URF_DISTRICTS_AND_ZONES = FeatureProcessingDefinition(
+    id="urf:DistrictsAndZones",
+    target_elements=_make_prefix_variants(
+        [
+            "urf:AircraftNoiseControlZone",
+            "urf:ConservationZoneForClustersOfTraditionalStructures",
+            "urf:DistributionBusinessZone",
+            "urf:DistrictsAndZones",
+            "urf:ExceptionalFloorAreaRateDistrict",
+            "urf:FirePreventionDistrict",
+            "urf:GreenSpaceConservationDistrict",
+            "urf:HeightControlDistrict",
+            "urf:HighLevelUseDistrict",
+            "urf:HighRiseResidentialAttractionDistrict",
+            "urf:HousingControlArea",
+            "urf:LandscapeZone",
+            "urf:ParkingPlaceDevelopmentZone",
+            "urf:PortZone",
+            "urf:ProductiveGreenZone",
+            "urf:ResidentialEnvironmentImprovementDistrict",
+            "urf:ScenicDistrict",
+            "urf:SpecialGreenSpaceConservationDistrict",
+            "urf:SpecialUrbanRenaissanceDistrict",
+            "urf:SpecialUseAttractionDistrict",
+            "urf:SpecialUseDistrict",
+            "urf:SpecialUseRestrictionDistrict",
+            "urf:SpecialZoneForPreservationOfHistoricalLandscape",
+            "urf:SpecifiedBlock",
+            "urf:SpecifiedDisasterPreventionBlockImprovementZone",
+            "urf:TreePlantingDistrict",
+            "urf:UseDistrict",
+            "urf:ZoneForPreservationOfHistoricalLandscape",
+        ]
+    ),
+    attribute_groups=[
+        *_base_attributes,
+        AttributeGroup(
+            base_element=None,
+            attributes=[
+                Attribute(
+                    name="function",
+                    path="./urf:function",
+                    datatype="[]string",
+                    predefined_codelist="Common_districtsAndZonesType",
+                ),
+                Attribute(
+                    name="areaInTotal",
+                    path="./urf:areaInTotal",
+                    datatype="double",
                 ),
                 Attribute(
                     name="buildingCoverageRate",
@@ -285,95 +327,14 @@ URF_ZONE = FeatureProcessingDefinition(
                     datatype="string",
                 ),
                 Attribute(
-                    name="buildingLotDevelopment",
-                    path="./urf:buildingLotDevelopment",
-                    datatype="string",
+                    name="buildingHeightLimits",
+                    path="./urf:buildingHeightLimits",
+                    datatype="double",
                 ),
                 Attribute(
                     name="buildingRestrictions",
                     path="./urf:buildingRestrictions",
                     datatype="string",
-                ),
-                Attribute(
-                    name="buildingUsage",
-                    path="./urf:buildingUsage",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="cityPopulation",
-                    path="./urf:cityPopulation",
-                    datatype="integer",
-                ),
-                Attribute(
-                    name="developer",
-                    path="./urf:developer",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="developmentPlan",
-                    path="./urf:developmentPlan",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="developmentPolicy",
-                    path="./urf:developmentPolicy",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="disasterPreventionPublicFacilityAllocation",
-                    path="./urf:disasterPreventionPublicFacilityAllocation",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="distributionBusinessPark",
-                    path="./urf:distributionBusinessPark",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="districtFacilitiesAllocation",
-                    path="./urf:districtFacilitiesAllocation",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="districtsAllocation",
-                    path="./urf:districtsAllocation",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="emergencyRecoveryPolicy",
-                    path="./urf:emergencyRecoveryPolicy",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="enactmentFiscalYear",
-                    path="./urf:enactmentFiscalYear",
-                    datatype="integer",
-                ),
-                Attribute(
-                    name="endLocation",
-                    path="./urf:endLocation",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="expirationDate",
-                    path="./urf:expirationDate",
-                    datatype="date",
-                ),
-                Attribute(
-                    name="facilitiesAllocation",
-                    path="./urf:facilitiesAllocation",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="facilityAllocation",
-                    path="./urf:facilityAllocation",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="facilityType",
-                    path="./urf:facilityType",
-                    datatype="string",
-                    predefined_codelist="ZonalDisasterPreventionFacility_facilityType",  # ???
                 ),
                 Attribute(
                     name="floorAreaRate",
@@ -384,51 +345,6 @@ URF_ZONE = FeatureProcessingDefinition(
                     name="guidelinePublicationDate",
                     path="./urf:guidelinePublicationDate",
                     datatype="date",
-                ),
-                Attribute(
-                    name="housing",
-                    path="./urf:housing",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="housingFacilities",
-                    path="./urf:housingFacilities",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="housingTarget",
-                    path="./urf:housingTarget",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="implementationBody",
-                    path="./urf:implementationBody",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="implementationPeriod",
-                    path="./urf:implementationPeriod",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="landForCentralPublicFacilities",
-                    path="./urf:landForCentralPublicFacilities",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="landUsePlan",
-                    path="./urf:landUsePlan",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="landUsePolicy",
-                    path="./urf:landUsePolicy",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="landuseRestrictions",
-                    path="./urf:landuseRestrictions",
-                    datatype="string",
                 ),
                 Attribute(
                     name="maximumBuildingCoverageRate",
@@ -443,6 +359,16 @@ URF_ZONE = FeatureProcessingDefinition(
                 Attribute(
                     name="maximumFloorAreaRate",
                     path="./urf:maximumFloorAreaRate",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="minimumBuildingArea",
+                    path="./urf:minimumBuildingArea",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="minimumBuildingHeight",
+                    path="./urf:minimumBuildingHeight",
                     datatype="double",
                 ),
                 Attribute(
@@ -461,13 +387,255 @@ URF_ZONE = FeatureProcessingDefinition(
                     datatype="double",
                 ),
                 Attribute(
-                    name="numberOfHighRiseHousing",
-                    path="./urf:numberOfHighRiseHousing",
-                    datatype="integer",
+                    name="minimumSiteArea",
+                    path="./urf:minimumSiteArea",
+                    datatype="double",
                 ),
                 Attribute(
-                    name="numberOfHousing",
-                    path="./urf:numberOfHousing",
+                    name="otherRestrictions",
+                    path="./urf:otherRestrictions",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="requirement",
+                    path="./urf:requirement",
+                    datatype="string",
+                    predefined_codelist="SpecialGreenSpaceConservationDistrict_requirement",
+                ),
+                Attribute(
+                    name="setbackRestrictions",
+                    path="./urf:setbackRestrictions",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="setbackSize",
+                    path="./urf:setbackSize",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="shadeRegulation",
+                    path="./urf:shadeRegulation",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="specification",
+                    path="./urf:specification",
+                    datatype="string",
+                    predefined_codelist="Common_availabilityType",
+                ),
+                Attribute(
+                    name="useToBeInduced",
+                    path="./urf:useToBeInduced",
+                    datatype="string",
+                ),
+            ],
+        ),
+    ],
+    lod_detection=LODDetection(lod1=["./urf:lod1MultiSurface"]),
+    emissions=FeatureEmissions(
+        lod1=FeatureEmission(collect_all=["./urf:lod1MultiSurface//gml:Polygon"]),
+    ),
+)
+
+URF_PROJECT_PROMOTION_AREA = FeatureProcessingDefinition(
+    id="urf:ProjectPromotionArea",
+    target_elements=_make_prefix_variants(
+        [
+            "urf:LandReadjustmentPromotionArea",
+            "urf:LandReadjustmentPromotionAreasForCoreBusinessUrbanDevelopment",
+            "urf:ProjectPromotionArea",
+            "urf:ResidentialBlockConstructionPromotionArea",
+            "urf:UrbanRedevelopmentPromotionArea",
+        ]
+    ),
+    attribute_groups=[
+        *_base_attributes,
+        AttributeGroup(
+            base_element=None,
+            attributes=[
+                Attribute(
+                    name="function",
+                    path="./urf:function",
+                    datatype="[]string",
+                    predefined_codelist="ProjectPromotionArea_function",
+                ),
+                Attribute(
+                    name="developmentPolicy",
+                    path="./urf:developmentPolicy",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="publicFacilities",
+                    path="./urf:publicFacilities",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="publicFacilitiesPlans",
+                    path="./urf:publicFacilitiesPlans",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="unitArea",
+                    path="./urf:unitArea",
+                    datatype="string",
+                ),
+            ],
+        ),
+    ],
+    lod_detection=LODDetection(lod1=["./urf:lod1MultiSurface"]),
+    emissions=FeatureEmissions(
+        lod1=FeatureEmission(collect_all=["./urf:lod1MultiSurface//gml:Polygon"]),
+    ),
+)
+
+URF_UNUSED_LAND_USE_PROMOTION_AREA = FeatureProcessingDefinition(
+    id="urf:UnusedLandUsePromotionArea",
+    target_elements=_make_prefix_variants(["urf:UnusedLandUsePromotionArea"]),
+    attribute_groups=_base_attributes,
+    lod_detection=LODDetection(lod1=["./urf:lod1MultiSurface"]),
+    emissions=FeatureEmissions(
+        lod1=FeatureEmission(collect_all=["./urf:lod1MultiSurface//gml:Polygon"]),
+    ),
+)
+
+URF_URBAN_DISASTER_RECOVERY_PROMOTION_AREA = FeatureProcessingDefinition(
+    id="urf:UrbanDisasterRecoveryPromotionArea",
+    target_elements=_make_prefix_variants(["urf:UrbanDisasterRecoveryPromotionArea"]),
+    attribute_groups=[
+        *_base_attributes,
+        AttributeGroup(
+            base_element=None,
+            attributes=[
+                Attribute(
+                    name="emergencyRecoveryPolicy",
+                    path="./urf:emergencyRecoveryPolicy",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="expirationDate",
+                    path="./urf:expirationDate",
+                    datatype="date",
+                ),
+                Attribute(
+                    name="plannedProjectType",
+                    path="./urf:plannedProjectType",
+                    datatype="string",
+                    predefined_codelist="UrbanDevelopmentProject_function",
+                ),
+            ],
+        ),
+    ],
+    lod_detection=LODDetection(lod1=["./urf:lod1MultiSurface"]),
+    emissions=FeatureEmissions(
+        lod1=FeatureEmission(collect_all=["./urf:lod1MultiSurface//gml:Polygon"]),
+    ),
+)
+
+URF_URBAN_FACILITY = FeatureProcessingDefinition(
+    id="urf:UrbanFacility",
+    target_elements=_make_prefix_variants(
+        [
+            "urf:CollectiveFacilitiesForReconstruction",
+            "urf:CollectiveFacilitiesForReconstructionAndRevitalization",
+            "urf:CollectiveFacilitiesForTsunamiDisasterPrevention",
+            "urf:CollectiveGovernmentAndPublicOfficeFacilities",
+            "urf:CollectiveHousingFacilities",
+            "urf:CollectiveUrbanDisasterPreventionFacilities",
+            "urf:DistributionBusinessPark",
+            "urf:EducationalAndCulturalFacility",
+            "urf:FireProtectionFacility",
+            "urf:FloodPreventionFacility",
+            "urf:MarketsSlaughterhousesCrematoria",
+            "urf:MedicalFacility",
+            "urf:OpenSpaceForPublicUse",
+            "urf:SandControlFacility",
+            "urf:SnowProtectionFacility",
+            "urf:SocialWelfareFacility",
+            "urf:SupplyFacility",
+            "urf:TelecommunicationFacility",
+            "urf:TideFacility",
+            "urf:TrafficFacility",
+            "urf:TreatmentFacility",
+            "urf:UrbanFacility",
+            "urf:UrbanFacilityStipulatedByCabinetOrder",
+            "urf:Waterway",
+            "urf:WindProtectionFacility",
+        ]
+    ),
+    attribute_groups=[
+        *_base_attributes,
+        AttributeGroup(
+            base_element=None,
+            attributes=[
+                Attribute(
+                    name="function",
+                    path="./urf:function",
+                    datatype="[]string",
+                    predefined_codelist="UrbanFacility_function",
+                ),
+                Attribute(
+                    name="buildingCoverageRate",
+                    path="./urf:buildingCoverageRate",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="distributionBusinessPark",
+                    path="./urf:distributionBusinessPark",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="endLocation",
+                    path="./urf:endLocation",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="floorAreaRate",
+                    path="./urf:floorAreaRate",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="housingFacilities",
+                    path="./urf:housingFacilities",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="length",
+                    path="./urf:length",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="maximumBuildingCoverageRate",
+                    path="./urf:maximumBuildingCoverageRate",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="maximumBuildingHeight",
+                    path="./urf:maximumBuildingHeight",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="maximumFloorAreaRate",
+                    path="./urf:maximumFloorAreaRate",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="minimumBuildingHeight",
+                    path="./urf:minimumBuildingHeight",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="minimumFloorAreaRate",
+                    path="./urf:minimumFloorAreaRate",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="number",
+                    path="./urf:number",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="numberOfHighRiseHousing",
+                    path="./urf:numberOfHighRiseHousing",
                     datatype="integer",
                 ),
                 Attribute(
@@ -478,52 +646,6 @@ URF_ZONE = FeatureProcessingDefinition(
                 Attribute(
                     name="numberOfMiddleRiseHousing",
                     path="./urf:numberOfMiddleRiseHousing",
-                    datatype="integer",
-                ),
-                Attribute(
-                    name="objectives",
-                    path="./urf:objectives",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="otherPublicFacilityAllocation",
-                    path="./urf:otherPublicFacilityAllocation",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="otherRestrictions",
-                    path="./urf:otherRestrictions",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="plan",
-                    path="./urf:plan",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="plannedProjectType",
-                    path="./urf:plannedProjectType",
-                    datatype="string",
-                    predefined_codelist="UrbanDevelopmentProject_function",
-                ),
-                Attribute(
-                    name="policy",
-                    path="./urf:policy",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="policyForAreaClassification",
-                    path="./urf:policyForAreaClassification",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="policyForUrbanPlanDecision",
-                    path="./urf:policyForUrbanPlanDecision",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="population",
-                    path="./urf:population",
                     datatype="integer",
                 ),
                 Attribute(
@@ -542,54 +664,8 @@ URF_ZONE = FeatureProcessingDefinition(
                     datatype="string",
                 ),
                 Attribute(
-                    name="publicFacilitiesPlans",
-                    path="./urf:publicFacilitiesPlans",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="publicFacilityAllocation",
-                    path="./urf:publicFacilityAllocation",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="purposeForUrbanPlan",
-                    path="./urf:purposeForUrbanPlan",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="reasonForAreaClassification",
-                    path="./urf:reasonForAreaClassification",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="requirement",
-                    path="./urf:requirement",
-                    datatype="string",
-                    predefined_codelist="SpecialGreenSpaceConservationDistrict_requirement",  # ???
-                ),
-                Attribute(
-                    name="residentialLandUsePlan",
-                    path="./urf:residentialLandUsePlan",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="roadsideDistrictFacilitiesAllocation",
-                    path="./urf:roadsideDistrictFacilitiesAllocation",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="ruralDistrictFacilitiesAllocation",
-                    path="./urf:ruralDistrictFacilitiesAllocation",
-                    datatype="string",
-                ),
-                Attribute(
                     name="scheduledExecutor",
                     path="./urf:scheduledExecutor",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="setbackRestrictions",
-                    path="./urf:setbackRestrictions",
                     datatype="string",
                 ),
                 Attribute(
@@ -598,40 +674,14 @@ URF_ZONE = FeatureProcessingDefinition(
                     datatype="string",
                 ),
                 Attribute(
-                    name="shadeRegulation",
-                    path="./urf:shadeRegulation",
-                    datatype="string",
-                ),
-                Attribute(
                     name="specificUtilityAndPublicFacilities",
                     path="./urf:specificUtilityAndPublicFacilities",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="specification",
-                    path="./urf:specification",
-                    datatype="string",
-                    predefined_codelist="Common_availabilityType",
-                ),
-                Attribute(
-                    name="specifiedZonalDisasterPreventionFacilitiesAllocation",
-                    path="./urf:specifiedZonalDisasterPreventionFacilitiesAllocation",
                     datatype="string",
                 ),
                 Attribute(
                     name="startLocation",
                     path="./urf:startLocation",
                     datatype="string",
-                ),
-                Attribute(
-                    name="storeysAboveGround",
-                    path="./urf:storeysAboveGround",
-                    datatype="integer",
-                ),
-                Attribute(
-                    name="storeysBelowGround",
-                    path="./urf:storeysBelowGround",
-                    datatype="integer",
                 ),
                 Attribute(
                     name="structure",
@@ -650,21 +700,6 @@ URF_ZONE = FeatureProcessingDefinition(
                     datatype="integer",
                 ),
                 Attribute(
-                    name="unitArea",
-                    path="./urf:unitArea",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="urbanGreenSpaceConservation",
-                    path="./urf:urbanGreenSpaceConservation",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="useToBeInduced",
-                    path="./urf:useToBeInduced",
-                    datatype="string",
-                ),
-                Attribute(
                     name="utilityFacilities",
                     path="./urf:utilityFacilities",
                     datatype="string",
@@ -675,80 +710,15 @@ URF_ZONE = FeatureProcessingDefinition(
                     datatype="string",
                 ),
                 Attribute(
-                    name="wallSetbackDistance",
-                    path="./urf:wallSetbackDistance",
-                    datatype="string",
+                    name="width",
+                    path="./urf:width",
+                    datatype="double",
                 ),
-                Attribute(
-                    name="zonalDisasterPreventionFacilitiesAllocation",
-                    path="./urf:zonalDisasterPreventionFacilitiesAllocation",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="zoneNumber",
-                    path="./urf:zoneNumber",
-                    datatype="string",
-                ),
-                # TODO: 入れ子データ系どうするか
-                # Property(
-                #    name="boundary",
-                #    path="./urf:boundary",
-                #    datatype="[]urf:BoundaryPropertyType",
-                # ),
-                # Property(
-                #    name="developmentProject",
-                #    path="./urf:developmentProject",
-                #    datatype="[]urf:GlobalHubCityDevelopmentProjectPropertyType",
-                # ),
-                # Property(
-                #    name="district",
-                #    path="./urf:district",
-                #    datatype="[]urf:DistrictPropertyType",
-                # ),
-                # Property(
-                #    name="districtDevelopmentPlan",
-                #    path="./urf:districtDevelopmentPlan",
-                #    datatype="[]urf:DistrictDevelopmentPlanPropertyType",
-                # ),
-                # Property(
-                #    name="districtFacility",
-                #    path="./urf:districtFacility",
-                #    datatype="[]urf:DistrictFacilityPropertyType",
-                # ),
-                # Property(
-                #    name="privateProject",
-                #    path="./urf:privateProject",
-                #    datatype="[]urf:PrivateUrbanRenewalProjectPlanPropertyType",
-                # ),
-                # Property(
-                #    name="promotionDistrict",
-                #    path="./urf:promotionDistrict",
-                #    datatype="[]urf:PromotionDistrictPropertyType",
-                # ),
-                # Property(
-                #    name="specialDistrict",
-                #    path="./urf:specialDistrict",
-                #    datatype="[]urf:SpecialUrbanRenaissanceDistrictPropertyType",
-                # ),
-                # Property(
-                #    name="specifiedArea",
-                #    path="./urf:specifiedArea",
-                #    datatype="[]urf:SpecifiedUrgentUrbanRenewalAreaPropertyType",
-                # ),
-                # Property(
-                #    name="target",
-                #    path="./urf:target",
-                #    datatype="[]urf:TargetPropertyType",
-                # ),
-                # Property(
+                # TODO: 入れ子データ
+                # Attribute(
                 #    name="threeDimensionalExtent",
                 #    path="./urf:threeDimensionalExtent",
                 #    datatype="[]urf:ThreeDimensionalExtentPropertyType",
-                # ),
-                # Property(
-                #    name="zonalDisasterPreventionFacilities",
-                #    path="./urf:zonalDisasterPreventionFacilities",
-                #    datatype="[]urf:ZonalDisasterPreventionFacilityPropertyType",
                 # ),
             ],
         ),
@@ -830,7 +800,7 @@ URF_ZONE = FeatureProcessingDefinition(
                     datatype="string",
                     predefined_codelist="TrafficFacility_trafficFacilityCrossingType",
                 ),
-                # 入れ子データ
+                # TODO: 入れ子データ
                 # Property(
                 #     name="structuralDetails",
                 #     path="./urf:structuralDetails",
@@ -892,7 +862,7 @@ URF_ZONE = FeatureProcessingDefinition(
                     datatype="string",
                     predefined_codelist="Common_availabilityType",
                 ),
-                # 入れ子データ
+                # TODO: 入れ子データ
                 # Property(
                 #     name="structuralDetails",
                 #     path="./urf:structuralDetails",
@@ -927,11 +897,509 @@ URF_ZONE = FeatureProcessingDefinition(
             ],
         ),
     ],
+    lod_detection=LODDetection(lod1=["./urf:lod1MultiSurface"]),
     emissions=FeatureEmissions(
-        lod1=FeatureEmission(
-            collect_all=[
-                "./urf:lod1MultiSurface//gml:Polygon",
-            ]
+        lod1=FeatureEmission(collect_all=["./urf:lod1MultiSurface//gml:Polygon"]),
+    ),
+)
+
+URF_URBAN_DEVELOPMENT_PROJECT = FeatureProcessingDefinition(
+    id="urf:UrbanDevelopmentProject",
+    target_elements=_make_prefix_variants(
+        [
+            "urf:DisasterPreventionBlockImprovementProject",
+            "urf:IndustrialParkDevelopmentProject",
+            "urf:LandReadjustmentProject",
+            "urf:NewHousingAndUrbanDevelopmentProject",
+            "urf:NewUrbanInfrastructureProject",
+            "urf:ResidentialBlockConstructionProject",
+            "urf:UrbanDevelopmentProject",
+            "urf:UrbanRedevelopmentProject",
+            "urf:UrbanRenewalProject",
+        ]
+    ),
+    attribute_groups=[
+        *_base_attributes,
+        AttributeGroup(
+            base_element=None,
+            attributes=[
+                Attribute(
+                    name="function",
+                    path="./urf:function",
+                    datatype="[]string",
+                    predefined_codelist="UrbanDevelopmentProject_function",
+                ),
+                Attribute(
+                    name="usage",
+                    path="./urf:usage",
+                    datatype="[]string",
+                ),
+                Attribute(
+                    name="buildingLotDevelopment",
+                    path="./urf:buildingLotDevelopment",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="buildingUsage",
+                    path="./urf:buildingUsage",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="developmentPlan",
+                    path="./urf:developmentPlan",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="disasterPreventionPublicFacilityAllocation",
+                    path="./urf:disasterPreventionPublicFacilityAllocation",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="districtsAllocation",
+                    path="./urf:districtsAllocation",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="floorAreaRate",
+                    path="./urf:floorAreaRate",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="housing",
+                    path="./urf:housing",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="housingTarget",
+                    path="./urf:housingTarget",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="landForCentralPublicFacilities",
+                    path="./urf:landForCentralPublicFacilities",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="landUsePlan",
+                    path="./urf:landUsePlan",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="numberOfHousing",
+                    path="./urf:numberOfHousing",
+                    datatype="integer",
+                ),
+                Attribute(
+                    name="otherPublicFacilityAllocation",
+                    path="./urf:otherPublicFacilityAllocation",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="publicFacilityAllocation",
+                    path="./urf:publicFacilityAllocation",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="residentialLandUsePlan",
+                    path="./urf:residentialLandUsePlan",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="scheduledExecutor",
+                    path="./urf:scheduledExecutor",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="setbackSize",
+                    path="./urf:setbackSize",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="siteArea",
+                    path="./urf:siteArea",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="storeysAboveGround",
+                    path="./urf:storeysAboveGround",
+                    datatype="integer",
+                ),
+                Attribute(
+                    name="storeysBelowGround",
+                    path="./urf:storeysBelowGround",
+                    datatype="integer",
+                ),
+                Attribute(
+                    name="totalFloorArea",
+                    path="./urf:totalFloorArea",
+                    datatype="double",
+                ),
+            ],
         ),
+    ],
+    lod_detection=LODDetection(lod1=["./urf:lod1MultiSurface"]),
+    emissions=FeatureEmissions(
+        lod1=FeatureEmission(collect_all=["./urf:lod1MultiSurface//gml:Polygon"]),
+    ),
+)
+
+URF_SCHEDULED_AREA_FOR_URBAN_DEVELOPMENT = FeatureProcessingDefinition(
+    id="urf:ScheduledAreaForUrbanDevelopmentProject",
+    target_elements=_make_prefix_variants(
+        [
+            "urf:ScheduledAreaForCollectiveGovernmentAndPublicOfficeFacilities",
+            "urf:ScheduledAreaForCollectiveHousingFacilities",
+            "urf:ScheduledAreaForDistributionBusinessPark",
+            "urf:ScheduledAreaForIndustrialParkDevelopmentProjects",
+            "urf:ScheduledAreaForNewHousingAndUrbanDevelopmentProjects",
+            "urf:ScheduledAreaForNewUrbanInfrastructureProjects",
+            "urf:ScheduledAreaForUrbanDevelopmentProject",
+        ]
+    ),
+    attribute_groups=[
+        *_base_attributes,
+        AttributeGroup(
+            base_element=None,
+            attributes=[
+                Attribute(
+                    name="function",
+                    path="./urf:function",
+                    datatype="[]string",
+                    predefined_codelist="ScheduledAreaForUrbanDevelopment_function",
+                ),
+                Attribute(
+                    name="scheduledExecutor",
+                    path="./urf:scheduledExecutor",
+                    datatype="string",
+                ),
+            ],
+        ),
+    ],
+    lod_detection=LODDetection(lod1=["./urf:lod1MultiSurface"]),
+    emissions=FeatureEmissions(
+        lod1=FeatureEmission(collect_all=["./urf:lod1MultiSurface//gml:Polygon"]),
+    ),
+)
+
+URF_DISTRICT_PLAN = FeatureProcessingDefinition(
+    id="urf:DistrictPlan",
+    target_elements=_make_prefix_variants(
+        [
+            "urf:DisasterPreventionBlockImprovementZonePlan",
+            "urf:DistrictPlan",
+            "urf:HistoricSceneryMaintenanceAndImprovementDistrictPlan",
+            "urf:RoadsideDistrictPlan",
+            "urf:RuralDistrictPlan",
+        ]
+    ),
+    attribute_groups=[
+        *_base_attributes,
+        AttributeGroup(
+            base_element=None,
+            attributes=[
+                Attribute(
+                    name="function",
+                    path="./urf:function",
+                    datatype="[]string",
+                    predefined_codelist="DistrictPlan_function",
+                ),
+                Attribute(
+                    name="facilitiesAllocation",
+                    path="./urf:facilitiesAllocation",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="facilityAllocation",
+                    path="./urf:facilityAllocation",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="landUsePolicy",
+                    path="./urf:landUsePolicy",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="objectives",
+                    path="./urf:objectives",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="policy",
+                    path="./urf:policy",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="specifiedZonalDisasterPreventionFacilitiesAllocation",
+                    path="./urf:specifiedZonalDisasterPreventionFacilitiesAllocation",
+                    datatype="string",
+                ),
+            ],
+        ),
+    ],
+    lod_detection=LODDetection(lod1=["./urf:lod1MultiSurface"]),
+    emissions=FeatureEmissions(
+        lod1=FeatureEmission(collect_all=["./urf:lod1MultiSurface//gml:Polygon"]),
+        semantic_parts=[
+            "./urf:districtDevelopmentPlan/urf:*" "./urf:promotionDistrict/urf:*"
+        ],
+    ),
+)
+
+URF_DISTRICT_DEVELOPMENT_PLAN = FeatureProcessingDefinition(
+    id="urf:DistrictDevelopmentPlan",
+    target_elements=_make_prefix_variants(
+        [
+            "urf:DistrictDevelopmentPlan",
+            "urf:DistrictImprovementPlanForDisasterPreventionBlockImprovementZonePlan",
+            "urf:DistrictImprovementPlanForHistoricSceneryMaintenanceAndImprovementDistrict",
+            "urf:RoadsideDistrictImprovementPlan",
+            "urf:RuralDistrictImprovementPlan",
+            "urf:SpecifiedBuildingZoneImprovementPlan",
+        ]
+    ),
+    attribute_groups=[
+        *_base_attributes,
+        AttributeGroup(
+            base_element=None,
+            attributes=[
+                Attribute(
+                    name="function",
+                    path="./urf:function",
+                    datatype="[]string",
+                    predefined_codelist="DistrictDevelopmentPlan_function",
+                ),
+                Attribute(
+                    name="activityRestrictionInFarmland",
+                    path="./urf:activityRestrictionInFarmland",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="buildingRestrictions",
+                    path="./urf:buildingRestrictions",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="districtFacilitiesAllocation",
+                    path="./urf:districtFacilitiesAllocation",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="landuseRestrictions",
+                    path="./urf:landuseRestrictions",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="roadsideDistrictFacilitiesAllocation",
+                    path="./urf:roadsideDistrictFacilitiesAllocation",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="ruralDistrictFacilitiesAllocation",
+                    path="./urf:ruralDistrictFacilitiesAllocation",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="urbanGreenSpaceConservation",
+                    path="./urf:urbanGreenSpaceConservation",
+                    datatype="string",
+                ),
+            ],
+        ),
+    ],
+    lod_detection=LODDetection(lod1=["./urf:lod1MultiSurface"]),
+    emissions=FeatureEmissions(
+        lod1=FeatureEmission(collect_all=["./urf:lod1MultiSurface//gml:Polygon"]),
+        semantic_parts=[
+            "./urf:district/urf:District",
+            "./urf:districtFacility/urf:*",
+        ],
+    ),
+)
+
+URF_DISTRICT_FACILITY = FeatureProcessingDefinition(
+    id="urf:DistrictFacility",
+    target_elements=_make_prefix_variants(
+        [
+            "urf:DistrictFacility",
+            "urf:RoadsideDistrictFacility",
+            "urf:RuralDistrictFacility",
+            "urf:ZonalDisasterPreventionFacility",
+        ]
+    ),
+    attribute_groups=[
+        *_base_attributes,
+        AttributeGroup(
+            base_element=None,
+            attributes=[
+                Attribute(
+                    name="function",
+                    path="./urf:function",
+                    datatype="[]string",
+                    predefined_codelist="Common_districtFacilityType",
+                ),
+                Attribute(
+                    name="usage",
+                    path="./urf:usage",
+                    datatype="[]string",
+                    predefined_codelist="UrbanFacility_function",
+                ),
+                Attribute(
+                    name="facilityType",
+                    path="./urf:facilityType",
+                    datatype="string",
+                    predefined_codelist="ZonalDisasterPreventionFacility_facilityType",
+                ),
+            ],
+        ),
+    ],
+    lod_detection=LODDetection(lod1=["./urf:lod1MultiSurface"]),
+    emissions=FeatureEmissions(
+        lod1=FeatureEmission(collect_all=["./urf:lod1MultiSurface//gml:Polygon"]),
+    ),
+)
+
+URF_PROMOTION_DISTRICT = FeatureProcessingDefinition(
+    id="urf:PromotionDistrict",
+    target_elements=_make_prefix_variants(["urf:PromotionDistrict"]),
+    attribute_groups=[
+        *_base_attributes,
+        AttributeGroup(
+            base_element=None,
+            attributes=[
+                Attribute(
+                    name="function",
+                    path="./urf:function",
+                    datatype="[]string",
+                    predefined_codelist="PromotionArea_function",
+                ),
+            ],
+        ),
+    ],
+    lod_detection=LODDetection(lod1=["./urf:lod1MultiSurface"]),
+    emissions=FeatureEmissions(
+        lod1=FeatureEmission(collect_all=["./urf:lod1MultiSurface//gml:Polygon"]),
+    ),
+)
+
+URF_DISTRICT = FeatureProcessingDefinition(
+    id="urf:District",
+    target_elements=_make_prefix_variants(["urf:District"]),
+    attribute_groups=[
+        *_base_attributes,
+        AttributeGroup(
+            base_element=None,
+            attributes=[
+                Attribute(
+                    name="function",
+                    path="./urf:function",
+                    datatype="[]string",
+                    predefined_codelist="District_function",
+                ),
+                Attribute(
+                    name="urf:buildingDesignRestriction",
+                    path="./urf:buildingDesignRestriction",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="urf:buildingRestrictions",
+                    path="./urf:buildingRestrictions",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="urf:fenceGuideline",
+                    path="./urf:fenceGuideline",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="urf:maximumBuildingCoverageRate",
+                    path="./urf:maximumBuildingCoverageRate",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="urf:maximumBuildingHeight",
+                    path="./urf:maximumBuildingHeight",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="urf:maximumFloorAreaRate",
+                    path="./urf:maximumFloorAreaRate",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="urf:minimumBuildingArea",
+                    path="./urf:minimumBuildingArea",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="urf:minimumBuildingCoverageRate",
+                    path="./urf:minimumBuildingCoverageRate",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="urf:minimumBuildingHeight",
+                    path="./urf:minimumBuildingHeight",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="urf:minimumFloorAreaRate",
+                    path="./urf:minimumFloorAreaRate",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="urf:minimumFloorHeight",
+                    path="./urf:minimumFloorHeight",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="urf:minimumFrontageRate",
+                    path="./urf:minimumFrontageRate",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="urf:minimumGreeningRate",
+                    path="./urf:minimumGreeningRate",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="urf:minimumGroundHeight",
+                    path="./urf:minimumGroundHeight",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="urf:minimumSiteArea",
+                    path="./urf:minimumSiteArea",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="urf:restrictionsForFireProtection",
+                    path="./urf:restrictionsForFireProtection",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="urf:restrictionsForNoiseProtection",
+                    path="./urf:restrictionsForNoiseProtection",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="urf:setbackSize",
+                    path="./urf:setbackSize",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="urf:structurePlacementRestrictions",
+                    path="./urf:structurePlacementRestrictions",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="urf:useRestrictions",
+                    path="./urf:useRestrictions",
+                    datatype="string",
+                ),
+            ],
+        ),
+    ],
+    lod_detection=LODDetection(lod1=["./urf:lod1MultiSurface"]),
+    emissions=FeatureEmissions(
+        lod1=FeatureEmission(collect_all=["./urf:lod1MultiSurface//gml:Polygon"]),
     ),
 )

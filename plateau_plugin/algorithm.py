@@ -266,9 +266,9 @@ class PlateauProcessingAlrogithm(QgsProcessingAlgorithm):
                     feedback.setProgress(top_level_count / total_count * 100)
                     feedback.pushInfo(f"{count} 個の地物を読み込みました。")
 
-        except ValueError:
+        except ValueError as e:
             feedback.reportError(
-                "ファイルの読み込みに失敗しました。正常なファイルかどうか確認してください。", fatalError=True
+                f"ファイルの読み込みに失敗しました。正常なファイルかどうか確認してください。\n{e}", fatalError=True
             )
 
         feedback.pushInfo(f"{count} 個の地物を読み込みました。")
