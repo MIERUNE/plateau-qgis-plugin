@@ -17,7 +17,8 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import datetime
-from typing import Any, Iterable
+import json
+from typing import Any, Optional
 
 from PyQt5.QtCore import QCoreApplication, QDate, QVariant
 from qgis.core import (
@@ -34,9 +35,13 @@ from qgis.core import (
 )
 
 from .geometry import to_qgis_geometry
-from .plateau.models import processors
 from .plateau.parser import FileParser, ParseSettings
-from .plateau.types import CityObject, MultiPolygon
+from .plateau.types import (
+    CityObject,
+    MultiPolygon,
+    get_geometry_type_name,
+    get_table_definition,
+)
 
 _TYPE_TO_QT_TYPE = {
     "string": QVariant.String,
@@ -80,31 +85,49 @@ class LayerManager:
     def get_layer(self, cityobj: CityObject) -> QgsVectorLayer:
         """地物の種類とLODをもとにふさわしい出力レイヤを取得する"""
 
-        # レイヤ名を決定
-        # TODO: レイヤの名前を識別子として使わないほうがよいだろう
-        layer_name = " / ".join(p[0] for p in cityobj.processor_path)
-        if cityobj.lod is not None:
-            layer_name += f" (LOD{cityobj.lod})"
-
-        if (layer := self._layers.get(layer_name)) is not None:
+        layer_id = self._get_layer_id(cityobj)
+        if (layer := self._layers.get(layer_id)) is not None:
             # if already exists
             return layer
 
-        return self._add_new_layer(layer_name, cityobj)
+        return self._add_new_layer(layer_id, cityobj)
 
-    def _add_new_layer(self, layer_name: str, cityobj: CityObject) -> QgsVectorLayer:
+    def _get_layer_name(self, cityobj: CityObject) -> str:
+        co: Optional[CityObject] = cityobj
+        s = []
+        while co:
+            s.append(co.processor.id)
+            co = co.parent
+        name = " / ".join(s)
+        if cityobj.lod is not None:
+            name += f" (LOD{cityobj.lod})"
+        return name
+
+    def _get_layer_id(self, cityobj: CityObject) -> str:
+        co: Optional[CityObject] = cityobj
+        s = []
+        while co:
+            s.append(co.processor.id)
+            co = co.parent
+        name = " / ".join(s)
+        if cityobj.lod is not None:
+            assert cityobj.geometry is not None
+            name += f" (LOD{cityobj.lod}) {get_geometry_type_name(cityobj.geometry)}"
+        return name
+
+    def _add_new_layer(self, layer_id: str, cityobj: CityObject) -> QgsVectorLayer:
         """新たなレイヤを作る"""
-
-        if len(cityobj.processor_path) > 1:
-            parent_layer_name = " / ".join(p[0] for p in cityobj.processor_path[:-1])
-            self._parent_map[layer_name] = parent_layer_name
 
         # setup attributes
         attributes = [
             QgsField("id", QVariant.String),
         ]
-        if len(cityobj.processor_path) > 1:
+
+        if cityobj.parent:
+            parent_layer_id = self._get_layer_id(cityobj.parent)
+            self._parent_map[layer_id] = parent_layer_id
             attributes.append(QgsField("parent", QVariant.String))
+
         attributes.extend(
             [
                 QgsField("type", QVariant.String),
@@ -113,7 +136,7 @@ class LayerManager:
                 QgsField("terminationDate", QVariant.Date),
             ]
         )
-        table_def = processors.get_table_definition(cityobj.processor_path)
+        table_def = get_table_definition(cityobj)
         for field in table_def.fields:
             attributes.append(QgsField(field.name, _TYPE_TO_QT_TYPE[field.datatype]))
 
@@ -124,14 +147,15 @@ class LayerManager:
             layer_path = "NoGeometry"
         else:
             raise RuntimeError(f"Unsupported geometry type: {type(cityobj.geometry)}")
+
         layer = QgsVectorLayer(
             layer_path,
-            layer_name,
+            self._get_layer_name(cityobj),
             "memory",
         )
         dp = layer.dataProvider()
         dp.addAttributes(attributes)
-        self._layers[layer_name] = layer
+        self._layers[layer_id] = layer
         return layer
 
     def add_to_project(self, feedback):
@@ -243,48 +267,44 @@ class PlateauProcessingAlrogithm(QgsProcessingAlgorithm):
         feedback.pushInfo("地物を読み込んでいます...")
         top_level_count = 0
         count = 0
-        try:
-            for top_level_count, cityobj in parser.iter_cityobjs():
-                if feedback.isCanceled():
-                    return {}
 
-                layer = layers.get_layer(cityobj)
-                provider = layer.dataProvider()
-                feature = QgsFeature(provider.fields())
+        # NOTE: 例外のハンドリングはプロセッシングフレームワークに任せている
+        for top_level_count, cityobj in parser.iter_cityobjs():
+            if feedback.isCanceled():
+                return {}
 
-                # Set attributes
-                feature.setAttribute("id", cityobj.id)
-                feature.setAttribute("type", cityobj.type)
-                feature.setAttribute("name", cityobj.name)
-                feature.setAttribute(
-                    "creationDate",
-                    QDate(cityobj.creation_date) if cityobj.creation_date else None,  # type: ignore
-                )
-                feature.setAttribute(
-                    "terminationDate",
-                    QDate(cityobj.creation_date) if cityobj.termination_date else None,  # type: ignore
-                )
-                if len(cityobj.processor_path) > 1:
-                    # 親地物と結合 (join) できるように親地物の ID を持たせる
-                    feature.setAttribute("parent", cityobj.processor_path[-2][1])
+            layer = layers.get_layer(cityobj)
+            provider = layer.dataProvider()
+            feature = QgsFeature(provider.fields())
 
-                for name, value in cityobj.attributes.items():
-                    feature.setAttribute(name, _convert_to_qt_value(value))
-
-                # Set geometry
-                if cityobj.geometry:
-                    feature.setGeometry(to_qgis_geometry(cityobj.geometry))
-
-                provider.addFeature(feature)
-                count += 1
-                if count % 100 == 0:
-                    feedback.setProgress(top_level_count / total_count * 100)
-                    feedback.pushInfo(f"{count} 個の地物を読み込みました。")
-
-        except ValueError as e:
-            feedback.reportError(
-                f"ファイルの読み込みに失敗しました。正常なファイルかどうか確認してください。\n{e}", fatalError=True
+            # Set attributes
+            feature.setAttribute("id", cityobj.id)
+            feature.setAttribute("type", cityobj.type)
+            feature.setAttribute("name", cityobj.name)
+            feature.setAttribute(
+                "creationDate",
+                QDate(cityobj.creation_date) if cityobj.creation_date else None,  # type: ignore
             )
+            feature.setAttribute(
+                "terminationDate",
+                QDate(cityobj.creation_date) if cityobj.termination_date else None,  # type: ignore
+            )
+            if cityobj.parent:
+                # 親地物と結合 (join) できるように親地物の ID を持たせる
+                feature.setAttribute("parent", cityobj.parent.id)
+
+            for name, value in cityobj.attributes.items():
+                feature.setAttribute(name, _convert_to_qt_value(value))
+
+            # Set geometry
+            if cityobj.geometry:
+                feature.setGeometry(to_qgis_geometry(cityobj.geometry))
+
+            provider.addFeature(feature)
+            count += 1
+            if count % 100 == 0:
+                feedback.setProgress(top_level_count / total_count * 100)
+                feedback.pushInfo(f"{count} 個の地物を読み込みました。")
 
         feedback.pushInfo(f"{count} 個の地物を読み込みました。")
         layers.add_to_project(feedback)

@@ -2,7 +2,7 @@ from collections import OrderedDict
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
-from typing import Any, Iterable, Optional, Sequence
+from typing import Any, Iterable, Optional
 
 import lxml.etree as et
 
@@ -160,10 +160,10 @@ class Parser:
     def process_cityobj_element(
         self,
         elem: et._Element,
-        ancestors: Sequence[tuple[str, str]],  # 親地物の (target_element, gml_id)
+        parent: Optional[CityObject],  # 祖先地物の Processor
     ) -> Iterable[CityObject]:
         ns = self._ns
-        nsmap = ns.nsmap
+        nsmap = self._nsmap
 
         (gml_id, gml_name) = self._get_id_and_name(elem)
         (creation_date, termination_date) = self._get_basic_dates(elem)
@@ -173,20 +173,38 @@ class Parser:
         if processor is None:
             return
 
+        # 属性を収集する
+        props = self._load_props(processor, elem)
+
         # 子地物 (部分要素) を個別に読み込む設定の場合は、子地物を探索する
-        has_semantic_parts = False
-        new_ancestors = (*ancestors, (processor.id, gml_id))
         if self._settings.load_semantic_parts and processor.emissions.semantic_parts:
+            # 親地物 (ジオメトリなし) を用意する
+            nogeom_obj = CityObject(
+                type=ns.to_prefixed_name(elem.tag),
+                id=gml_id,
+                name=gml_name,
+                creation_date=creation_date,
+                termination_date=termination_date,
+                lod=None,
+                geometry=None,
+                attributes=props,
+                processor=processor,
+                parent=parent,
+            )
+
+            found_child = False
             for path in processor.emissions.semantic_parts:
                 for child_cityobj in elem.iterfind(path, nsmap):
                     # 子地物の Processor に処理を委ねる
-                    yield from self.process_cityobj_element(
-                        child_cityobj, new_ancestors
-                    )
-                    has_semantic_parts = True
+                    for child in self.process_cityobj_element(
+                        child_cityobj, nogeom_obj
+                    ):
+                        found_child = True
+                        yield child
 
-        # 属性 (プロパティ) の値を収集する
-        props = self._load_props(processor, elem)
+            if found_child:
+                # 親地物 (ジオメトリなし) を出力する
+                yield nogeom_obj
 
         # ジオメトリを読んで出力する
         emission_for_lods = processor.emission_list
@@ -199,6 +217,7 @@ class Parser:
             if emission is None:
                 continue
 
+            # 子地物を読む設定かどうかによって探索方法を変える
             geom_paths = (
                 emission.only_direct or emission.collect_all
                 if self._settings.load_semantic_parts
@@ -221,25 +240,13 @@ class Parser:
                     termination_date=termination_date,
                     attributes=props,
                     geometry=geom,
-                    processor_path=new_ancestors,
+                    processor=processor,
+                    parent=parent,
                 )
-                if self._settings.only_highest_lod:
-                    # 各地物の最高 LOD だけ出力する場合はここで離脱
-                    break
 
-        if has_semantic_parts:
-            # 子地物を出力したときは、親の情報を含んだジオメトリなしの地物を出力する
-            yield CityObject(
-                type=ns.to_prefixed_name(elem.tag),
-                id=gml_id,
-                name=gml_name,
-                creation_date=creation_date,
-                termination_date=termination_date,
-                lod=None,
-                geometry=None,
-                attributes=props,
-                processor_path=new_ancestors,
-            )
+            if self._settings.only_highest_lod:
+                # 各地物の最高 LOD だけ出力する設定の場合はここで離脱
+                break
 
 
 class FileParser:
@@ -267,6 +274,6 @@ class FileParser:
         for city_object in self._doc.iterfind(
             "./core:cityObjectMember/*", self._ns.nsmap
         ):
-            for cityobj in parser.process_cityobj_element(city_object, ancestors=[]):
+            for cityobj in parser.process_cityobj_element(city_object, parent=None):
                 yield (toplevel_count, cityobj)
             toplevel_count += 1

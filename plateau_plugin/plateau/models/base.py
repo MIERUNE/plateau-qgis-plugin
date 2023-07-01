@@ -77,21 +77,6 @@ class AttributeGroup:
 
 
 @dataclass
-class FieldDefinition:
-    """QGIS 等にテーブルを作る際のフィールド定義"""
-
-    name: str
-    datatype: PropertyDatatype
-
-
-@dataclass
-class TableDefinition:
-    """QGIS 等にテーブルを作る際のテーブル定義"""
-
-    fields: list[FieldDefinition]
-
-
-@dataclass
 class FeatureProcessingDefinition:
     """各地物の処理方法を定める"""
 
@@ -178,29 +163,6 @@ class ProcessorRegistory:
     def get_processor_by_id(self, _id: str) -> FeatureProcessingDefinition:
         """Processor の id をもとに Processor を取得する"""
         return self._id_map[_id]
-
-    def get_table_definition(self, processor_path: Sequence[tuple[str, str]]):
-        processor = self.get_processor_by_id(processor_path[-1][0])
-        fields = [
-            FieldDefinition("id", "string"),
-            FieldDefinition("type", "string"),
-            FieldDefinition("name", "string"),
-            FieldDefinition("creationDate", "date"),
-            FieldDefinition("terminationDate", "date"),
-        ]
-        closed: dict[str, str] = {}
-        for group in processor.attribute_groups:
-            for prop in group.attributes:
-                if prop.name not in closed:
-                    fields.append(FieldDefinition(prop.name, prop.datatype))
-                    closed[prop.name] = prop.datatype
-                else:
-                    # 同名のフィールドが既にある場合は、型が一致しているか確認する
-                    assert (
-                        closed[prop.name] == prop.datatype
-                    ), f"{prop.name}, {closed[prop.name]} != {prop.datatype}"
-
-        return TableDefinition(fields=fields)
 
     def validate_processors(self):
         from pathlib import Path
