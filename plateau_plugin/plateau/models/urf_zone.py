@@ -424,6 +424,26 @@ URF_DISTRICTS_AND_ZONES = FeatureProcessingDefinition(
                     path="./urf:useToBeInduced",
                     datatype="string",
                 ),
+                Attribute(
+                    name="urf:wallSetbackDistance",
+                    path="./urf:wallSetbackDistance",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="urf:wallSetbackDistanceWithAdjoiningLand",
+                    path="./urf:wallSetbackDistanceWithAdjoiningLand",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="urf:wallSetbackDistanceWithRoad",
+                    path="./urf:wallSetbackDistanceWithRoad",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="urf:zoneNumber",
+                    path="./urf:zoneNumber",
+                    datatype="string",
+                ),
             ],
         ),
     ],
@@ -912,19 +932,17 @@ URF_URBAN_FACILITY = FeatureProcessingDefinition(
 
 URF_URBAN_DEVELOPMENT_PROJECT = FeatureProcessingDefinition(
     id="urf:UrbanDevelopmentProject",
-    target_elements=
-        [
-            "urf:DisasterPreventionBlockImprovementProject",
-            "urf:IndustrialParkDevelopmentProject",
-            "urf:LandReadjustmentProject",
-            "urf:NewHousingAndUrbanDevelopmentProject",
-            "urf:NewUrbanInfrastructureProject",
-            "urf:ResidentialBlockConstructionProject",
-            "urf:UrbanDevelopmentProject",
-            "urf:UrbanRedevelopmentProject",
-            "urf:UrbanRenewalProject",
-        ]
-    ,
+    target_elements=[
+        "urf:DisasterPreventionBlockImprovementProject",
+        "urf:IndustrialParkDevelopmentProject",
+        "urf:LandReadjustmentProject",
+        "urf:NewHousingAndUrbanDevelopmentProject",
+        "urf:NewUrbanInfrastructureProject",
+        "urf:ResidentialBlockConstructionProject",
+        "urf:UrbanDevelopmentProject",
+        "urf:UrbanRedevelopmentProject",
+        "urf:UrbanRenewalProject",
+    ],
     attribute_groups=[
         *_base_attributes,
         AttributeGroup(
@@ -1055,17 +1073,15 @@ URF_URBAN_DEVELOPMENT_PROJECT = FeatureProcessingDefinition(
 
 URF_SCHEDULED_AREA_FOR_URBAN_DEVELOPMENT = FeatureProcessingDefinition(
     id="urf:ScheduledAreaForUrbanDevelopmentProject",
-    target_elements=
-        [
-            "urf:ScheduledAreaForCollectiveGovernmentAndPublicOfficeFacilities",
-            "urf:ScheduledAreaForCollectiveHousingFacilities",
-            "urf:ScheduledAreaForDistributionBusinessPark",
-            "urf:ScheduledAreaForIndustrialParkDevelopmentProjects",
-            "urf:ScheduledAreaForNewHousingAndUrbanDevelopmentProjects",
-            "urf:ScheduledAreaForNewUrbanInfrastructureProjects",
-            "urf:ScheduledAreaForUrbanDevelopmentProject",
-        ]
-    ,
+    target_elements=[
+        "urf:ScheduledAreaForCollectiveGovernmentAndPublicOfficeFacilities",
+        "urf:ScheduledAreaForCollectiveHousingFacilities",
+        "urf:ScheduledAreaForDistributionBusinessPark",
+        "urf:ScheduledAreaForIndustrialParkDevelopmentProjects",
+        "urf:ScheduledAreaForNewHousingAndUrbanDevelopmentProjects",
+        "urf:ScheduledAreaForNewUrbanInfrastructureProjects",
+        "urf:ScheduledAreaForUrbanDevelopmentProject",
+    ],
     attribute_groups=[
         *_base_attributes,
         AttributeGroup(
@@ -1233,14 +1249,12 @@ URF_DISTRICT_DEVELOPMENT_PLAN = FeatureProcessingDefinition(
 
 URF_DISTRICT_FACILITY = FeatureProcessingDefinition(
     id="urf:DistrictFacility",
-    target_elements=
-        [
-            "urf:DistrictFacility",
-            "urf:RoadsideDistrictFacility",
-            "urf:RuralDistrictFacility",
-            "urf:ZonalDisasterPreventionFacility",
-        ]
-    ,
+    target_elements=[
+        "urf:DistrictFacility",
+        "urf:RoadsideDistrictFacility",
+        "urf:RuralDistrictFacility",
+        "urf:ZonalDisasterPreventionFacility",
+    ],
     attribute_groups=[
         *_base_attributes,
         AttributeGroup(
