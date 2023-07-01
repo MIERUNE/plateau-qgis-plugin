@@ -64,7 +64,7 @@ class Parser:
         )
         return (creation_date, termination_date)
 
-    def _load_props(
+    def _load_props(  # noqa: C901
         self, processor: FeatureProcessingDefinition, feature_elem: et._Element
     ) -> OrderedDict[str, Any]:
         nsmap = self._nsmap
@@ -117,7 +117,9 @@ class Parser:
                         raise NotImplementedError(f"Unknown datatype: {prop.datatype}")
         return props
 
-    def _parse_generic_attributes(self, elem: et._Element) -> dict[str, Any]:
+    def _parse_generic_attributes(  # noqa: C901
+        self, elem: et._Element
+    ) -> dict[str, Any]:
         nsmap = self._nsmap
         generic_attrs = {}
 
@@ -157,7 +159,7 @@ class Parser:
 
         return generic_attrs
 
-    def process_cityobj_element(
+    def process_cityobj_element(  # noqa: C901
         self,
         elem: et._Element,
         parent: Optional[CityObject],  # 祖先地物の Processor
