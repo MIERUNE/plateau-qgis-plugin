@@ -10,20 +10,6 @@ from .base import (
 )
 from .common import river_facility_id_attribute_attrs
 
-
-def _make_prefix_variants(prefixed_names: list[str]) -> list[str]:
-    # uro を uro2, uro3 に置換する
-    names = []
-    for name in prefixed_names:
-        assert name.startswith("uro:")
-        n = name.split(":")[1]
-        names.append("uro14:" + n)
-        names.append("uro15:" + n)
-        names.append("uro2:" + n)
-        names.append("uro3:" + n)
-    return names
-
-
 _construction_structure_attribute_attrs = [
     Attribute(
         name="ceilingHeight",
@@ -82,7 +68,7 @@ _construction_structure_attribute_attrs = [
 
 OTHER_CONSTRUCTION = FeatureProcessingDefinition(
     id="OtherConstruction",
-    target_elements=_make_prefix_variants(["uro:OtherConstruction"]),
+    target_elements=["uro:OtherConstruction"],
     lod_detection=LODDetection(
         lod1=["./uro:lod1Geometry"],
         lod2=["./uro:lod2Geometry"],
@@ -325,16 +311,14 @@ OTHER_CONSTRUCTION = FeatureProcessingDefinition(
 
 OTHER_CONSTRUCTION_BOUNDARY_SURFACE = FeatureProcessingDefinition(
     id="uro:_BoundarySurface",
-    target_elements=_make_prefix_variants(
-        [
-            "uro:GroundSurface",
-            "uro:WallSurface",
-            "uro:RoofSurface",
-            "uro:OuterCeilingSurface",
-            "uro:OuterFloorSurface",
-            "uro:ClosureSurface",
-        ]
-    ),
+    target_elements=[
+        "uro:GroundSurface",
+        "uro:WallSurface",
+        "uro:RoofSurface",
+        "uro:OuterCeilingSurface",
+        "uro:OuterFloorSurface",
+        "uro:ClosureSurface",
+    ],
     attribute_groups=[],
     lod_detection=LODDetection(
         lod2=["./uro:lod2MultiSurface"],
@@ -365,7 +349,7 @@ OTHER_CONSTRUCTION_BOUNDARY_SURFACE = FeatureProcessingDefinition(
 
 OTHER_CONSTRUCTION_INSTALLATION = FeatureProcessingDefinition(
     id="ConstructionInstallation",
-    target_elements=_make_prefix_variants(["uro:ConstructionInstallation"]),
+    target_elements=["uro:ConstructionInstallation"],
     attribute_groups=[
         AttributeGroup(
             base_element=None,

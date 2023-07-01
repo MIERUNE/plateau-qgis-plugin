@@ -9,19 +9,6 @@ from .base import (
     LODDetection,
 )
 
-
-def _make_prefix_variants(prefixed_names: list[str]) -> list[str]:
-    names = []
-    for name in prefixed_names:
-        assert name.startswith("urf:")
-        n = name.split(":")[1]
-        names.append("urf14:" + n)
-        names.append("urf15:" + n)
-        names.append("urf2:" + n)
-        names.append("urf3:" + n)
-    return names
-
-
 # urf:Zone の属性
 _base_attributes = [
     # attributes inherited from urf:Zone
@@ -140,7 +127,7 @@ _base_attributes = [
 
 URF_URBAN_PLANNING_AREA = FeatureProcessingDefinition(
     id="urf:UrbanPlanningArea",
-    target_elements=_make_prefix_variants(["urf:UrbanPlanningArea"]),
+    target_elements=["urf:UrbanPlanningArea"],
     attribute_groups=[
         *_base_attributes,
         AttributeGroup(
@@ -207,7 +194,7 @@ URF_URBAN_PLANNING_AREA = FeatureProcessingDefinition(
 
 URF_QUASI_URBAN_PLANNING_AREA = FeatureProcessingDefinition(
     id="urf:QuasiUrbanPlanningArea",
-    target_elements=_make_prefix_variants(["urf:QuasiUrbanPlanningArea"]),
+    target_elements=["urf:QuasiUrbanPlanningArea"],
     attribute_groups=[
         *_base_attributes,
         AttributeGroup(
@@ -248,7 +235,7 @@ URF_QUASI_URBAN_PLANNING_AREA = FeatureProcessingDefinition(
 
 URF_AREA_CLASSIFICATION = FeatureProcessingDefinition(
     id="urf:AreaClassification",
-    target_elements=_make_prefix_variants(["urf:AreaClassification"]),
+    target_elements=["urf:AreaClassification"],
     attribute_groups=[
         *_base_attributes,
         AttributeGroup(
@@ -279,38 +266,36 @@ URF_AREA_CLASSIFICATION = FeatureProcessingDefinition(
 
 URF_DISTRICTS_AND_ZONES = FeatureProcessingDefinition(
     id="urf:DistrictsAndZones",
-    target_elements=_make_prefix_variants(
-        [
-            "urf:AircraftNoiseControlZone",
-            "urf:ConservationZoneForClustersOfTraditionalStructures",
-            "urf:DistributionBusinessZone",
-            "urf:DistrictsAndZones",
-            "urf:ExceptionalFloorAreaRateDistrict",
-            "urf:FirePreventionDistrict",
-            "urf:GreenSpaceConservationDistrict",
-            "urf:HeightControlDistrict",
-            "urf:HighLevelUseDistrict",
-            "urf:HighRiseResidentialAttractionDistrict",
-            "urf:HousingControlArea",
-            "urf:LandscapeZone",
-            "urf:ParkingPlaceDevelopmentZone",
-            "urf:PortZone",
-            "urf:ProductiveGreenZone",
-            "urf:ResidentialEnvironmentImprovementDistrict",
-            "urf:ScenicDistrict",
-            "urf:SpecialGreenSpaceConservationDistrict",
-            "urf:SpecialUrbanRenaissanceDistrict",
-            "urf:SpecialUseAttractionDistrict",
-            "urf:SpecialUseDistrict",
-            "urf:SpecialUseRestrictionDistrict",
-            "urf:SpecialZoneForPreservationOfHistoricalLandscape",
-            "urf:SpecifiedBlock",
-            "urf:SpecifiedDisasterPreventionBlockImprovementZone",
-            "urf:TreePlantingDistrict",
-            "urf:UseDistrict",
-            "urf:ZoneForPreservationOfHistoricalLandscape",
-        ]
-    ),
+    target_elements=[
+        "urf:AircraftNoiseControlZone",
+        "urf:ConservationZoneForClustersOfTraditionalStructures",
+        "urf:DistributionBusinessZone",
+        "urf:DistrictsAndZones",
+        "urf:ExceptionalFloorAreaRateDistrict",
+        "urf:FirePreventionDistrict",
+        "urf:GreenSpaceConservationDistrict",
+        "urf:HeightControlDistrict",
+        "urf:HighLevelUseDistrict",
+        "urf:HighRiseResidentialAttractionDistrict",
+        "urf:HousingControlArea",
+        "urf:LandscapeZone",
+        "urf:ParkingPlaceDevelopmentZone",
+        "urf:PortZone",
+        "urf:ProductiveGreenZone",
+        "urf:ResidentialEnvironmentImprovementDistrict",
+        "urf:ScenicDistrict",
+        "urf:SpecialGreenSpaceConservationDistrict",
+        "urf:SpecialUrbanRenaissanceDistrict",
+        "urf:SpecialUseAttractionDistrict",
+        "urf:SpecialUseDistrict",
+        "urf:SpecialUseRestrictionDistrict",
+        "urf:SpecialZoneForPreservationOfHistoricalLandscape",
+        "urf:SpecifiedBlock",
+        "urf:SpecifiedDisasterPreventionBlockImprovementZone",
+        "urf:TreePlantingDistrict",
+        "urf:UseDistrict",
+        "urf:ZoneForPreservationOfHistoricalLandscape",
+    ],
     attribute_groups=[
         *_base_attributes,
         AttributeGroup(
@@ -453,15 +438,13 @@ URF_DISTRICTS_AND_ZONES = FeatureProcessingDefinition(
 
 URF_PROJECT_PROMOTION_AREA = FeatureProcessingDefinition(
     id="urf:ProjectPromotionArea",
-    target_elements=_make_prefix_variants(
-        [
-            "urf:LandReadjustmentPromotionArea",
-            "urf:LandReadjustmentPromotionAreasForCoreBusinessUrbanDevelopment",
-            "urf:ProjectPromotionArea",
-            "urf:ResidentialBlockConstructionPromotionArea",
-            "urf:UrbanRedevelopmentPromotionArea",
-        ]
-    ),
+    target_elements=[
+        "urf:LandReadjustmentPromotionArea",
+        "urf:LandReadjustmentPromotionAreasForCoreBusinessUrbanDevelopment",
+        "urf:ProjectPromotionArea",
+        "urf:ResidentialBlockConstructionPromotionArea",
+        "urf:UrbanRedevelopmentPromotionArea",
+    ],
     attribute_groups=[
         *_base_attributes,
         AttributeGroup(
@@ -507,7 +490,7 @@ URF_PROJECT_PROMOTION_AREA = FeatureProcessingDefinition(
 
 URF_UNUSED_LAND_USE_PROMOTION_AREA = FeatureProcessingDefinition(
     id="urf:UnusedLandUsePromotionArea",
-    target_elements=_make_prefix_variants(["urf:UnusedLandUsePromotionArea"]),
+    target_elements=["urf:UnusedLandUsePromotionArea"],
     attribute_groups=_base_attributes,
     lod_detection=LODDetection(
         lod0=["./urf:lod0MultiSurface"], lod1=["./urf:lod1MultiSurface"]
@@ -520,7 +503,7 @@ URF_UNUSED_LAND_USE_PROMOTION_AREA = FeatureProcessingDefinition(
 
 URF_URBAN_DISASTER_RECOVERY_PROMOTION_AREA = FeatureProcessingDefinition(
     id="urf:UrbanDisasterRecoveryPromotionArea",
-    target_elements=_make_prefix_variants(["urf:UrbanDisasterRecoveryPromotionArea"]),
+    target_elements=["urf:UrbanDisasterRecoveryPromotionArea"],
     attribute_groups=[
         *_base_attributes,
         AttributeGroup(
@@ -556,35 +539,33 @@ URF_URBAN_DISASTER_RECOVERY_PROMOTION_AREA = FeatureProcessingDefinition(
 
 URF_URBAN_FACILITY = FeatureProcessingDefinition(
     id="urf:UrbanFacility",
-    target_elements=_make_prefix_variants(
-        [
-            "urf:CollectiveFacilitiesForReconstruction",
-            "urf:CollectiveFacilitiesForReconstructionAndRevitalization",
-            "urf:CollectiveFacilitiesForTsunamiDisasterPrevention",
-            "urf:CollectiveGovernmentAndPublicOfficeFacilities",
-            "urf:CollectiveHousingFacilities",
-            "urf:CollectiveUrbanDisasterPreventionFacilities",
-            "urf:DistributionBusinessPark",
-            "urf:EducationalAndCulturalFacility",
-            "urf:FireProtectionFacility",
-            "urf:FloodPreventionFacility",
-            "urf:MarketsSlaughterhousesCrematoria",
-            "urf:MedicalFacility",
-            "urf:OpenSpaceForPublicUse",
-            "urf:SandControlFacility",
-            "urf:SnowProtectionFacility",
-            "urf:SocialWelfareFacility",
-            "urf:SupplyFacility",
-            "urf:TelecommunicationFacility",
-            "urf:TideFacility",
-            "urf:TrafficFacility",
-            "urf:TreatmentFacility",
-            "urf:UrbanFacility",
-            "urf:UrbanFacilityStipulatedByCabinetOrder",
-            "urf:Waterway",
-            "urf:WindProtectionFacility",
-        ]
-    ),
+    target_elements=[
+        "urf:CollectiveFacilitiesForReconstruction",
+        "urf:CollectiveFacilitiesForReconstructionAndRevitalization",
+        "urf:CollectiveFacilitiesForTsunamiDisasterPrevention",
+        "urf:CollectiveGovernmentAndPublicOfficeFacilities",
+        "urf:CollectiveHousingFacilities",
+        "urf:CollectiveUrbanDisasterPreventionFacilities",
+        "urf:DistributionBusinessPark",
+        "urf:EducationalAndCulturalFacility",
+        "urf:FireProtectionFacility",
+        "urf:FloodPreventionFacility",
+        "urf:MarketsSlaughterhousesCrematoria",
+        "urf:MedicalFacility",
+        "urf:OpenSpaceForPublicUse",
+        "urf:SandControlFacility",
+        "urf:SnowProtectionFacility",
+        "urf:SocialWelfareFacility",
+        "urf:SupplyFacility",
+        "urf:TelecommunicationFacility",
+        "urf:TideFacility",
+        "urf:TrafficFacility",
+        "urf:TreatmentFacility",
+        "urf:UrbanFacility",
+        "urf:UrbanFacilityStipulatedByCabinetOrder",
+        "urf:Waterway",
+        "urf:WindProtectionFacility",
+    ],
     attribute_groups=[
         *_base_attributes,
         AttributeGroup(
@@ -931,7 +912,7 @@ URF_URBAN_FACILITY = FeatureProcessingDefinition(
 
 URF_URBAN_DEVELOPMENT_PROJECT = FeatureProcessingDefinition(
     id="urf:UrbanDevelopmentProject",
-    target_elements=_make_prefix_variants(
+    target_elements=
         [
             "urf:DisasterPreventionBlockImprovementProject",
             "urf:IndustrialParkDevelopmentProject",
@@ -943,7 +924,7 @@ URF_URBAN_DEVELOPMENT_PROJECT = FeatureProcessingDefinition(
             "urf:UrbanRedevelopmentProject",
             "urf:UrbanRenewalProject",
         ]
-    ),
+    ,
     attribute_groups=[
         *_base_attributes,
         AttributeGroup(
@@ -1074,7 +1055,7 @@ URF_URBAN_DEVELOPMENT_PROJECT = FeatureProcessingDefinition(
 
 URF_SCHEDULED_AREA_FOR_URBAN_DEVELOPMENT = FeatureProcessingDefinition(
     id="urf:ScheduledAreaForUrbanDevelopmentProject",
-    target_elements=_make_prefix_variants(
+    target_elements=
         [
             "urf:ScheduledAreaForCollectiveGovernmentAndPublicOfficeFacilities",
             "urf:ScheduledAreaForCollectiveHousingFacilities",
@@ -1084,7 +1065,7 @@ URF_SCHEDULED_AREA_FOR_URBAN_DEVELOPMENT = FeatureProcessingDefinition(
             "urf:ScheduledAreaForNewUrbanInfrastructureProjects",
             "urf:ScheduledAreaForUrbanDevelopmentProject",
         ]
-    ),
+    ,
     attribute_groups=[
         *_base_attributes,
         AttributeGroup(
@@ -1115,15 +1096,13 @@ URF_SCHEDULED_AREA_FOR_URBAN_DEVELOPMENT = FeatureProcessingDefinition(
 
 URF_DISTRICT_PLAN = FeatureProcessingDefinition(
     id="urf:DistrictPlan",
-    target_elements=_make_prefix_variants(
-        [
-            "urf:DisasterPreventionBlockImprovementZonePlan",
-            "urf:DistrictPlan",
-            "urf:HistoricSceneryMaintenanceAndImprovementDistrictPlan",
-            "urf:RoadsideDistrictPlan",
-            "urf:RuralDistrictPlan",
-        ]
-    ),
+    target_elements=[
+        "urf:DisasterPreventionBlockImprovementZonePlan",
+        "urf:DistrictPlan",
+        "urf:HistoricSceneryMaintenanceAndImprovementDistrictPlan",
+        "urf:RoadsideDistrictPlan",
+        "urf:RuralDistrictPlan",
+    ],
     attribute_groups=[
         *_base_attributes,
         AttributeGroup(
@@ -1182,16 +1161,14 @@ URF_DISTRICT_PLAN = FeatureProcessingDefinition(
 
 URF_DISTRICT_DEVELOPMENT_PLAN = FeatureProcessingDefinition(
     id="urf:DistrictDevelopmentPlan",
-    target_elements=_make_prefix_variants(
-        [
-            "urf:DistrictDevelopmentPlan",
-            "urf:DistrictImprovementPlanForDisasterPreventionBlockImprovementZonePlan",
-            "urf:DistrictImprovementPlanForHistoricSceneryMaintenanceAndImprovementDistrict",
-            "urf:RoadsideDistrictImprovementPlan",
-            "urf:RuralDistrictImprovementPlan",
-            "urf:SpecifiedBuildingZoneImprovementPlan",
-        ]
-    ),
+    target_elements=[
+        "urf:DistrictDevelopmentPlan",
+        "urf:DistrictImprovementPlanForDisasterPreventionBlockImprovementZonePlan",
+        "urf:DistrictImprovementPlanForHistoricSceneryMaintenanceAndImprovementDistrict",
+        "urf:RoadsideDistrictImprovementPlan",
+        "urf:RuralDistrictImprovementPlan",
+        "urf:SpecifiedBuildingZoneImprovementPlan",
+    ],
     attribute_groups=[
         *_base_attributes,
         AttributeGroup(
@@ -1256,14 +1233,14 @@ URF_DISTRICT_DEVELOPMENT_PLAN = FeatureProcessingDefinition(
 
 URF_DISTRICT_FACILITY = FeatureProcessingDefinition(
     id="urf:DistrictFacility",
-    target_elements=_make_prefix_variants(
+    target_elements=
         [
             "urf:DistrictFacility",
             "urf:RoadsideDistrictFacility",
             "urf:RuralDistrictFacility",
             "urf:ZonalDisasterPreventionFacility",
         ]
-    ),
+    ,
     attribute_groups=[
         *_base_attributes,
         AttributeGroup(
@@ -1301,7 +1278,7 @@ URF_DISTRICT_FACILITY = FeatureProcessingDefinition(
 
 URF_PROMOTION_DISTRICT = FeatureProcessingDefinition(
     id="urf:PromotionDistrict",
-    target_elements=_make_prefix_variants(["urf:PromotionDistrict"]),
+    target_elements=["urf:PromotionDistrict"],
     attribute_groups=[
         *_base_attributes,
         AttributeGroup(
@@ -1327,7 +1304,7 @@ URF_PROMOTION_DISTRICT = FeatureProcessingDefinition(
 
 URF_DISTRICT = FeatureProcessingDefinition(
     id="urf:District",
-    target_elements=_make_prefix_variants(["urf:District"]),
+    target_elements=["urf:District"],
     attribute_groups=[
         *_base_attributes,
         AttributeGroup(

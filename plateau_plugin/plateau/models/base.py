@@ -138,6 +138,22 @@ class ProcessorRegistory:
             for processor in processors:
                 self.register_processor(processor)
 
+    def _make_prefix_variants(self, prefixed_names: Iterable[str]) -> list[str]:
+        names = []
+        for name in prefixed_names:
+            prefix, n = name.split(":", 1)
+            if prefix == "uro":
+                names.append("uro14:" + n)
+                names.append("uro15:" + n)
+                names.append("uro2:" + n)
+                names.append("uro3:" + n)
+            if prefix == "urf":
+                names.append("urf14:" + n)
+                names.append("urf15:" + n)
+                names.append("urf2:" + n)
+                names.append("urf3:" + n)
+        return names
+
     def register_processor(self, processor: FeatureProcessingDefinition):
         """Processor を登録する"""
         assert (
@@ -145,7 +161,7 @@ class ProcessorRegistory:
         ), f"Processor id {processor.id} is already registered"
 
         self._id_map[processor.id] = processor
-        for prefixed_name in processor.target_elements:
+        for prefixed_name in self._make_prefix_variants(processor.target_elements):
             qualified_name = re.sub(
                 r"^(.+?):()", lambda m: "{" + BASE_NS[m.group(1)] + "}", prefixed_name
             )

@@ -32,19 +32,6 @@ from .base import (
 )
 from .common import facility_id_attribute_attrs
 
-
-def _make_prefix_variants(prefixed_names: list[str]) -> list[str]:
-    names = []
-    for name in prefixed_names:
-        assert name.startswith("uro:")
-        n = name.split(":")[1]
-        names.append("uro14:" + n)
-        names.append("uro15:" + n)
-        names.append("uro2:" + n)
-        names.append("uro3:" + n)
-    return names
-
-
 _common_property_groups = [
     AttributeGroup(
         base_element=None,
@@ -142,11 +129,9 @@ _common_property_groups = [
 
 UTILITY_NODE = FeatureProcessingDefinition(
     id="UtilityNode",
-    target_elements=_make_prefix_variants(
-        [
-            "uro:Appurtenance",
-        ]
-    ),
+    target_elements=[
+        "uro:Appurtenance",
+    ],
     lod_detection=LODDetection(
         lod1=["./frn:lod1Geometry"],
         lod2=["./frn:lod2Geometry"],
@@ -186,12 +171,10 @@ UTILITY_NODE = FeatureProcessingDefinition(
 
 UTILITY_NODE_CONTAINER = FeatureProcessingDefinition(
     id="UtilityNodeContainer",
-    target_elements=_make_prefix_variants(
-        [
-            "uro:Manhole",
-            "uro:Handhole",
-        ]
-    ),
+    target_elements=[
+        "uro:Manhole",
+        "uro:Handhole",
+    ],
     lod_detection=LODDetection(
         lod1=["./frn:lod1Geometry"],
         lod2=["./frn:lod2Geometry"],
@@ -245,19 +228,17 @@ UTILITY_NODE_CONTAINER = FeatureProcessingDefinition(
 
 UTILITY_LINK = FeatureProcessingDefinition(
     id="UtilityLink",
-    target_elements=_make_prefix_variants(
-        [
-            "uro:Pipe",
-            "uro:WaterPipe",
-            "uro:ThermalPipe",
-            "uro:SewerPipe",
-            "uro:OilGasChemicalsPipe",
-            "uro:Duct",
-            "uro:Cable",
-            "uro:TelecommunicationsCable",
-            "uro:ElectricityCable",
-        ]
-    ),
+    target_elements=[
+        "uro:Pipe",
+        "uro:WaterPipe",
+        "uro:ThermalPipe",
+        "uro:SewerPipe",
+        "uro:OilGasChemicalsPipe",
+        "uro:Duct",
+        "uro:Cable",
+        "uro:TelecommunicationsCable",
+        "uro:ElectricityCable",
+    ],
     lod_detection=LODDetection(
         lod1=["./frn:lod1Geometry"],
         lod2=["./frn:lod2Geometry"],
