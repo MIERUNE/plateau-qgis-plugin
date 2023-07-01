@@ -1170,6 +1170,11 @@ URF_DISTRICT_PLAN = FeatureProcessingDefinition(
                     path="./urf:specifiedZonalDisasterPreventionFacilitiesAllocation",
                     datatype="string",
                 ),
+                Attribute(
+                    name="zonalDisasterPreventionFacilitiesAllocation",
+                    path="./urf:zonalDisasterPreventionFacilitiesAllocation",
+                    datatype="string",
+                ),
             ],
         ),
     ],
