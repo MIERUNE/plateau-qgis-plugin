@@ -12,6 +12,8 @@ from .base import (
 UNDERGROUND_BUILDING = FeatureProcessingDefinition(
     id="UndergroundBuilding",
     target_elements=[
+        "uro14:UndergroundBuilding",
+        "uro15:UndergroundBuilding",
         "uro2:UndergroundBuilding",
         "uro3:UndergroundBuilding",
     ],

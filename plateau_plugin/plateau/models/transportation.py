@@ -631,6 +631,8 @@ SQUARE = FeatureProcessingDefinition(
 WATERWAY = FeatureProcessingDefinition(
     id="Waterway",
     target_elements=[
+        "uro14:Waterway",
+        "uro15:Waterway",
         "uro2:Waterway",
         "uro3:Waterway",
     ],

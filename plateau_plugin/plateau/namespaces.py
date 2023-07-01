@@ -20,6 +20,10 @@ BASE_NS = {
     "wtr": "http://www.opengis.net/citygml/waterbody/2.0",
     "tun": "http://www.opengis.net/citygml/tunnel/2.0",
     # i-UR
+    "uro14": "http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/uro/1.4",
+    "urf14": "http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/urf/1.4",
+    "uro15": "https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/uro/1.5",
+    "urf15": "https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/urf/1.5",
     "uro2": "https://www.geospatial.jp/iur/uro/2.0",
     "urf2": "https://www.geospatial.jp/iur/urf/2.0",
     "uro3": "https://www.geospatial.jp/iur/uro/3.0",

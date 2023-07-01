@@ -17,6 +17,8 @@ def _make_prefix_variants(prefixed_names: list[str]) -> list[str]:
     for name in prefixed_names:
         assert name.startswith("uro:")
         n = name.split(":")[1]
+        names.append("uro14:" + n)
+        names.append("uro15:" + n)
         names.append("uro2:" + n)
         names.append("uro3:" + n)
     return names

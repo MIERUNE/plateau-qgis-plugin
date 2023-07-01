@@ -12,6 +12,8 @@ from .base import (
 URF_SEDIMENT_DISASTER_PRONE_AREA = FeatureProcessingDefinition(
     id="SedimentDisasterProneArea",
     target_elements=[
+        "urf14:SedimentDisasterProneArea",
+        "urf15:SedimentDisasterProneArea",
         "urf2:SedimentDisasterProneArea",
         "urf3:SedimentDisasterProneArea",
     ],
