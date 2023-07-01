@@ -222,7 +222,7 @@ class PlateauProcessingAlrogithm(QgsProcessingAlgorithm):
         return PlateauProcessingAlrogithm()
 
     def name(self):
-        return "plateau_plugin"
+        return "load_gml"
 
     def group(self):
         return None

@@ -1188,7 +1188,7 @@ URF_DISTRICT_PLAN = FeatureProcessingDefinition(
         semantic_parts=[
             "./urf:districtDevelopmentPlan/urf:*",
             "./urf:promotionDistrict/urf:*",
-            "./urf:zonalDisasterPreventionFacilities/urf:ZonalDisasterPreventionFacility"
+            "./urf:zonalDisasterPreventionFacilities/urf:ZonalDisasterPreventionFacility",
         ],
     ),
 )
