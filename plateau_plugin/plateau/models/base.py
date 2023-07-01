@@ -1,7 +1,7 @@
 import re
 from dataclasses import dataclass
 from functools import cached_property
-from typing import Iterable, Literal, Optional, Sequence
+from typing import Iterable, Iterator, Literal, Optional, Sequence
 
 import lxml.etree as et
 
@@ -138,21 +138,21 @@ class ProcessorRegistory:
             for processor in processors:
                 self.register_processor(processor)
 
-    def _make_prefix_variants(self, prefixed_names: Iterable[str]) -> list[str]:
-        names = []
+    def _make_prefix_variants(self, prefixed_names: Iterable[str]) -> Iterator[str]:
         for name in prefixed_names:
             prefix, n = name.split(":", 1)
             if prefix == "uro":
-                names.append("uro14:" + n)
-                names.append("uro15:" + n)
-                names.append("uro2:" + n)
-                names.append("uro3:" + n)
-            if prefix == "urf":
-                names.append("urf14:" + n)
-                names.append("urf15:" + n)
-                names.append("urf2:" + n)
-                names.append("urf3:" + n)
-        return names
+                yield "uro14:" + n
+                yield "uro15:" + n
+                yield "uro2:" + n
+                yield "uro3:" + n
+            elif prefix == "urf":
+                yield "urf14:" + n
+                yield "urf15:" + n
+                yield "urf2:" + n
+                yield "urf3:" + n
+            else:
+                yield name
 
     def register_processor(self, processor: FeatureProcessingDefinition):
         """Processor を登録する"""
