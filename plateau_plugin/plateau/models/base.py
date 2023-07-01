@@ -15,6 +15,8 @@ PropertyDatatype = Literal[
     "datetime",
     "boolean",
     "date",
+    "object",
+    "[]object",
 ]
 
 
@@ -107,6 +109,9 @@ class FeatureProcessingDefinition:
 
     emissions: FeatureEmissions
     """ジオメトリの抽出についての定義"""
+
+    load_generic_attributes: bool = False
+    """gen:stringAttribute などの汎用属性を読み込むかどうか"""
 
     def detect_lods(self, elem: et._Element, nsmap: dict[str, str]) -> tuple[bool, ...]:
         """

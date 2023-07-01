@@ -71,6 +71,9 @@ class Parser:
         props = OrderedDict()
         codelist_lookup = self._codelist_store.lookup
 
+        if processor.load_generic_attributes:
+            props["generic"] = self._parse_generic_attributes(feature_elem)
+
         for group in processor.attribute_groups:
             if group.base_element is None:
                 base_elem = feature_elem
@@ -113,6 +116,46 @@ class Parser:
                     else:
                         raise NotImplementedError(f"Unknown datatype: {prop.datatype}")
         return props
+
+    def _parse_generic_attributes(self, elem: et._Element) -> dict[str, Any]:
+        nsmap = self._nsmap
+        generic_attrs = {}
+
+        for gen in elem.iterfind("gen:genericAttributeSet", nsmap):
+            if name := gen.get("name"):
+                generic_attrs[name] = self._parse_generic_attributes(gen)
+
+        for gen in elem.iterfind("gen:stringAttribute", nsmap):
+            if (name := gen.get("name")) and (
+                value := gen.find("./gen:value", nsmap)
+            ) is not None:
+                generic_attrs[name] = value.text
+
+        for gen in elem.iterfind("gen:intAttribute", nsmap):
+            if (name := gen.get("name")) and (
+                value := gen.find("./gen:value", nsmap)
+            ) is not None:
+                generic_attrs[name] = int(value.text)
+
+        for gen in elem.iterfind("gen:doubleAttribute", nsmap):
+            if (name := gen.get("name")) and (
+                value := gen.find("./gen:value", nsmap)
+            ) is not None:
+                generic_attrs[name] = float(value.text)
+
+        for gen in elem.iterfind("gen:measureAttribute", nsmap):
+            if (name := gen.get("name")) and (
+                value := gen.find("./gen:value", nsmap)
+            ) is not None:
+                generic_attrs[name] = float(value.text)
+
+        for gen in elem.iterfind("gen:dateAttribute", nsmap):
+            if (name := gen.get("name")) and (
+                value := gen.find("./gen:value", nsmap)
+            ) is not None:
+                generic_attrs[name] = value.text
+
+        return generic_attrs
 
     def process_cityobj_element(
         self,

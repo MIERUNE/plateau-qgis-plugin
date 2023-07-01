@@ -45,14 +45,29 @@ _TYPE_TO_QT_TYPE = {
     "boolean": QVariant.Bool,
     "date": QVariant.Date,
     "[]string": QVariant.StringList,
+    "object": QVariant.String,  # JSON string
+    "[]object": QVariant.String,  # JSON string
 }
 
 
 def _convert_to_qt_value(v: Any):
-    if isinstance(v, datetime.date):
-        return QDate(v.year, v.month, v.day)
+    if isinstance(v, list):
+        # list
+        if not v:
+            return []
+
+        if isinstance(v[0], str):
+            return v
+        else:
+            return json.dumps(v, ensure_ascii=False)
     else:
-        return v
+        # not a list
+        if isinstance(v, dict):
+            return json.dumps(v, ensure_ascii=False)
+        elif isinstance(v, datetime.date):
+            return QDate(v.year, v.month, v.day)
+        else:
+            return v
 
 
 class LayerManager:

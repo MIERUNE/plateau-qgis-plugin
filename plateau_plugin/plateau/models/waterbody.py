@@ -15,6 +15,7 @@ WATER_BODY = FeatureProcessingDefinition(
     target_elements=[
         "wtr:WaterBody",
     ],
+    load_generic_attributes=True,
     lod_detection=LODDetection(
         lod1=["./wtr:lod1MultiSurface"],
         lod2=["./wtr:lod2Solid"],

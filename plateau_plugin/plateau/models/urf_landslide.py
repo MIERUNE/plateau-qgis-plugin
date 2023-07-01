@@ -18,6 +18,7 @@ URF_SEDIMENT_DISASTER_PRONE_AREA = FeatureProcessingDefinition(
     lod_detection=LODDetection(
         lod1=["./urf:lod1MultiSurface"],
     ),
+    load_generic_attributes=True,
     attribute_groups=[
         AttributeGroup(
             base_element=None,

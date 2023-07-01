@@ -18,6 +18,7 @@ GENERIC_CITY_OBJECT = FeatureProcessingDefinition(
         lod2=["./gen:lod2Geometry"],
         lod3=["./gen:lod3Geometry"],
     ),
+    load_generic_attributes=True,
     attribute_groups=[
         AttributeGroup(
             base_element=None,

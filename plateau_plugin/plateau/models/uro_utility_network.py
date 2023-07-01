@@ -150,6 +150,7 @@ UTILITY_NODE = FeatureProcessingDefinition(
         lod2=["./frn:lod2Geometry"],
         lod3=["./frn:lod3Geometry"],
     ),
+    load_generic_attributes=True,
     attribute_groups=[
         *_common_property_groups,
         AttributeGroup(
@@ -194,6 +195,7 @@ UTILITY_NODE_CONTAINER = FeatureProcessingDefinition(
         lod2=["./frn:lod2Geometry"],
         lod3=["./frn:lod3Geometry"],
     ),
+    load_generic_attributes=True,
     attribute_groups=[
         *_common_property_groups,
         AttributeGroup(
@@ -259,6 +261,7 @@ UTILITY_LINK = FeatureProcessingDefinition(
         lod2=["./frn:lod2Geometry"],
         lod3=["./frn:lod3Geometry"],
     ),
+    load_generic_attributes=True,
     attribute_groups=[
         *_common_property_groups,
         AttributeGroup(
