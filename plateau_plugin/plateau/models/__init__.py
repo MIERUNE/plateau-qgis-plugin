@@ -1,3 +1,10 @@
+from .attr_disaster_risk import (
+    ATTR_DISASTER_RISK_HIGH_TIDE,
+    ATTR_DISASTER_RISK_INLAND_FLOODING,
+    ATTR_DISASTER_RISK_LAND_SLIDE,
+    ATTR_DISASTER_RISK_RIVER_FLOODING,
+    ATTR_DISASTER_RISK_TSUNAMI,
+)
 from .base import ProcessorRegistory
 from .bridge import (
     BRIDGE,
@@ -130,5 +137,11 @@ processors = ProcessorRegistory(
         URF_URBAN_PLANNING_AREA,
         URF_DISTRICT,
         URF_PROMOTION_DISTRICT,
+        # attributes: uro:DisasterRiskAttribute, uro:BuildingDisasterRiskAttribute
+        ATTR_DISASTER_RISK_HIGH_TIDE,
+        ATTR_DISASTER_RISK_INLAND_FLOODING,
+        ATTR_DISASTER_RISK_LAND_SLIDE,
+        ATTR_DISASTER_RISK_RIVER_FLOODING,
+        ATTR_DISASTER_RISK_TSUNAMI,
     ]
 )
