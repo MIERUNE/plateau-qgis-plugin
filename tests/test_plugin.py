@@ -11,7 +11,7 @@ def test_registered(qgis_app: QgsApplication, provider: str):
     assert len(provider.name()) > 0
     assert isinstance(provider.icon(), QIcon)
 
-    alg = registory.algorithmById("plateau_plugin:load_gml")
+    alg = registory.algorithmById("plateau_plugin:load_as_vector")
     assert alg is not None
     assert alg.group() is None
     assert alg.groupId() is None

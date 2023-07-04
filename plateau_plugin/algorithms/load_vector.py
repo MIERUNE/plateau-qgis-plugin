@@ -34,9 +34,9 @@ from qgis.core import (
     QgsVectorLayerJoinInfo,
 )
 
-from .geometry import to_qgis_geometry
-from .plateau.parser import FileParser, ParseSettings
-from .plateau.types import (
+from ..geometry import to_qgis_geometry
+from ..plateau.parser import FileParser, ParseSettings
+from ..plateau.types import (
     CityObject,
     LineStringCollection,
     PointCollection,
@@ -194,8 +194,8 @@ class LayerManager:
             layer.addJoin(join)
 
 
-class PlateauProcessingAlrogithm(QgsProcessingAlgorithm):
-    """Processing algorithm for loading PLATEAU 3D City models into QGIS"""
+class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
+    """Processing algorithm to load PLATEAU 3D City models as vector layers"""
 
     INPUT = "INPUT"
     ONLY_HIGHEST_LOD = "ONLY_HIGHEST_LoD"
@@ -236,10 +236,10 @@ class PlateauProcessingAlrogithm(QgsProcessingAlgorithm):
         )
 
     def createInstance(self):
-        return PlateauProcessingAlrogithm()
+        return PlateauVectorLoaderAlrogithm()
 
     def name(self):
-        return "load_gml"
+        return "load_as_vector"
 
     def group(self):
         return None
