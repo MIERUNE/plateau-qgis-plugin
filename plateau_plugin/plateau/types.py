@@ -9,19 +9,19 @@ from .models.base import FeatureProcessingDefinition, PropertyDatatype
 
 @dataclass
 class PointCollection:
-    __slots__ = ["points"]  # noqa: RUF012
+    __slots__ = ("points",)
     points: np.ndarray
 
 
 @dataclass
 class LineStringCollection:
-    __slots__ = ["lines"]  # noqa: RUF012
+    __slots__ = ("lines",)
     lines: list[np.ndarray]
 
 
 @dataclass
 class PolygonCollection:
-    __slots__ = ["polygons"]  # noqa: RUF012
+    __slots__ = ("polygons",)
     polygons: list[list[np.ndarray]]
 
 
