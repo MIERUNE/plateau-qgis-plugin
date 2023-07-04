@@ -3,12 +3,11 @@
 from .base import (
     Attribute,
     AttributeGroup,
+    FacilityAttributePaths,
     FeatureEmission,
     FeatureEmissions,
     FeatureProcessingDefinition,
-    LODDetection,
 )
-from .common import facility_id_attribute_attrs
 
 WATER_BODY = FeatureProcessingDefinition(
     id="WaterBody",
@@ -16,11 +15,6 @@ WATER_BODY = FeatureProcessingDefinition(
         "wtr:WaterBody",
     ],
     load_generic_attributes=True,
-    lod_detection=LODDetection(
-        lod1=["./wtr:lod1MultiSurface"],
-        lod2=["./wtr:lod2Solid"],
-        lod3=["./wtr:lod3Solid"],
-    ),
     attribute_groups=[
         AttributeGroup(
             base_element=None,
@@ -36,6 +30,71 @@ WATER_BODY = FeatureProcessingDefinition(
                     path="./wtr:function",  # 浸水リスクモデルで使われる
                     datatype="[]string",
                     predefined_codelist="WaterBody_function",
+                ),
+            ],
+        ),
+        AttributeGroup(
+            base_element="./uro:waterBodyDetailAttribute/uro:WaterBodyDetailAttribute",
+            attributes=[
+                Attribute(
+                    name="adminType",
+                    path="./uro:adminType",
+                    datatype="string",
+                    predefined_codelist=None,
+                ),
+                Attribute(
+                    name="area",
+                    path="./uro:area",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="city",
+                    path="./uro:city",
+                    datatype="[]string",
+                    predefined_codelist="Common_localPublicAuthorities",
+                ),
+                Attribute(
+                    name="flowDirection",
+                    path="./uro:flowDirection",
+                    datatype="boolean",
+                ),
+                Attribute(
+                    name="kana",
+                    path="./uro:kana",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="maximumDepth",
+                    path="./uro:maximumDepth",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="measurementYearMonth",
+                    path="./uro:measurementYearMonth",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="prefecture",
+                    path="./uro:prefecture",
+                    datatype="[]string",
+                    predefined_codelist="Common_localPublicAuthorities",
+                ),
+                Attribute(
+                    name="riverCode",
+                    path="./uro:riverCode",
+                    datatype="string",
+                    predefined_codelist=None,
+                ),
+                Attribute(
+                    name="waterSurfaceElevation",
+                    path="./uro:waterSurfaceElevation",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="waterSystemCode",
+                    path="./uro:waterSystemCode",
+                    datatype="string",
+                    predefined_codelist=None,
                 ),
             ],
         ),
@@ -167,7 +226,6 @@ WATER_BODY = FeatureProcessingDefinition(
                     name="description",
                     path="./uro:description",
                     datatype="string",
-                    predefined_codelist=None,
                 ),
                 Attribute(
                     name="rank",
@@ -187,103 +245,31 @@ WATER_BODY = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        AttributeGroup(
-            base_element="./uro:waterBodyDetailAttribute/uro:WaterBodyDetailAttribute",
-            attributes=[
-                Attribute(
-                    name="adminType",
-                    path="./uro:adminType",
-                    datatype="string",
-                    predefined_codelist=None,
-                ),
-                Attribute(
-                    name="area",
-                    path="./uro:area",
-                    datatype="double",
-                ),
-                Attribute(
-                    name="city",
-                    path="./uro:city",
-                    datatype="[]string",
-                    predefined_codelist="Common_localPublicAuthorities",
-                ),
-                Attribute(
-                    name="flowDirection",
-                    path="./uro:flowDirection",
-                    datatype="boolean",
-                ),
-                Attribute(
-                    name="kana",
-                    path="./uro:kana",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="maximumDepth",
-                    path="./uro:maximumDepth",
-                    datatype="double",
-                ),
-                Attribute(
-                    name="measurementYearMonth",
-                    path="./uro:measurementYearMonth",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="prefecture",
-                    path="./uro:prefecture",
-                    datatype="[]string",
-                    predefined_codelist="Common_localPublicAuthorities",
-                ),
-                Attribute(
-                    name="riverCode",
-                    path="./uro:riverCode",
-                    datatype="string",
-                    predefined_codelist=None,
-                ),
-                Attribute(
-                    name="waterSurfaceElevation",
-                    path="./uro:waterSurfaceElevation",
-                    datatype="double",
-                ),
-                Attribute(
-                    name="waterSystemCode",
-                    path="./uro:waterSystemCode",
-                    datatype="string",
-                    predefined_codelist=None,
-                ),
-            ],
-        ),
-        AttributeGroup(
-            base_element="./uro:wtrFacilityIdAttribute/uro:FacilityIdAttribute",
-            attributes=facility_id_attribute_attrs,
-        ),
-        # TODO: uro:wtrDmAttribute
-        # TODO: uro:wtrFacilityTypeAttribute
-        # TODO: uro:wtrFacilityAttribute
     ],
+    dm_attr_container="./uro:wtrDmAttribute",
+    facility_attr_paths=FacilityAttributePaths(
+        facility_id="./uro:wtrFacilityIdAttribute",
+        facility_types="./uro:wtrFacilityTypeAttribute",
+        facility_attrs="./uro:wtrFacilityAttribute",
+    ),
     emissions=FeatureEmissions(
+        lod0=FeatureEmission(
+            lod_detection=["./wtr:lod0MultiCurve"],
+            collect_all=["./wtr:lod0MultiCurve//gml:LineString"],
+        ),
         lod1=FeatureEmission(
-            collect_all=[
-                "./wtr:lod1MultiSurface//gml:Polygon",
-            ],
-            only_direct=[
-                "./wtr:lod1MultiSurface//gml:Polygon",
-            ],
+            lod_detection=["./wtr:lod1MultiSurface"],
+            collect_all=["./wtr:lod1MultiSurface//gml:Polygon"],
         ),
         lod2=FeatureEmission(
-            collect_all=[
-                ".//wtr:lod2Surface//gml:Polygon",
-            ],
-            only_direct=[
-                "./wtr:lod2Surface//gml:Polygon",
-            ],
+            lod_detection=["./wtr:lod2Solid"],
+            collect_all=[".//wtr:lod2Surface//gml:Polygon"],
+            only_direct=["./wtr:lod2Solid//gml:Polygon"],
         ),
         lod3=FeatureEmission(
-            collect_all=[
-                ".//wtr:lod3Surface//gml:Polygon",
-            ],
-            only_direct=[
-                "./wtr:lod3Surface//gml:Polygon",
-            ],
+            lod_detection=["./wtr:lod3Solid"],
+            collect_all=[".//wtr:lod3Surface//gml:Polygon"],
+            only_direct=["./wtr:lod3Solid//gml:Polygon"],
         ),
         semantic_parts=[
             ".//wtr:WaterSurface",
@@ -300,21 +286,19 @@ WATER_BOUNDARY_SURFACE = FeatureProcessingDefinition(
         "wtr:WaterGroundSurface",
         "wtr:WaterClosureSurface",
     ],
-    lod_detection=LODDetection(
-        lod2=["./wtr:lod2Surface"],
-        lod3=["./wtr:lod3Surface"],
-    ),
     attribute_groups=[],
     emissions=FeatureEmissions(
         lod2=FeatureEmission(
+            lod_detection=["./wtr:lod2Surface"],
             collect_all=[
                 "./wtr:lod2Surface//gml:Polygon",
-            ]
+            ],
         ),
         lod3=FeatureEmission(
+            lod_detection=["./wtr:lod3Surface"],
             collect_all=[
                 "./wtr:lod3Surface//gml:Polygon",
-            ]
+            ],
         ),
     ),
 )

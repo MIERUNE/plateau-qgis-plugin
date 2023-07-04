@@ -3,12 +3,11 @@
 from .base import (
     Attribute,
     AttributeGroup,
+    FacilityAttributePaths,
     FeatureEmission,
     FeatureEmissions,
     FeatureProcessingDefinition,
-    LODDetection,
 )
-from .common import facility_id_attribute_attrs
 
 _uro_vegetation_data_quality_attribute = AttributeGroup(
     base_element="./uro:vegetationDataQualityAttribute/uro:VegetationDataQualityAttribute",
@@ -43,11 +42,6 @@ _uro_vegetation_data_quality_attribute = AttributeGroup(
 SOLITARY_VEGETATION_OBJECT = FeatureProcessingDefinition(
     id="SolitaryVegetationObject",
     target_elements=["veg:SolitaryVegetationObject"],
-    lod_detection=LODDetection(
-        lod1=["./veg:lod1Geometry"],
-        lod2=["./veg:lod2Geometry"],
-        lod3=["./veg:lod3Geometry"],
-    ),
     attribute_groups=[
         AttributeGroup(
             base_element=None,
@@ -82,29 +76,32 @@ SOLITARY_VEGETATION_OBJECT = FeatureProcessingDefinition(
             ],
         ),
         _uro_vegetation_data_quality_attribute,
-        AttributeGroup(
-            base_element="./uro:vegFacilityIdAttribute/uro:FacilityIdAttribute",
-            attributes=facility_id_attribute_attrs,
-        ),
-        # TODO: uro:vegFacilityTypeAttribute
-        # TODO: uro:vegFacilityAttribute
-        # TODO: uro:vegDmAttribute
     ],
+    dm_attr_container="./uro:vegDmAttribute",
+    facility_attr_paths=FacilityAttributePaths(
+        facility_id="./uro:vegFacilityIdAttribute",
+        facility_types="./uro:vegFacilityTypeAttribute",
+        facility_attrs="./uro:vegFacilityAttribute",
+    ),
     emissions=FeatureEmissions(
-        lod1=FeatureEmission(collect_all=["./veg:lod1Geometry//gml:Polygon"]),
-        lod2=FeatureEmission(collect_all=["./veg:lod2Geometry//gml:Polygon"]),
-        lod3=FeatureEmission(collect_all=["./veg:lod3Geometry//gml:Polygon"]),
+        lod1=FeatureEmission(
+            lod_detection=["./veg:lod1Geometry"],
+            collect_all=["./veg:lod1Geometry//gml:Polygon"],
+        ),
+        lod2=FeatureEmission(
+            lod_detection=["./veg:lod2Geometry"],
+            collect_all=["./veg:lod2Geometry//gml:Polygon"],
+        ),
+        lod3=FeatureEmission(
+            lod_detection=["./veg:lod3Geometry"],
+            collect_all=["./veg:lod3Geometry//gml:Polygon"],
+        ),
     ),
 )
 
 PLANT_COVER = FeatureProcessingDefinition(
     id="PlantCover",
     target_elements=["veg:PlantCover"],
-    lod_detection=LODDetection(
-        lod1=["./veg:lod1MultiSolid", "./veg:lod1MultiSurface"],
-        lod2=["./veg:lod2MultiSolid", "./veg:lod2MultiSurface"],
-        lod3=["./veg:lod3MultiSolid", "./veg:lod3MultiSurface"],
-    ),
     attribute_groups=[
         AttributeGroup(
             base_element=None,
@@ -123,32 +120,34 @@ PLANT_COVER = FeatureProcessingDefinition(
             ],
         ),
         _uro_vegetation_data_quality_attribute,
-        AttributeGroup(
-            base_element="./uro:vegFacilityIdAttribute/uro:FacilityIdAttribute",
-            attributes=facility_id_attribute_attrs,
-        ),
-        # TODO: uro:vegFacilityTypeAttribute
-        # TODO: uro:vegFacilityAttribute
-        # TODO: uro:vegDmAttribute
     ],
+    dm_attr_container="./uro:vegDmAttribute",
+    facility_attr_paths=FacilityAttributePaths(
+        facility_id="./uro:vegFacilityIdAttribute",
+        facility_types="./uro:vegFacilityTypeAttribute",
+        facility_attrs="./uro:vegFacilityAttribute",
+    ),
     emissions=FeatureEmissions(
         lod1=FeatureEmission(
+            lod_detection=["./veg:lod1MultiSolid", "./veg:lod1MultiSurface"],
             collect_all=[
                 "./veg:lod1MultiSolid//gml:Polygon",
                 "./veg:lod1MultiSurface//gml:Polygon",
-            ]
+            ],
         ),
         lod2=FeatureEmission(
+            lod_detection=["./veg:lod2MultiSolid", "./veg:lod2MultiSurface"],
             collect_all=[
                 "./veg:lod1MultiSolid//gml:Polygon",
                 "./veg:lod2MultiSurface//gml:Polygon",
-            ]
+            ],
         ),
         lod3=FeatureEmission(
+            lod_detection=["./veg:lod3MultiSolid", "./veg:lod3MultiSurface"],
             collect_all=[
                 "./veg:lod1MultiSolid//gml:Polygon",
                 "./veg:lod3MultiSurface//gml:Polygon",
-            ]
+            ],
         ),
     ),
 )

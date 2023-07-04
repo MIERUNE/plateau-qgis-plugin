@@ -4,26 +4,19 @@ from .base import (
     FeatureEmission,
     FeatureEmissions,
     FeatureProcessingDefinition,
-    LODDetection,
 )
 
 RELIEF = FeatureProcessingDefinition(
     id="ReliefFeature",
     target_elements=["dem:ReliefFeature"],
-    lod_detection=LODDetection(
-        lod_n="dem:lod",
-    ),
     attribute_groups=[],
     emissions=FeatureEmissions(
-        # NOTE: ひとまず TIN のみに対応する
-        lod1=FeatureEmission(
-            collect_all=["./dem:reliefComponent/dem:TINRelief/dem:tin//gml:Triangle"]
-        ),
-        lod2=FeatureEmission(
-            collect_all=["./dem:reliefComponent/dem:TINRelief/dem:tin//gml:Triangle"]
-        ),
-        lod3=FeatureEmission(
-            collect_all=["./dem:reliefComponent/dem:TINRelief/dem:tin//gml:Triangle"]
+        # TODO: ひとまず TIN のみに対応しているが...
+        lod_n="dem:lod",
+        lod_n_paths=FeatureEmission(
+            lod_detection=[],
+            collect_all=["./dem:reliefComponent/dem:TINRelief/dem:tin//gml:Triangle"],
         ),
     ),
+    dm_attr_container="./uro:demDmAttribute",
 )

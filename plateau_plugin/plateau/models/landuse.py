@@ -3,22 +3,17 @@
 from .base import (
     Attribute,
     AttributeGroup,
+    FacilityAttributePaths,
     FeatureEmission,
     FeatureEmissions,
     FeatureProcessingDefinition,
-    LODDetection,
 )
-from .common import facility_id_attribute_attrs
 
 LAND_USE = FeatureProcessingDefinition(
     id="LandUse",
     target_elements=[
         "luse:LandUse",
     ],
-    lod_detection=LODDetection(
-        lod0=["./luse:lod0MultiSurface"],
-        lod1=["./luse:lod1MultiSurface"],
-    ),
     attribute_groups=[
         AttributeGroup(
             base_element=None,
@@ -148,24 +143,21 @@ LAND_USE = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        AttributeGroup(
-            base_element="./uro:luseFacilityIdAttribute/uro:FacilityIdAttribute",
-            attributes=facility_id_attribute_attrs,
-        ),
-        # TODO: uro:luseFacilityTypeAttribute (入れ子)
-        # TODO: uro:luseFacilityAttribute
-        # TODO: uro:luseDmAttribute (?)
     ],
+    dm_attr_container="./uro:luseDmAttribute",
+    facility_attr_paths=FacilityAttributePaths(
+        facility_id="./uro:luseFacilityIdAttribute",
+        facility_types="./uro:luseFacilityTypeAttribute",
+        facility_attrs="./uro:luseFacilityAttribute",
+    ),
     emissions=FeatureEmissions(
-        lod0=FeatureEmission(
-            collect_all=[
-                "./luse:lod0MultiSurface//gml:Polygon",
-            ]
+        lod0=FeatureEmission(  # NOTE: PLATEAU 2.0 compatibility
+            lod_detection=["./luse:lod0MultiSurface"],
+            collect_all=["./luse:lod0MultiSurface//gml:Polygon"],
         ),
         lod1=FeatureEmission(
-            collect_all=[
-                "./luse:lod1MultiSurface//gml:Polygon",
-            ]
+            lod_detection=["./luse:lod1MultiSurface"],
+            collect_all=["./luse:lod1MultiSurface//gml:Polygon"],
         ),
     ),
 )

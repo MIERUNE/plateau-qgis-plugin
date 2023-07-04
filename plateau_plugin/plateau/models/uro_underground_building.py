@@ -3,10 +3,10 @@
 from .base import (
     Attribute,
     AttributeGroup,
+    FacilityAttributePaths,
     FeatureEmission,
     FeatureEmissions,
     FeatureProcessingDefinition,
-    LODDetection,
 )
 
 UNDERGROUND_BUILDING = FeatureProcessingDefinition(
@@ -17,12 +17,6 @@ UNDERGROUND_BUILDING = FeatureProcessingDefinition(
         "uro2:UndergroundBuilding",
         "uro3:UndergroundBuilding",
     ],
-    lod_detection=LODDetection(
-        lod1=["./bldg:lod1Solid"],
-        lod2=["./bldg:lod2Solid"],
-        lod3=["./bldg:lod3Solid"],
-        lod4=["./bldg:lod4Solid", "./bldg:lod4MultiSurface"],
-    ),
     attribute_groups=[
         AttributeGroup(
             base_element=None,
@@ -425,14 +419,29 @@ UNDERGROUND_BUILDING = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        # TODO: uro:buildingDisasterRiskAttribute (入れ子, polymorpohic)
         # TODO: uro:keyValuePairAttribute
         # TODO: uro:indoorBuildingAttribute
         # (TODO: uro:ifcBuildingAttribute)
     ],
+    disaster_risk_attr_conatiner_path="./uro:buildingDisasterRiskAttribute",
+    dm_attr_container="./uro:bldgDmAttribute",
+    facility_attr_paths=FacilityAttributePaths(
+        facility_id="./uro:bldgFacilityIdAttribute",
+        facility_types="./uro:bldgFacilityTypeAttribute",
+        facility_attrs="./uro:bldgFacilityAttribute",
+        large_customer_facility_attrs="./uro:largeCustomerFacilityAttribute",
+    ),
     emissions=FeatureEmissions(
-        lod1=FeatureEmission(collect_all=[".//bldg:lod1Solid//gml:Polygon"]),
+        lod0=FeatureEmission(
+            lod_detection=["./bldg:lod0RoofEdge"],
+            collect_all=[".//bldg:lod0RoofEdge//gml:Polygon"],
+        ),
+        lod1=FeatureEmission(
+            lod_detection=["./bldg:lod1Solid"],
+            collect_all=[".//bldg:lod1Solid//gml:Polygon"],
+        ),
         lod2=FeatureEmission(
+            lod_detection=["./bldg:lod2Solid"],
             collect_all=[
                 ".//bldg:lod2MultiSurface//gml:Polygon",
                 ".//bldg:lod2Geometry//gml:Polygon",
@@ -440,6 +449,7 @@ UNDERGROUND_BUILDING = FeatureProcessingDefinition(
             only_direct=["./bldg:lod2Solid//gml:Polygon"],
         ),
         lod3=FeatureEmission(
+            lod_detection=["./bldg:lod3Solid"],
             collect_all=[
                 ".//bldg:lod3MultiSurface//gml:Polygon",
                 ".//bldg:lod3Geometry//gml:Polygon",
@@ -448,6 +458,7 @@ UNDERGROUND_BUILDING = FeatureProcessingDefinition(
             only_direct=["./bldg:lod3Solid//gml:Polygon"],
         ),
         lod4=FeatureEmission(
+            lod_detection=["./bldg:lod4Solid", "./bldg:lod4MultiSurface"],
             collect_all=[
                 ".//bldg:lod4MultiSurface//gml:Polygon",
                 ".//bldg:lod4Geometry//gml:Polygon",

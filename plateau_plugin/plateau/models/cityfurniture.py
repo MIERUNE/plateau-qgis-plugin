@@ -3,21 +3,15 @@
 from .base import (
     Attribute,
     AttributeGroup,
+    FacilityAttributePaths,
     FeatureEmission,
     FeatureEmissions,
     FeatureProcessingDefinition,
-    LODDetection,
 )
-from .common import facility_id_attribute_attrs
 
 CITY_FURNITURE = FeatureProcessingDefinition(
     id="CityFurniture",
     target_elements=["frn:CityFurniture"],
-    lod_detection=LODDetection(
-        lod1=["./frn:lod1Geometry"],
-        lod2=["./frn:lod2Geometry"],
-        lod3=["./frn:lod3Geometry"],
-    ),
     load_generic_attributes=True,
     attribute_groups=[
         AttributeGroup(
@@ -93,17 +87,25 @@ CITY_FURNITURE = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        AttributeGroup(
-            base_element="./uro:frnFacilityIdAttribute/uro:FacilityIdAttribute",
-            attributes=facility_id_attribute_attrs,
-        ),
-        # TODO: uro:frnFacilityTypeAttribute
-        # TODO: uro:frnFacilityAttribute
-        # TODO: uro:frnDmAttribute
     ],
+    dm_attr_container="./uro:frnDmAttribute",
+    facility_attr_paths=FacilityAttributePaths(
+        facility_id="./uro:frnFacilityIdAttribute",
+        facility_types="./uro:frnFacilityTypeAttribute",
+        facility_attrs="./uro:frnFacilityAttribute",
+    ),
     emissions=FeatureEmissions(
-        lod1=FeatureEmission(collect_all=["./frn:lod1Geometry//gml:Polygon"]),
-        lod2=FeatureEmission(collect_all=["./frn:lod2Geometry//gml:Polygon"]),
-        lod3=FeatureEmission(collect_all=["./frn:lod3Geometry//gml:Polygon"]),
+        lod1=FeatureEmission(
+            lod_detection=["./frn:lod1Geometry"],
+            collect_all=["./frn:lod1Geometry//gml:Polygon"],
+        ),
+        lod2=FeatureEmission(
+            lod_detection=["./frn:lod2Geometry"],
+            collect_all=["./frn:lod2Geometry//gml:Polygon"],
+        ),
+        lod3=FeatureEmission(
+            lod_detection=["./frn:lod3Geometry"],
+            collect_all=["./frn:lod3Geometry//gml:Polygon"],
+        ),
     ),
 )

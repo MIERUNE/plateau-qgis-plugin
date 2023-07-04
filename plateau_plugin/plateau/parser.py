@@ -1,13 +1,12 @@
-from collections import OrderedDict
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
-from typing import Any, Iterable, Optional
+from typing import Any, Iterable, Optional, Union
 
 import lxml.etree as et
 
 from .codelists import CodelistStore
-from .geometry import parse_multipolygon
+from .geometry import parse_geometry
 from .models import processors
 from .models.base import FeatureProcessingDefinition
 from .namespaces import Namespace
@@ -22,7 +21,7 @@ class ParseSettings:
     """部分要素 (e.g. Road の細分化の TrafficArea) に分けて読み込むかどうか"""
 
     only_highest_lod: bool = False
-    """各地物の最高の LOD だけ出力するかどうか"""
+    """各Featureの最高の LoD だけ出力するかどうか"""
 
 
 class Parser:
@@ -64,11 +63,19 @@ class Parser:
         )
         return (creation_date, termination_date)
 
+    def _get_codelist(
+        self, base_elem: et._Element, codelist: Union[str, dict[str, str], None]
+    ) -> Optional[str]:
+        if codelist is None or isinstance(codelist, str):
+            return codelist
+
+        return codelist[self._ns.to_prefixed_name(base_elem.tag)]
+
     def _load_props(  # noqa: C901
         self, processor: FeatureProcessingDefinition, feature_elem: et._Element
-    ) -> OrderedDict[str, Any]:
+    ) -> dict[str, Any]:
         nsmap = self._nsmap
-        props = OrderedDict()
+        props: dict[str, Any] = {}
         codelist_lookup = self._codelist_store.lookup
 
         if processor.load_generic_attributes:
@@ -90,7 +97,10 @@ class Parser:
                         v = child_elem.text
                         path = child_elem.get("codeSpace")
                         if prop.predefined_codelist or path:
-                            v = codelist_lookup(prop.predefined_codelist, path, v)
+                            pcl = self._get_codelist(
+                                base_elem, prop.predefined_codelist
+                            )
+                            v = codelist_lookup(pcl, path, v)
                         values.append(v)
                     props[prop.name] = values
                 else:
@@ -103,7 +113,10 @@ class Parser:
                         v = str(value)
                         path = child_elem.get("codeSpace")
                         if prop.predefined_codelist or path:
-                            v = codelist_lookup(prop.predefined_codelist, path, v)
+                            pcl = self._get_codelist(
+                                base_elem, prop.predefined_codelist
+                            )
+                            v = codelist_lookup(pcl, path, v)
                         props[prop.name] = v
                     elif prop.datatype == "double":
                         props[prop.name] = float(value)
@@ -162,7 +175,7 @@ class Parser:
     def process_cityobj_element(  # noqa: C901
         self,
         elem: et._Element,
-        parent: Optional[CityObject],  # 祖先地物の Processor
+        parent: Optional[CityObject],  # 祖先Featureの Processor
     ) -> Iterable[CityObject]:
         ns = self._ns
         nsmap = self._nsmap
@@ -178,35 +191,51 @@ class Parser:
         # 属性を収集する
         props = self._load_props(processor, elem)
 
-        # 子地物 (部分要素) を個別に読み込む設定の場合は、子地物を探索する
+        # 親Feature (ジオメトリなし) を用意する
+        nogeom_obj = CityObject(
+            type=ns.to_prefixed_name(elem.tag),
+            id=gml_id,
+            name=gml_name,
+            creation_date=creation_date,
+            termination_date=termination_date,
+            lod=None,
+            geometry=None,
+            attributes=props,
+            processor=processor,
+            parent=parent,
+        )
+        nogeom_emitted = False
+
+        # リスク属性
+        if processor.disaster_risk_attr_conatiner_path:
+            for risk in elem.iterfind(
+                processor.disaster_risk_attr_conatiner_path + "/*", nsmap
+            ):
+                for child_obj in self.process_cityobj_element(risk, nogeom_obj):
+                    if not nogeom_emitted:
+                        yield nogeom_obj
+                        nogeom_emitted = True
+                    yield child_obj
+
+        # 子Feature (部分要素) を個別に読み込む設定の場合は、子Featureを探索する
         if self._settings.load_semantic_parts and processor.emissions.semantic_parts:
-            # 親地物 (ジオメトリなし) を用意する
-            nogeom_obj = CityObject(
-                type=ns.to_prefixed_name(elem.tag),
-                id=gml_id,
-                name=gml_name,
-                creation_date=creation_date,
-                termination_date=termination_date,
-                lod=None,
-                geometry=None,
-                attributes=props,
-                processor=processor,
-                parent=parent,
-            )
-
-            found_child = False
             for path in processor.emissions.semantic_parts:
-                for child_cityobj in elem.iterfind(path, nsmap):
-                    # 子地物の Processor に処理を委ねる
-                    for child in self.process_cityobj_element(
-                        child_cityobj, nogeom_obj
+                for child_elem in elem.iterfind(path, nsmap):
+                    # 子Featureの Processor に処理を委ねる
+                    for child_obj in self.process_cityobj_element(
+                        child_elem, nogeom_obj
                     ):
-                        found_child = True
-                        yield child
+                        if not nogeom_emitted:
+                            yield nogeom_obj
+                            nogeom_emitted = True
+                        yield child_obj
 
-            if found_child:
-                # 親地物 (ジオメトリなし) を出力する
+        # ジオメトリをもたない場合は、ここで終了
+        if processor.non_geometric:
+            if not nogeom_emitted:
                 yield nogeom_obj
+                nogeom_emitted = True
+            return
 
         # ジオメトリを読んで出力する
         emission_for_lods = processor.emission_list
@@ -215,24 +244,21 @@ class Parser:
             if not has_lods[lod]:
                 continue
 
-            emission = emission_for_lods[lod]
+            if processor.emissions.lod_n is not None:
+                emission = processor.emissions.lod_n_paths
+            else:
+                emission = emission_for_lods[lod]
             if emission is None:
                 continue
 
-            # 子地物を読む設定かどうかによって探索方法を変える
+            # 子Featureを読む設定かどうかによってジオメトリの抽出方法を変える
             geom_paths = (
                 emission.only_direct or emission.collect_all
                 if self._settings.load_semantic_parts
                 else emission.collect_all
             )
-            if emission.geometry_loader == "polygons":
-                geom = parse_multipolygon(elem, geom_paths, nsmap)
-            else:
-                raise NotImplementedError(
-                    f"Unknown geometry loader: {emission.geometry_loader}"
-                )
 
-            if geom:
+            if geom := parse_geometry(elem, geom_paths, nsmap):
                 yield CityObject(
                     lod=lod,
                     type=ns.to_prefixed_name(elem.tag),
@@ -247,7 +273,7 @@ class Parser:
                 )
 
             if self._settings.only_highest_lod:
-                # 各地物の最高 LOD だけ出力する設定の場合はここで離脱
+                # 各Featureの最高 LoD だけ出力する設定の場合はここで離脱
                 break
 
 
@@ -262,13 +288,13 @@ class FileParser:
         self._ns = Namespace.from_document_nsmap(self._doc.getroot().nsmap)
 
     def count_toplevel_cityobjs(self) -> int:
-        """ファイルに含まれるトップレベルの地物の数を返す"""
+        """ファイルに含まれるトップレベルのFeatureの数を返す"""
         return sum(
             1 for _ in self._doc.iterfind("./core:cityObjectMember", self._ns.nsmap)
         )
 
     def iter_cityobjs(self) -> Iterable[tuple[int, CityObject]]:
-        """ファイルに含まれる地物の数を返す"""
+        """ファイルに含まれるFeatureの数を返す"""
 
         codelists = CodelistStore(self._base_dir)
         parser = Parser(self._settings, ns=self._ns, codelist_store=codelists)

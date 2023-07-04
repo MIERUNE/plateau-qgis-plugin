@@ -38,7 +38,9 @@ from .geometry import to_qgis_geometry
 from .plateau.parser import FileParser, ParseSettings
 from .plateau.types import (
     CityObject,
-    MultiPolygon,
+    LineStringCollection,
+    PointCollection,
+    PolygonCollection,
     get_geometry_type_name,
     get_table_definition,
 )
@@ -76,14 +78,15 @@ def _convert_to_qt_value(v: Any):
 
 
 class LayerManager:
-    """地物の種類とLODをもとにふさわしい出力先レイヤを返すためのユーティリティ"""
+    """Featureの種類とLoDをもとにふさわしい出力先レイヤを返すためのユーティリティ"""
 
-    def __init__(self):
+    def __init__(self, is3d: bool):
         self._layers: dict[str, QgsVectorLayer] = {}
         self._parent_map: dict[str, str] = {}
+        self._is3d = is3d
 
     def get_layer(self, cityobj: CityObject) -> QgsVectorLayer:
-        """地物の種類とLODをもとにふさわしい出力レイヤを取得する"""
+        """Featureの種類とLoDをもとにふさわしい出力レイヤを取得する"""
 
         layer_id = self._get_layer_id(cityobj)
         if (layer := self._layers.get(layer_id)) is not None:
@@ -92,27 +95,29 @@ class LayerManager:
 
         return self._add_new_layer(layer_id, cityobj)
 
-    def _get_layer_name(self, cityobj: CityObject) -> str:
-        co: Optional[CityObject] = cityobj
-        s = []
-        while co:
-            s.append(co.processor.id)
-            co = co.parent
-        name = " / ".join(s)
-        if cityobj.lod is not None:
-            name += f" (LOD{cityobj.lod})"
-        return name
-
     def _get_layer_id(self, cityobj: CityObject) -> str:
         co: Optional[CityObject] = cityobj
         s = []
         while co:
             s.append(co.processor.id)
             co = co.parent
-        name = " / ".join(s)
+        name = " / ".join(reversed(s))
         if cityobj.lod is not None:
             assert cityobj.geometry is not None
-            name += f" (LOD{cityobj.lod}) {get_geometry_type_name(cityobj.geometry)}"
+            name += (
+                f":LoD={cityobj.lod}):type={get_geometry_type_name(cityobj.geometry)}"
+            )
+        return name
+
+    def _get_layer_name(self, cityobj: CityObject) -> str:
+        co: Optional[CityObject] = cityobj
+        s = []
+        while co:
+            s.append(co.processor.id)
+            co = co.parent
+        name = " / ".join(reversed(s))
+        if cityobj.lod is not None:
+            name += f" (LoD{cityobj.lod})"
         return name
 
     def _add_new_layer(self, layer_id: str, cityobj: CityObject) -> QgsVectorLayer:
@@ -141,8 +146,13 @@ class LayerManager:
             attributes.append(QgsField(field.name, _TYPE_TO_QT_TYPE[field.datatype]))
 
         # make a new layer
-        if isinstance(cityobj.geometry, MultiPolygon):
-            layer_path = "MultiPolygonZ?crs=epsg:6697"
+        _z_suffix = "Z" if self._is3d else ""
+        if isinstance(cityobj.geometry, PolygonCollection):
+            layer_path = f"MultiPolygon{_z_suffix}?crs=epsg:6697"
+        elif isinstance(cityobj.geometry, LineStringCollection):
+            layer_path = f"MultiLineString{_z_suffix}?crs=epsg:6697"
+        elif isinstance(cityobj.geometry, PointCollection):
+            layer_path = f"MultiPoint{_z_suffix}?crs=epsg:6697"
         elif cityobj.geometry is None:
             layer_path = "NoGeometry"
         else:
@@ -158,7 +168,7 @@ class LayerManager:
         self._layers[layer_id] = layer
         return layer
 
-    def add_to_project(self, feedback):
+    def add_to_project(self):
         """レイヤをプロジェクトに追加する"""
         for layer in self._layers.values():
             layer.updateFields()
@@ -166,14 +176,13 @@ class LayerManager:
         # グループを作る?
         # QgsProject.instance().addMapLayers(layers.layers(), False)
         # group = QgsProject.instance().layerTreeRoot().addGroup(Path(filename).stem)
-        self._make_joins(feedback)
+        self._make_joins()
 
-    def _make_joins(self, feedback):
-        """子地物->親地物のテーブル結合を生成する"""
+    def _make_joins(self):
+        """子Feature->親Featureのテーブル結合を生成する"""
         for layer_id, parent_id in self._parent_map.items():
             layer = self._layers.get(layer_id)
             parent_layer = self._layers.get(parent_id)
-            feedback.pushInfo(f"Joining {layer} to {parent_layer}")
             if layer is None or parent_layer is None:
                 continue
             join = QgsVectorLayerJoinInfo()
@@ -189,8 +198,9 @@ class PlateauProcessingAlrogithm(QgsProcessingAlgorithm):
     """Processing algorithm for loading PLATEAU 3D City models into QGIS"""
 
     INPUT = "INPUT"
-    ONLY_HIGHEST_LOD = "ONLY_HIGHEST_LOD"
+    ONLY_HIGHEST_LOD = "ONLY_HIGHEST_LoD"
     LOAD_SEMANTIC_PARTS = "LOAD_SEMANTIC_PARTS"
+    FORCE_2D = "FORCE_2D"
 
     def tr(self, string: str):
         return QCoreApplication.translate("Processing", string)
@@ -206,14 +216,21 @@ class PlateauProcessingAlrogithm(QgsProcessingAlgorithm):
         self.addParameter(
             QgsProcessingParameterBoolean(
                 self.ONLY_HIGHEST_LOD,
-                self.tr("各地物の最高 LOD のみを読み込む"),
+                self.tr("各地物の最高 LoD のみを読み込む"),
                 defaultValue=True,
             )
         )
         self.addParameter(
             QgsProcessingParameterBoolean(
                 self.LOAD_SEMANTIC_PARTS,
-                self.tr("部分要素に分けて読み込む"),
+                self.tr("意味的子要素に分けて読み込む"),
+                defaultValue=False,
+            )
+        )
+        self.addParameter(
+            QgsProcessingParameterBoolean(
+                self.FORCE_2D,
+                self.tr("2次元データとして読み込む"),
                 defaultValue=False,
             )
         )
@@ -258,13 +275,13 @@ class PlateauProcessingAlrogithm(QgsProcessingAlgorithm):
         return FileParser(filename, settings)
 
     def processAlgorithm(self, parameters, context, feedback):
-        # Prepare field definition
-        layers = LayerManager()
+        is3d = not self.parameterAsBoolean(parameters, self.FORCE_2D, context)
+        layers = LayerManager(is3d=is3d)
 
         parser = self._make_parser(parameters, context)
         total_count = parser.count_toplevel_cityobjs()
-        feedback.pushInfo(f"{total_count}個のトップレベル地物が含まれています。")
-        feedback.pushInfo("地物を読み込んでいます...")
+        feedback.pushInfo(f"{total_count}個のトップレベル都市オブジェクトが含まれています。")
+        feedback.pushInfo("都市オブジェクトを読み込んでいます...")
         top_level_count = 0
         count = 0
 
@@ -290,7 +307,7 @@ class PlateauProcessingAlrogithm(QgsProcessingAlgorithm):
                 QDate(cityobj.creation_date) if cityobj.termination_date else None,  # type: ignore
             )
             if cityobj.parent:
-                # 親地物と結合 (join) できるように親地物の ID を持たせる
+                # 親Featureと結合 (join) できるように親Featureの ID を持たせる
                 feature.setAttribute("parent", cityobj.parent.id)
 
             for name, value in cityobj.attributes.items():
@@ -298,7 +315,7 @@ class PlateauProcessingAlrogithm(QgsProcessingAlgorithm):
 
             # Set geometry
             if cityobj.geometry:
-                feature.setGeometry(to_qgis_geometry(cityobj.geometry))
+                feature.setGeometry(to_qgis_geometry(cityobj.geometry, is3d=is3d))
 
             provider.addFeature(feature)
             count += 1
@@ -307,6 +324,6 @@ class PlateauProcessingAlrogithm(QgsProcessingAlgorithm):
                 feedback.pushInfo(f"{count} 個の地物を読み込みました。")
 
         feedback.pushInfo(f"{count} 個の地物を読み込みました。")
-        layers.add_to_project(feedback)
+        layers.add_to_project()
 
         return {}

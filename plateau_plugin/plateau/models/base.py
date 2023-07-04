@@ -1,7 +1,7 @@
 import re
 from dataclasses import dataclass
 from functools import cached_property
-from typing import Iterable, Iterator, Literal, Optional, Sequence
+from typing import Iterable, Iterator, Literal, Optional, Sequence, Union
 
 import lxml.etree as et
 
@@ -21,31 +21,19 @@ PropertyDatatype = Literal[
 
 
 @dataclass
-class LODDetection:
-    """各LODの存在を判定するための XML Paths を列挙する"""
-
-    lod0: Optional[list[str]] = None
-    lod1: Optional[list[str]] = None
-    lod2: Optional[list[str]] = None
-    lod3: Optional[list[str]] = None
-    lod4: Optional[list[str]] = None
-    lod_n: Optional[str] = None
-
-
-@dataclass
 class FeatureEmission:
-    collect_all: list[str]
-    """この地物の階層下にある全ジオメトリを収集するための element path (部分要素に分けずに読み込む場合に使う) """
+    lod_detection: Sequence[str]
+
+    collect_all: Sequence[str]
+    """このFeatureの階層下にある全ジオメトリを収集するための element path (部分要素に分けずに読み込む場合に使う) """
 
     only_direct: Optional[list[str]] = None
-    """この地物の直下にあるジオメトリを収集するための element path"""
-
-    geometry_loader: Literal["polygons"] = "polygons"
+    """このFeatureの直下にあるジオメトリを収集するための element path"""
 
 
 @dataclass
 class FeatureEmissions:
-    """地物の出力について記述する"""
+    """Featureの出力について記述する"""
 
     lod0: Optional[FeatureEmission] = None
     lod1: Optional[FeatureEmission] = None
@@ -53,8 +41,11 @@ class FeatureEmissions:
     lod3: Optional[FeatureEmission] = None
     lod4: Optional[FeatureEmission] = None
 
+    lod_n: Optional[str] = None
+    lod_n_paths: Optional[FeatureEmission] = None
+
     semantic_parts: Optional[list[str]] = None
-    """子地物への element paths"""
+    """子Featureへの element paths"""
 
 
 @dataclass
@@ -62,7 +53,7 @@ class Attribute:
     name: str
     path: str
     datatype: PropertyDatatype
-    predefined_codelist: Optional[str] = None
+    predefined_codelist: Optional[Union[str, dict[str, str]]] = None
 
 
 @dataclass
@@ -70,24 +61,29 @@ class AttributeGroup:
     """属性抽出をグルーピングする"""
 
     base_element: Optional[str]
-    """属性抽出の起点とするXML要素への element path。None の場合はこの地物自体を起点とする。"""
+    """属性抽出の起点とするXML要素への element path。None の場合はこのFeature自体を起点とする。"""
 
     attributes: Sequence[Attribute]
     # mode: Literal["flatten", "map"] = "flatten"
 
 
 @dataclass
+class FacilityAttributePaths:
+    facility_types: str
+    facility_id: str
+    facility_attrs: str
+    large_customer_facility_attrs: Optional[str] = None
+
+
+@dataclass
 class FeatureProcessingDefinition:
-    """各地物の処理方法を定める"""
+    """各 Feature の処理方法を定める"""
 
     id: str
     """このProcessorのID"""
 
     target_elements: list[str]
-    """処理対象とする地物要素 (e.g. "tran:Road", "tran:TrafficArea", "bldg:WallSurface")"""
-
-    lod_detection: LODDetection
-    """各 LOD の有無を判定するための element paths"""
+    """処理対象とするFeature要素 (e.g. "tran:Road", "tran:TrafficArea", "bldg:WallSurface")"""
 
     attribute_groups: list[AttributeGroup]
     """取得したい属性の定義"""
@@ -96,38 +92,50 @@ class FeatureProcessingDefinition:
     """ジオメトリの抽出についての定義"""
 
     load_generic_attributes: bool = False
-    """gen:stringAttribute などの汎用属性を読み込むかどうか"""
+    """汎用属性 (gen:stringAttribute など) を読み込むかどうか"""
+
+    dm_attr_container: Optional[str] = None
+    """公共測量標準図式 uro:DmAttribute を包含する要素 (e.g. bldg:bldgDmAttribute) への element path"""
+
+    facility_attr_paths: Optional[FacilityAttributePaths] = None
+    """施設管理の応用スキーマ関連の属性へのpath"""
+
+    disaster_risk_attr_conatiner_path: Optional[str] = None
+    """災害リスク属性 uro:(Building)DisasterRiskAttribute を包含する要素への element path"""
+
+    non_geometric: bool = False
+    """ジオメトリを持たない Feature であるかどうか"""
 
     def detect_lods(self, elem: et._Element, nsmap: dict[str, str]) -> tuple[bool, ...]:
         """
-        どの LOD が存在するかを返す。例: LOD1と2のとき → (False, True, True, False, False)
+        どの LoD が存在するかを返す。例: LoD1と2のとき → (False, True, True, False, False)
         """
-        det = self.lod_detection
+        det = self.emissions
         if det.lod_n:
             lod = int(elem.find(det.lod_n, BASE_NS).text)
             return tuple(lod == i for i in range(5))
-        return (
-            bool(det.lod0 and any(elem.find(p, nsmap) is not None for p in det.lod0)),
-            bool(det.lod1 and any(elem.find(p, nsmap) is not None for p in det.lod1)),
-            bool(det.lod2 and any(elem.find(p, nsmap) is not None for p in det.lod2)),
-            bool(det.lod3 and any(elem.find(p, nsmap) is not None for p in det.lod3)),
-            bool(det.lod4 and any(elem.find(p, nsmap) is not None for p in det.lod4)),
-        )
+        else:
+            return tuple(
+                bool(
+                    em
+                    and any(elem.find(p, nsmap) is not None for p in em.lod_detection)
+                )
+                for em in self.emission_list
+            )
 
     @cached_property
     def emission_list(self) -> tuple[Optional[FeatureEmission], ...]:
-        emissions = self.emissions
         return (
-            emissions.lod0,
-            emissions.lod1,
-            emissions.lod2,
-            emissions.lod3,
-            emissions.lod4,
+            self.emissions.lod0,
+            self.emissions.lod1,
+            self.emissions.lod2,
+            self.emissions.lod3,
+            self.emissions.lod4,
         )
 
 
 class ProcessorRegistory:
-    """地物を処理する Processors を登録しておくレジストリ"""
+    """Featureを処理する Processors を登録しておくレジストリ"""
 
     def __init__(
         self, processors: Optional[Iterable[FeatureProcessingDefinition]] = None
@@ -176,10 +184,6 @@ class ProcessorRegistory:
         """XMLの要素名をもとに Processor を取得する"""
         return self._tag_map.get(target_tag)
 
-    def get_processor_by_id(self, _id: str) -> FeatureProcessingDefinition:
-        """Processor の id をもとに Processor を取得する"""
-        return self._id_map[_id]
-
     def validate_processors(self):
         from pathlib import Path
 
@@ -191,4 +195,8 @@ class ProcessorRegistory:
             for group in processor.attribute_groups:
                 for prop in group.attributes:
                     if prop.predefined_codelist:
-                        codelists.get_predefined(prop.predefined_codelist)
+                        if isinstance(prop.predefined_codelist, str):
+                            codelists.get_predefined(prop.predefined_codelist)
+                        else:
+                            for a in prop.predefined_codelist.values():
+                                codelists.get_predefined(a)

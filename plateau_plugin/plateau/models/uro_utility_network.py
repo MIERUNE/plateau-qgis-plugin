@@ -1,6 +1,6 @@
 """地下埋設物モデル (./unf/)
 
-地物の継承関係:
+Featureの継承関係:
 
 - (uro:UtilityNetworkElement)
   - (uro:UtilityNode)
@@ -25,12 +25,11 @@ uro:UtilityNode, uro:UtilityNodeContainer, uro:UtilityLink の3種類に分け�
 from .base import (
     Attribute,
     AttributeGroup,
+    FacilityAttributePaths,
     FeatureEmission,
     FeatureEmissions,
     FeatureProcessingDefinition,
-    LODDetection,
 )
-from .common import facility_id_attribute_attrs
 
 _common_property_groups = [
     AttributeGroup(
@@ -66,7 +65,6 @@ _common_property_groups = [
             ),
         ],
     ),
-    # uro:CityFurnitureDataQualityAttribute
     AttributeGroup(
         base_element="./uro:cityFurnitureDataQualityAttribute/uro:CityFurnitureDataQualityAttribute",
         attributes=[
@@ -117,13 +115,6 @@ _common_property_groups = [
             ),
         ],
     ),
-    AttributeGroup(
-        base_element="./uro:frnFacilityIdAttribute/uro:FacilityIdAttribute",
-        attributes=facility_id_attribute_attrs,
-    ),
-    # TODO: uro:frnFacilityTypeAttribute
-    # TODO: uro:frnFacilityAttribute
-    # TODO: uro:frnDmAttribute
 ]
 
 
@@ -132,11 +123,6 @@ UTILITY_NODE = FeatureProcessingDefinition(
     target_elements=[
         "uro:Appurtenance",
     ],
-    lod_detection=LODDetection(
-        lod1=["./frn:lod1Geometry"],
-        lod2=["./frn:lod2Geometry"],
-        lod3=["./frn:lod3Geometry"],
-    ),
     load_generic_attributes=True,
     attribute_groups=[
         *_common_property_groups,
@@ -162,10 +148,25 @@ UTILITY_NODE = FeatureProcessingDefinition(
             ],
         ),
     ],
+    dm_attr_container="./uro:frnDmAttribute",
+    facility_attr_paths=FacilityAttributePaths(
+        facility_id="./uro:frnFacilityIdAttribute",
+        facility_types="./uro:frnFacilityTypeAttribute",
+        facility_attrs="./uro:frnFacilityAttribute",
+    ),
     emissions=FeatureEmissions(
-        lod1=FeatureEmission(collect_all=["./frn:lod1Geometry//gml:Polygon"]),
-        lod2=FeatureEmission(collect_all=["./frn:lod2Geometry//gml:Polygon"]),
-        lod3=FeatureEmission(collect_all=["./frn:lod3Geometry//gml:Polygon"]),
+        lod1=FeatureEmission(
+            lod_detection=["./frn:lod1Geometry"],
+            collect_all=["./frn:lod1Geometry//gml:Polygon"],
+        ),
+        lod2=FeatureEmission(
+            lod_detection=["./frn:lod2Geometry"],
+            collect_all=["./frn:lod2Geometry//gml:Polygon"],
+        ),
+        lod3=FeatureEmission(
+            lod_detection=["./frn:lod3Geometry"],
+            collect_all=["./frn:lod3Geometry//gml:Polygon"],
+        ),
     ),
 )
 
@@ -175,11 +176,6 @@ UTILITY_NODE_CONTAINER = FeatureProcessingDefinition(
         "uro:Manhole",
         "uro:Handhole",
     ],
-    lod_detection=LODDetection(
-        lod1=["./frn:lod1Geometry"],
-        lod2=["./frn:lod2Geometry"],
-        lod3=["./frn:lod3Geometry"],
-    ),
     load_generic_attributes=True,
     attribute_groups=[
         *_common_property_groups,
@@ -219,10 +215,25 @@ UTILITY_NODE_CONTAINER = FeatureProcessingDefinition(
             ],
         ),
     ],
+    dm_attr_container="./uro:frnDmAttribute",
+    facility_attr_paths=FacilityAttributePaths(
+        facility_id="./uro:frnFacilityIdAttribute",
+        facility_types="./uro:frnFacilityTypeAttribute",
+        facility_attrs="./uro:frnFacilityAttribute",
+    ),
     emissions=FeatureEmissions(
-        lod1=FeatureEmission(collect_all=["./frn:lod1Geometry//gml:Polygon"]),
-        lod2=FeatureEmission(collect_all=["./frn:lod2Geometry//gml:Polygon"]),
-        lod3=FeatureEmission(collect_all=["./frn:lod3Geometry//gml:Polygon"]),
+        lod1=FeatureEmission(
+            lod_detection=["./frn:lod1Geometry"],
+            collect_all=["./frn:lod1Geometry//gml:Polygon"],
+        ),
+        lod2=FeatureEmission(
+            lod_detection=["./frn:lod2Geometry"],
+            collect_all=["./frn:lod2Geometry//gml:Polygon"],
+        ),
+        lod3=FeatureEmission(
+            lod_detection=["./frn:lod3Geometry"],
+            collect_all=["./frn:lod3Geometry//gml:Polygon"],
+        ),
     ),
 )
 
@@ -239,11 +250,6 @@ UTILITY_LINK = FeatureProcessingDefinition(
         "uro:TelecommunicationsCable",
         "uro:ElectricityCable",
     ],
-    lod_detection=LODDetection(
-        lod1=["./frn:lod1Geometry"],
-        lod2=["./frn:lod2Geometry"],
-        lod3=["./frn:lod3Geometry"],
-    ),
     load_generic_attributes=True,
     attribute_groups=[
         *_common_property_groups,
@@ -340,9 +346,24 @@ UTILITY_LINK = FeatureProcessingDefinition(
             ],
         ),
     ],
+    dm_attr_container="./uro:frnDmAttribute",
+    facility_attr_paths=FacilityAttributePaths(
+        facility_id="./uro:frnFacilityIdAttribute",
+        facility_types="./uro:frnFacilityTypeAttribute",
+        facility_attrs="./uro:frnFacilityAttribute",
+    ),
     emissions=FeatureEmissions(
-        lod1=FeatureEmission(collect_all=["./frn:lod1Geometry//gml:Polygon"]),
-        lod2=FeatureEmission(collect_all=["./frn:lod2Geometry//gml:Polygon"]),
-        lod3=FeatureEmission(collect_all=["./frn:lod3Geometry//gml:Polygon"]),
+        lod1=FeatureEmission(
+            lod_detection=["./frn:lod1Geometry"],
+            collect_all=["./frn:lod1Geometry//gml:Polygon"],
+        ),
+        lod2=FeatureEmission(
+            lod_detection=["./frn:lod2Geometry"],
+            collect_all=["./frn:lod2Geometry//gml:Polygon"],
+        ),
+        lod3=FeatureEmission(
+            lod_detection=["./frn:lod3Geometry"],
+            collect_all=["./frn:lod3Geometry//gml:Polygon"],
+        ),
     ),
 )

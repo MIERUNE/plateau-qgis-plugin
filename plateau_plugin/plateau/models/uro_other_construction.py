@@ -3,12 +3,11 @@
 from .base import (
     Attribute,
     AttributeGroup,
+    FacilityAttributePaths,
     FeatureEmission,
     FeatureEmissions,
     FeatureProcessingDefinition,
-    LODDetection,
 )
-from .common import river_facility_id_attribute_attrs
 
 _construction_structure_attribute_attrs = [
     Attribute(
@@ -69,11 +68,6 @@ _construction_structure_attribute_attrs = [
 OTHER_CONSTRUCTION = FeatureProcessingDefinition(
     id="OtherConstruction",
     target_elements=["uro:OtherConstruction"],
-    lod_detection=LODDetection(
-        lod1=["./uro:lod1Geometry"],
-        lod2=["./uro:lod2Geometry"],
-        lod3=["./uro:lod3Geometry"],
-    ),
     attribute_groups=[
         AttributeGroup(
             base_element=None,
@@ -244,10 +238,6 @@ OTHER_CONSTRUCTION = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        AttributeGroup(
-            base_element="./uro:consFacilityIdAttribute/uro:RiverFacilityIdAttribute",
-            attributes=river_facility_id_attribute_attrs,
-        ),
         # TODO: 入れ子データ
         # Property(
         #    name="elevation",
@@ -259,25 +249,28 @@ OTHER_CONSTRUCTION = FeatureProcessingDefinition(
         #    path="./uro:height",
         #    datatype="[]uro:HeightPropertyType",
         # ),
-        # Property(
-        #    name="consFacilityAttribute",
-        #    path="./uro:consFacilityAttribute",
-        #    datatype="[]uro:FacilityAttributePropertyType",
-        # ),
-        # Property(
-        #    name="consFacilityTypeAttribute",
-        #    path="./uro:consFacilityTypeAttribute",
-        #    datatype="[]uro:FacilityTypeAttributePropertyType",
-        # ),
-        # Property(
-        #    name="consDmAttribute",
-        #    path="./uro:consDmAttribute",
-        #    datatype="[]uro:DmAttributePropertyType",
-        # ),
     ],
+    dm_attr_container="./uro:consDmAttribute",
+    facility_attr_paths=FacilityAttributePaths(
+        facility_id="./uro:consFacilityIdAttribute",
+        facility_types="./uro:consFacilityTypeAttribute",
+        facility_attrs="./uro:consFacilityAttribute",
+    ),
     emissions=FeatureEmissions(
-        lod1=FeatureEmission(collect_all=["./uro:lod1Solid//gml:Polygon"]),
+        lod0=FeatureEmission(
+            lod_detection=["./uro:lod0Geometry"],
+            collect_all=[
+                "./uro:lod0Geometry//gml:LineString",
+                "./uro:lod0Geometry//gml:Point",
+                "./uro:lod0Geometry//gml:Polygon",
+            ],
+        ),
+        lod1=FeatureEmission(
+            lod_detection=["./uro:lod1Geometry"],
+            collect_all=["./uro:lod1Geometry//gml:Polygon"],
+        ),
         lod2=FeatureEmission(
+            lod_detection=["./uro:lod2Geometry"],
             collect_all=[
                 ".//uro:lod2MultiSurface//gml:Polygon",
                 ".//uro:lod2Geometry//gml:Polygon",
@@ -288,6 +281,7 @@ OTHER_CONSTRUCTION = FeatureProcessingDefinition(
             ],
         ),
         lod3=FeatureEmission(
+            lod_detection=["./uro:lod3Geometry"],
             collect_all=[
                 ".//uro:lod3MultiSurface//gml:Polygon",
                 ".//uro:lod3Geometry//gml:Polygon",
@@ -320,29 +314,27 @@ OTHER_CONSTRUCTION_BOUNDARY_SURFACE = FeatureProcessingDefinition(
         "uro:ClosureSurface",
     ],
     attribute_groups=[],
-    lod_detection=LODDetection(
-        lod2=["./uro:lod2MultiSurface"],
-        lod3=["./uro:lod3MultiSurface"],
-        lod4=["./uro:lod4MultiSurface"],
-    ),
     emissions=FeatureEmissions(
         lod2=FeatureEmission(
+            lod_detection=["./uro:lod2MultiSurface"],
             collect_all=[
                 ".//uro:lod2MultiSurface//gml:Polygon",
                 ".//uro:lod2Geometry//gml:Polygon",
-            ]
+            ],
         ),
         lod3=FeatureEmission(
+            lod_detection=["./uro:lod3MultiSurface"],
             collect_all=[
                 ".//uro:lod3MultiSurface//gml:Polygon",
                 ".//uro:lod3Geometry//gml:Polygon",
-            ]
+            ],
         ),
         lod4=FeatureEmission(
+            lod_detection=["./uro:lod4MultiSurface"],
             collect_all=[
                 ".//uro:lod4MultiSurface//gml:Polygon",
                 ".//uro:lod4Geometry//gml:Polygon",
-            ]
+            ],
         ),
     ),
 )
@@ -373,14 +365,18 @@ OTHER_CONSTRUCTION_INSTALLATION = FeatureProcessingDefinition(
             ],
         )
     ],
-    lod_detection=LODDetection(
-        lod2=["./uro:lod2Geometry"],
-        lod3=["./uro:lod3Geometry"],
-        lod4=["./uro:lod4Geometry"],
-    ),
     emissions=FeatureEmissions(
-        lod2=FeatureEmission(collect_all=[".//uro:lod2Geometry//gml:Polygon"]),
-        lod3=FeatureEmission(collect_all=[".//uro:lod3Geometry//gml:Polygon"]),
-        lod4=FeatureEmission(collect_all=[".//uro:lod4Geometry//gml:Polygon"]),
+        lod2=FeatureEmission(
+            lod_detection=["./uro:lod2Geometry"],
+            collect_all=[".//uro:lod2Geometry//gml:Polygon"],
+        ),
+        lod3=FeatureEmission(
+            lod_detection=["./uro:lod3Geometry"],
+            collect_all=[".//uro:lod3Geometry//gml:Polygon"],
+        ),
+        lod4=FeatureEmission(
+            lod_detection=["./uro:lod4Geometry"],
+            collect_all=[".//uro:lod4Geometry//gml:Polygon"],
+        ),
     ),
 )

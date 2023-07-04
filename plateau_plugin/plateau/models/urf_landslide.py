@@ -6,7 +6,6 @@ from .base import (
     FeatureEmission,
     FeatureEmissions,
     FeatureProcessingDefinition,
-    LODDetection,
 )
 
 URF_SEDIMENT_DISASTER_PRONE_AREA = FeatureProcessingDefinition(
@@ -17,9 +16,6 @@ URF_SEDIMENT_DISASTER_PRONE_AREA = FeatureProcessingDefinition(
         "urf2:SedimentDisasterProneArea",
         "urf3:SedimentDisasterProneArea",
     ],
-    lod_detection=LODDetection(
-        lod1=["./urf:lod1MultiSurface"],
-    ),
     load_generic_attributes=True,
     attribute_groups=[
         AttributeGroup(
@@ -80,9 +76,10 @@ URF_SEDIMENT_DISASTER_PRONE_AREA = FeatureProcessingDefinition(
     ],
     emissions=FeatureEmissions(
         lod1=FeatureEmission(
+            lod_detection=["./urf:lod1MultiSurface"],
             collect_all=[
                 "./urf:lod1MultiSurface//gml:Polygon",
-            ]
+            ],
         ),
     ),
 )
