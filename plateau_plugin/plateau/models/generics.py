@@ -3,9 +3,9 @@
 from .base import (
     Attribute,
     AttributeGroup,
-    FeatureEmission,
-    FeatureEmissions,
     FeatureProcessingDefinition,
+    GeometricAttribute,
+    GeometricAttributes,
 )
 
 GENERIC_CITY_OBJECT = FeatureProcessingDefinition(
@@ -34,8 +34,8 @@ GENERIC_CITY_OBJECT = FeatureProcessingDefinition(
             ],
         )
     ],
-    emissions=FeatureEmissions(
-        lod0=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
             lod_detection=["./gen:lod0Geometry"],
             collect_all=[
                 "./gen:lod0Geometry//gml:Polygon",
@@ -43,15 +43,15 @@ GENERIC_CITY_OBJECT = FeatureProcessingDefinition(
                 # TODO: Point ?
             ],
         ),
-        lod1=FeatureEmission(
+        lod1=GeometricAttribute(
             lod_detection=["./gen:lod0Geometry"],
             collect_all=["./gen:lod0Geometry//gml:Polygon"],
         ),
-        lod2=FeatureEmission(
+        lod2=GeometricAttribute(
             lod_detection=["./gen:lod0Geometry"],
             collect_all=["./gen:lod0Geometry//gml:Polygon"],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./gen:lod0Geometry"],
             collect_all=["./gen:lod0Geometry//gml:Polygon"],
         ),

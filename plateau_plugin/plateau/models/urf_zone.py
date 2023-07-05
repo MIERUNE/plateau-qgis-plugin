@@ -3,9 +3,9 @@
 from .base import (
     Attribute,
     AttributeGroup,
-    FeatureEmission,
-    FeatureEmissions,
     FeatureProcessingDefinition,
+    GeometricAttribute,
+    GeometricAttributes,
 )
 
 # urf:Zone の属性
@@ -182,12 +182,12 @@ URF_URBAN_PLANNING_AREA = FeatureProcessingDefinition(
             ],
         ),
     ],
-    emissions=FeatureEmissions(
-        lod0=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
-        lod1=FeatureEmission(
+        lod1=GeometricAttribute(
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),
@@ -226,12 +226,12 @@ URF_QUASI_URBAN_PLANNING_AREA = FeatureProcessingDefinition(
             ],
         ),
     ],
-    emissions=FeatureEmissions(
-        lod0=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
-        lod1=FeatureEmission(
+        lod1=GeometricAttribute(
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),
@@ -260,12 +260,12 @@ URF_AREA_CLASSIFICATION = FeatureProcessingDefinition(
             ],
         ),
     ],
-    emissions=FeatureEmissions(
-        lod0=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
-        lod1=FeatureEmission(
+        lod1=GeometricAttribute(
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),
@@ -455,12 +455,12 @@ URF_DISTRICTS_AND_ZONES = FeatureProcessingDefinition(
             ],
         ),
     ],
-    emissions=FeatureEmissions(
-        lod0=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
-        lod1=FeatureEmission(
+        lod1=GeometricAttribute(
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),
@@ -510,12 +510,12 @@ URF_PROJECT_PROMOTION_AREA = FeatureProcessingDefinition(
             ],
         ),
     ],
-    emissions=FeatureEmissions(
-        lod0=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
-        lod1=FeatureEmission(
+        lod1=GeometricAttribute(
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),
@@ -526,12 +526,12 @@ URF_UNUSED_LAND_USE_PROMOTION_AREA = FeatureProcessingDefinition(
     id="urf:UnusedLandUsePromotionArea",
     target_elements=["urf:UnusedLandUsePromotionArea"],
     attribute_groups=_base_attributes,
-    emissions=FeatureEmissions(
-        lod0=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
-        lod1=FeatureEmission(
+        lod1=GeometricAttribute(
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),
@@ -565,12 +565,12 @@ URF_URBAN_DISASTER_RECOVERY_PROMOTION_AREA = FeatureProcessingDefinition(
             ],
         ),
     ],
-    emissions=FeatureEmissions(
-        lod0=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
-        lod1=FeatureEmission(
+        lod1=GeometricAttribute(
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),
@@ -762,7 +762,7 @@ URF_URBAN_FACILITY = FeatureProcessingDefinition(
                 # Attribute(
                 #    name="threeDimensionalExtent",
                 #    path="./urf:threeDimensionalExtent",
-                #    datatype="[]urf:ThreeDimensionalExtentPropertyType",
+                #    datatype="[]urf:ThreeDimensionalExtentAttributeType",
                 # ),
             ],
         ),
@@ -907,7 +907,7 @@ URF_URBAN_FACILITY = FeatureProcessingDefinition(
                     predefined_codelist="Common_availabilityType",
                 ),
                 # TODO: 入れ子データ
-                # Property(
+                # Attribute(
                 #     name="structuralDetails",
                 #     path="./urf:structuralDetails",
                 #     datatype="[]urf:StructureDetails",
@@ -941,12 +941,12 @@ URF_URBAN_FACILITY = FeatureProcessingDefinition(
             ],
         ),
     ],
-    emissions=FeatureEmissions(
-        lod0=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
-        lod1=FeatureEmission(
+        lod1=GeometricAttribute(
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),
@@ -1085,12 +1085,12 @@ URF_URBAN_DEVELOPMENT_PROJECT = FeatureProcessingDefinition(
             ],
         ),
     ],
-    emissions=FeatureEmissions(
-        lod0=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
-        lod1=FeatureEmission(
+        lod1=GeometricAttribute(
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),
@@ -1127,12 +1127,12 @@ URF_SCHEDULED_AREA_FOR_URBAN_DEVELOPMENT = FeatureProcessingDefinition(
             ],
         ),
     ],
-    emissions=FeatureEmissions(
-        lod0=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
-        lod1=FeatureEmission(
+        lod1=GeometricAttribute(
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),
@@ -1197,12 +1197,12 @@ URF_DISTRICT_PLAN = FeatureProcessingDefinition(
             ],
         ),
     ],
-    emissions=FeatureEmissions(
-        lod0=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
-        lod1=FeatureEmission(
+        lod1=GeometricAttribute(
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),
@@ -1268,12 +1268,12 @@ URF_DISTRICT_DEVELOPMENT_PLAN = FeatureProcessingDefinition(
             ],
         ),
     ],
-    emissions=FeatureEmissions(
-        lod0=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
-        lod1=FeatureEmission(
+        lod1=GeometricAttribute(
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),
@@ -1314,12 +1314,12 @@ URF_DISTRICT_FACILITY = FeatureProcessingDefinition(
             ],
         ),
     ],
-    emissions=FeatureEmissions(
-        lod0=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
-        lod1=FeatureEmission(
+        lod1=GeometricAttribute(
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),
@@ -1343,12 +1343,12 @@ URF_PROMOTION_DISTRICT = FeatureProcessingDefinition(
             ],
         ),
     ],
-    emissions=FeatureEmissions(
-        lod0=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
-        lod1=FeatureEmission(
+        lod1=GeometricAttribute(
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),
@@ -1472,12 +1472,12 @@ URF_DISTRICT = FeatureProcessingDefinition(
             ],
         ),
     ],
-    emissions=FeatureEmissions(
-        lod0=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
-        lod1=FeatureEmission(
+        lod1=GeometricAttribute(
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),

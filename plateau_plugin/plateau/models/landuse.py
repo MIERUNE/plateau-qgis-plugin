@@ -4,9 +4,9 @@ from .base import (
     Attribute,
     AttributeGroup,
     FacilityAttributePaths,
-    FeatureEmission,
-    FeatureEmissions,
     FeatureProcessingDefinition,
+    GeometricAttribute,
+    GeometricAttributes,
 )
 
 LAND_USE = FeatureProcessingDefinition(
@@ -150,12 +150,12 @@ LAND_USE = FeatureProcessingDefinition(
         facility_types="./uro:luseFacilityTypeAttribute",
         facility_attrs="./uro:luseFacilityAttribute",
     ),
-    emissions=FeatureEmissions(
-        lod0=FeatureEmission(  # NOTE: PLATEAU 2.0 compatibility
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(  # NOTE: PLATEAU 2.0 compatibility
             lod_detection=["./luse:lod0MultiSurface"],
             collect_all=["./luse:lod0MultiSurface//gml:Polygon"],
         ),
-        lod1=FeatureEmission(
+        lod1=GeometricAttribute(
             lod_detection=["./luse:lod1MultiSurface"],
             collect_all=["./luse:lod1MultiSurface//gml:Polygon"],
         ),

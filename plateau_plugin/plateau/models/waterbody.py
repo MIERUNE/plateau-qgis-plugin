@@ -4,9 +4,9 @@ from .base import (
     Attribute,
     AttributeGroup,
     FacilityAttributePaths,
-    FeatureEmission,
-    FeatureEmissions,
     FeatureProcessingDefinition,
+    GeometricAttribute,
+    GeometricAttributes,
 )
 
 WATER_BODY = FeatureProcessingDefinition(
@@ -252,21 +252,21 @@ WATER_BODY = FeatureProcessingDefinition(
         facility_types="./uro:wtrFacilityTypeAttribute",
         facility_attrs="./uro:wtrFacilityAttribute",
     ),
-    emissions=FeatureEmissions(
-        lod0=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
             lod_detection=["./wtr:lod0MultiCurve"],
             collect_all=["./wtr:lod0MultiCurve//gml:LineString"],
         ),
-        lod1=FeatureEmission(
+        lod1=GeometricAttribute(
             lod_detection=["./wtr:lod1MultiSurface"],
             collect_all=["./wtr:lod1MultiSurface//gml:Polygon"],
         ),
-        lod2=FeatureEmission(
+        lod2=GeometricAttribute(
             lod_detection=["./wtr:lod2Solid"],
             collect_all=[".//wtr:lod2Surface//gml:Polygon"],
             only_direct=["./wtr:lod2Solid//gml:Polygon"],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./wtr:lod3Solid"],
             collect_all=[".//wtr:lod3Surface//gml:Polygon"],
             only_direct=["./wtr:lod3Solid//gml:Polygon"],
@@ -287,14 +287,14 @@ WATER_BOUNDARY_SURFACE = FeatureProcessingDefinition(
         "wtr:WaterClosureSurface",
     ],
     attribute_groups=[],
-    emissions=FeatureEmissions(
-        lod2=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod2=GeometricAttribute(
             lod_detection=["./wtr:lod2Surface"],
             collect_all=[
                 "./wtr:lod2Surface//gml:Polygon",
             ],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./wtr:lod3Surface"],
             collect_all=[
                 "./wtr:lod3Surface//gml:Polygon",

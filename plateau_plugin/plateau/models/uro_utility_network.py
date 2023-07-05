@@ -26,9 +26,9 @@ from .base import (
     Attribute,
     AttributeGroup,
     FacilityAttributePaths,
-    FeatureEmission,
-    FeatureEmissions,
     FeatureProcessingDefinition,
+    GeometricAttribute,
+    GeometricAttributes,
 )
 
 _common_property_groups = [
@@ -154,16 +154,16 @@ UTILITY_NODE = FeatureProcessingDefinition(
         facility_types="./uro:frnFacilityTypeAttribute",
         facility_attrs="./uro:frnFacilityAttribute",
     ),
-    emissions=FeatureEmissions(
-        lod1=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod1=GeometricAttribute(
             lod_detection=["./frn:lod1Geometry"],
             collect_all=["./frn:lod1Geometry//gml:Polygon"],
         ),
-        lod2=FeatureEmission(
+        lod2=GeometricAttribute(
             lod_detection=["./frn:lod2Geometry"],
             collect_all=["./frn:lod2Geometry//gml:Polygon"],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./frn:lod3Geometry"],
             collect_all=["./frn:lod3Geometry//gml:Polygon"],
         ),
@@ -221,16 +221,16 @@ UTILITY_NODE_CONTAINER = FeatureProcessingDefinition(
         facility_types="./uro:frnFacilityTypeAttribute",
         facility_attrs="./uro:frnFacilityAttribute",
     ),
-    emissions=FeatureEmissions(
-        lod1=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod1=GeometricAttribute(
             lod_detection=["./frn:lod1Geometry"],
             collect_all=["./frn:lod1Geometry//gml:Polygon"],
         ),
-        lod2=FeatureEmission(
+        lod2=GeometricAttribute(
             lod_detection=["./frn:lod2Geometry"],
             collect_all=["./frn:lod2Geometry//gml:Polygon"],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./frn:lod3Geometry"],
             collect_all=["./frn:lod3Geometry//gml:Polygon"],
         ),
@@ -352,16 +352,16 @@ UTILITY_LINK = FeatureProcessingDefinition(
         facility_types="./uro:frnFacilityTypeAttribute",
         facility_attrs="./uro:frnFacilityAttribute",
     ),
-    emissions=FeatureEmissions(
-        lod1=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod1=GeometricAttribute(
             lod_detection=["./frn:lod1Geometry"],
             collect_all=["./frn:lod1Geometry//gml:Polygon"],
         ),
-        lod2=FeatureEmission(
+        lod2=GeometricAttribute(
             lod_detection=["./frn:lod2Geometry"],
             collect_all=["./frn:lod2Geometry//gml:Polygon"],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./frn:lod3Geometry"],
             collect_all=["./frn:lod3Geometry//gml:Polygon"],
         ),

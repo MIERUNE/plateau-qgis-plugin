@@ -7,7 +7,7 @@ import lxml.etree as et
 
 from ..namespaces import BASE_NS
 
-PropertyDatatype = Literal[
+AttributeDatatype = Literal[
     "string",
     "[]string",
     "integer",
@@ -21,7 +21,7 @@ PropertyDatatype = Literal[
 
 
 @dataclass
-class FeatureEmission:
+class GeometricAttribute:
     lod_detection: Sequence[str]
 
     collect_all: Sequence[str]
@@ -32,17 +32,17 @@ class FeatureEmission:
 
 
 @dataclass
-class FeatureEmissions:
+class GeometricAttributes:
     """Featureの出力について記述する"""
 
-    lod0: Optional[FeatureEmission] = None
-    lod1: Optional[FeatureEmission] = None
-    lod2: Optional[FeatureEmission] = None
-    lod3: Optional[FeatureEmission] = None
-    lod4: Optional[FeatureEmission] = None
+    lod0: Optional[GeometricAttribute] = None
+    lod1: Optional[GeometricAttribute] = None
+    lod2: Optional[GeometricAttribute] = None
+    lod3: Optional[GeometricAttribute] = None
+    lod4: Optional[GeometricAttribute] = None
 
     lod_n: Optional[str] = None
-    lod_n_paths: Optional[FeatureEmission] = None
+    lod_n_paths: Optional[GeometricAttribute] = None
 
     semantic_parts: Optional[list[str]] = None
     """子Featureへの element paths"""
@@ -52,7 +52,7 @@ class FeatureEmissions:
 class Attribute:
     name: str
     path: str
-    datatype: PropertyDatatype
+    datatype: AttributeDatatype
     predefined_codelist: Optional[Union[str, dict[str, str]]] = None
 
 
@@ -86,9 +86,9 @@ class FeatureProcessingDefinition:
     """処理対象とするFeature要素 (e.g. "tran:Road", "tran:TrafficArea", "bldg:WallSurface")"""
 
     attribute_groups: list[AttributeGroup]
-    """取得したい属性の定義"""
+    """抽出したい属性の定義"""
 
-    emissions: FeatureEmissions
+    geometries: GeometricAttributes
     """ジオメトリの抽出についての定義"""
 
     load_generic_attributes: bool = False
@@ -98,19 +98,19 @@ class FeatureProcessingDefinition:
     """公共測量標準図式 uro:DmAttribute を包含する要素 (e.g. bldg:bldgDmAttribute) への element path"""
 
     facility_attr_paths: Optional[FacilityAttributePaths] = None
-    """施設管理の応用スキーマ関連の属性へのpath"""
+    """施設管理の応用スキーマ関連の属性への element path"""
 
     disaster_risk_attr_conatiner_path: Optional[str] = None
     """災害リスク属性 uro:(Building)DisasterRiskAttribute を包含する要素への element path"""
 
     non_geometric: bool = False
-    """ジオメトリを持たない Feature であるかどうか"""
+    """ジオメトリを持たない Feature かどうか"""
 
     def detect_lods(self, elem: et._Element, nsmap: dict[str, str]) -> tuple[bool, ...]:
         """
         どの LoD が存在するかを返す。例: LoD1と2のとき → (False, True, True, False, False)
         """
-        det = self.emissions
+        det = self.geometries
         if det.lod_n:
             lod = int(elem.find(det.lod_n, BASE_NS).text)
             return tuple(lod == i for i in range(5))
@@ -124,13 +124,13 @@ class FeatureProcessingDefinition:
             )
 
     @cached_property
-    def emission_list(self) -> tuple[Optional[FeatureEmission], ...]:
+    def emission_list(self) -> tuple[Optional[GeometricAttribute], ...]:
         return (
-            self.emissions.lod0,
-            self.emissions.lod1,
-            self.emissions.lod2,
-            self.emissions.lod3,
-            self.emissions.lod4,
+            self.geometries.lod0,
+            self.geometries.lod1,
+            self.geometries.lod2,
+            self.geometries.lod3,
+            self.geometries.lod4,
         )
 
 

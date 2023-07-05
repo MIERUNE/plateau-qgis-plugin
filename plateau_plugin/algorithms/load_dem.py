@@ -28,6 +28,8 @@ from qgis.core import (
     QgsProcessingUtils,
 )
 
+from ..plateau.namespaces import BASE_NS
+
 _PLY_HEADER_TEMPLATE = """ply
 format binary_little_endian 1.0
 comment crs: GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]
@@ -45,7 +47,7 @@ def convert_citygml_relief_to_ply(src_filename: str, dst_filename: str) -> None:
     index_map = {}
     points = []
     faces = []
-    for pos_list in doc.iterfind(".//{http://www.opengis.net/gml}posList"):
+    for pos_list in doc.iterfind(".//dem:TINRelief//gml:posList", BASE_NS):
         tri_verts = [float(v) for v in pos_list.text.split()]
         tri_indices = [b"\x03"]
         for i in range(0, 3):

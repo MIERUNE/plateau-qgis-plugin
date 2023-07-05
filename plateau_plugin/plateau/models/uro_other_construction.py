@@ -4,9 +4,9 @@ from .base import (
     Attribute,
     AttributeGroup,
     FacilityAttributePaths,
-    FeatureEmission,
-    FeatureEmissions,
     FeatureProcessingDefinition,
+    GeometricAttribute,
+    GeometricAttributes,
 )
 
 _construction_structure_attribute_attrs = [
@@ -239,15 +239,15 @@ OTHER_CONSTRUCTION = FeatureProcessingDefinition(
             ],
         ),
         # TODO: 入れ子データ
-        # Property(
+        # Attribute(
         #    name="elevation",
         #    path="./uro:elevation",
-        #    datatype="[]uro:ElevationPropertyType",
+        #    datatype="[]uro:ElevationAttributeType",
         # ),
-        # Property(
+        # Attribute(
         #    name="height",
         #    path="./uro:height",
-        #    datatype="[]uro:HeightPropertyType",
+        #    datatype="[]uro:HeightAttributeType",
         # ),
     ],
     dm_attr_container_path="./uro:consDmAttribute",
@@ -256,8 +256,8 @@ OTHER_CONSTRUCTION = FeatureProcessingDefinition(
         facility_types="./uro:consFacilityTypeAttribute",
         facility_attrs="./uro:consFacilityAttribute",
     ),
-    emissions=FeatureEmissions(
-        lod0=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
             lod_detection=["./uro:lod0Geometry"],
             collect_all=[
                 "./uro:lod0Geometry//gml:LineString",
@@ -265,11 +265,11 @@ OTHER_CONSTRUCTION = FeatureProcessingDefinition(
                 "./uro:lod0Geometry//gml:Polygon",
             ],
         ),
-        lod1=FeatureEmission(
+        lod1=GeometricAttribute(
             lod_detection=["./uro:lod1Geometry"],
             collect_all=["./uro:lod1Geometry//gml:Polygon"],
         ),
-        lod2=FeatureEmission(
+        lod2=GeometricAttribute(
             lod_detection=["./uro:lod2Geometry"],
             collect_all=[
                 ".//uro:lod2MultiSurface//gml:Polygon",
@@ -280,7 +280,7 @@ OTHER_CONSTRUCTION = FeatureProcessingDefinition(
                 "./uro:lod2Geometry//gml:Polygon",
             ],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./uro:lod3Geometry"],
             collect_all=[
                 ".//uro:lod3MultiSurface//gml:Polygon",
@@ -314,22 +314,22 @@ OTHER_CONSTRUCTION_BOUNDARY_SURFACE = FeatureProcessingDefinition(
         "uro:ClosureSurface",
     ],
     attribute_groups=[],
-    emissions=FeatureEmissions(
-        lod2=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod2=GeometricAttribute(
             lod_detection=["./uro:lod2MultiSurface"],
             collect_all=[
                 ".//uro:lod2MultiSurface//gml:Polygon",
                 ".//uro:lod2Geometry//gml:Polygon",
             ],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./uro:lod3MultiSurface"],
             collect_all=[
                 ".//uro:lod3MultiSurface//gml:Polygon",
                 ".//uro:lod3Geometry//gml:Polygon",
             ],
         ),
-        lod4=FeatureEmission(
+        lod4=GeometricAttribute(
             lod_detection=["./uro:lod4MultiSurface"],
             collect_all=[
                 ".//uro:lod4MultiSurface//gml:Polygon",
@@ -365,16 +365,16 @@ OTHER_CONSTRUCTION_INSTALLATION = FeatureProcessingDefinition(
             ],
         )
     ],
-    emissions=FeatureEmissions(
-        lod2=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod2=GeometricAttribute(
             lod_detection=["./uro:lod2Geometry"],
             collect_all=[".//uro:lod2Geometry//gml:Polygon"],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./uro:lod3Geometry"],
             collect_all=[".//uro:lod3Geometry//gml:Polygon"],
         ),
-        lod4=FeatureEmission(
+        lod4=GeometricAttribute(
             lod_detection=["./uro:lod4Geometry"],
             collect_all=[".//uro:lod4Geometry//gml:Polygon"],
         ),

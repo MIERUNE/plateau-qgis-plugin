@@ -4,7 +4,7 @@ from typing import Any, Literal, Optional, Union
 
 import numpy as np
 
-from .models.base import FeatureProcessingDefinition, PropertyDatatype
+from .models.base import AttributeDatatype, FeatureProcessingDefinition
 
 
 @dataclass
@@ -78,7 +78,7 @@ class FieldDefinition:
     """QGIS 等にテーブルを作る際のフィールド定義"""
 
     name: str
-    datatype: PropertyDatatype
+    datatype: AttributeDatatype
 
 
 @dataclass

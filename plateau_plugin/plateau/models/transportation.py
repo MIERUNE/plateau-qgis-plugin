@@ -4,9 +4,9 @@ from .base import (
     Attribute,
     AttributeGroup,
     FacilityAttributePaths,
-    FeatureEmission,
-    FeatureEmissions,
     FeatureProcessingDefinition,
+    GeometricAttribute,
+    GeometricAttributes,
 )
 
 _transportation_data_quality_attribute = [
@@ -182,22 +182,22 @@ ROAD = FeatureProcessingDefinition(
         facility_types="./uro:tranFacilityTypeAttribute",
         facility_attrs="./uro:tranFacilityAttribute",
     ),
-    emissions=FeatureEmissions(
-        lod0=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
             lod_detection=["./tran:lod0Network"],
             collect_all=["./tran:lod0Network//gml:LineString"],
         ),
-        lod1=FeatureEmission(
+        lod1=GeometricAttribute(
             lod_detection=["./tran:lod1MultiSurface"],
             collect_all=["./tran:lod1MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod1MultiSurface//gml:Polygon"],
         ),
-        lod2=FeatureEmission(
+        lod2=GeometricAttribute(
             lod_detection=["./tran:lod2MultiSurface"],
             collect_all=[".//tran:lod2MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod2MultiSurface//gml:Polygon"],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./tran:lod3MultiSurface"],
             collect_all=[".//tran:lod3MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod3MultiSurface//gml:Polygon"],
@@ -272,22 +272,22 @@ RAILWAY = FeatureProcessingDefinition(
         facility_types="./uro:tranFacilityTypeAttribute",
         facility_attrs="./uro:tranFacilityAttribute",
     ),
-    emissions=FeatureEmissions(
-        lod0=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
             lod_detection=["./tran:lod0Network"],
             collect_all=["./tran:lod0Network//gml:LineString"],
         ),
-        lod1=FeatureEmission(
+        lod1=GeometricAttribute(
             lod_detection=["./tran:lod1MultiSurface"],
             collect_all=["./tran:lod1MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod1MultiSurface//gml:Polygon"],
         ),
-        lod2=FeatureEmission(
+        lod2=GeometricAttribute(
             lod_detection=["./tran:lod2MultiSurface"],
             collect_all=[".//tran:lod2MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod2MultiSurface//gml:Polygon"],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./tran:lod3MultiSurface"],
             collect_all=[".//tran:lod3MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod3MultiSurface//gml:Polygon"],
@@ -374,22 +374,22 @@ TRACK = FeatureProcessingDefinition(
         facility_types="./uro:tranFacilityTypeAttribute",
         facility_attrs="./uro:tranFacilityAttribute",
     ),
-    emissions=FeatureEmissions(
-        lod0=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
             lod_detection=["./tran:lod0Network"],
             collect_all=["./tran:lod0Network//gml:LineString"],
         ),
-        lod1=FeatureEmission(
+        lod1=GeometricAttribute(
             lod_detection=["./tran:lod1MultiSurface"],
             collect_all=["./tran:lod1MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod1MultiSurface//gml:Polygon"],
         ),
-        lod2=FeatureEmission(
+        lod2=GeometricAttribute(
             lod_detection=["./tran:lod2MultiSurface"],
             collect_all=[".//tran:lod2MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod2MultiSurface//gml:Polygon"],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./tran:lod3MultiSurface"],
             collect_all=[".//tran:lod3MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod3MultiSurface//gml:Polygon"],
@@ -584,22 +584,22 @@ SQUARE = FeatureProcessingDefinition(
         facility_types="./uro:tranFacilityTypeAttribute",
         facility_attrs="./uro:tranFacilityAttribute",
     ),
-    emissions=FeatureEmissions(
-        lod0=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
             lod_detection=["./tran:lod0Network"],
             collect_all=["./tran:lod0Network//gml:LineString"],
         ),
-        lod1=FeatureEmission(
+        lod1=GeometricAttribute(
             lod_detection=["./tran:lod1MultiSurface"],
             collect_all=["./tran:lod1MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod1MultiSurface//gml:Polygon"],
         ),
-        lod2=FeatureEmission(
+        lod2=GeometricAttribute(
             lod_detection=["./tran:lod2MultiSurface"],
             collect_all=[".//tran:lod2MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod2MultiSurface//gml:Polygon"],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./tran:lod3MultiSurface"],
             collect_all=[".//tran:lod3MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod3MultiSurface//gml:Polygon"],
@@ -698,22 +698,22 @@ WATERWAY = FeatureProcessingDefinition(
         facility_types="./uro:tranFacilityTypeAttribute",
         facility_attrs="./uro:tranFacilityAttribute",
     ),
-    emissions=FeatureEmissions(
-        lod0=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
             lod_detection=["./tran:lod0Network"],
             collect_all=["./tran:lod0Network//gml:LineString"],
         ),
-        lod1=FeatureEmission(
+        lod1=GeometricAttribute(
             lod_detection=["./tran:lod1MultiSurface"],
             collect_all=["./tran:lod1MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod1MultiSurface//gml:Polygon"],
         ),
-        lod2=FeatureEmission(
+        lod2=GeometricAttribute(
             lod_detection=["./tran:lod2MultiSurface"],
             collect_all=[".//tran:lod2MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod2MultiSurface//gml:Polygon"],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./tran:lod3MultiSurface"],
             collect_all=[".//tran:lod3MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod3MultiSurface//gml:Polygon"],
@@ -800,8 +800,8 @@ TRAFFIC_AREA = FeatureProcessingDefinition(
             ],
         ),
     ],
-    emissions=FeatureEmissions(
-        lod2=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod2=GeometricAttribute(
             lod_detection=[
                 "./tran:lod2MultiSurface",
                 "./uro:railwayTrackAttribute/uro:RailwayTrackAttribute/uro:lod2Network",
@@ -811,7 +811,7 @@ TRAFFIC_AREA = FeatureProcessingDefinition(
                 "./uro:railwayTrackAttribute/uro:RailwayTrackAttribute/uro:lod2Network//gml:LineString",
             ],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=[
                 "./tran:lod3MultiSurface",
                 "./uro:railwayTrackAttribute/uro:RailwayTrackAttribute/uro:lod3Network",

@@ -1,11 +1,11 @@
-"""公共測量標準図式 (DM)"""
+"""公共測量標準図式 (DM) を子Featureとして処理する"""
 
 from .base import (
     Attribute,
     AttributeGroup,
-    FeatureEmission,
-    FeatureEmissions,
     FeatureProcessingDefinition,
+    GeometricAttribute,
+    GeometricAttributes,
 )
 
 DM_GEOMETRIC = FeatureProcessingDefinition(
@@ -29,8 +29,8 @@ DM_GEOMETRIC = FeatureProcessingDefinition(
             ],
         ),
     ],
-    emissions=FeatureEmissions(
-        lod0=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
             lod_detection=["./uro:lod0Geometry"],
             collect_all=[
                 "./uro:lod0Geometry//gml:Polygon",

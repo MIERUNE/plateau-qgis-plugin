@@ -4,9 +4,9 @@ from .base import (
     Attribute,
     AttributeGroup,
     FacilityAttributePaths,
-    FeatureEmission,
-    FeatureEmissions,
     FeatureProcessingDefinition,
+    GeometricAttribute,
+    GeometricAttributes,
 )
 
 UNDERGROUND_BUILDING = FeatureProcessingDefinition(
@@ -48,7 +48,7 @@ UNDERGROUND_BUILDING = FeatureProcessingDefinition(
                     datatype="[]string",  # NOTE: 階数分出現しうる
                     # NOTE: []string でよいかどうか
                 ),
-                # Property(
+                # Attribute(
                 #     name="address",
                 #     path="./bldg:address",
                 #     datatype="string",  # TODO: xAL をどう読むか
@@ -431,16 +431,16 @@ UNDERGROUND_BUILDING = FeatureProcessingDefinition(
         facility_attrs="./uro:bldgFacilityAttribute",
         large_customer_facility_attrs="./uro:largeCustomerFacilityAttribute",
     ),
-    emissions=FeatureEmissions(
-        lod0=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
             lod_detection=["./bldg:lod0RoofEdge"],
             collect_all=[".//bldg:lod0RoofEdge//gml:Polygon"],
         ),
-        lod1=FeatureEmission(
+        lod1=GeometricAttribute(
             lod_detection=["./bldg:lod1Solid"],
             collect_all=[".//bldg:lod1Solid//gml:Polygon"],
         ),
-        lod2=FeatureEmission(
+        lod2=GeometricAttribute(
             lod_detection=["./bldg:lod2Solid"],
             collect_all=[
                 ".//bldg:lod2MultiSurface//gml:Polygon",
@@ -448,7 +448,7 @@ UNDERGROUND_BUILDING = FeatureProcessingDefinition(
             ],
             only_direct=["./bldg:lod2Solid//gml:Polygon"],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./bldg:lod3Solid"],
             collect_all=[
                 ".//bldg:lod3MultiSurface//gml:Polygon",
@@ -457,7 +457,7 @@ UNDERGROUND_BUILDING = FeatureProcessingDefinition(
             ],
             only_direct=["./bldg:lod3Solid//gml:Polygon"],
         ),
-        lod4=FeatureEmission(
+        lod4=GeometricAttribute(
             lod_detection=["./bldg:lod4Solid", "./bldg:lod4MultiSurface"],
             collect_all=[
                 ".//bldg:lod4MultiSurface//gml:Polygon",

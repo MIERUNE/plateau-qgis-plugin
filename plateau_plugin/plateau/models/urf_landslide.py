@@ -3,9 +3,9 @@
 from .base import (
     Attribute,
     AttributeGroup,
-    FeatureEmission,
-    FeatureEmissions,
     FeatureProcessingDefinition,
+    GeometricAttribute,
+    GeometricAttributes,
 )
 
 URF_SEDIMENT_DISASTER_PRONE_AREA = FeatureProcessingDefinition(
@@ -74,8 +74,8 @@ URF_SEDIMENT_DISASTER_PRONE_AREA = FeatureProcessingDefinition(
             ],
         )
     ],
-    emissions=FeatureEmissions(
-        lod1=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod1=GeometricAttribute(
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=[
                 "./urf:lod1MultiSurface//gml:Polygon",

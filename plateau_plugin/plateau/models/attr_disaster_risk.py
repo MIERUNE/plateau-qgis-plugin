@@ -3,8 +3,8 @@
 from .base import (
     Attribute,
     AttributeGroup,
-    FeatureEmissions,
     FeatureProcessingDefinition,
+    GeometricAttributes,
 )
 
 ATTR_DISASTER_RISK_RIVER_FLOODING = FeatureProcessingDefinition(
@@ -68,7 +68,7 @@ ATTR_DISASTER_RISK_RIVER_FLOODING = FeatureProcessingDefinition(
             ],
         )
     ],
-    emissions=FeatureEmissions(),
+    geometries=GeometricAttributes(),
 )
 
 ATTR_DISASTER_RISK_TSUNAMI = FeatureProcessingDefinition(
@@ -109,7 +109,7 @@ ATTR_DISASTER_RISK_TSUNAMI = FeatureProcessingDefinition(
             ],
         )
     ],
-    emissions=FeatureEmissions(),
+    geometries=GeometricAttributes(),
 )
 
 ATTR_DISASTER_RISK_HIGH_TIDE = FeatureProcessingDefinition(
@@ -150,7 +150,7 @@ ATTR_DISASTER_RISK_HIGH_TIDE = FeatureProcessingDefinition(
             ],
         )
     ],
-    emissions=FeatureEmissions(),
+    geometries=GeometricAttributes(),
 )
 
 ATTR_DISASTER_RISK_INLAND_FLOODING = FeatureProcessingDefinition(
@@ -191,7 +191,7 @@ ATTR_DISASTER_RISK_INLAND_FLOODING = FeatureProcessingDefinition(
             ],
         )
     ],
-    emissions=FeatureEmissions(),
+    geometries=GeometricAttributes(),
 )
 
 ATTR_DISASTER_RISK_LAND_SLIDE = FeatureProcessingDefinition(
@@ -226,5 +226,5 @@ ATTR_DISASTER_RISK_LAND_SLIDE = FeatureProcessingDefinition(
             ],
         )
     ],
-    emissions=FeatureEmissions(),
+    geometries=GeometricAttributes(),
 )

@@ -4,9 +4,9 @@ from .base import (
     Attribute,
     AttributeGroup,
     FacilityAttributePaths,
-    FeatureEmission,
-    FeatureEmissions,
     FeatureProcessingDefinition,
+    GeometricAttribute,
+    GeometricAttributes,
 )
 
 BRIDGE = FeatureProcessingDefinition(
@@ -289,12 +289,12 @@ BRIDGE = FeatureProcessingDefinition(
         facility_types="./uro:bridFacilityTypeAttribute",
         facility_attrs="./uro:bridFacilityAttribute",
     ),
-    emissions=FeatureEmissions(
-        lod1=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod1=GeometricAttribute(
             lod_detection=["./brid:lod1Solid"],
             collect_all=["./brid:lod1Solid//gml:Polygon"],
         ),
-        lod2=FeatureEmission(
+        lod2=GeometricAttribute(
             lod_detection=["./brid:lod2Solid", "./brid:lod2MultiSurface"],
             collect_all=[
                 ".//brid:lod2MultiSurface//gml:Polygon",
@@ -305,7 +305,7 @@ BRIDGE = FeatureProcessingDefinition(
                 "./brid:lod2Geometry//gml:Polygon",
             ],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./brid:lod3Solid", "./brid:lod3MultiSurface"],
             collect_all=[
                 ".//brid:lod3MultiSurface//gml:Polygon",
@@ -316,7 +316,7 @@ BRIDGE = FeatureProcessingDefinition(
                 "./brid:lod3Geometry//gml:Polygon",
             ],
         ),
-        lod4=FeatureEmission(
+        lod4=GeometricAttribute(
             lod_detection=["./brid:lod4Solid", "./brid:lod4MultiSurface"],
             collect_all=[
                 ".//brid:lod4MultiSurface//gml:Polygon",
@@ -359,22 +359,22 @@ BRIDGE_BOUNDARY_SURFACE = FeatureProcessingDefinition(
         "brid:FloorSurface",
     ],
     attribute_groups=[],
-    emissions=FeatureEmissions(
-        lod2=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod2=GeometricAttribute(
             lod_detection=["./brid:lod2MultiSurface"],
             collect_all=[
                 ".//brid:lod2MultiSurface//gml:Polygon",
                 ".//brid:lod2Geometry//gml:Polygon",
             ],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./brid:lod3MultiSurface"],
             collect_all=[
                 ".//brid:lod3MultiSurface//gml:Polygon",
                 ".//brid:lod3Geometry//gml:Polygon",
             ],
         ),
-        lod4=FeatureEmission(
+        lod4=GeometricAttribute(
             lod_detection=["./brid:lod4MultiSurface"],
             collect_all=[
                 ".//brid:lod4MultiSurface//gml:Polygon",
@@ -395,12 +395,12 @@ BRIDGE_OPENING = FeatureProcessingDefinition(
         "brid:Door",
     ],
     attribute_groups=[],
-    emissions=FeatureEmissions(
-        lod3=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod3=GeometricAttribute(
             lod_detection=["./brid:lod3MultiSurface"],
             collect_all=[".//brid:lod3MultiSurface//gml:Polygon"],
         ),
-        lod4=FeatureEmission(
+        lod4=GeometricAttribute(
             lod_detection=["./brid:lod4MultiSurface"],
             collect_all=[".//brid:lod4MultiSurface//gml:Polygon"],
         ),
@@ -425,16 +425,16 @@ BRIDGE_CONSTRUCTION_ELEMENT = FeatureProcessingDefinition(
             ],
         )
     ],
-    emissions=FeatureEmissions(
-        lod2=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod2=GeometricAttribute(
             lod_detection=["./brid:lod2Geometry"],
             collect_all=[".//brid:lod2Geometry//gml:Polygon"],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./brid:lod3Geometry"],
             collect_all=[".//brid:lod3Geometry//gml:Polygon"],
         ),
-        lod4=FeatureEmission(
+        lod4=GeometricAttribute(
             lod_detection=["./brid:lod4Geometry"],
             collect_all=[".//brid:lod4Geometry//gml:Polygon"],
         ),
@@ -469,16 +469,16 @@ BRIDGE_INSTALLATION = FeatureProcessingDefinition(
             ],
         )
     ],
-    emissions=FeatureEmissions(
-        lod2=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod2=GeometricAttribute(
             lod_detection=["./brid:lod2Geometry"],
             collect_all=[".//brid:lod2Geometry//gml:Polygon"],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./brid:lod3Geometry"],
             collect_all=[".//brid:lod3Geometry//gml:Polygon"],
         ),
-        lod4=FeatureEmission(
+        lod4=GeometricAttribute(
             lod_detection=["./brid:lod4Geometry"],
             collect_all=[".//brid:lod4Geometry//gml:Polygon"],
         ),
@@ -509,16 +509,16 @@ BRIDGE_INT_INSTALLATION = FeatureProcessingDefinition(
             ],
         )
     ],
-    emissions=FeatureEmissions(
-        lod2=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod2=GeometricAttribute(
             lod_detection=["./brid:lod2Geometry"],
             collect_all=[".//brid:lod2Geometry//gml:Polygon"],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./brid:lod3Geometry"],
             collect_all=[".//brid:lod3Geometry//gml:Polygon"],
         ),
-        lod4=FeatureEmission(
+        lod4=GeometricAttribute(
             lod_detection=["./brid:lod4Geometry"],
             collect_all=[".//brid:lod4Geometry//gml:Polygon"],
         ),
@@ -544,8 +544,8 @@ BRIDGE_FURNITURE = FeatureProcessingDefinition(
             ],
         ),
     ],
-    emissions=FeatureEmissions(
-        lod4=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod4=GeometricAttribute(
             lod_detection=["./brid:lod4Geometry"],
             collect_all=[".//brid:lod4Geometry//gml:Polygon"],
         ),

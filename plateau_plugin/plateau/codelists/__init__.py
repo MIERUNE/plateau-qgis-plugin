@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 from typing import Optional
 
-from lxml import etree as et
+import lxml.etree as et
 
 from ..namespaces import BASE_NS as _NS
 

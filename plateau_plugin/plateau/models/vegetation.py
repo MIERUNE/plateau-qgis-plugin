@@ -4,9 +4,9 @@ from .base import (
     Attribute,
     AttributeGroup,
     FacilityAttributePaths,
-    FeatureEmission,
-    FeatureEmissions,
     FeatureProcessingDefinition,
+    GeometricAttribute,
+    GeometricAttributes,
 )
 
 _uro_vegetation_data_quality_attribute = AttributeGroup(
@@ -83,16 +83,16 @@ SOLITARY_VEGETATION_OBJECT = FeatureProcessingDefinition(
         facility_types="./uro:vegFacilityTypeAttribute",
         facility_attrs="./uro:vegFacilityAttribute",
     ),
-    emissions=FeatureEmissions(
-        lod1=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod1=GeometricAttribute(
             lod_detection=["./veg:lod1Geometry"],
             collect_all=["./veg:lod1Geometry//gml:Polygon"],
         ),
-        lod2=FeatureEmission(
+        lod2=GeometricAttribute(
             lod_detection=["./veg:lod2Geometry"],
             collect_all=["./veg:lod2Geometry//gml:Polygon"],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./veg:lod3Geometry"],
             collect_all=["./veg:lod3Geometry//gml:Polygon"],
         ),
@@ -127,22 +127,22 @@ PLANT_COVER = FeatureProcessingDefinition(
         facility_types="./uro:vegFacilityTypeAttribute",
         facility_attrs="./uro:vegFacilityAttribute",
     ),
-    emissions=FeatureEmissions(
-        lod1=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod1=GeometricAttribute(
             lod_detection=["./veg:lod1MultiSolid", "./veg:lod1MultiSurface"],
             collect_all=[
                 "./veg:lod1MultiSolid//gml:Polygon",
                 "./veg:lod1MultiSurface//gml:Polygon",
             ],
         ),
-        lod2=FeatureEmission(
+        lod2=GeometricAttribute(
             lod_detection=["./veg:lod2MultiSolid", "./veg:lod2MultiSurface"],
             collect_all=[
                 "./veg:lod1MultiSolid//gml:Polygon",
                 "./veg:lod2MultiSurface//gml:Polygon",
             ],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./veg:lod3MultiSolid", "./veg:lod3MultiSurface"],
             collect_all=[
                 "./veg:lod1MultiSolid//gml:Polygon",

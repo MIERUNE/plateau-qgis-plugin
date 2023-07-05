@@ -4,9 +4,9 @@ from .base import (
     Attribute,
     AttributeGroup,
     FacilityAttributePaths,
-    FeatureEmission,
-    FeatureEmissions,
     FeatureProcessingDefinition,
+    GeometricAttribute,
+    GeometricAttributes,
 )
 
 BUILDING = FeatureProcessingDefinition(
@@ -53,7 +53,7 @@ BUILDING = FeatureProcessingDefinition(
                     path="./bldg:storeysBelowGround",
                     datatype="integer",
                 ),
-                # Property(
+                # Attribute(
                 #     name="address",
                 #     path="./bldg:address",
                 #     datatype="string",  # TODO: xAL をどう読むか
@@ -436,19 +436,19 @@ BUILDING = FeatureProcessingDefinition(
         facility_attrs="./uro:bldgFacilityAttribute",
         large_customer_facility_attrs="./uro:largeCustomerFacilityAttribute",
     ),
-    emissions=FeatureEmissions(
-        lod0=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
             lod_detection=["./bldg:lod0RoofEdge", "./bldg:lod0FootPrint"],
             collect_all=[
                 ".//bldg:lod0RoofEdge//gml:Polygon",
                 ".//bldg:lod0FootPrint//gml:Polygon",
             ],
         ),
-        lod1=FeatureEmission(
+        lod1=GeometricAttribute(
             lod_detection=["./bldg:lod1Solid"],
             collect_all=[".//bldg:lod1Solid//gml:Polygon"],
         ),
-        lod2=FeatureEmission(
+        lod2=GeometricAttribute(
             lod_detection=["./bldg:lod2Solid"],
             collect_all=[
                 ".//bldg:lod2MultiSurface//gml:Polygon",
@@ -456,7 +456,7 @@ BUILDING = FeatureProcessingDefinition(
             ],
             only_direct=["./bldg:lod2Solid//gml:Polygon"],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./bldg:lod3Solid"],
             collect_all=[
                 ".//bldg:lod3MultiSurface//gml:Polygon",
@@ -465,7 +465,7 @@ BUILDING = FeatureProcessingDefinition(
             ],
             only_direct=["./bldg:lod3Solid//gml:Polygon"],
         ),
-        lod4=FeatureEmission(
+        lod4=GeometricAttribute(
             lod_detection=["./bldg:lod4Solid", "./bldg:lod4MultiSurface"],
             collect_all=[
                 ".//bldg:lod4MultiSurface//gml:Polygon",
@@ -509,18 +509,18 @@ BUILDING_BOUNDARY_SURFACE = FeatureProcessingDefinition(
         "bldg:FloorSurface",
     ],
     attribute_groups=[],
-    emissions=FeatureEmissions(
-        lod2=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod2=GeometricAttribute(
             lod_detection=["./bldg:lod2MultiSurface"],
             collect_all=[".//bldg:lod2MultiSurface//gml:Polygon"],
             only_direct=["./bldg:lod2MultiSurface//gml:Polygon"],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./bldg:lod3MultiSurface"],
             collect_all=[".//bldg:lod3MultiSurface//gml:Polygon"],
             only_direct=["./bldg:lod3MultiSurface//gml:Polygon"],
         ),
-        lod4=FeatureEmission(
+        lod4=GeometricAttribute(
             lod_detection=["./bldg:lod4MultiSurface"],
             collect_all=[".//bldg:lod4MultiSurface//gml:Polygon"],
             only_direct=["./bldg:lod4MultiSurface//gml:Polygon"],
@@ -541,12 +541,12 @@ BUILDING_OPENING = FeatureProcessingDefinition(
     attribute_groups=[
         # TODO: uro:indoorOpeningAttribute
     ],
-    emissions=FeatureEmissions(
-        lod3=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod3=GeometricAttribute(
             lod_detection=["./bldg:lod3MultiSurface"],
             collect_all=[".//bldg:lod3MultiSurface//gml:Polygon"],
         ),
-        lod4=FeatureEmission(
+        lod4=GeometricAttribute(
             lod_detection=["./bldg:lod4MultiSurface"],
             collect_all=[".//bldg:lod4MultiSurface//gml:Polygon"],
         ),
@@ -577,16 +577,16 @@ BUILDING_INSTALLATION = FeatureProcessingDefinition(
             ],
         )
     ],
-    emissions=FeatureEmissions(
-        lod2=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod2=GeometricAttribute(
             lod_detection=["./bldg:lod2Geometry"],
             collect_all=[".//bldg:lod2Geometry//gml:Polygon"],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./bldg:lod3Geometry"],
             collect_all=[".//bldg:lod3Geometry//gml:Polygon"],
         ),
-        lod4=FeatureEmission(
+        lod4=GeometricAttribute(
             lod_detection=["./bldg:lod4Geometry"],
             collect_all=[".//bldg:lod4Geometry//gml:Polygon"],
         ),
@@ -618,16 +618,16 @@ BUILDING_INT_INSTALLATION = FeatureProcessingDefinition(
         ),
         # TODO: uro:indoorInstallationAttribute
     ],
-    emissions=FeatureEmissions(
-        lod2=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod2=GeometricAttribute(
             lod_detection=["./bldg:lod2Geometry"],
             collect_all=[".//bldg:lod2Geometry//gml:Polygon"],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./bldg:lod3Geometry"],
             collect_all=[".//bldg:lod3Geometry//gml:Polygon"],
         ),
-        lod4=FeatureEmission(
+        lod4=GeometricAttribute(
             lod_detection=["./bldg:lod4Geometry"],
             collect_all=[".//bldg:lod4Geometry//gml:Polygon"],
         ),
@@ -660,8 +660,8 @@ BUILDING_FURNITURE = FeatureProcessingDefinition(
         ),
         # TODO: uro:indoorFurnitureAttribute
     ],
-    emissions=FeatureEmissions(
-        lod4=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod4=GeometricAttribute(
             lod_detection=["./bldg:lod4Geometry"],
             collect_all=[".//bldg:lod4Geometry//gml:Polygon"],
         ),

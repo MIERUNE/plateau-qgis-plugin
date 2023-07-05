@@ -229,8 +229,8 @@ class Parser:
                     yield child_obj
 
         # 子Feature (部分要素) を個別に読み込む設定の場合は、子Featureを探索する
-        if self._settings.load_semantic_parts and processor.emissions.semantic_parts:
-            for path in processor.emissions.semantic_parts:
+        if self._settings.load_semantic_parts and processor.geometries.semantic_parts:
+            for path in processor.geometries.semantic_parts:
                 for child_elem in elem.iterfind(path, nsmap):
                     # 子Featureの Processor に処理を委ねる
                     for child_obj in self.process_cityobj_element(
@@ -255,8 +255,8 @@ class Parser:
             if not has_lods[lod]:
                 continue
 
-            if processor.emissions.lod_n is not None:
-                emission = processor.emissions.lod_n_paths
+            if processor.geometries.lod_n is not None:
+                emission = processor.geometries.lod_n_paths
             else:
                 emission = emission_for_lods[lod]
             if emission is None:

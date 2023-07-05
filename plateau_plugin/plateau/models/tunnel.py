@@ -4,9 +4,9 @@ from .base import (
     Attribute,
     AttributeGroup,
     FacilityAttributePaths,
-    FeatureEmission,
-    FeatureEmissions,
     FeatureProcessingDefinition,
+    GeometricAttribute,
+    GeometricAttributes,
 )
 
 TUNNEL = FeatureProcessingDefinition(
@@ -275,12 +275,12 @@ TUNNEL = FeatureProcessingDefinition(
         facility_types="./uro:tunFacilityTypeAttribute",
         facility_attrs="./uro:tunFacilityAttribute",
     ),
-    emissions=FeatureEmissions(
-        lod1=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod1=GeometricAttribute(
             lod_detection=["./tun:lod1Solid"],
             collect_all=[".//tun:lod1Solid//gml:Polygon"],
         ),
-        lod2=FeatureEmission(
+        lod2=GeometricAttribute(
             lod_detection=["./tun:lod2Solid"],
             collect_all=[
                 ".//tun:lod2MultiSurface//gml:Polygon",
@@ -288,7 +288,7 @@ TUNNEL = FeatureProcessingDefinition(
             ],
             only_direct=["./tun:lod2Solid//gml:Polygon"],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./tun:lod3Solid"],
             collect_all=[
                 ".//tun:lod3MultiSurface//gml:Polygon",
@@ -297,7 +297,7 @@ TUNNEL = FeatureProcessingDefinition(
             ],
             only_direct=["./tun:lod3Solid//gml:Polygon"],
         ),
-        lod4=FeatureEmission(
+        lod4=GeometricAttribute(
             lod_detection=["./tun:lod4Solid", "./tun:lod4MultiSurface"],
             collect_all=[
                 ".//tun:lod4MultiSurface//gml:Polygon",
@@ -341,18 +341,18 @@ TUNNEL_BOUNDARY_SURFACE = FeatureProcessingDefinition(
         "tun:FloorSurface",
     ],
     attribute_groups=[],
-    emissions=FeatureEmissions(
-        lod2=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod2=GeometricAttribute(
             lod_detection=["./tun:lod2MultiSurface"],
             collect_all=[".//tun:lod2MultiSurface//gml:Polygon"],
             only_direct=["./tun:lod2MultiSurface//gml:Polygon"],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./tun:lod3MultiSurface"],
             collect_all=[".//tun:lod3MultiSurface//gml:Polygon"],
             only_direct=["./tun:lod3MultiSurface//gml:Polygon"],
         ),
-        lod4=FeatureEmission(
+        lod4=GeometricAttribute(
             lod_detection=["./tun:lod4MultiSurface"],
             collect_all=[".//tun:lod4MultiSurface//gml:Polygon"],
             only_direct=["./tun:lod4MultiSurface//gml:Polygon"],
@@ -371,12 +371,12 @@ TUNNEL_OPENING = FeatureProcessingDefinition(
         "tun:Door",
     ],
     attribute_groups=[],
-    emissions=FeatureEmissions(
-        lod3=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod3=GeometricAttribute(
             lod_detection=["./tun:lod3MultiSurface"],
             collect_all=[".//tun:lod3MultiSurface//gml:Polygon"],
         ),
-        lod4=FeatureEmission(
+        lod4=GeometricAttribute(
             lod_detection=["./tun:lod4MultiSurface"],
             collect_all=[".//tun:lod4MultiSurface//gml:Polygon"],
         ),
@@ -401,16 +401,16 @@ TUNNEL_INSTALLATION = FeatureProcessingDefinition(
             ],
         )
     ],
-    emissions=FeatureEmissions(
-        lod2=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod2=GeometricAttribute(
             lod_detection=["./tun:lod2Geometry"],
             collect_all=[".//tun:lod2Geometry//gml:Polygon"],
         ),
-        lod3=FeatureEmission(
+        lod3=GeometricAttribute(
             lod_detection=["./tun:lod3Geometry"],
             collect_all=[".//tun:lod3Geometry//gml:Polygon"],
         ),
-        lod4=FeatureEmission(
+        lod4=GeometricAttribute(
             lod_detection=["./tun:lod4Geometry"],
             collect_all=[".//tun:lod4Geometry//gml:Polygon"],
         ),
@@ -435,12 +435,12 @@ TUNNEL_INT_INSTALLATION = FeatureProcessingDefinition(
             ],
         ),
     ],
-    emissions=FeatureEmissions(
-        lod3=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod3=GeometricAttribute(
             lod_detection=["./tun:lod3Geometry"],
             collect_all=[".//tun:lod3Geometry//gml:Polygon"],
         ),
-        lod4=FeatureEmission(
+        lod4=GeometricAttribute(
             lod_detection=["./tun:lod4Geometry"],
             collect_all=[".//tun:lod4Geometry//gml:Polygon"],
         ),
@@ -466,8 +466,8 @@ TUNNEL_FURNITURE = FeatureProcessingDefinition(
             ],
         ),
     ],
-    emissions=FeatureEmissions(
-        lod4=FeatureEmission(
+    geometries=GeometricAttributes(
+        lod4=GeometricAttribute(
             lod_detection=["./tun:lod4Geometry"],
             collect_all=[".//tun:lod4Geometry//gml:Polygon"],
         ),
