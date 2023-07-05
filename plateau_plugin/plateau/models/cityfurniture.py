@@ -36,7 +36,6 @@ CITY_FURNITURE = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        # uro:CityFurnitureDataQualityAttribute
         AttributeGroup(
             base_element="./uro:cityFurnitureDataQualityAttribute/uro:CityFurnitureDataQualityAttribute",
             attributes=[
@@ -88,7 +87,7 @@ CITY_FURNITURE = FeatureProcessingDefinition(
             ],
         ),
     ],
-    dm_attr_container="./uro:frnDmAttribute",
+    dm_attr_container_path="./uro:frnDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
         facility_id="./uro:frnFacilityIdAttribute",
         facility_types="./uro:frnFacilityTypeAttribute",

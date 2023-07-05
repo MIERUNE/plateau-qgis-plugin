@@ -283,7 +283,7 @@ BRIDGE = FeatureProcessingDefinition(
         ),
     ],
     disaster_risk_attr_conatiner_path="./uro:bridDisasterRiskAttribute",
-    dm_attr_container="./uro:bridDmAttribute",
+    dm_attr_container_path="./uro:bridDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
         facility_id="./uro:bridFacilityIdAttribute",
         facility_types="./uro:bridFacilityTypeAttribute",

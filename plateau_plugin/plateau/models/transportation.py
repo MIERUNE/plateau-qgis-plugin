@@ -176,7 +176,7 @@ ROAD = FeatureProcessingDefinition(
             attributes=_transportation_data_quality_attribute,
         ),
     ],
-    dm_attr_container="./uro:tranDmAttribute",
+    dm_attr_container_path="./uro:tranDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
         facility_id="./uro:tranFacilityIdAttribute",
         facility_types="./uro:tranFacilityTypeAttribute",
@@ -266,7 +266,7 @@ RAILWAY = FeatureProcessingDefinition(
             attributes=_transportation_data_quality_attribute,
         ),
     ],
-    dm_attr_container="./uro:tranDmAttribute",
+    dm_attr_container_path="./uro:tranDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
         facility_id="./uro:tranFacilityIdAttribute",
         facility_types="./uro:tranFacilityTypeAttribute",
@@ -368,7 +368,7 @@ TRACK = FeatureProcessingDefinition(
             attributes=_transportation_data_quality_attribute,
         ),
     ],
-    dm_attr_container="./uro:tranDmAttribute",
+    dm_attr_container_path="./uro:tranDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
         facility_id="./uro:tranFacilityIdAttribute",
         facility_types="./uro:tranFacilityTypeAttribute",
@@ -578,7 +578,7 @@ SQUARE = FeatureProcessingDefinition(
             attributes=_transportation_data_quality_attribute,
         ),
     ],
-    dm_attr_container="./uro:tranDmAttribute",
+    dm_attr_container_path="./uro:tranDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
         facility_id="./uro:tranFacilityIdAttribute",
         facility_types="./uro:tranFacilityTypeAttribute",
@@ -822,5 +822,5 @@ TRAFFIC_AREA = FeatureProcessingDefinition(
             ],
         ),
     ),
-    dm_attr_container="./uro:tranDmAttribute",
+    dm_attr_container_path="./uro:tranDmAttribute",
 )

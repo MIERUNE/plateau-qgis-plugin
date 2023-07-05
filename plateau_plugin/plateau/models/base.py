@@ -94,7 +94,7 @@ class FeatureProcessingDefinition:
     load_generic_attributes: bool = False
     """汎用属性 (gen:stringAttribute など) を読み込むかどうか"""
 
-    dm_attr_container: Optional[str] = None
+    dm_attr_container_path: Optional[str] = None
     """公共測量標準図式 uro:DmAttribute を包含する要素 (e.g. bldg:bldgDmAttribute) への element path"""
 
     facility_attr_paths: Optional[FacilityAttributePaths] = None

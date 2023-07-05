@@ -49,7 +49,7 @@ class Parser:
     def _get_basic_dates(
         self, elem: et._Element
     ) -> tuple[Optional[date], Optional[date]]:
-        """core:creationDate (あれば) と core:terminationDate (あれば) を読む"""
+        """基本形な日付 core:creationDate (あれば) と core:terminationDate (あれば) を読む"""
         nsmap = self._nsmap
         creation_date = (
             date.fromisoformat(name_elem.text)
@@ -74,6 +74,7 @@ class Parser:
     def _load_props(  # noqa: C901
         self, processor: FeatureProcessingDefinition, feature_elem: et._Element
     ) -> dict[str, Any]:
+        """属性値を読み込む"""
         nsmap = self._nsmap
         props: dict[str, Any] = {}
         codelist_lookup = self._codelist_store.lookup
@@ -217,6 +218,16 @@ class Parser:
                         nogeom_emitted = True
                     yield child_obj
 
+        # 公共測量標準図式 (DM)
+        if processor.dm_attr_container_path:
+            for dm in elem.iterfind(processor.dm_attr_container_path + "/*", nsmap):
+                for child_obj in self.process_cityobj_element(dm, nogeom_obj):
+                    if not nogeom_emitted:
+                        yield nogeom_obj
+                        nogeom_emitted = True
+                    print(child_obj.geometry)
+                    yield child_obj
+
         # 子Feature (部分要素) を個別に読み込む設定の場合は、子Featureを探索する
         if self._settings.load_semantic_parts and processor.emissions.semantic_parts:
             for path in processor.emissions.semantic_parts:
@@ -284,7 +295,7 @@ class FileParser:
         self._settings = settings
 
         # ドキュメントで使われている i-UR のバージョンを検出して
-        # uro: と urf: 接頭辞が指すXML名前空間を自動で決定する
+        # uro: と urf: 接頭辞が指すべきXML名前空間を自動で決定する
         self._ns = Namespace.from_document_nsmap(self._doc.getroot().nsmap)
 
     def count_toplevel_cityobjs(self) -> int:

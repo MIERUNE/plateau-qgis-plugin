@@ -269,7 +269,7 @@ TUNNEL = FeatureProcessingDefinition(
         ),
     ],
     disaster_risk_attr_conatiner_path="./uro:tunDisasterRiskAttribute",
-    dm_attr_container="./uro:tunDmAttribute",
+    dm_attr_container_path="./uro:tunDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
         facility_id="./uro:tunFacilityIdAttribute",
         facility_types="./uro:tunFacilityTypeAttribute",
