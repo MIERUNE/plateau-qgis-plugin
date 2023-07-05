@@ -18,5 +18,5 @@ RELIEF = FeatureProcessingDefinition(
             collect_all=["./dem:reliefComponent/dem:TINRelief/dem:tin//gml:Triangle"],
         ),
     ),
-    dm_attr_container="./uro:demDmAttribute",
+    dm_attr_container_path="./uro:demDmAttribute",
 )

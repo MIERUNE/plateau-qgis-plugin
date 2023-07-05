@@ -77,7 +77,7 @@ SOLITARY_VEGETATION_OBJECT = FeatureProcessingDefinition(
         ),
         _uro_vegetation_data_quality_attribute,
     ],
-    dm_attr_container="./uro:vegDmAttribute",
+    dm_attr_container_path="./uro:vegDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
         facility_id="./uro:vegFacilityIdAttribute",
         facility_types="./uro:vegFacilityTypeAttribute",
@@ -121,7 +121,7 @@ PLANT_COVER = FeatureProcessingDefinition(
         ),
         _uro_vegetation_data_quality_attribute,
     ],
-    dm_attr_container="./uro:vegDmAttribute",
+    dm_attr_container_path="./uro:vegDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
         facility_id="./uro:vegFacilityIdAttribute",
         facility_types="./uro:vegFacilityTypeAttribute",

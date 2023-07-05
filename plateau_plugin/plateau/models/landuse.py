@@ -144,7 +144,7 @@ LAND_USE = FeatureProcessingDefinition(
             ],
         ),
     ],
-    dm_attr_container="./uro:luseDmAttribute",
+    dm_attr_container_path="./uro:luseDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
         facility_id="./uro:luseFacilityIdAttribute",
         facility_types="./uro:luseFacilityTypeAttribute",

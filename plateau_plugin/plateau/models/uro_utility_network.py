@@ -148,7 +148,7 @@ UTILITY_NODE = FeatureProcessingDefinition(
             ],
         ),
     ],
-    dm_attr_container="./uro:frnDmAttribute",
+    dm_attr_container_path="./uro:frnDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
         facility_id="./uro:frnFacilityIdAttribute",
         facility_types="./uro:frnFacilityTypeAttribute",
@@ -215,7 +215,7 @@ UTILITY_NODE_CONTAINER = FeatureProcessingDefinition(
             ],
         ),
     ],
-    dm_attr_container="./uro:frnDmAttribute",
+    dm_attr_container_path="./uro:frnDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
         facility_id="./uro:frnFacilityIdAttribute",
         facility_types="./uro:frnFacilityTypeAttribute",
@@ -346,7 +346,7 @@ UTILITY_LINK = FeatureProcessingDefinition(
             ],
         ),
     ],
-    dm_attr_container="./uro:frnDmAttribute",
+    dm_attr_container_path="./uro:frnDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
         facility_id="./uro:frnFacilityIdAttribute",
         facility_types="./uro:frnFacilityTypeAttribute",

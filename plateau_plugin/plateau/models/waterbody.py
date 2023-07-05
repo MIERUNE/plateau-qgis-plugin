@@ -246,7 +246,7 @@ WATER_BODY = FeatureProcessingDefinition(
             ],
         ),
     ],
-    dm_attr_container="./uro:wtrDmAttribute",
+    dm_attr_container_path="./uro:wtrDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
         facility_id="./uro:wtrFacilityIdAttribute",
         facility_types="./uro:wtrFacilityTypeAttribute",

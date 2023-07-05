@@ -54,6 +54,7 @@ from .urf_zone import (
     URF_URBAN_FACILITY,
     URF_URBAN_PLANNING_AREA,
 )
+from .uro_dm import DM_GEOMETRIC
 from .uro_other_construction import (
     OTHER_CONSTRUCTION,
     OTHER_CONSTRUCTION_BOUNDARY_SURFACE,
@@ -143,5 +144,7 @@ processors = ProcessorRegistory(
         ATTR_DISASTER_RISK_LAND_SLIDE,
         ATTR_DISASTER_RISK_RIVER_FLOODING,
         ATTR_DISASTER_RISK_TSUNAMI,
+        # uro - dm
+        DM_GEOMETRIC,
     ]
 )

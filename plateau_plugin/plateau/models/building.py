@@ -429,7 +429,7 @@ BUILDING = FeatureProcessingDefinition(
         # TODO: uro:indoorBuildingAttribute
     ],
     disaster_risk_attr_conatiner_path="./uro:buildingDisasterRiskAttribute",
-    dm_attr_container="./uro:bldgDmAttribute",
+    dm_attr_container_path="./uro:bldgDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
         facility_id="./uro:bldgFacilityIdAttribute",
         facility_types="./uro:bldgFacilityTypeAttribute",

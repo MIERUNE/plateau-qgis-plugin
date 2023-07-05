@@ -250,7 +250,7 @@ OTHER_CONSTRUCTION = FeatureProcessingDefinition(
         #    datatype="[]uro:HeightPropertyType",
         # ),
     ],
-    dm_attr_container="./uro:consDmAttribute",
+    dm_attr_container_path="./uro:consDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
         facility_id="./uro:consFacilityIdAttribute",
         facility_types="./uro:consFacilityTypeAttribute",
