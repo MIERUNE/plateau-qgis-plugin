@@ -43,7 +43,8 @@ _transportation_data_quality_attribute = [
 ]
 
 ROAD = FeatureProcessingDefinition(
-    id="Road",
+    id="tran:Road",
+    name="Road",
     target_elements=["tran:Road"],
     attribute_groups=[
         AttributeGroup(
@@ -210,7 +211,8 @@ ROAD = FeatureProcessingDefinition(
 )
 
 RAILWAY = FeatureProcessingDefinition(
-    id="Railway",
+    id="tran:Railway",
+    name="Railway",
     target_elements=["tran:Railway"],
     attribute_groups=[
         AttributeGroup(
@@ -300,7 +302,8 @@ RAILWAY = FeatureProcessingDefinition(
 )
 
 TRACK = FeatureProcessingDefinition(
-    id="Track",
+    id="tran:Track",
+    name="Track",
     target_elements=["tran:Track"],
     attribute_groups=[
         AttributeGroup(
@@ -541,7 +544,8 @@ _square_urban_plan_attribute_attrs = [
 ]
 
 SQUARE = FeatureProcessingDefinition(
-    id="Square",
+    id="tran:Square",
+    name="Square",
     target_elements=["tran:Square"],
     attribute_groups=[
         AttributeGroup(
@@ -612,13 +616,9 @@ SQUARE = FeatureProcessingDefinition(
 )
 
 WATERWAY = FeatureProcessingDefinition(
-    id="Waterway",
-    target_elements=[
-        "uro14:Waterway",
-        "uro15:Waterway",
-        "uro2:Waterway",
-        "uro3:Waterway",
-    ],
+    id="uro:Waterway",
+    name="uro:Waterway",
+    target_elements=["uro:Waterway"],
     attribute_groups=[
         AttributeGroup(
             base_element=None,
@@ -728,7 +728,8 @@ WATERWAY = FeatureProcessingDefinition(
 # TrafficArea, AuxiliaryTrafficArea を扱う
 # これらは Road, Railway, Track, Square (いずれもLoD2-4) の子として使われる
 TRAFFIC_AREA = FeatureProcessingDefinition(
-    id="TrafficArea",
+    id="tran:TrafficArea",
+    name="TrafficArea",
     target_elements=["tran:TrafficArea", "tran:AuxiliaryTrafficArea"],
     attribute_groups=[
         AttributeGroup(

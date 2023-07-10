@@ -13,8 +13,9 @@ if __name__ == "__main__":
     processors.validate_processors()
 
     # settings = ParseSettings(load_semantic_parts=True)
-    settings = ParseSettings(only_highest_lod=True, load_semantic_parts=False)
+    settings = ParseSettings(only_highest_lod=False, load_semantic_parts=False)
     parser = FileParser(sys.argv[1], settings)
+    parser.load_apperance()
     for count, cityobj in parser.iter_cityobjs():
         print(
             f"{count} [{cityobj.processor.id}] {cityobj.type}, {cityobj.name}, LoD={cityobj.lod}, {cityobj.attributes}"

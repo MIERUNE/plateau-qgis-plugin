@@ -10,7 +10,8 @@ from .base import (
 )
 
 BUILDING = FeatureProcessingDefinition(
-    id="Building",
+    id="bldg:Building",
+    name="Building",
     target_elements=["bldg:Building"],
     attribute_groups=[
         AttributeGroup(
@@ -497,6 +498,7 @@ BUILDING = FeatureProcessingDefinition(
 
 BUILDING_BOUNDARY_SURFACE = FeatureProcessingDefinition(
     id="bldg:_BoundarySurface",
+    name="BoundarySurface",
     target_elements=[
         "bldg:GroundSurface",
         "bldg:WallSurface",
@@ -534,6 +536,7 @@ BUILDING_BOUNDARY_SURFACE = FeatureProcessingDefinition(
 
 BUILDING_OPENING = FeatureProcessingDefinition(
     id="bldg:_Opening",
+    name="Opening",
     target_elements=[
         "bldg:Window",
         "bldg:Door",
@@ -554,7 +557,8 @@ BUILDING_OPENING = FeatureProcessingDefinition(
 )
 
 BUILDING_INSTALLATION = FeatureProcessingDefinition(
-    id="BuildingInstallation",
+    id="bldg:BuildingInstallation",
+    name="BuildingInstallation",
     target_elements=[
         "bldg:BuildingInstallation",
     ],
@@ -594,10 +598,9 @@ BUILDING_INSTALLATION = FeatureProcessingDefinition(
 )
 
 BUILDING_INT_INSTALLATION = FeatureProcessingDefinition(
-    id="IntBuildingInstallation",
-    target_elements=[
-        "bldg:IntBuildingInstallation",
-    ],
+    id="bldg:IntBuildingInstallation",
+    name="IntBuildingInstallation",
+    target_elements=["bldg:IntBuildingInstallation"],
     attribute_groups=[
         AttributeGroup(
             base_element=None,
@@ -636,10 +639,9 @@ BUILDING_INT_INSTALLATION = FeatureProcessingDefinition(
 
 
 BUILDING_FURNITURE = FeatureProcessingDefinition(
-    id="BuildingFurniture",
-    target_elements=[
-        "bldg:BuildingFurniture",
-    ],
+    id="bldg:BuildingFurniture",
+    name="BuildingFurniture",
+    target_elements=["bldg:BuildingFurniture"],
     attribute_groups=[
         AttributeGroup(
             base_element=None,

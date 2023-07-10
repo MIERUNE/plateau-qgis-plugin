@@ -126,6 +126,7 @@ _base_attributes = [
 
 URF_URBAN_PLANNING_AREA = FeatureProcessingDefinition(
     id="urf:UrbanPlanningArea",
+    name="都市計画区域",
     target_elements=["urf:UrbanPlanningArea"],
     attribute_groups=[
         *_base_attributes,
@@ -196,6 +197,7 @@ URF_URBAN_PLANNING_AREA = FeatureProcessingDefinition(
 
 URF_QUASI_URBAN_PLANNING_AREA = FeatureProcessingDefinition(
     id="urf:QuasiUrbanPlanningArea",
+    name="準都市計画区域",
     target_elements=["urf:QuasiUrbanPlanningArea"],
     attribute_groups=[
         *_base_attributes,
@@ -240,6 +242,7 @@ URF_QUASI_URBAN_PLANNING_AREA = FeatureProcessingDefinition(
 
 URF_AREA_CLASSIFICATION = FeatureProcessingDefinition(
     id="urf:AreaClassification",
+    name="地域地区",
     target_elements=["urf:AreaClassification"],
     attribute_groups=[
         *_base_attributes,
@@ -274,6 +277,7 @@ URF_AREA_CLASSIFICATION = FeatureProcessingDefinition(
 
 URF_DISTRICTS_AND_ZONES = FeatureProcessingDefinition(
     id="urf:DistrictsAndZones",
+    name="区域区分",
     target_elements=[
         "urf:AircraftNoiseControlZone",
         "urf:ConservationZoneForClustersOfTraditionalStructures",
@@ -469,6 +473,7 @@ URF_DISTRICTS_AND_ZONES = FeatureProcessingDefinition(
 
 URF_PROJECT_PROMOTION_AREA = FeatureProcessingDefinition(
     id="urf:ProjectPromotionArea",
+    name="促進区域",
     target_elements=[
         "urf:LandReadjustmentPromotionArea",
         "urf:LandReadjustmentPromotionAreasForCoreBusinessUrbanDevelopment",
@@ -524,6 +529,7 @@ URF_PROJECT_PROMOTION_AREA = FeatureProcessingDefinition(
 
 URF_UNUSED_LAND_USE_PROMOTION_AREA = FeatureProcessingDefinition(
     id="urf:UnusedLandUsePromotionArea",
+    name="遊休土地転換利用促進地区",
     target_elements=["urf:UnusedLandUsePromotionArea"],
     attribute_groups=_base_attributes,
     geometries=GeometricAttributes(
@@ -540,6 +546,7 @@ URF_UNUSED_LAND_USE_PROMOTION_AREA = FeatureProcessingDefinition(
 
 URF_URBAN_DISASTER_RECOVERY_PROMOTION_AREA = FeatureProcessingDefinition(
     id="urf:UrbanDisasterRecoveryPromotionArea",
+    name="被災市街地復興推進地域",
     target_elements=["urf:UrbanDisasterRecoveryPromotionArea"],
     attribute_groups=[
         *_base_attributes,
@@ -579,6 +586,7 @@ URF_URBAN_DISASTER_RECOVERY_PROMOTION_AREA = FeatureProcessingDefinition(
 
 URF_URBAN_FACILITY = FeatureProcessingDefinition(
     id="urf:UrbanFacility",
+    name="都市施設",
     target_elements=[
         "urf:CollectiveFacilitiesForReconstruction",
         "urf:CollectiveFacilitiesForReconstructionAndRevitalization",
@@ -955,6 +963,7 @@ URF_URBAN_FACILITY = FeatureProcessingDefinition(
 
 URF_URBAN_DEVELOPMENT_PROJECT = FeatureProcessingDefinition(
     id="urf:UrbanDevelopmentProject",
+    name="市街地開発事業",
     target_elements=[
         "urf:DisasterPreventionBlockImprovementProject",
         "urf:IndustrialParkDevelopmentProject",
@@ -1099,6 +1108,7 @@ URF_URBAN_DEVELOPMENT_PROJECT = FeatureProcessingDefinition(
 
 URF_SCHEDULED_AREA_FOR_URBAN_DEVELOPMENT = FeatureProcessingDefinition(
     id="urf:ScheduledAreaForUrbanDevelopmentProject",
+    name="市街地開発事業等の予定区域",
     target_elements=[
         "urf:ScheduledAreaForCollectiveGovernmentAndPublicOfficeFacilities",
         "urf:ScheduledAreaForCollectiveHousingFacilities",
@@ -1141,6 +1151,7 @@ URF_SCHEDULED_AREA_FOR_URBAN_DEVELOPMENT = FeatureProcessingDefinition(
 
 URF_DISTRICT_PLAN = FeatureProcessingDefinition(
     id="urf:DistrictPlan",
+    name="地区計画等",
     target_elements=[
         "urf:DisasterPreventionBlockImprovementZonePlan",
         "urf:DistrictPlan",
@@ -1211,6 +1222,7 @@ URF_DISTRICT_PLAN = FeatureProcessingDefinition(
 
 URF_DISTRICT_DEVELOPMENT_PLAN = FeatureProcessingDefinition(
     id="urf:DistrictDevelopmentPlan",
+    name="地区整備計画等",
     target_elements=[
         "urf:DistrictDevelopmentPlan",
         "urf:DistrictImprovementPlanForDisasterPreventionBlockImprovementZonePlan",
@@ -1282,6 +1294,7 @@ URF_DISTRICT_DEVELOPMENT_PLAN = FeatureProcessingDefinition(
 
 URF_DISTRICT_FACILITY = FeatureProcessingDefinition(
     id="urf:DistrictFacility",
+    name="地区施設等",
     target_elements=[
         "urf:DistrictFacility",
         "urf:RoadsideDistrictFacility",
@@ -1328,6 +1341,7 @@ URF_DISTRICT_FACILITY = FeatureProcessingDefinition(
 
 URF_PROMOTION_DISTRICT = FeatureProcessingDefinition(
     id="urf:PromotionDistrict",
+    name="促進区",
     target_elements=["urf:PromotionDistrict"],
     attribute_groups=[
         *_base_attributes,
@@ -1357,6 +1371,7 @@ URF_PROMOTION_DISTRICT = FeatureProcessingDefinition(
 
 URF_DISTRICT = FeatureProcessingDefinition(
     id="urf:District",
+    name="地区",
     target_elements=["urf:District"],
     attribute_groups=[
         *_base_attributes,

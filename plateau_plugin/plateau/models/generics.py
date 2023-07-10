@@ -9,7 +9,8 @@ from .base import (
 )
 
 GENERIC_CITY_OBJECT = FeatureProcessingDefinition(
-    id="GenericCityObject",
+    id="gen:GenericCityObject",
+    name="GenericCityObject",
     target_elements=["gen:GenericCityObject"],
     load_generic_attributes=True,
     attribute_groups=[

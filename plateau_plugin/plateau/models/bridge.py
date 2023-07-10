@@ -10,7 +10,8 @@ from .base import (
 )
 
 BRIDGE = FeatureProcessingDefinition(
-    id="Bridge",
+    id="brid:Bridge",
+    name="Bridge",
     target_elements=["brid:Bridge"],
     attribute_groups=[
         AttributeGroup(
@@ -302,7 +303,7 @@ BRIDGE = FeatureProcessingDefinition(
             ],
             only_direct=[
                 "./brid:lod2MultiSurface//gml:Polygon",
-                "./brid:lod2Geometry//gml:Polygon",
+                "./brid:lod2Solid//gml:Polygon",
             ],
         ),
         lod3=GeometricAttribute(
@@ -313,7 +314,7 @@ BRIDGE = FeatureProcessingDefinition(
             ],
             only_direct=[
                 "./brid:lod3MultiSurface//gml:Polygon",
-                "./brid:lod3Geometry//gml:Polygon",
+                "./brid:lod3Solid//gml:Polygon",
             ],
         ),
         lod4=GeometricAttribute(
@@ -324,7 +325,7 @@ BRIDGE = FeatureProcessingDefinition(
             ],
             only_direct=[
                 "./brid:lod4MultiSurface//gml:Polygon",
-                "./brid:lod4Geometry//gml:Polygon",
+                "./brid:lod4Solid//gml:Polygon",
             ],
         ),
         semantic_parts=[
@@ -347,6 +348,7 @@ BRIDGE = FeatureProcessingDefinition(
 
 BRIDGE_BOUNDARY_SURFACE = FeatureProcessingDefinition(
     id="brid:_BoundarySurface",
+    name="BoundarySurface",
     target_elements=[
         "brid:GroundSurface",
         "brid:WallSurface",
@@ -390,6 +392,7 @@ BRIDGE_BOUNDARY_SURFACE = FeatureProcessingDefinition(
 
 BRIDGE_OPENING = FeatureProcessingDefinition(
     id="brid:_Opening",
+    name="Opening",
     target_elements=[
         "brid:Window",
         "brid:Door",
@@ -408,7 +411,8 @@ BRIDGE_OPENING = FeatureProcessingDefinition(
 )
 
 BRIDGE_CONSTRUCTION_ELEMENT = FeatureProcessingDefinition(
-    id="BridgeConstructionElement",
+    id="brid:BridgeConstructionElement",
+    name="BridgeConstructionElement",
     target_elements=[
         "brid:BridgeConstructionElement",
     ],
@@ -442,10 +446,9 @@ BRIDGE_CONSTRUCTION_ELEMENT = FeatureProcessingDefinition(
 )
 
 BRIDGE_INSTALLATION = FeatureProcessingDefinition(
-    id="BridgeInstallation",
-    target_elements=[
-        "brid:BridgeInstallation",
-    ],
+    id="brid:BridgeInstallation",
+    name="BridgeInstallation",
+    target_elements=["brid:BridgeInstallation"],
     attribute_groups=[
         AttributeGroup(
             base_element=None,
@@ -488,9 +491,8 @@ BRIDGE_INSTALLATION = FeatureProcessingDefinition(
 
 BRIDGE_INT_INSTALLATION = FeatureProcessingDefinition(
     id="IntBridgeInstallation",
-    target_elements=[
-        "brid:IntBridgeInstallation",
-    ],
+    name="IntBridgeInstallation",
+    target_elements=["brid:IntBridgeInstallation"],
     attribute_groups=[
         AttributeGroup(
             base_element=None,
@@ -527,10 +529,9 @@ BRIDGE_INT_INSTALLATION = FeatureProcessingDefinition(
 
 
 BRIDGE_FURNITURE = FeatureProcessingDefinition(
-    id="BridgeFurniture",
-    target_elements=[
-        "brid:BridgeFurniture",
-    ],
+    id="brid:BridgeFurniture",
+    name="BridgeFurniture",
+    target_elements=["brid:BridgeFurniture"],
     attribute_groups=[
         AttributeGroup(
             base_element=None,

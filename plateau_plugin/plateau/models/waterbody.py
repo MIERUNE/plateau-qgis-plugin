@@ -10,7 +10,8 @@ from .base import (
 )
 
 WATER_BODY = FeatureProcessingDefinition(
-    id="WaterBody",
+    id="wtr:WaterBody",
+    name="WaterBody",
     target_elements=[
         "wtr:WaterBody",
     ],
@@ -280,7 +281,8 @@ WATER_BODY = FeatureProcessingDefinition(
 )
 
 WATER_BOUNDARY_SURFACE = FeatureProcessingDefinition(
-    id="WaterBoundarySurface",
+    id="wtr:_BoundarySurface",
+    name="BoundarySurface",
     target_elements=[
         "wtr:WaterSurface",
         "wtr:WaterGroundSurface",

@@ -119,7 +119,8 @@ _common_property_groups = [
 
 
 UTILITY_NODE = FeatureProcessingDefinition(
-    id="UtilityNode",
+    id="uro:UtilityNode",
+    name="UtilityNode",
     target_elements=[
         "uro:Appurtenance",
     ],
@@ -171,7 +172,8 @@ UTILITY_NODE = FeatureProcessingDefinition(
 )
 
 UTILITY_NODE_CONTAINER = FeatureProcessingDefinition(
-    id="UtilityNodeContainer",
+    id="uro:UtilityNodeContainer",
+    name="UtilityNodeContainer",
     target_elements=[
         "uro:Manhole",
         "uro:Handhole",
@@ -238,7 +240,8 @@ UTILITY_NODE_CONTAINER = FeatureProcessingDefinition(
 )
 
 UTILITY_LINK = FeatureProcessingDefinition(
-    id="UtilityLink",
+    id="uro:UtilityLink",
+    name="UtilityLink",
     target_elements=[
         "uro:Pipe",
         "uro:WaterPipe",

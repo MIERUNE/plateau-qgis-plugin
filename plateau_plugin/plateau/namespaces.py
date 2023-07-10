@@ -54,6 +54,7 @@ class Namespace:
                 (
                     "https://www.geospatial.jp/iur/uro/",
                     "http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/uro/",
+                    "https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/uro/",
                 )
             ):
                 _ns_update["uro"] = ns
@@ -61,6 +62,7 @@ class Namespace:
                 (
                     "https://www.geospatial.jp/iur/urf/",
                     "http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/urf/",
+                    "https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/urf/",
                 )
             ):
                 _ns_update["urf"] = ns

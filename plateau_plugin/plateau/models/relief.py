@@ -1,4 +1,8 @@
-"""地形モデル (./dem/)"""
+"""地形モデル (./dem/)
+
+これは地形モデルをベクタレイヤとして読み込むが、
+メッシュレイヤとして読み込むための別のアルゴリズムの使用を推奨する。
+"""
 
 from .base import (
     FeatureProcessingDefinition,
@@ -7,7 +11,8 @@ from .base import (
 )
 
 RELIEF = FeatureProcessingDefinition(
-    id="ReliefFeature",
+    id="dem:ReliefFeature",
+    name="ReliefFeature",
     target_elements=["dem:ReliefFeature"],
     attribute_groups=[],
     geometries=GeometricAttributes(

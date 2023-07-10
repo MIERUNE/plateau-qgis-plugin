@@ -8,7 +8,8 @@ from .base import (
 )
 
 ATTR_DISASTER_RISK_RIVER_FLOODING = FeatureProcessingDefinition(
-    id="RiverFloodingRisk",
+    id="uro:RiverFloodingRisk",
+    name="RiverFloodingRisk",
     target_elements=[
         "uro:BuildingRiverFloodingRiskAttribute",
         "uro:RiverFloodingRiskAttribute",
@@ -72,7 +73,8 @@ ATTR_DISASTER_RISK_RIVER_FLOODING = FeatureProcessingDefinition(
 )
 
 ATTR_DISASTER_RISK_TSUNAMI = FeatureProcessingDefinition(
-    id="TsumaniRisk",
+    id="uro:TsumaniRisk",
+    name="TsumaniRisk",
     target_elements=[
         "uro:BuildingTsunamiRiskAttribute",
         "uro:TsunamiRiskAttribute",
@@ -113,7 +115,8 @@ ATTR_DISASTER_RISK_TSUNAMI = FeatureProcessingDefinition(
 )
 
 ATTR_DISASTER_RISK_HIGH_TIDE = FeatureProcessingDefinition(
-    id="HighTideRisk",
+    id="uro:HighTideRisk",
+    name="HighTideRisk",
     target_elements=[
         "uro:BuildingHighTideRiskAttribute",
         "uro:HighTideRiskAttribute",
@@ -154,7 +157,8 @@ ATTR_DISASTER_RISK_HIGH_TIDE = FeatureProcessingDefinition(
 )
 
 ATTR_DISASTER_RISK_INLAND_FLOODING = FeatureProcessingDefinition(
-    id="InlandFloodingRisk",
+    id="uro:InlandFloodingRisk",
+    name="InlandFloodingRisk",
     target_elements=[
         "uro:BuildingInlandFloodingRiskAttribute",
         "uro:InlandFloodingRiskAttribute",
@@ -195,7 +199,8 @@ ATTR_DISASTER_RISK_INLAND_FLOODING = FeatureProcessingDefinition(
 )
 
 ATTR_DISASTER_RISK_LAND_SLIDE = FeatureProcessingDefinition(
-    id="LandSlideRisk",
+    id="uro:LandSlideRisk",
+    name="LandSlideRisk",
     target_elements=[
         "uro:BuildingLandSlideRiskAttribute",
         "uro:LandSlideRiskAttribute",

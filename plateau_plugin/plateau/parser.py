@@ -5,6 +5,7 @@ from typing import Any, Iterable, Optional, Union
 
 import lxml.etree as et
 
+from .appearance import Appearance, parse_appearances
 from .codelists import CodelistStore
 from .geometry import parse_geometry
 from .models import processors
@@ -23,15 +24,22 @@ class ParseSettings:
     only_highest_lod: bool = False
     """各Featureの最高の LoD だけ出力するかどうか"""
 
+    load_apperance: bool = False
+
 
 class Parser:
     def __init__(
-        self, settings: ParseSettings, ns: Namespace, codelist_store: CodelistStore
+        self,
+        settings: ParseSettings,
+        ns: Namespace,
+        codelist_store: CodelistStore,
+        appearance: Optional[Appearance] = None,
     ) -> None:
         self._settings = settings
         self._ns: Namespace = ns
         self._nsmap: dict[str, str] = ns.nsmap
         self._codelist_store = codelist_store
+        self.appearance = appearance
 
     def _get_id_and_name(self, elem: et._Element):
         """@gml:id と gml:name (あれば) を読む"""
@@ -180,6 +188,7 @@ class Parser:
     ) -> Iterable[CityObject]:
         ns = self._ns
         nsmap = self._nsmap
+        appearance = self.appearance
 
         (gml_id, gml_name) = self._get_id_and_name(elem)
         (creation_date, termination_date) = self._get_basic_dates(elem)
@@ -269,7 +278,9 @@ class Parser:
                 else emission.collect_all
             )
 
-            if geom := parse_geometry(elem, geom_paths, nsmap):
+            if geom := parse_geometry(
+                elem, geom_paths, nsmap=nsmap, appearance=appearance
+            ):
                 yield CityObject(
                     lod=lod,
                     type=ns.to_prefixed_name(elem.tag),
@@ -297,6 +308,14 @@ class FileParser:
         # ドキュメントで使われている i-UR のバージョンを検出して
         # uro: と urf: 接頭辞が指すべきXML名前空間を自動で決定する
         self._ns = Namespace.from_document_nsmap(self._doc.getroot().nsmap)
+        codelists = CodelistStore(self._base_dir)
+
+        self._parser = Parser(self._settings, ns=self._ns, codelist_store=codelists)
+
+    def load_apperance(self, theme: Optional[str] = None):
+        for app in parse_appearances(self._doc):
+            self._parser.appearance = app
+            break
 
     def count_toplevel_cityobjs(self) -> int:
         """ファイルに含まれるトップレベルのFeatureの数を返す"""
@@ -305,14 +324,14 @@ class FileParser:
         )
 
     def iter_cityobjs(self) -> Iterable[tuple[int, CityObject]]:
-        """ファイルに含まれるFeatureの数を返す"""
+        """都市オブジェクトをパースして返す"""
 
-        codelists = CodelistStore(self._base_dir)
-        parser = Parser(self._settings, ns=self._ns, codelist_store=codelists)
         toplevel_count = 0
         for city_object in self._doc.iterfind(
             "./core:cityObjectMember/*", self._ns.nsmap
         ):
-            for cityobj in parser.process_cityobj_element(city_object, parent=None):
+            for cityobj in self._parser.process_cityobj_element(
+                city_object, parent=None
+            ):
                 yield (toplevel_count, cityobj)
             toplevel_count += 1

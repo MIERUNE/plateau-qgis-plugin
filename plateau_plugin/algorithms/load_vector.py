@@ -59,7 +59,6 @@ _TYPE_TO_QT_TYPE = {
 
 def _convert_to_qt_value(v: Any):
     if isinstance(v, list):
-        # list
         if not v:
             return []
 
@@ -113,7 +112,7 @@ class LayerManager:
         co: Optional[CityObject] = cityobj
         s = []
         while co:
-            s.append(co.processor.id)
+            s.append(co.processor.name)
             co = co.parent
         name = " / ".join(reversed(s))
         if cityobj.lod is not None:
@@ -198,7 +197,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
     """Processing algorithm to load PLATEAU 3D City models as vector layers"""
 
     INPUT = "INPUT"
-    ONLY_HIGHEST_LOD = "ONLY_HIGHEST_LoD"
+    ONLY_HIGHEST_LOD = "ONLY_HIGHEST_LOD"
     LOAD_SEMANTIC_PARTS = "LOAD_SEMANTIC_PARTS"
     FORCE_2D = "FORCE_2D"
 
