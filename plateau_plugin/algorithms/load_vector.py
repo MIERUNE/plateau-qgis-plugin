@@ -148,8 +148,8 @@ class LayerManager:
         as2d = False
         if cityobj.lod is not None:
             lod_def = cityobj.processor.lod_list[cityobj.lod]
-            assert lod_def is not None
-            as2d = self._force2d or lod_def.is2d
+            if lod_def:
+                as2d = self._force2d or lod_def.is2d
 
         _z_suffix = "" if as2d else "Z"
         if isinstance(cityobj.geometry, PolygonCollection):
@@ -228,14 +228,14 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
         self.addParameter(
             QgsProcessingParameterBoolean(
                 self.LOAD_SEMANTIC_PARTS,
-                self.tr("意味的子要素に分けて読み込む"),
+                self.tr("意味的な子要素に分けて読み込む"),
                 defaultValue=False,
             )
         )
         self.addParameter(
             QgsProcessingParameterBoolean(
                 self.FORCE_2D,
-                self.tr("強制的に2次元データとして読み込む"),
+                self.tr("強制的に2次元化して読み込む"),
                 defaultValue=False,
             )
         )

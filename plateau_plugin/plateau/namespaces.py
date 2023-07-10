@@ -66,6 +66,9 @@ class Namespace:
                 )
             ):
                 _ns_update["urf"] = ns
+
+        _ns_update.setdefault("uro", "https://www.geospatial.jp/iur/uro/3.0")
+        _ns_update.setdefault("urf", "https://www.geospatial.jp/iur/urf/3.0")
         return cls(_ns_update)
 
     def to_qualified_name(self, prefixed_name: str) -> str:

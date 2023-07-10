@@ -232,10 +232,12 @@ URF_QUASI_URBAN_PLANNING_AREA = FeatureProcessingDefinition(
     ],
     geometries=GeometricAttributes(
         lod0=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
         lod1=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),
@@ -542,10 +544,12 @@ URF_UNUSED_LAND_USE_PROMOTION_AREA = FeatureProcessingDefinition(
     attribute_groups=_base_attributes,
     geometries=GeometricAttributes(
         lod0=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
         lod1=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),
@@ -582,10 +586,12 @@ URF_URBAN_DISASTER_RECOVERY_PROMOTION_AREA = FeatureProcessingDefinition(
     ],
     geometries=GeometricAttributes(
         lod0=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
         lod1=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),

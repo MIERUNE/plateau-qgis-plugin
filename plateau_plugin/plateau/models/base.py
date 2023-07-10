@@ -31,7 +31,7 @@ class GeometricAttribute:
     """このFeatureの直下にあるジオメトリを収集するための element path"""
 
     is2d: bool = False
-    """仕様上の実態が2次元データかどうか"""
+    """PLATEAUの仕様において高さ0のジオメトリかどうか"""
 
 
 @dataclass
