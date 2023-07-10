@@ -255,6 +255,7 @@ WATER_BODY = FeatureProcessingDefinition(
     ),
     geometries=GeometricAttributes(
         lod0=GeometricAttribute(
+            is2d=True,
             lod_detection=["./wtr:lod0MultiCurve"],
             collect_all=["./wtr:lod0MultiCurve//gml:LineString"],
         ),

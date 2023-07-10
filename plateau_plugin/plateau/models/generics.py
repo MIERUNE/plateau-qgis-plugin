@@ -37,6 +37,7 @@ GENERIC_CITY_OBJECT = FeatureProcessingDefinition(
     ],
     geometries=GeometricAttributes(
         lod0=GeometricAttribute(
+            is2d=True,
             lod_detection=["./gen:lod0Geometry"],
             collect_all=[
                 "./gen:lod0Geometry//gml:Polygon",

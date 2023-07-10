@@ -259,6 +259,7 @@ OTHER_CONSTRUCTION = FeatureProcessingDefinition(
     ),
     geometries=GeometricAttributes(
         lod0=GeometricAttribute(
+            is2d=True,
             lod_detection=["./uro:lod0Geometry"],
             collect_all=[
                 "./uro:lod0Geometry//gml:LineString",

@@ -74,6 +74,7 @@ URF_SEDIMENT_DISASTER_PRONE_AREA = FeatureProcessingDefinition(
     ],
     geometries=GeometricAttributes(
         lod1=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=[
                 "./urf:lod1MultiSurface//gml:Polygon",

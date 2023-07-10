@@ -439,6 +439,7 @@ BUILDING = FeatureProcessingDefinition(
     ),
     geometries=GeometricAttributes(
         lod0=GeometricAttribute(
+            is2d=True,
             lod_detection=["./bldg:lod0RoofEdge", "./bldg:lod0FootPrint"],
             collect_all=[
                 ".//bldg:lod0RoofEdge//gml:Polygon",

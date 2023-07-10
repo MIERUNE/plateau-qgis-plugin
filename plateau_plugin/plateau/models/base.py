@@ -30,6 +30,9 @@ class GeometricAttribute:
     only_direct: Optional[list[str]] = None
     """このFeatureの直下にあるジオメトリを収集するための element path"""
 
+    is2d: bool = False
+    """仕様上の実態が2次元データかどうか"""
+
 
 @dataclass
 class GeometricAttributes:
@@ -126,11 +129,11 @@ class FeatureProcessingDefinition:
                     em
                     and any(elem.find(p, nsmap) is not None for p in em.lod_detection)
                 )
-                for em in self.emission_list
+                for em in self.lod_list
             )
 
     @cached_property
-    def emission_list(self) -> tuple[Optional[GeometricAttribute], ...]:
+    def lod_list(self) -> tuple[Optional[GeometricAttribute], ...]:
         return (
             self.geometries.lod0,
             self.geometries.lod1,

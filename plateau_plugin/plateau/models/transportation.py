@@ -185,15 +185,18 @@ ROAD = FeatureProcessingDefinition(
     ),
     geometries=GeometricAttributes(
         lod0=GeometricAttribute(
+            is2d=True,
             lod_detection=["./tran:lod0Network"],
             collect_all=["./tran:lod0Network//gml:LineString"],
         ),
         lod1=GeometricAttribute(
+            is2d=True,
             lod_detection=["./tran:lod1MultiSurface"],
             collect_all=["./tran:lod1MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod1MultiSurface//gml:Polygon"],
         ),
         lod2=GeometricAttribute(
+            is2d=True,
             lod_detection=["./tran:lod2MultiSurface"],
             collect_all=[".//tran:lod2MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod2MultiSurface//gml:Polygon"],
@@ -276,15 +279,18 @@ RAILWAY = FeatureProcessingDefinition(
     ),
     geometries=GeometricAttributes(
         lod0=GeometricAttribute(
+            is2d=True,
             lod_detection=["./tran:lod0Network"],
             collect_all=["./tran:lod0Network//gml:LineString"],
         ),
         lod1=GeometricAttribute(
+            is2d=True,
             lod_detection=["./tran:lod1MultiSurface"],
             collect_all=["./tran:lod1MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod1MultiSurface//gml:Polygon"],
         ),
         lod2=GeometricAttribute(
+            is2d=True,
             lod_detection=["./tran:lod2MultiSurface"],
             collect_all=[".//tran:lod2MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod2MultiSurface//gml:Polygon"],
@@ -379,15 +385,18 @@ TRACK = FeatureProcessingDefinition(
     ),
     geometries=GeometricAttributes(
         lod0=GeometricAttribute(
+            is2d=True,
             lod_detection=["./tran:lod0Network"],
             collect_all=["./tran:lod0Network//gml:LineString"],
         ),
         lod1=GeometricAttribute(
+            is2d=True,
             lod_detection=["./tran:lod1MultiSurface"],
             collect_all=["./tran:lod1MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod1MultiSurface//gml:Polygon"],
         ),
         lod2=GeometricAttribute(
+            is2d=True,
             lod_detection=["./tran:lod2MultiSurface"],
             collect_all=[".//tran:lod2MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod2MultiSurface//gml:Polygon"],
@@ -590,15 +599,18 @@ SQUARE = FeatureProcessingDefinition(
     ),
     geometries=GeometricAttributes(
         lod0=GeometricAttribute(
+            is2d=True,
             lod_detection=["./tran:lod0Network"],
             collect_all=["./tran:lod0Network//gml:LineString"],
         ),
         lod1=GeometricAttribute(
+            is2d=True,
             lod_detection=["./tran:lod1MultiSurface"],
             collect_all=["./tran:lod1MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod1MultiSurface//gml:Polygon"],
         ),
         lod2=GeometricAttribute(
+            is2d=True,
             lod_detection=["./tran:lod2MultiSurface"],
             collect_all=[".//tran:lod2MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod2MultiSurface//gml:Polygon"],
@@ -700,15 +712,18 @@ WATERWAY = FeatureProcessingDefinition(
     ),
     geometries=GeometricAttributes(
         lod0=GeometricAttribute(
+            is2d=True,
             lod_detection=["./tran:lod0Network"],
             collect_all=["./tran:lod0Network//gml:LineString"],
         ),
         lod1=GeometricAttribute(
+            is2d=True,
             lod_detection=["./tran:lod1MultiSurface"],
             collect_all=["./tran:lod1MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod1MultiSurface//gml:Polygon"],
         ),
         lod2=GeometricAttribute(
+            is2d=True,
             lod_detection=["./tran:lod2MultiSurface"],
             collect_all=[".//tran:lod2MultiSurface//gml:Polygon"],
             only_direct=["./tran:lod2MultiSurface//gml:Polygon"],
@@ -803,6 +818,7 @@ TRAFFIC_AREA = FeatureProcessingDefinition(
     ],
     geometries=GeometricAttributes(
         lod2=GeometricAttribute(
+            is2d=True,
             lod_detection=[
                 "./tran:lod2MultiSurface",
                 "./uro:railwayTrackAttribute/uro:RailwayTrackAttribute/uro:lod2Network",
