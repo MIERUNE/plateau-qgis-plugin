@@ -185,10 +185,12 @@ URF_URBAN_PLANNING_AREA = FeatureProcessingDefinition(
     ],
     geometries=GeometricAttributes(
         lod0=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
         lod1=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),
@@ -265,10 +267,12 @@ URF_AREA_CLASSIFICATION = FeatureProcessingDefinition(
     ],
     geometries=GeometricAttributes(
         lod0=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
         lod1=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),
@@ -461,10 +465,12 @@ URF_DISTRICTS_AND_ZONES = FeatureProcessingDefinition(
     ],
     geometries=GeometricAttributes(
         lod0=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
         lod1=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),
@@ -517,10 +523,12 @@ URF_PROJECT_PROMOTION_AREA = FeatureProcessingDefinition(
     ],
     geometries=GeometricAttributes(
         lod0=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
         lod1=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),
@@ -951,10 +959,12 @@ URF_URBAN_FACILITY = FeatureProcessingDefinition(
     ],
     geometries=GeometricAttributes(
         lod0=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
         lod1=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),
@@ -1096,10 +1106,12 @@ URF_URBAN_DEVELOPMENT_PROJECT = FeatureProcessingDefinition(
     ],
     geometries=GeometricAttributes(
         lod0=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
         lod1=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),
@@ -1139,10 +1151,12 @@ URF_SCHEDULED_AREA_FOR_URBAN_DEVELOPMENT = FeatureProcessingDefinition(
     ],
     geometries=GeometricAttributes(
         lod0=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
         lod1=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),
@@ -1210,10 +1224,12 @@ URF_DISTRICT_PLAN = FeatureProcessingDefinition(
     ],
     geometries=GeometricAttributes(
         lod0=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
         lod1=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),
@@ -1282,10 +1298,12 @@ URF_DISTRICT_DEVELOPMENT_PLAN = FeatureProcessingDefinition(
     ],
     geometries=GeometricAttributes(
         lod0=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
         lod1=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),
@@ -1329,10 +1347,12 @@ URF_DISTRICT_FACILITY = FeatureProcessingDefinition(
     ],
     geometries=GeometricAttributes(
         lod0=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
         lod1=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),
@@ -1359,10 +1379,12 @@ URF_PROMOTION_DISTRICT = FeatureProcessingDefinition(
     ],
     geometries=GeometricAttributes(
         lod0=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
         lod1=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),
@@ -1489,10 +1511,12 @@ URF_DISTRICT = FeatureProcessingDefinition(
     ],
     geometries=GeometricAttributes(
         lod0=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod0MultiSurface"],
             collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
         ),
         lod1=GeometricAttribute(
+            is2d=True,
             lod_detection=["./urf:lod1MultiSurface"],
             collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
         ),

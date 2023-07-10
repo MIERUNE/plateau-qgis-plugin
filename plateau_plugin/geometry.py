@@ -18,10 +18,10 @@ from .plateau.types import (
 )
 
 
-def to_qgis_geometry(src_geom: Geometry, is3d: bool) -> QgsGeometry:
+def to_qgis_geometry(src_geom: Geometry, as2d: bool) -> QgsGeometry:
     """Convert geometries from PLATEAU module into QGIS geometry"""
 
-    if not is3d:
+    if as2d:
         return _to_qgis_geometry_2d(src_geom)
 
     if isinstance(src_geom, PolygonCollection):

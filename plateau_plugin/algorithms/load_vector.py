@@ -79,10 +79,10 @@ def _convert_to_qt_value(v: Any):
 class LayerManager:
     """Featureの種類とLoDをもとにふさわしい出力先レイヤを返すためのユーティリティ"""
 
-    def __init__(self, is3d: bool):
+    def __init__(self, force2d: bool):
         self._layers: dict[str, QgsVectorLayer] = {}
         self._parent_map: dict[str, str] = {}
-        self._is3d = is3d
+        self._force2d = force2d
 
     def get_layer(self, cityobj: CityObject) -> QgsVectorLayer:
         """Featureの種類とLoDをもとにふさわしい出力レイヤを取得する"""
@@ -145,7 +145,13 @@ class LayerManager:
             attributes.append(QgsField(field.name, _TYPE_TO_QT_TYPE[field.datatype]))
 
         # make a new layer
-        _z_suffix = "Z" if self._is3d else ""
+        as2d = False
+        if cityobj.lod is not None:
+            lod_def = cityobj.processor.lod_list[cityobj.lod]
+            assert lod_def is not None
+            as2d = self._force2d or lod_def.is2d
+
+        _z_suffix = "" if as2d else "Z"
         if isinstance(cityobj.geometry, PolygonCollection):
             layer_path = f"MultiPolygon{_z_suffix}?crs=epsg:6697"
         elif isinstance(cityobj.geometry, LineStringCollection):
@@ -229,7 +235,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
         self.addParameter(
             QgsProcessingParameterBoolean(
                 self.FORCE_2D,
-                self.tr("2次元データとして読み込む"),
+                self.tr("強制的に2次元データとして読み込む"),
                 defaultValue=False,
             )
         )
@@ -274,8 +280,8 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
         return FileParser(filename, settings)
 
     def processAlgorithm(self, parameters, context, feedback):
-        is3d = not self.parameterAsBoolean(parameters, self.FORCE_2D, context)
-        layers = LayerManager(is3d=is3d)
+        force2d = self.parameterAsBoolean(parameters, self.FORCE_2D, context)
+        layers = LayerManager(force2d=force2d)
 
         parser = self._make_parser(parameters, context)
         total_count = parser.count_toplevel_cityobjs()
@@ -312,9 +318,16 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
             for name, value in cityobj.attributes.items():
                 feature.setAttribute(name, _convert_to_qt_value(value))
 
-            # Set geometry
             if cityobj.geometry:
-                feature.setGeometry(to_qgis_geometry(cityobj.geometry, is3d=is3d))
+                # Should be treated as 2D?
+                as2d = False
+                if cityobj.lod is not None:
+                    lod_def = cityobj.processor.lod_list[cityobj.lod]
+                    assert lod_def is not None
+                    as2d = force2d or lod_def.is2d
+
+                # Set geometry
+                feature.setGeometry(to_qgis_geometry(cityobj.geometry, as2d=as2d))
 
             provider.addFeature(feature)
             count += 1
