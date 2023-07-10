@@ -9,7 +9,8 @@ from .base import (
 )
 
 DM_GEOMETRIC = FeatureProcessingDefinition(
-    id="DmGeometric",
+    id="uro:DmGeometric",
+    name="DmGeometric",
     target_elements=["uro:DmGeometricAttribute"],
     attribute_groups=[
         AttributeGroup(

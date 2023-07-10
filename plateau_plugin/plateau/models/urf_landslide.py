@@ -9,12 +9,10 @@ from .base import (
 )
 
 URF_SEDIMENT_DISASTER_PRONE_AREA = FeatureProcessingDefinition(
-    id="SedimentDisasterProneArea",
+    id="urf:SedimentDisasterProneArea",
+    name="SedimentDisasterProneArea",
     target_elements=[
-        "urf14:SedimentDisasterProneArea",
-        "urf15:SedimentDisasterProneArea",
-        "urf2:SedimentDisasterProneArea",
-        "urf3:SedimentDisasterProneArea",
+        "urf:SedimentDisasterProneArea",
     ],
     load_generic_attributes=True,
     attribute_groups=[

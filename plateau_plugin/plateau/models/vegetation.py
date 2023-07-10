@@ -40,7 +40,8 @@ _uro_vegetation_data_quality_attribute = AttributeGroup(
 )
 
 SOLITARY_VEGETATION_OBJECT = FeatureProcessingDefinition(
-    id="SolitaryVegetationObject",
+    id="veg:SolitaryVegetationObject",
+    name="SolitaryVegetationObject",
     target_elements=["veg:SolitaryVegetationObject"],
     attribute_groups=[
         AttributeGroup(
@@ -100,7 +101,8 @@ SOLITARY_VEGETATION_OBJECT = FeatureProcessingDefinition(
 )
 
 PLANT_COVER = FeatureProcessingDefinition(
-    id="PlantCover",
+    id="veg:PlantCover",
+    name="PlantCover",
     target_elements=["veg:PlantCover"],
     attribute_groups=[
         AttributeGroup(

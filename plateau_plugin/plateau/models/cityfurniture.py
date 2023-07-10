@@ -10,7 +10,8 @@ from .base import (
 )
 
 CITY_FURNITURE = FeatureProcessingDefinition(
-    id="CityFurniture",
+    id="frn:CityFurniture",
+    name="CityFurniture",
     target_elements=["frn:CityFurniture"],
     load_generic_attributes=True,
     attribute_groups=[

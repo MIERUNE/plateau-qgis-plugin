@@ -82,6 +82,9 @@ class FeatureProcessingDefinition:
     id: str
     """このProcessorのID"""
 
+    name: str
+    """このProcessorの表示名"""
+
     target_elements: list[str]
     """処理対象とするFeature要素 (e.g. "tran:Road", "tran:TrafficArea", "bldg:WallSurface")"""
 
@@ -104,7 +107,10 @@ class FeatureProcessingDefinition:
     """災害リスク属性 uro:(Building)DisasterRiskAttribute を包含する要素への element path"""
 
     non_geometric: bool = False
-    """ジオメトリを持たない Feature かどうか"""
+    """ジオメトリを持たない Feature かどうか
+
+    Trueの場合は、ジオメトリをもたない場合も地物として出力する
+    """
 
     def detect_lods(self, elem: et._Element, nsmap: dict[str, str]) -> tuple[bool, ...]:
         """

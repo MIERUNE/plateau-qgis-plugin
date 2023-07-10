@@ -10,12 +10,10 @@ from .base import (
 )
 
 UNDERGROUND_BUILDING = FeatureProcessingDefinition(
-    id="UndergroundBuilding",
+    id="uro:UndergroundBuilding",
+    name="UndergroundBuilding",
     target_elements=[
-        "uro14:UndergroundBuilding",
-        "uro15:UndergroundBuilding",
-        "uro2:UndergroundBuilding",
-        "uro3:UndergroundBuilding",
+        "uro:UndergroundBuilding",
     ],
     attribute_groups=[
         AttributeGroup(

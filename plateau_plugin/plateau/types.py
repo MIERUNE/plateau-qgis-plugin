@@ -4,6 +4,7 @@ from typing import Any, Literal, Optional, Union
 
 import numpy as np
 
+from .appearance import Material, Texture
 from .models.base import AttributeDatatype, FeatureProcessingDefinition
 
 
@@ -21,8 +22,13 @@ class LineStringCollection:
 
 @dataclass
 class PolygonCollection:
-    __slots__ = ("polygons",)
+    __slots__ = ("polygons", "materials", "textures", "uvs")
     polygons: list[list[np.ndarray]]
+
+    # appearance
+    materials: Optional[list[Optional[Material]]]
+    textures: Optional[list[Optional[Texture]]]
+    uvs: Optional[list[Optional[list[np.ndarray]]]]
 
 
 Geometry = Union[PolygonCollection, LineStringCollection, PointCollection]

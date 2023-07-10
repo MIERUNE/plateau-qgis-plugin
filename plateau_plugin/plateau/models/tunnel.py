@@ -10,7 +10,8 @@ from .base import (
 )
 
 TUNNEL = FeatureProcessingDefinition(
-    id="Tunnel",
+    id="tun:Tunnel",
+    name="Tunnel",
     target_elements=["tun:Tunnel"],
     attribute_groups=[
         AttributeGroup(
@@ -329,6 +330,7 @@ TUNNEL = FeatureProcessingDefinition(
 
 TUNNEL_BOUNDARY_SURFACE = FeatureProcessingDefinition(
     id="tun:_BoundarySurface",
+    name="BoundarySurface",
     target_elements=[
         "tun:GroundSurface",
         "tun:WallSurface",
@@ -366,6 +368,7 @@ TUNNEL_BOUNDARY_SURFACE = FeatureProcessingDefinition(
 
 TUNNEL_OPENING = FeatureProcessingDefinition(
     id="tun:_Opening",
+    name="Opening",
     target_elements=[
         "tun:Window",
         "tun:Door",
@@ -384,7 +387,8 @@ TUNNEL_OPENING = FeatureProcessingDefinition(
 )
 
 TUNNEL_INSTALLATION = FeatureProcessingDefinition(
-    id="TunnelInstallation",
+    id="tun:TunnelInstallation",
+    name="TunnelInstallation",
     target_elements=[
         "tun:TunnelInstallation",
     ],
@@ -418,7 +422,8 @@ TUNNEL_INSTALLATION = FeatureProcessingDefinition(
 )
 
 TUNNEL_INT_INSTALLATION = FeatureProcessingDefinition(
-    id="IntTunnelInstallation",
+    id="tun:IntTunnelInstallation",
+    name="IntTunnelInstallation",
     target_elements=[
         "tun:IntTunnelInstallation",
     ],
@@ -449,7 +454,8 @@ TUNNEL_INT_INSTALLATION = FeatureProcessingDefinition(
 
 
 TUNNEL_FURNITURE = FeatureProcessingDefinition(
-    id="TunnelFurniture",
+    id="tun:TunnelFurniture",
+    name="TunnelFurniture",
     target_elements=[
         "tun:TunnelFurniture",
     ],

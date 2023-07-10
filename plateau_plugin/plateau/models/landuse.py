@@ -10,10 +10,9 @@ from .base import (
 )
 
 LAND_USE = FeatureProcessingDefinition(
-    id="LandUse",
-    target_elements=[
-        "luse:LandUse",
-    ],
+    id="luse:LandUse",
+    name="LandUse",
+    target_elements=["luse:LandUse"],
     attribute_groups=[
         AttributeGroup(
             base_element=None,

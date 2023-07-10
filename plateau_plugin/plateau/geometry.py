@@ -3,39 +3,96 @@ from typing import Iterable, Optional
 import lxml.etree as et
 import numpy as np
 
+from .appearance import Appearance, Material, Texture
 from .types import Geometry, LineStringCollection, PointCollection, PolygonCollection
 
 
 def parse_geometry(  # noqa: C901 (TODO)
-    element: et._Element, geometry_paths: Iterable[str], nsmap: dict[str, str]
+    element: et._Element,
+    geometry_paths: Iterable[str],
+    nsmap: dict[str, str],
+    appearance: Optional[Appearance],
 ) -> Optional[Geometry]:
     """指定された GML のジオメトリへのパスをもとにマルチパートのジオメトリを構成して返す"""
-    polygon_geoms = []
-    line_geoms = []
-    point_geoms = []
+    # TODO: refactoring
+
+    mpoly_geoms = []
+    mpoly_materials: list[Optional[Material]] = []
+    mpoly_textures: list[Optional[Texture]] = []
+    mpoly_uvs: list[Optional[list[np.ndarray]]] = []
+    mline_geoms = []
+    mpoint_geoms = []
 
     for geometry_path in geometry_paths:
         if geometry_path.endswith(("/gml:Polygon", "/gml:Triangle")):
             for polygon in element.iterfind(geometry_path, nsmap):
-                pos_list = polygon.find("./gml:exterior//gml:posList", nsmap)
-                vertices = np.fromstring(pos_list.text, dtype=np.float64, sep=" ")
-                exterior = vertices.reshape(-1, 3)
-                rings = []
-                rings.append(exterior)
+                # TODO: refactoring
+                poly_rings = []
+                poly_uvs = []
 
-                for pos_list in polygon.iterfind("./gml:interior//gml:posList", nsmap):
-                    vertices = np.fromstring(pos_list.text, dtype=np.float64, sep=" ")
-                    interior = vertices.reshape(-1, 3)
-                    rings.append(interior)
+                # exterior ring
+                ring_elem = polygon.find("./gml:exterior/gml:LinearRing", nsmap)
+                poslist = ring_elem.find("./gml:posList", nsmap)
+                vertices = np.fromstring(poslist.text, dtype=np.float64, sep=" ")
+                ring = vertices.reshape(-1, 3)
+                poly_rings.append(ring)
+                if appearance:
+                    poly_id = polygon.get("{http://www.opengis.net/gml}id")
+                    ring_id = ring_elem.get("{http://www.opengis.net/gml}id")
 
-                polygon_geoms.append(rings)
+                    # TODO: refactoring
+                    mat = None
+                    if poly_id and (m := appearance.target_material.get(poly_id)):
+                        mat = m
+                    else:
+                        sur = polygon.getparent().getparent()
+                        sur_id = sur.get("{http://www.opengis.net/gml}id")
+                        if sur_id and (m := appearance.target_material.get(sur_id)):
+                            mat = m
+                        elif sur.tag == "{http://www.opengis.net/gml}CompositeSurface":
+                            sur2 = sur.getparent().getparent()
+                            sur2_id = sur2.get("{http://www.opengis.net/gml}id")
+                            if sur2_id and (
+                                m := appearance.target_material.get(sur2_id)
+                            ):
+                                mat = m
+
+                    mpoly_materials.append(mat)
+
+                    if tex_uv := appearance.ring_texture.get(ring_id):
+                        tex, uv = tex_uv
+                        assert ring.shape[0] == uv.shape[0]
+                        mpoly_textures.append(tex)
+                        poly_uvs.append(uv)
+                    else:
+                        mpoly_textures.append(None)
+                        poly_uvs.append(None)
+
+                # interior rings
+                for ring_elem in polygon.iterfind(
+                    "./gml:interior/gml:LinearRing", nsmap
+                ):
+                    poslist = ring_elem.find("./gml:posList", nsmap)
+                    vertices = np.fromstring(poslist.text, dtype=np.float64, sep=" ")
+                    ring = vertices.reshape(-1, 3)
+                    poly_rings.append(ring)
+                    if appearance:
+                        uv = None
+                        ring_id = ring_elem.get("{http://www.opengis.net/gml}id")
+                        if tex_uv := appearance.ring_texture.get(ring_id):
+                            _, uv = tex_uv
+                            poly_uvs.append(uv)
+
+                if appearance:
+                    mpoly_uvs.append(poly_uvs)
+                mpoly_geoms.append(poly_rings)
 
         elif geometry_path.endswith("/gml:LineString"):
             for linestring in element.iterfind(geometry_path, nsmap):
-                pos_list = linestring.find("./gml:posList", nsmap)
-                vertices = np.fromstring(pos_list.text, dtype=np.float64, sep=" ")
+                poslist = linestring.find("./gml:posList", nsmap)
+                vertices = np.fromstring(poslist.text, dtype=np.float64, sep=" ")
                 line = vertices.reshape(-1, 3)
-                line_geoms.append(line)
+                mline_geoms.append(line)
 
         elif geometry_path.endswith("/gml:Point"):
             pass
@@ -43,11 +100,20 @@ def parse_geometry(  # noqa: C901 (TODO)
         else:
             raise NotImplementedError(f"Unsupported geometry path: {geometry_path}")
 
-    if polygon_geoms:
-        return PolygonCollection(polygons=polygon_geoms)
-    elif line_geoms:
-        return LineStringCollection(lines=line_geoms)
-    elif point_geoms:
-        return PointCollection(points=np.vstack(point_geoms))
+    if mpoly_geoms:
+        if appearance:
+            assert len(mpoly_geoms) == len(mpoly_textures)
+            assert len(mpoly_geoms) == len(mpoly_uvs)
+            assert len(mpoly_geoms) == len(mpoly_materials)
+        return PolygonCollection(
+            polygons=mpoly_geoms,
+            materials=None,
+            textures=mpoly_textures if appearance else None,
+            uvs=mpoly_uvs if appearance else None,
+        )
+    elif mline_geoms:
+        return LineStringCollection(lines=mline_geoms)
+    elif mpoint_geoms:
+        return PointCollection(points=np.vstack(mpoint_geoms))
 
     return None

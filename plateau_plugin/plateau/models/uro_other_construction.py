@@ -67,6 +67,7 @@ _construction_structure_attribute_attrs = [
 
 OTHER_CONSTRUCTION = FeatureProcessingDefinition(
     id="OtherConstruction",
+    name="uro:OtherConstruction",
     target_elements=["uro:OtherConstruction"],
     attribute_groups=[
         AttributeGroup(
@@ -261,8 +262,8 @@ OTHER_CONSTRUCTION = FeatureProcessingDefinition(
             lod_detection=["./uro:lod0Geometry"],
             collect_all=[
                 "./uro:lod0Geometry//gml:LineString",
-                "./uro:lod0Geometry//gml:Point",
                 "./uro:lod0Geometry//gml:Polygon",
+                "./uro:lod0Geometry//gml:Point",
             ],
         ),
         lod1=GeometricAttribute(
@@ -305,6 +306,7 @@ OTHER_CONSTRUCTION = FeatureProcessingDefinition(
 
 OTHER_CONSTRUCTION_BOUNDARY_SURFACE = FeatureProcessingDefinition(
     id="uro:_BoundarySurface",
+    name="BoundarySurface",
     target_elements=[
         "uro:GroundSurface",
         "uro:WallSurface",
@@ -340,7 +342,8 @@ OTHER_CONSTRUCTION_BOUNDARY_SURFACE = FeatureProcessingDefinition(
 )
 
 OTHER_CONSTRUCTION_INSTALLATION = FeatureProcessingDefinition(
-    id="ConstructionInstallation",
+    id="uro:ConstructionInstallation",
+    name="uro:ConstructionInstallation",
     target_elements=["uro:ConstructionInstallation"],
     attribute_groups=[
         AttributeGroup(
