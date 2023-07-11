@@ -22,12 +22,15 @@ from typing import Any, Optional
 
 from PyQt5.QtCore import QCoreApplication, QDate, QVariant
 from qgis.core import (
+    QgsCoordinateReferenceSystem,
+    QgsCoordinateTransform,
     QgsFeature,
     QgsField,
     # QgsLayerTreeGroup,
     QgsProcessingAlgorithm,
     QgsProcessingException,  # pyright: ignore
     QgsProcessingParameterBoolean,
+    QgsProcessingParameterCrs,
     QgsProcessingParameterFile,
     QgsProject,
     QgsVectorLayer,
@@ -79,10 +82,11 @@ def _convert_to_qt_value(v: Any):
 class LayerManager:
     """Featureの種類とLoDをもとにふさわしい出力先レイヤを返すためのユーティリティ"""
 
-    def __init__(self, force2d: bool):
+    def __init__(self, force2d: bool, crs: QgsCoordinateReferenceSystem):
         self._layers: dict[str, QgsVectorLayer] = {}
         self._parent_map: dict[str, str] = {}
         self._force2d = force2d
+        self._crs = crs
 
     def get_layer(self, cityobj: CityObject) -> QgsVectorLayer:
         """Featureの種類とLoDをもとにふさわしい出力レイヤを取得する"""
@@ -152,7 +156,7 @@ class LayerManager:
                 as2d = self._force2d or lod_def.is2d
 
         _z_suffix = "" if as2d else "Z"
-        crs = "epsg:6668" if as2d else "epsg:6697"
+        crs = self._crs.authid()
         if isinstance(cityobj.geometry, PolygonCollection):
             layer_path = f"MultiPolygon{_z_suffix}?crs={crs}"
         elif isinstance(cityobj.geometry, LineStringCollection):
@@ -207,6 +211,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
     ONLY_HIGHEST_LOD = "ONLY_HIGHEST_LOD"
     LOAD_SEMANTIC_PARTS = "LOAD_SEMANTIC_PARTS"
     FORCE_2D = "FORCE_2D"
+    CRS = "CRS"
 
     def tr(self, string: str):
         return QCoreApplication.translate("Processing", string)
@@ -222,7 +227,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
         self.addParameter(
             QgsProcessingParameterBoolean(
                 self.ONLY_HIGHEST_LOD,
-                self.tr("各地物の最高 LoD のみを読み込む"),
+                self.tr("各地物の最高 LOD のみを読み込む"),
                 defaultValue=True,
             )
         )
@@ -238,6 +243,13 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
                 self.FORCE_2D,
                 self.tr("強制的に2次元化して読み込む"),
                 defaultValue=False,
+            )
+        )
+        self.addParameter(
+            QgsProcessingParameterCrs(
+                self.CRS,
+                self.tr("変換先CRS"),
+                defaultValue="EPSG:6697",
             )
         )
 
@@ -281,8 +293,9 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
         return FileParser(filename, settings)
 
     def processAlgorithm(self, parameters, context, feedback):
+        destination_crs = self.parameterAsCrs(parameters, self.CRS, context)
         force2d = self.parameterAsBoolean(parameters, self.FORCE_2D, context)
-        layers = LayerManager(force2d=force2d)
+        layers = LayerManager(force2d=force2d, crs=destination_crs)
 
         parser = self._make_parser(parameters, context)
         total_count = parser.count_toplevel_cityobjs()
@@ -290,6 +303,12 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
         feedback.pushInfo("都市オブジェクトを読み込んでいます...")
         top_level_count = 0
         count = 0
+
+        crs_transform = QgsCoordinateTransform(
+            QgsCoordinateReferenceSystem("epsg:6697"),
+            destination_crs,
+            QgsProject.instance(),
+        )
 
         # NOTE: 例外のハンドリングはプロセッシングフレームワークに任せている
         for top_level_count, cityobj in parser.iter_cityobjs():
@@ -324,11 +343,13 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
                 as2d = False
                 if cityobj.lod is not None:
                     lod_def = cityobj.processor.lod_list[cityobj.lod]
-                    assert lod_def is not None
-                    as2d = force2d or lod_def.is2d
+                    if lod_def:
+                        as2d = force2d or lod_def.is2d
 
                 # Set geometry
-                feature.setGeometry(to_qgis_geometry(cityobj.geometry, as2d=as2d))
+                geom = to_qgis_geometry(cityobj.geometry, as2d=as2d)
+                geom.transform(crs_transform, transformZ=False)
+                feature.setGeometry(geom)
 
             provider.addFeature(feature)
             count += 1
