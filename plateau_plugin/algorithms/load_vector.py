@@ -152,12 +152,13 @@ class LayerManager:
                 as2d = self._force2d or lod_def.is2d
 
         _z_suffix = "" if as2d else "Z"
+        crs = "epsg:6668" if as2d else "epsg:6697"
         if isinstance(cityobj.geometry, PolygonCollection):
-            layer_path = f"MultiPolygon{_z_suffix}?crs=epsg:6697"
+            layer_path = f"MultiPolygon{_z_suffix}?crs={crs}"
         elif isinstance(cityobj.geometry, LineStringCollection):
-            layer_path = f"MultiLineString{_z_suffix}?crs=epsg:6697"
+            layer_path = f"MultiLineString{_z_suffix}?crs={crs}"
         elif isinstance(cityobj.geometry, PointCollection):
-            layer_path = f"MultiPoint{_z_suffix}?crs=epsg:6697"
+            layer_path = f"MultiPoint{_z_suffix}?crs={crs}"
         elif cityobj.geometry is None:
             layer_path = "NoGeometry"
         else:
