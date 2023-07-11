@@ -294,9 +294,9 @@ class Parser:
                     parent=parent,
                 )
 
-            if self._settings.only_highest_lod:
-                # 各Featureの最高 LoD だけ出力する設定の場合はここで離脱
-                break
+                if self._settings.only_highest_lod:
+                    # 各Featureの最高 LoD だけ出力する設定の場合はここで離脱
+                    break
 
 
 class FileParser:
