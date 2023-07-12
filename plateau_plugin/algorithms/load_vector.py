@@ -204,6 +204,20 @@ class LayerManager:
             layer.addJoin(join)
 
 
+_DESCRIPTION = """PLATEAU 3次元都市モデルを読み込みます。
+
+TODO: WRITE DESCRIPTION HERE
+
+CityGML では同一の建築物などに複数のLOD (詳細度) のデータが用意されていることがあります。デフォルトでは各地物の最も詳細なLODのみを読み込みますが、「各地物の最高 LOD のみを読み込む」 (デフォルトで有効) を無効にすると、すべてのLODを読み込みます。
+
+その他の高度なオプション:
+
+「意味的な子要素に分ける」を有効にすると、一部のモデルのLOD2以上において、壁や屋根、車道や歩道などの意味的な部分に分けて地物を生成します。このオプションを有効にすると生成される地物数が大幅に増えることに注意してください。
+
+「3Dデータを強制的に平面化する」を有効にすると、3次元の情報を捨てて平面データとして読み込みます。高さをもたないモデル (都市計画決定情報など) についてはこのオプションを有効にしなくても平面として読み込みます。
+"""
+
+
 class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
     """Processing algorithm to load PLATEAU 3D City models as vector layers"""
 
@@ -234,14 +248,14 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
         self.addParameter(
             QgsProcessingParameterBoolean(
                 self.LOAD_SEMANTIC_PARTS,
-                self.tr("意味的な子要素に分けて読み込む"),
+                self.tr("意味的な子要素に分ける"),
                 defaultValue=False,
             )
         )
         self.addParameter(
             QgsProcessingParameterBoolean(
                 self.FORCE_2D,
-                self.tr("強制的に2次元化して読み込む"),
+                self.tr("3次元データを強制的に2次元化する"),
                 defaultValue=False,
             )
         )
@@ -249,7 +263,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
             QgsProcessingParameterCrs(
                 self.CRS,
                 self.tr("変換先CRS"),
-                defaultValue="EPSG:6697",
+                defaultValue="EPSG:4326",
             )
         )
 
@@ -269,7 +283,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
         return self.tr("PLATEAU 3D都市モデルを読み込む")
 
     def shortHelpString(self) -> str:
-        return self.tr("PLATEAU PLATEAU PLATEAU")
+        return self.tr(_DESCRIPTION)
 
     def _make_parser(self, parameters, context) -> FileParser:
         """プロセシングの設定をもとにパーサを作る"""
@@ -294,6 +308,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
 
     def processAlgorithm(self, parameters, context, feedback):
         destination_crs = self.parameterAsCrs(parameters, self.CRS, context)
+        feedback.pushInfo(f"{destination_crs}")
         force2d = self.parameterAsBoolean(parameters, self.FORCE_2D, context)
         layers = LayerManager(force2d=force2d, crs=destination_crs)
 

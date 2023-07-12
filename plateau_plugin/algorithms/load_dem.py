@@ -42,6 +42,12 @@ property list uchar uint vertex_indices
 end_header\n"""
 
 
+_DESCRIPTION = """PLATEAU の 地形モデル (./dem/) をメッシュレイヤとして読み込みます。
+
+TODO: WRITE DESCRIPTION HERE
+"""
+
+
 def convert_citygml_relief_to_ply(src_filename: str, dst_filename: str) -> None:
     doc = et.parse(src_filename, None)
     index_map = {}
@@ -107,7 +113,7 @@ class PlateauDEMLoaderAlrogithm(QgsProcessingAlgorithm):
         return None
 
     def displayName(self):
-        return self.tr("PLATEAU 地形モデルをメッシュとして読み込む")
+        return self.tr(_DESCRIPTION)
 
     def shortHelpString(self) -> str:
         return self.tr("PLATEAU PLATEAU PLATEAU")
