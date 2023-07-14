@@ -246,7 +246,7 @@ URF_QUASI_URBAN_PLANNING_AREA = FeatureProcessingDefinition(
 
 URF_AREA_CLASSIFICATION = FeatureProcessingDefinition(
     id="urf:AreaClassification",
-    name="地域地区",
+    name="区域区分",
     target_elements=["urf:AreaClassification"],
     attribute_groups=[
         *_base_attributes,
@@ -283,7 +283,7 @@ URF_AREA_CLASSIFICATION = FeatureProcessingDefinition(
 
 URF_DISTRICTS_AND_ZONES = FeatureProcessingDefinition(
     id="urf:DistrictsAndZones",
-    name="区域区分",
+    name="地域地区",
     target_elements=[
         "urf:AircraftNoiseControlZone",
         "urf:ConservationZoneForClustersOfTraditionalStructures",
