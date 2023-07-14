@@ -113,10 +113,10 @@ class PlateauDEMLoaderAlrogithm(QgsProcessingAlgorithm):
         return None
 
     def displayName(self):
-        return self.tr(_DESCRIPTION)
+        return self.tr("PLATEAU 地形モデルをメッシュとして読み込む")
 
     def shortHelpString(self) -> str:
-        return self.tr("PLATEAU PLATEAU PLATEAU")
+        return self.tr(_DESCRIPTION)
 
     def processAlgorithm(self, parameters, context, feedback):
         input_filename = self.parameterAsFile(parameters, self.INPUT, context)
