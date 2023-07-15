@@ -54,19 +54,18 @@ _TYPE_TO_QT_TYPE = {
     "integer": QVariant.Int,
     "boolean": QVariant.Bool,
     "date": QVariant.Date,
-    "[]string": QVariant.StringList,
+    "[]string": QVariant.String,  # Comma-separated string
     "object": QVariant.String,  # JSON string
     "[]object": QVariant.String,  # JSON string
 }
 
 
-def _convert_to_qt_value(v: Any):
+def _convert_to_qt_value(v: Any) -> Any:
     if isinstance(v, list):
         if not v:
-            return []
-
-        if isinstance(v[0], str):
-            return v
+            return None
+        elif isinstance(v[0], str):
+            return ",".join(v)
         else:
             return json.dumps(v, ensure_ascii=False)
     else:
