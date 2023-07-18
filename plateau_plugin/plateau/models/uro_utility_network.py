@@ -100,21 +100,21 @@ _common_property_groups = [
         ],
     ),
     # FIXME: cityFurnitureDetailAttribute は多重度が[0..*] (入れ子)
-    AttributeGroup(
-        base_element="./uro:cityFurnitureDetailAttribute/uro:CityFurnitureDetailAttribute",
-        attributes=[
-            Attribute(
-                name="facilityType",
-                path="./uro:facilityType",
-                datatype="string",
-            ),
-            Attribute(
-                name="description",
-                path="./uro:description",
-                datatype="string",
-            ),
-        ],
-    ),
+    # AttributeGroup(
+    #     base_element="./uro:cityFurnitureDetailAttribute/uro:CityFurnitureDetailAttribute",
+    #     attributes=[
+    #         Attribute(
+    #             name="facilityType",
+    #             path="./uro:facilityType",
+    #             datatype="string",
+    #         ),
+    #         Attribute(
+    #             name="description",
+    #             path="./uro:description",
+    #             datatype="string",
+    #         ),
+    #     ],
+    # ),
 ]
 
 

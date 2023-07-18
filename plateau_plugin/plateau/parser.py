@@ -234,7 +234,6 @@ class Parser:
                     if not nogeom_emitted:
                         yield nogeom_obj
                         nogeom_emitted = True
-                    print(child_obj.geometry)
                     yield child_obj
 
         # 子Feature (部分要素) を個別に読み込む設定の場合は、子Featureを探索する

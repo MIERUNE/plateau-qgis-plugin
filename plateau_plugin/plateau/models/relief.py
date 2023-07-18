@@ -16,7 +16,7 @@ RELIEF = FeatureProcessingDefinition(
     target_elements=["dem:ReliefFeature"],
     attribute_groups=[],
     geometries=GeometricAttributes(
-        # TODO: ひとまず TIN のみに対応しているが...
+        # TODO: ひとまず TIN のみに対応している
         lod_n="dem:lod",
         lod_n_paths=GeometricAttribute(
             lod_detection=[],

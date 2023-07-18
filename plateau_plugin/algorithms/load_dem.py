@@ -42,9 +42,7 @@ property list uchar uint vertex_indices
 end_header\n"""
 
 
-_DESCRIPTION = """PLATEAU の 地形モデル (./dem/) をメッシュレイヤとして読み込みます。
-
-TODO: WRITE DESCRIPTION HERE
+_DESCRIPTION = """PLATEAU の 地形モデル (./dem/) を QGIS のメッシュレイヤとして読み込みます。
 """
 
 
@@ -97,6 +95,7 @@ class PlateauDEMLoaderAlrogithm(QgsProcessingAlgorithm):
                 self.OUTPUT_MESH,
                 self.tr("出力メッシュファイル"),
                 fileFilter=self.tr("Stanford PLY メッシュファイル (*.ply)"),
+                optional=True,
             )
         )
 

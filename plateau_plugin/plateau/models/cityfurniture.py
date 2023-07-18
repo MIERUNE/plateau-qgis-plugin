@@ -71,22 +71,22 @@ CITY_FURNITURE = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        # FIXME: cityFurnitureDetailAttribute は多重度が[0..*] (入れ子) なのでこれは正しくない
-        AttributeGroup(
-            base_element="./uro:cityFurnitureDetailAttribute/uro:CityFurnitureDetailAttribute",
-            attributes=[
-                Attribute(
-                    name="facilityType",
-                    path="./uro:facilityType",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="description",
-                    path="./uro:description",
-                    datatype="string",
-                ),
-            ],
-        ),
+        # # FIXME: cityFurnitureDetailAttribute は多重度が[0..*] (入れ子) なのでこれは正しくない
+        # AttributeGroup(
+        #     base_element="./uro:cityFurnitureDetailAttribute/uro:CityFurnitureDetailAttribute",
+        #     attributes=[
+        #         Attribute(
+        #             name="facilityType",
+        #             path="./uro:facilityType",
+        #             datatype="string",
+        #         ),
+        #         Attribute(
+        #             name="description",
+        #             path="./uro:description",
+        #             datatype="string",
+        #         ),
+        #     ],
+        # ),
     ],
     dm_attr_container_path="./uro:frnDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
