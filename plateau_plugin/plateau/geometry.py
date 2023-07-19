@@ -107,7 +107,7 @@ def parse_geometry(  # noqa: C901 (TODO)
             assert len(mpoly_geoms) == len(mpoly_materials)
         return PolygonCollection(
             polygons=mpoly_geoms,
-            materials=None,
+            materials=mpoly_materials if appearance else None,
             textures=mpoly_textures if appearance else None,
             uvs=mpoly_uvs if appearance else None,
         )
