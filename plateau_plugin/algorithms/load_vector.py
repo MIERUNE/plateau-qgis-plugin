@@ -203,7 +203,7 @@ class LayerManager:
             layer.addJoin(join)
 
 
-_DESCRIPTION = """PLATEAU 3D都市モデルを読み込みます。
+_DESCRIPTION = """PLATEAU 3D都市モデルのCityGML (.gml) ファイルを読み込みます。
 
 同一の都市オブジェクトに複数のLOD (詳細度) が用意されている場合、デフォルトでは最も詳細なLODのみを読み込みます。すべてのLODを読み込みたい場合は「各地物の最高 LOD のみを読み込む」を無効化してください。
 
@@ -307,7 +307,6 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
 
     def processAlgorithm(self, parameters, context, feedback):
         destination_crs = self.parameterAsCrs(parameters, self.CRS, context)
-        feedback.pushInfo(f"{destination_crs}")
         force2d = self.parameterAsBoolean(parameters, self.FORCE_2D, context)
         layers = LayerManager(force2d=force2d, crs=destination_crs)
 

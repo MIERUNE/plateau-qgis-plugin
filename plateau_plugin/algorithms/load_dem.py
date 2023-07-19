@@ -42,7 +42,7 @@ property list uchar uint vertex_indices
 end_header\n"""
 
 
-_DESCRIPTION = """PLATEAU の 地形モデル (./dem/) を QGIS のメッシュレイヤとして読み込みます。
+_DESCRIPTION = """PLATEAU の地形モデル (./dem/) の CityGML ファイルを QGIS のメッシュレイヤとして読み込みます。
 """
 
 
