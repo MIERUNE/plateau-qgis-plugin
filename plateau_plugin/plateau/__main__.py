@@ -31,18 +31,22 @@ def load_texture(basepath: Path, uri: str) -> trimesh.visual.texture.SimpleMater
         return tex
     else:
         img = Image.open(basepath / uri)
-        texmat = trimesh.visual.texture.SimpleMaterial(image=img, diffuse=(255, 255, 255))
+        texmat = trimesh.visual.texture.SimpleMaterial(
+            image=img, diffuse=(255, 255, 255)
+        )
         loaded_textures[uri] = texmat
         return texmat
 
-def load_polygons(
-        basepath: Path,
-        polygons: list[list[np.ndarray]],
-        materials: Sequence[Material] | None,
-        textures,
-        uvs,
-        ) -> tuple[np.ndarray, np.ndarray, np.ndarray, trimesh.visual.texture.TextureVisuals | None]:
 
+def load_polygons(
+    basepath: Path,
+    polygons: list[list[np.ndarray]],
+    materials: Sequence[Material] | None,
+    textures,
+    uvs,
+) -> tuple[
+    np.ndarray, np.ndarray, np.ndarray, trimesh.visual.texture.TextureVisuals | None
+]:
     all_vertices = np.empty((0, 3), dtype=np.float64)
     all_faces = np.empty((0, 3), dtype=np.uint32)
     face_colors = np.empty((0, 3), dtype=np.uint8)
@@ -105,10 +109,13 @@ def load_polygons(
         all_vertices = np.vstack((all_vertices, vertices))
 
     if texmat:
-        assert len(all_uvs) == len(all_vertices), f"uv={len(all_uvs)}, verts={len(all_vertices)}"
-    tex_visual = trimesh.visual.TextureVisuals(uv=all_uvs, material=texmat) if texmat else None
+        assert len(all_uvs) == len(
+            all_vertices
+        ), f"uv={len(all_uvs)}, verts={len(all_vertices)}"
+    tex_visual = (
+        trimesh.visual.TextureVisuals(uv=all_uvs, material=texmat) if texmat else None
+    )
     return all_vertices, all_faces, face_colors, tex_visual
-
 
 
 if __name__ == "__main__":
@@ -117,11 +124,13 @@ if __name__ == "__main__":
 
     # settings = ParseSettings(load_semantic_parts=True)
     for filename in sys.argv[1:]:
-        settings = ParseSettings(only_highest_lod=True, load_semantic_parts=False, load_apperance=True)
+        settings = ParseSettings(
+            only_highest_lod=False, load_semantic_parts=False, load_apperance=True
+        )
         parser = FileParser(filename, settings)
         parser.load_apperance()
         for count, cityobj in parser.iter_cityobjs():
-            if cityobj.lod is None or cityobj.lod < 3:
+            if cityobj.lod is None or cityobj.lod != 2:
                 continue
 
             print(
@@ -159,4 +168,4 @@ if __name__ == "__main__":
         ),
     )
     scene.set_camera((0, 0, 0), 5)
-    scene.show(background=[210,240,255,255])
+    scene.show(background=[210, 240, 255, 255])
