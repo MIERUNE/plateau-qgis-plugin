@@ -38,16 +38,18 @@ class PlateauPlugin:
         self.provider = PlateauProcessingProvider()
         QgsApplication.processingRegistry().addProvider(self.provider)
 
-        icon = self.provider.icon()
-        self._toolbar_action = QAction(
-            icon, "PLATEAU 3D都市モデルを読み込む", self.iface.mainWindow()
-        )
-        self._toolbar_action.triggered.connect(self._show_processing_dialog)
-        self.iface.addToolBarIcon(self._toolbar_action)
+        if self.iface:
+            icon = self.provider.icon()
+            self._toolbar_action = QAction(
+                icon, "PLATEAU 3D都市モデルを読み込む", self.iface.mainWindow()
+            )
+            self._toolbar_action.triggered.connect(self._show_processing_dialog)
+            self.iface.addToolBarIcon(self._toolbar_action)
 
     def _show_processing_dialog(self):
         execAlgorithmDialog("plateau_plugin:load_as_vector", {})
 
     def unload(self):
-        self.iface.removeToolBarIcon(self._toolbar_action)
+        if self.iface:
+            self.iface.removeToolBarIcon(self._toolbar_action)
         QgsApplication.processingRegistry().removeProvider(self.provider)
