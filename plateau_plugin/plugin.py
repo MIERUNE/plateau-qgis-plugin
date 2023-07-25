@@ -16,6 +16,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+from processing import execAlgorithmDialog
+from PyQt5.QtWidgets import QAction
 from qgis.core import QgsApplication
 from qgis.gui import QgisInterface
 
@@ -32,5 +34,16 @@ class PlateauPlugin:
         self.provider = PlateauProcessingProvider()
         QgsApplication.processingRegistry().addProvider(self.provider)
 
+        icon = self.provider.icon()
+        self._toolbar_action = QAction(
+            icon, "PLATEAU 3D都市モデルを読み込む", self.iface.mainWindow()
+        )
+        self._toolbar_action.triggered.connect(self._show_processing_dialog)
+        self.iface.addToolBarIcon(self._toolbar_action)
+
+    def _show_processing_dialog(self):
+        execAlgorithmDialog("plateau_plugin:load_as_vector", {})
+
     def unload(self):
+        self.iface.removeToolBarIcon(self._toolbar_action)
         QgsApplication.processingRegistry().removeProvider(self.provider)
