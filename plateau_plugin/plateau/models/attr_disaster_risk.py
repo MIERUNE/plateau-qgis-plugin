@@ -34,8 +34,8 @@ ATTR_DISASTER_RISK_RIVER_FLOODING = FeatureProcessingDefinition(
                     },
                 ),
                 Attribute(
-                    name="orgRank",
-                    path="./uro:orgRank",
+                    name="rankOrg",
+                    path="./uro:rankOrg",
                     datatype="string",
                 ),
                 Attribute(
@@ -99,8 +99,8 @@ ATTR_DISASTER_RISK_TSUNAMI = FeatureProcessingDefinition(
                     },
                 ),
                 Attribute(
-                    name="orgRank",
-                    path="./uro:orgRank",
+                    name="rankOrg",
+                    path="./uro:rankOrg",
                     datatype="string",
                 ),
                 Attribute(
@@ -141,8 +141,8 @@ ATTR_DISASTER_RISK_HIGH_TIDE = FeatureProcessingDefinition(
                     },
                 ),
                 Attribute(
-                    name="orgRank",
-                    path="./uro:orgRank",
+                    name="rankOrg",
+                    path="./uro:rankOrg",
                     datatype="string",
                 ),
                 Attribute(
@@ -183,8 +183,8 @@ ATTR_DISASTER_RISK_INLAND_FLOODING = FeatureProcessingDefinition(
                     },
                 ),
                 Attribute(
-                    name="orgRank",
-                    path="./uro:orgRank",
+                    name="rankOrg",
+                    path="./uro:rankOrg",
                     datatype="string",
                 ),
                 Attribute(
