@@ -1,6 +1,6 @@
 # PLATEAUデータ表⽰⽤QGISプラグイン(PLATEAU 3D City Model Plugin)
 
-<img src="picture/image01.png" width="700">
+<img src="picture/screen01.png" width="700">
 
 ## 概要
 本プラグイン(PLATEAU 3D City Model Plugin)は、QGIS上でCityGMLを読み込みLOD1の地物を読み込むためのQGIS用プラグインです。
