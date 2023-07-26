@@ -73,8 +73,8 @@ ATTR_DISASTER_RISK_RIVER_FLOODING = FeatureProcessingDefinition(
 )
 
 ATTR_DISASTER_RISK_TSUNAMI = FeatureProcessingDefinition(
-    id="uro:TsumaniRisk",
-    name="TsumaniRisk",
+    id="uro:TsunamiRisk",
+    name="TsunamiRisk",
     target_elements=[
         "uro:BuildingTsunamiRiskAttribute",
         "uro:TsunamiRiskAttribute",
