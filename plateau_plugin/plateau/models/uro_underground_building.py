@@ -46,11 +46,11 @@ UNDERGROUND_BUILDING = FeatureProcessingDefinition(
                     datatype="[]string",  # NOTE: 階数分出現しうる
                     # NOTE: []string でよいかどうか
                 ),
-                # Attribute(
-                #     name="address",
-                #     path="./bldg:address",
-                #     datatype="string",  # TODO: xAL をどう読むか
-                # ),
+                Attribute(
+                    name="address",
+                    path="./bldg:address",
+                    datatype="xAL",
+                ),
             ],
         ),
         AttributeGroup(

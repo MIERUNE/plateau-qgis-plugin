@@ -54,11 +54,11 @@ BUILDING = FeatureProcessingDefinition(
                     path="./bldg:storeysBelowGround",
                     datatype="integer",
                 ),
-                # Attribute(
-                #     name="address",
-                #     path="./bldg:address",
-                #     datatype="string",  # TODO: xAL をどう読むか
-                # ),
+                Attribute(
+                    name="address",
+                    path="./bldg:address",
+                    datatype="xAL",
+                ),
             ],
         ),
         AttributeGroup(

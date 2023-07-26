@@ -112,6 +112,14 @@ class Parser:
                             v = codelist_lookup(pcl, path, v)
                         values.append(v)
                     props[prop.name] = values
+                elif prop.datatype == "xAL":
+                    if (child_elem := base_elem.find(prop.path, nsmap)) is not None:
+                        value = " ".join(
+                            s.strip() for s in child_elem.itertext() if s.strip()
+                        )
+                        props[prop.name] = value
+                    else:
+                        continue
                 else:
                     if (child_elem := base_elem.find(prop.path, nsmap)) is not None:
                         value = child_elem.text

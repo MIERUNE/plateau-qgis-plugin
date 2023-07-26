@@ -17,6 +17,7 @@ AttributeDatatype = Literal[
     "date",
     "object",
     "[]object",
+    "xAL",
 ]
 
 
