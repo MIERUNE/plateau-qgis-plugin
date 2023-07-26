@@ -57,6 +57,7 @@ _TYPE_TO_QT_TYPE = {
     "[]string": QVariant.String,  # Comma-separated string
     "object": QVariant.String,  # JSON string
     "[]object": QVariant.String,  # JSON string
+    "xAL": QVariant.String,  # JSON string
 }
 
 
