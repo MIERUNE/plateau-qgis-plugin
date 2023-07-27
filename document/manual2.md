@@ -1,7 +1,13 @@
 # PLATEAU 3D City Model Plugin
 このプラグインはQGIS上でCityGMLを読み込みLOD1の地物を読み込むためのQGIS用プラグインです。
 
-<img src="picture/image01.png" width="500">
+#### PLATEAU 地形モデル以外
+
+<img src="picture/screen01.png" width="500">
+
+#### PLATEAU 地形モデル
+
+<img src="picture/screen02.png" width="500">
 
 ## はじめに
 
@@ -68,14 +74,16 @@ CityGMLファイルを読み込み、ポリゴンレイヤとしてQGIS上に表
 
 ## データの準備
 本プラグインにはCityGMLデータが必要です。CityGMLデータは以下のサイトからダウンロードできます。
-<URL>
+
+[CityGMLデータ](https://www.geospatial.jp/ckan/dataset)
+
 ダウンロードしたZIPファイルを解凍後に作成されるフォルダー内の「xxxxx.gml」ファイルが必要となります。
 
 ## 実行手順 (PLATEAU 地形モデル以外)
 
 1. メニュータブの[プロセシング]から[ツールボックス]を選択、ツールボックスが表示されたら、[Project PLATEAU]をダブルクリックし、[PLATEAU 3D都市モデルを読み込む]をダブルクリックしプラグインを起動する。
 
-<img src="picture/image01.png" width="500">
+<img src="picture/menu01.png" width="500">
 
 2. 本プラグインの設定画面において、各項目を設定
 
@@ -105,7 +113,7 @@ CityGMLファイルを読み込み、ポリゴンレイヤとしてQGIS上に表
 
 1. メニュータブの[プロセシング]から[ツールボックス]を選択、ツールボックスが表示されたら、[Project PLATEAU]をダブルクリックし、[PLATEAU 地形モデルをメッシュとして読み込む]をダブルクリックしプラグインを起動する。
 
-<img src="picture/operation02.png" width="500">
+<img src="picture/menu02.png" width="500">
 
 2. 本プラグインの設定画面において、各項目を設定
 
@@ -117,14 +125,13 @@ CityGMLファイルを読み込み、ポリゴンレイヤとしてQGIS上に表
 > 処理が完了すると、QGISのレイヤパネルに読み込まれたデータが表示されます。
 
 
+## 本プラグインは個別のCityGMLファイルを読み込む方法の他にバッチプロセスによる複数のCityGMLファイルを指定し一括読み込みが可能です。
 
-##  バッチプロセスでの実行 (PLATEAU 地形モデル以外)
-
-本プラグインは個別のCityGMLファイルを読み込む方法の他にバッチプロセスによる複数のCityGMLファイルを指定しての一括読み込みが可能です。
+###  バッチプロセスでの実行 (PLATEAU 地形モデル以外)
 
 1. メニュータブの[プロセシング]から[ツールボックス]を選択、ツールボックスが表示されたら、[Project PLATEAU]をダブルクリックし、[PLATEAU 3D都市モデルを読み込む]をダブルクリックしプラグインを起動する。
 
-<img src="picture/image01.png" width="500">
+<img src="picture/menu01.png" width="500">
 
 2. バッチプロセスで実行をクリック
 
@@ -136,8 +143,29 @@ CityGMLファイルを読み込み、ポリゴンレイヤとしてQGIS上に表
     - 各地物の最高LODのみを読み込む (デフォルトYes)
     - 意味的な子要素に分ける (デフォルトNo)
     - 3次元データを強制的に2次元化する (デフォルトNo)
-    - 変換先CRS ((デフォルトで EPSG:4326 (WGS84)))
+    - 変換先CRS (デフォルトで EPSG:4326 [WGS84])
 
-4. 完了時にレイヤーを読み込む
-5. ｢実行｣を押下して処理を実行
+1. 完了時にレイヤーを読み込む
+2. ｢実行｣を押下して処理を実行
 
+<img src="picture/operation04.png" width="500">
+
+###  バッチプロセスでの実行 (PLATEAU 地形モデル)
+
+1. メニュータブの[プロセシング]から[ツールボックス]を選択、ツールボックスが表示されたら、[Project PLATEAU]をダブルクリックし、[PLATEAU 地形モデルをメッシュとして読み込む]をダブルクリックしプラグインを起動する。
+
+<img src="picture/menu02.png" width="500">
+
+2. バッチプロセスで実行をクリック
+
+<img src="picture/operation05.png" width="500">
+
+3. パラメータタブにおいて、以下の項目を読み込みたいCityGMLの数だけ設定する。
+
+    - PLATEAU CityGMLファイル
+    - 出力メッシュファイル (デフォルト空白)
+
+1. 完了時にレイヤーを読み込む
+2. ｢実行｣を押下して処理を実行
+
+<img src="picture/operation06.png" width="500">
