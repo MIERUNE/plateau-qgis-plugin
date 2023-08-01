@@ -1,5 +1,4 @@
 # PLATEAU 3D City Model Plugin
-このプラグインはQGIS上でCityGMLを読み込みLOD1の地物を読み込むためのQGIS用プラグインです。
 
 #### PLATEAU 地形モデル以外
 
@@ -13,7 +12,7 @@
 
 ### プラグインの概要
 
-CityGMLを読み込みプラグイン（PLATEAU 3D City Model Plugin、以降「本プラグイン」と呼称）は、QGIS上でCityGMLファイルを読み込みLOD1に相当する地物をQGIS上に表示することが出来るプラグインです。データは一時スクラッチレイヤに読み込まれます。
+CityGML読み込みプラグイン（PLATEAU 3D City Model Plugin、以降「本プラグイン」と呼称）は、QGIS上でCityGMLファイルを読み込みLOD1に相当する地物をQGIS上に表示することが出来るプラグインです。データは一時スクラッチレイヤに読み込まれます。
 
 ### 対応データ形式
 
