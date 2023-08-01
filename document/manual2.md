@@ -26,7 +26,7 @@ OS：Windows10
 QGIS：バージョン3.28以上
 QGISのインストールについては、以下を参照ください
 
-QGISインストーラー
+[QGISインストーラー](https://www.qgis.org/ja/site/forusers/alldownloads.html)
 
 
 ## インストール方法
@@ -151,6 +151,29 @@ QGISを起動
 
 <img src="picture/operation04.png" width="500">
 
+#### 上記以外にも、オートフィル機能を使って、複数のCityGMLファイルを一括読み込みすることが可能です。
+
+1.オートフィルを選択
+2.ファイルを選択
+
+<img src="picture/operation07.png" width="500">
+
+3.フォルダーから読み込みたいCityGMLファイルを複数選択
+
+<img src="picture/operation08.png" width="500">
+
+
+####  フィルダウン機能を使ってオプションを一括登録することも可能です
+一番上の行の選択項目が全ての行に反映されます。
+
+1.１番上の行の選択項目を設定し、オートフィルを選択
+2.フィルダウンを選択
+<img src="picture/operation09.png" width="500">
+
+3.選択列の項目が全て１番目の値に全て変更されます
+
+<img src="picture/operation10.png" width="500">
+
 ###  バッチプロセスでの実行 (PLATEAU 地形モデル)
 
 1. メニュータブの[プロセシング]から[ツールボックス]を選択、ツールボックスが表示されたら、[Project PLATEAU]をダブルクリックし、[PLATEAU 地形モデルをメッシュとして読み込む]をダブルクリックしプラグインを起動する。
@@ -170,3 +193,14 @@ QGISを起動
 2. ｢実行｣を押下して処理を実行
 
 <img src="picture/operation06.png" width="500">
+
+#### 上記以外にも、オートフィル機能を使って、複数のCityGMLファイルを一括読み込みすることが可能です。
+
+1.オートフィルを選択
+2.ファイルを選択
+
+<img src="picture/operation11.png" width="500">
+
+3.フォルダーから読み込みたいCityGMLファイルを複数選択
+
+<img src="picture/operation12.png" width="500">
