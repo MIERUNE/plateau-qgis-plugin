@@ -76,7 +76,7 @@ QGISを起動
 ## データの準備
 本プラグインにはCityGMLデータが必要です。CityGMLデータは以下のサイトからダウンロードできます。
 
-[CityGMLデータ](https://www.geospatial.jp/ckan/dataset)
+[CityGMLデータ](https://www.geospatial.jp/ckan/dataset/plateau)
 
 ダウンロードしたZIPファイルを解凍後に作成されるフォルダー内の「xxxxx.gml」ファイルが必要となります。
 
