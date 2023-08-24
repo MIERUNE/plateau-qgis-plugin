@@ -25,7 +25,6 @@ from qgis.core import (
     # QgsLayerTreeGroup,
     QgsProject,
     QgsVectorLayer,
-    QgsVectorLayerJoinInfo,
 )
 
 from ...plateau.types import (
@@ -52,11 +51,14 @@ _TYPE_TO_QT_TYPE = {
 class LayerManager:
     """Featureの種類とLoDをもとにふさわしい出力先レイヤを返すためのユーティリティ"""
 
-    def __init__(self, force2d: bool, crs: QgsCoordinateReferenceSystem):
+    def __init__(
+        self, force2d: bool, crs: QgsCoordinateReferenceSystem, append_mode: bool
+    ):
         self._layers: dict[str, QgsVectorLayer] = {}
         self._parent_map: dict[str, str] = {}
         self._force2d = force2d
         self._crs = crs
+        self._append_mode = append_mode
 
     def get_layer(self, cityobj: CityObject) -> QgsVectorLayer:
         """Featureの種類とLoDをもとにふさわしい出力レイヤを取得する"""
@@ -65,6 +67,22 @@ class LayerManager:
         if (layer := self._layers.get(layer_id)) is not None:
             # if already exists
             return layer
+
+        if self._append_mode:
+            # プロジェクト中に存在する同名の既存レイヤに追記する
+            layer_name = self._get_layer_name(cityobj)
+            for layer in QgsProject.instance().mapLayersByName(layer_name):
+                # 既存レイヤに追記できる条件:
+                # 見つかったレイヤがベクタレイヤ かつ
+                # ジオメトリ型が一致する かつ
+                # CRSが一致する (または NoGeometry 型である)
+                geom_type_name = self._get_geometry_type_name(cityobj)
+                if isinstance(layer, QgsVectorLayer) and (
+                    layer.wkbType().name == geom_type_name
+                    and (geom_type_name == "NoGeometry" or layer.crs() == self._crs)
+                ):
+                    self._layers[layer_id] = layer
+                    return layer
 
         return self._add_new_layer(layer_id, cityobj)
 
@@ -159,22 +177,25 @@ class LayerManager:
         for layer in self._layers.values():
             layer.updateFields()
         QgsProject.instance().addMapLayers(self._layers.values(), True)
-        # グループを作る?
+
+        # NOTE: グループを作る?
         # QgsProject.instance().addMapLayers(layers.layers(), False)
         # group = QgsProject.instance().layerTreeRoot().addGroup(Path(filename).stem)
-        self._make_joins()
 
-    def _make_joins(self):
-        """子Feature->親Featureのテーブル結合を生成する"""
-        for layer_id, parent_id in self._parent_map.items():
-            layer = self._layers.get(layer_id)
-            parent_layer = self._layers.get(parent_id)
-            if layer is None or parent_layer is None:
-                continue
-            join = QgsVectorLayerJoinInfo()
-            join.setJoinLayerId(parent_layer.id())
-            join.setJoinLayer(parent_layer)
-            join.setJoinFieldName("id")
-            join.setTargetFieldName("parent")
-            join.setUsingMemoryCache(True)
-            layer.addJoin(join)
+        # NOTE: テーブル結合を自動で生成する?
+        # self._make_joins()
+
+    # def _make_joins(self):
+    #     """子Feature->親Featureのテーブル結合を生成する"""
+    #     for layer_id, parent_id in self._parent_map.items():
+    #         layer = self._layers.get(layer_id)
+    #         parent_layer = self._layers.get(parent_id)
+    #         if layer is None or parent_layer is None:
+    #             continue
+    #         join = QgsVectorLayerJoinInfo()
+    #         join.setJoinLayerId(parent_layer.id())
+    #         join.setJoinLayer(parent_layer)
+    #         join.setJoinFieldName("id")
+    #         join.setTargetFieldName("parent")
+    #         join.setUsingMemoryCache(True)
+    #         layer.addJoin(join)
