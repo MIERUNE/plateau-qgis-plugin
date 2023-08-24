@@ -118,13 +118,15 @@ class FeatureProcessingDefinition:
 
     def detect_lods(self, elem: et._Element, nsmap: dict[str, str]) -> tuple[bool, ...]:
         """
-        どの LoD が存在するかを返す。例: LoD1と2のとき → (False, True, True, False, False)
+        どの LoD が存在するかを返す。例: LoD1と2が存在するとき → (False, True, True, False, False)
         """
         det = self.geometries
         if det.lod_n:
+            # dem では <lod>1</lod> のスタイルでLODが記述されている
             lod = int(elem.find(det.lod_n, BASE_NS).text)
             return tuple(lod == i for i in range(5))
         else:
+            # そのほかの場合
             return tuple(
                 bool(
                     em
