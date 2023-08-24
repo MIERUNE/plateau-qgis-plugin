@@ -192,6 +192,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
             # Set attributes
             feature.setAttribute("id", cityobj.id)
             feature.setAttribute("type", cityobj.type)
+            feature.setAttribute("lod", cityobj.lod)
             feature.setAttribute("name", cityobj.name)
             feature.setAttribute(
                 "creationDate",
