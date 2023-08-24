@@ -110,6 +110,7 @@ class LayerManager:
         attributes.extend(
             [
                 QgsField("type", QVariant.String),
+                QgsField("lod", QVariant.Int),
                 QgsField("name", QVariant.String),
                 QgsField("creationDate", QVariant.Date),
                 QgsField("terminationDate", QVariant.Date),
