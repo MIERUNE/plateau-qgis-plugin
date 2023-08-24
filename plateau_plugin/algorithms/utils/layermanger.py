@@ -33,7 +33,6 @@ from ...plateau.types import (
     LineStringCollection,
     PointCollection,
     PolygonCollection,
-    get_geometry_type_name,
     get_table_definition,
 )
 
@@ -78,9 +77,7 @@ class LayerManager:
         name = " / ".join(reversed(s))
         if cityobj.lod is not None:
             assert cityobj.geometry is not None
-            name += (
-                f":LoD={cityobj.lod}):type={get_geometry_type_name(cityobj.geometry)}"
-            )
+            name += f":LoD={cityobj.lod}):type={self._get_geometry_type_name(cityobj)}"
         return name
 
     def _get_layer_name(self, cityobj: CityObject) -> str:
@@ -93,6 +90,28 @@ class LayerManager:
         if cityobj.lod is not None:
             name += f" (LoD{cityobj.lod})"
         return name
+
+    def _get_geometry_type_name(self, cityobj: CityObject):
+        as2d = False
+        if cityobj.lod is not None:
+            lod_def = cityobj.processor.lod_list[cityobj.lod]
+            if lod_def:
+                as2d = self._force2d or lod_def.is2d
+
+        _z_suffix = "" if as2d else "Z"
+        geometry = cityobj.geometry
+        if geometry is None:
+            return "NoGeometry"
+        if isinstance(geometry, PolygonCollection):
+            return "MultiPolygon" + _z_suffix
+        elif isinstance(geometry, LineStringCollection):
+            return "MultiLineString" + _z_suffix
+        elif isinstance(geometry, PointCollection):
+            return "MultiPoint" + _z_suffix
+        else:
+            raise NotImplementedError(
+                f"Geometry type {type(geometry)} is not implemented."
+            )
 
     def _add_new_layer(self, layer_id: str, cityobj: CityObject) -> QgsVectorLayer:
         """新たなレイヤを作る"""
@@ -121,24 +140,9 @@ class LayerManager:
             attributes.append(QgsField(field.name, _TYPE_TO_QT_TYPE[field.datatype]))
 
         # make a new layer
-        as2d = False
-        if cityobj.lod is not None:
-            lod_def = cityobj.processor.lod_list[cityobj.lod]
-            if lod_def:
-                as2d = self._force2d or lod_def.is2d
-
-        _z_suffix = "" if as2d else "Z"
         crs = self._crs.authid()
-        if isinstance(cityobj.geometry, PolygonCollection):
-            layer_path = f"MultiPolygon{_z_suffix}?crs={crs}"
-        elif isinstance(cityobj.geometry, LineStringCollection):
-            layer_path = f"MultiLineString{_z_suffix}?crs={crs}"
-        elif isinstance(cityobj.geometry, PointCollection):
-            layer_path = f"MultiPoint{_z_suffix}?crs={crs}"
-        elif cityobj.geometry is None:
-            layer_path = "NoGeometry"
-        else:
-            raise RuntimeError(f"Unsupported geometry type: {type(cityobj.geometry)}")
+        geometry_type_name = self._get_geometry_type_name(cityobj)
+        layer_path = f"{geometry_type_name}?crs={crs}"
 
         layer = QgsVectorLayer(
             layer_path,

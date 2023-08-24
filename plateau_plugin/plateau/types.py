@@ -34,17 +34,6 @@ class PolygonCollection:
 Geometry = Union[PolygonCollection, LineStringCollection, PointCollection]
 
 
-def get_geometry_type_name(geometry: Geometry):
-    if isinstance(geometry, PolygonCollection):
-        return "MultiPolygon"
-    elif isinstance(geometry, LineStringCollection):
-        return "MultiLineString"
-    elif isinstance(geometry, PointCollection):
-        return "MultiPoint"
-    else:
-        raise NotImplementedError(f"Geometry type {type(geometry)} is not implemented.")
-
-
 @dataclass
 class CityObject:
     """都市オブジェクト (Feature) を表す"""
