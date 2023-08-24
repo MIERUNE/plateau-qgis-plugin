@@ -140,14 +140,14 @@ PLANT_COVER = FeatureProcessingDefinition(
         lod2=GeometricAttribute(
             lod_detection=["./veg:lod2MultiSolid", "./veg:lod2MultiSurface"],
             collect_all=[
-                "./veg:lod1MultiSolid//gml:Polygon",
+                "./veg:lod2MultiSolid//gml:Polygon",
                 "./veg:lod2MultiSurface//gml:Polygon",
             ],
         ),
         lod3=GeometricAttribute(
             lod_detection=["./veg:lod3MultiSolid", "./veg:lod3MultiSurface"],
             collect_all=[
-                "./veg:lod1MultiSolid//gml:Polygon",
+                "./veg:lod3MultiSolid//gml:Polygon",
                 "./veg:lod3MultiSurface//gml:Polygon",
             ],
         ),
