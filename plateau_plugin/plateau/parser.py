@@ -153,39 +153,35 @@ class Parser:
         nsmap = self._nsmap
         generic_attrs = {}
 
-        for gen in elem.iterfind("gen:genericAttributeSet", nsmap):
-            if name := gen.get("name"):
-                generic_attrs[name] = self._parse_generic_attributes(gen)
-
-        for gen in elem.iterfind("gen:stringAttribute", nsmap):
-            if (name := gen.get("name")) and (
-                value := gen.find("./gen:value", nsmap)
-            ) is not None:
-                generic_attrs[name] = value.text
-
-        for gen in elem.iterfind("gen:intAttribute", nsmap):
-            if (name := gen.get("name")) and (
-                value := gen.find("./gen:value", nsmap)
-            ) is not None:
-                generic_attrs[name] = int(value.text)
-
-        for gen in elem.iterfind("gen:doubleAttribute", nsmap):
-            if (name := gen.get("name")) and (
-                value := gen.find("./gen:value", nsmap)
-            ) is not None:
-                generic_attrs[name] = float(value.text)
-
-        for gen in elem.iterfind("gen:measureAttribute", nsmap):
-            if (name := gen.get("name")) and (
-                value := gen.find("./gen:value", nsmap)
-            ) is not None:
-                generic_attrs[name] = float(value.text)
-
-        for gen in elem.iterfind("gen:dateAttribute", nsmap):
-            if (name := gen.get("name")) and (
-                value := gen.find("./gen:value", nsmap)
-            ) is not None:
-                generic_attrs[name] = value.text
+        for gen in elem.findall("./gen:*", nsmap):
+            tag = self._ns.to_prefixed_name(gen.tag)
+            if tag.startswith("gen:lod"):
+                continue
+            if tag == "gen:genericAttributeSet":
+                if name := gen.get("name"):
+                    generic_attrs[name] = self._parse_generic_attributes(gen)
+            elif tag == "gen:stringAttribute":
+                if (name := gen.get("name")) and (
+                    value := gen.find("./gen:value", nsmap)
+                ) is not None:
+                    generic_attrs[name] = value.text
+            elif tag == "gen:intAttribute":
+                if (name := gen.get("name")) and (
+                    value := gen.find("./gen:value", nsmap)
+                ) is not None:
+                    generic_attrs[name] = int(value.text)
+            elif tag == "gen:doubleAttribute" or tag == "gen:measureAttribute":
+                if (name := gen.get("name")) and (
+                    value := gen.find("./gen:value", nsmap)
+                ) is not None:
+                    generic_attrs[name] = float(value.text)
+            elif tag == "gen:dateAttribute":
+                if (name := gen.get("name")) and (
+                    value := gen.find("./gen:value", nsmap)
+                ) is not None:
+                    generic_attrs[name] = value.text
+            else:
+                raise NotImplementedError(f"Unknown generic attribute: {tag}")
 
         return generic_attrs
 
