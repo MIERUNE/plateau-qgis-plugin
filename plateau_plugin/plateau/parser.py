@@ -17,7 +17,7 @@ _BOOLEAN_TRUE_STRINGS = frozenset({"true", "True", "1"})
 
 
 @dataclass
-class ParseSettings:
+class ParserSettings:
     load_semantic_parts: bool = False
     """部分要素 (e.g. Road の細分化の TrafficArea) に分けて読み込むかどうか"""
 
@@ -25,12 +25,13 @@ class ParseSettings:
     """各Featureの最高の LoD だけ出力するかどうか"""
 
     load_apperance: bool = False
+    """Apperance (マテリアル、テクスチャ) を読み込むかどうか"""
 
 
-class Parser:
+class CityObjectParser:
     def __init__(
         self,
-        settings: ParseSettings,
+        settings: ParserSettings,
         ns: Namespace,
         codelist_store: CodelistStore,
         appearance: Optional[Appearance] = None,
@@ -57,7 +58,7 @@ class Parser:
     def _get_basic_dates(
         self, elem: et._Element
     ) -> tuple[Optional[date], Optional[date]]:
-        """基本形な日付 core:creationDate (あれば) と core:terminationDate (あれば) を読む"""
+        """基本的な日付 core:creationDate (あれば) と core:terminationDate (あれば) を読む"""
         nsmap = self._nsmap
         creation_date = (
             date.fromisoformat(name_elem.text)
@@ -150,6 +151,7 @@ class Parser:
     def _parse_generic_attributes(  # noqa: C901
         self, elem: et._Element
     ) -> dict[str, Any]:
+        """汎用属性 (gen:stringAttributeなど) を読み込む"""
         nsmap = self._nsmap
         generic_attrs = {}
 
@@ -188,7 +190,7 @@ class Parser:
     def process_cityobj_element(  # noqa: C901
         self,
         elem: et._Element,
-        parent: Optional[CityObject],  # 祖先Featureの Processor
+        parent: Optional[CityObject],  # 親 Feature の Processor
     ) -> Iterable[CityObject]:
         ns = self._ns
         nsmap = self._nsmap
@@ -302,8 +304,10 @@ class Parser:
                     break
 
 
-class FileParser:
-    def __init__(self, filename: str, settings: ParseSettings):
+class PlateauCityGmlParser:
+    """PLATEAU の CityGML ファイルのパーサー"""
+
+    def __init__(self, filename: str, settings: ParserSettings):
         self._base_dir = Path(filename).parent
         self._doc = et.parse(filename, None)
         self._settings = settings
@@ -313,7 +317,9 @@ class FileParser:
         self._ns = Namespace.from_document_nsmap(self._doc.getroot().nsmap)
         codelists = CodelistStore(self._base_dir)
 
-        self._parser = Parser(self._settings, ns=self._ns, codelist_store=codelists)
+        self._parser = CityObjectParser(
+            self._settings, ns=self._ns, codelist_store=codelists
+        )
 
     def load_apperance(self, theme: Optional[str] = None):
         for app in parse_appearances(self._doc):

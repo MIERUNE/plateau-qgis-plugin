@@ -1,3 +1,8 @@
+"""コード表を扱う
+
+事前定義されたコード表および配布物に含まれる自治体独自のコード表を扱う。
+"""
+
 import json
 from pathlib import Path
 from typing import Optional

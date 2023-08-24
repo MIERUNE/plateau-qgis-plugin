@@ -23,13 +23,16 @@ AttributeDatatype = Literal[
 
 @dataclass
 class GeometricAttribute:
+    """ジオメトリ属性 (a.k.a 空間属性)"""
+
     lod_detection: Sequence[str]
+    """lodを検出するための element paths"""
 
     collect_all: Sequence[str]
     """このFeatureの階層下にある全ジオメトリを収集するための element path (部分要素に分けずに読み込む場合に使う) """
 
     only_direct: Optional[list[str]] = None
-    """このFeatureの直下にあるジオメトリを収集するための element path"""
+    """このFeatureの直下にあるジオメトリを収集するための element paths"""
 
     is2d: bool = False
     """PLATEAUの仕様において高さ0のジオメトリかどうか"""
@@ -54,6 +57,8 @@ class GeometricAttributes:
 
 @dataclass
 class Attribute:
+    """1つの属性抽出についての定義"""
+
     name: str
     path: str
     datatype: AttributeDatatype
@@ -117,8 +122,9 @@ class FeatureProcessingDefinition:
     """
 
     def detect_lods(self, elem: et._Element, nsmap: dict[str, str]) -> tuple[bool, ...]:
-        """
-        どの LoD が存在するかを返す。例: LoD1と2が存在するとき → (False, True, True, False, False)
+        """どの LoD が存在するかを返す。
+
+        例: LoD1と2が存在するとき → (False, True, True, False, False)
         """
         det = self.geometries
         if det.lod_n:
@@ -147,7 +153,7 @@ class FeatureProcessingDefinition:
 
 
 class ProcessorRegistory:
-    """Featureを処理する Processors を登録しておくレジストリ"""
+    """Feature を処理する Processors を登録しておくレジストリ"""
 
     def __init__(
         self, processors: Optional[Iterable[FeatureProcessingDefinition]] = None
@@ -196,7 +202,8 @@ class ProcessorRegistory:
         """XMLの要素名をもとに Processor を取得する"""
         return self._tag_map.get(target_tag)
 
-    def validate_processors(self):
+    def validate_processors(self):  # noqa: C901
+        """Processor の定義を検証する処理 (テスト用)"""
         from pathlib import Path
 
         from ..codelists import CodelistStore
@@ -205,10 +212,22 @@ class ProcessorRegistory:
 
         for processor in self._id_map.values():
             for group in processor.attribute_groups:
-                for prop in group.attributes:
-                    if prop.predefined_codelist:
-                        if isinstance(prop.predefined_codelist, str):
-                            codelists.get_predefined(prop.predefined_codelist)
+                for attr in group.attributes:
+                    assert attr.name in attr.path, f"{attr.name} not in {attr.path}"
+                    if attr.predefined_codelist:
+                        if isinstance(attr.predefined_codelist, str):
+                            codelists.get_predefined(attr.predefined_codelist)
                         else:
-                            for a in prop.predefined_codelist.values():
+                            for a in attr.predefined_codelist.values():
                                 codelists.get_predefined(a)
+
+            for i, lod in enumerate(processor.lod_list):
+                if lod is None:
+                    continue
+                if any(str(i) not in a for a in lod.collect_all):
+                    raise ValueError(f"{i} not in {lod.collect_all} for {processor.id}")
+
+                if any(str(i) not in a for a in lod.lod_detection):
+                    raise ValueError(
+                        f"{i} not in {lod.lod_detection} for {processor.id}"
+                    )

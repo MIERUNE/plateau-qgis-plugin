@@ -36,7 +36,7 @@ from qgis.core import (
 )
 
 from ..geometry import to_qgis_geometry
-from ..plateau.parser import FileParser, ParseSettings
+from ..plateau.parser import ParserSettings, PlateauCityGmlParser
 from .utils.layermanger import LayerManager
 
 
@@ -141,7 +141,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
     def shortHelpString(self) -> str:
         return self.tr(_DESCRIPTION)
 
-    def _make_parser(self, parameters, context) -> FileParser:
+    def _make_parser(self, parameters, context) -> PlateauCityGmlParser:
         """プロセシングの設定をもとにパーサを作る"""
         load_semantic_parts = self.parameterAsBoolean(
             parameters, self.LOAD_SEMANTIC_PARTS, context
@@ -149,7 +149,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
         only_highest_lod = self.parameterAsBoolean(
             parameters, self.ONLY_HIGHEST_LOD, context
         )
-        settings = ParseSettings(
+        settings = ParserSettings(
             load_semantic_parts=load_semantic_parts,
             only_highest_lod=only_highest_lod,
         )
@@ -160,7 +160,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
                 self.invalidSourceError(parameters, self.INPUT)
             )  # pragma: no cover
 
-        return FileParser(filename, settings)
+        return PlateauCityGmlParser(filename, settings)
 
     def processAlgorithm(self, parameters, context, feedback):
         destination_crs = self.parameterAsCrs(parameters, self.CRS, context)

@@ -1,4 +1,4 @@
-"""災害リスク属性を仮想的な子Featureとして処理する"""
+"""災害リスク属性を、ジオメトリなし Feature として処理する"""
 
 from .base import (
     Attribute,
