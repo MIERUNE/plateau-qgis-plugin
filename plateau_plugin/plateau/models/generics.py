@@ -46,16 +46,16 @@ GENERIC_CITY_OBJECT = FeatureProcessingDefinition(
             ],
         ),
         lod1=GeometricAttribute(
-            lod_detection=["./gen:lod0Geometry"],
-            collect_all=["./gen:lod0Geometry//gml:Polygon"],
+            lod_detection=["./gen:lod1Geometry"],
+            collect_all=["./gen:lod1Geometry//gml:Polygon"],
         ),
         lod2=GeometricAttribute(
-            lod_detection=["./gen:lod0Geometry"],
-            collect_all=["./gen:lod0Geometry//gml:Polygon"],
+            lod_detection=["./gen:lod2Geometry"],
+            collect_all=["./gen:lod2Geometry//gml:Polygon"],
         ),
         lod3=GeometricAttribute(
-            lod_detection=["./gen:lod0Geometry"],
-            collect_all=["./gen:lod0Geometry//gml:Polygon"],
+            lod_detection=["./gen:lod3Geometry"],
+            collect_all=["./gen:lod3Geometry//gml:Polygon"],
         ),
     ),
 )
