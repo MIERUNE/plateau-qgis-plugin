@@ -31,6 +31,7 @@ update_dependencies:  ## Update PLATEAU library
 	git clone https://github.com/MIERUNE/plateau-py.git || true
 	rm -rf plateau_plugin/plateau
 	mv -f plateau-py/src/plateau plateau_plugin/
+	mv -f plateau-py/LICENSE.txt plateau_plugin/plateau/
 	rm -rf plateau-py
 
 init:  ## Startup project

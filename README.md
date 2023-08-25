@@ -2,6 +2,12 @@
 
 A QGIS plugin for loading PLATEAU 3D city models. (PLATEAU 3D 都市モデルを読み込むための QGIS プラグイン)
 
+## License
+
+License: GPL v2
+
+This plugin contains [plateau-py](https://github.com/MIERUNE/plateau-py), which is licensed under the MIT License.
+
 ## 開発
 
 - QGIS 3.28 で動作させるため Python 3.9 の文法で実装する必要があります。
