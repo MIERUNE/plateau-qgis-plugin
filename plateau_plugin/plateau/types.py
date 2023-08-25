@@ -4,7 +4,6 @@ from typing import Any, Literal, Optional, Union
 
 import numpy as np
 
-from .appearance import Material, Texture
 from .models.base import AttributeDatatype, FeatureProcessingDefinition
 
 
@@ -26,8 +25,8 @@ class PolygonCollection:
     polygons: list[list[np.ndarray]]
 
     # appearance
-    materials: Optional[list[Optional[Material]]]
-    textures: Optional[list[Optional[Texture]]]
+    materials: Optional[list[Optional["Material"]]]
+    textures: Optional[list[Optional["Texture"]]]
     uvs: Optional[list[Optional[list[np.ndarray]]]]
 
 
@@ -44,7 +43,7 @@ class CityObject:
     type: str
     """このFeatureの型名 (e.g. tran:Road, tran:TrafficArea, etc.)"""
 
-    id: str
+    id: Optional[str]
     """@gml:id"""
 
     name: Optional[str]
@@ -83,7 +82,7 @@ class TableDefinition:
     fields: list[FieldDefinition]
 
 
-def get_table_definition(cityobj: CityObject):
+def get_table_definition(cityobj: CityObject) -> TableDefinition:
     processor = cityobj.processor
     fields = [
         FieldDefinition("id", "string"),
@@ -107,3 +106,23 @@ def get_table_definition(cityobj: CityObject):
                 ), f"{prop.name}, {closed[prop.name]} != {prop.datatype}"
 
     return TableDefinition(fields=fields)
+
+
+@dataclass
+class Material:
+    __slots__ = ("diffuse_color", "specular_color", "shininess")
+    diffuse_color: Optional[tuple[float, ...]]
+    specular_color: Optional[tuple[float, ...]]
+    shininess: Optional[float]
+
+
+@dataclass
+class Texture:
+    __slots__ = ("image_uri",)
+    image_uri: str
+
+
+@dataclass
+class Appearance:
+    target_material: dict[str, Material]
+    ring_texture: dict[str, tuple[Texture, np.ndarray]]

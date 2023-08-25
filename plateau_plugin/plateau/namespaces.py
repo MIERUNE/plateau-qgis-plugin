@@ -1,6 +1,7 @@
 """定数値"""
 
 import re
+from typing import Type
 
 BASE_NS = {
     # GML
@@ -38,12 +39,14 @@ class Namespace:
     特に、uro, urf のバージョン (2 or 3) が配布物ごとに異なることに対応する役目をする。
     """
 
-    def __init__(self, update: dict):
+    def __init__(self, update: dict) -> None:
         self.nsmap: dict[str, str] = dict(**BASE_NS, **update)
         self.inverted = {v: k for k, v in self.nsmap.items()}
 
     @classmethod
-    def from_document_nsmap(cls, src_nsmap: dict[str, str]) -> "Namespace":
+    def from_document_nsmap(
+        cls: Type["Namespace"], src_nsmap: dict[str, str]
+    ) -> "Namespace":
         """XML文書をもとに、接頭辞と名前空間の対応を作成する
 
         特に、与えられた文書において uro および urf 接頭辞が指すべきXML名前空間を特定する

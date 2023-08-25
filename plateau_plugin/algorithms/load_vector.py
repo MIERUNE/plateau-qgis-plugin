@@ -36,7 +36,7 @@ from qgis.core import (
 )
 
 from ..geometry import to_qgis_geometry
-from ..plateau.parser import ParserSettings, PlateauCityGmlParser
+from ..plateau.parse import ParserSettings, PlateauCityGmlParser
 from .utils.layermanger import LayerManager
 
 

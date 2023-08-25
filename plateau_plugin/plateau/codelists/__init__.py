@@ -15,7 +15,7 @@ from ..namespaces import BASE_NS as _NS
 class CodelistStore:
     """事前定義されたコードリストまたは頒布データの ./codelists./ ディレクトリからコードを検索する"""
 
-    def __init__(self, base_path: Path):
+    def __init__(self, base_path: Path) -> None:
         self._base_path = base_path
         self._cached: dict[str, Optional[dict[str, str]]] = {}
         self._predefined: dict[str, dict[str, str]] = {}

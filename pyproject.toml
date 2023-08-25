@@ -46,6 +46,9 @@ select = [
 ignore = ["N802", "E501"]
 target-version = "py38"
 
+[tool.ruff.isort]
+known-third-party = ["plateau"]
+
 [tool.coverage.run]
 source = ['plateau_plugin']
 concurrency = ["thread"]
