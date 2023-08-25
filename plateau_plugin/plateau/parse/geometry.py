@@ -1,4 +1,6 @@
-from typing import Iterable, Optional
+from __future__ import annotations
+
+from typing import Iterable
 
 import lxml.etree as et
 import numpy as np
@@ -11,15 +13,15 @@ def parse_geometry(  # noqa: C901 (TODO)
     element: et._Element,
     geometry_paths: Iterable[str],
     nsmap: dict[str, str],
-    appearance: Optional[Appearance],
-) -> Optional[Geometry]:
+    appearance: Appearance | None,
+) -> Geometry | None:
     """指定された GML のジオメトリへのパスをもとにマルチパートのジオメトリを構成して返す"""
     # TODO: refactoring
 
     mpoly_geoms = []
-    mpoly_materials: list[Optional[Material]] = []
-    mpoly_textures: list[Optional[Texture]] = []
-    mpoly_uvs: list[Optional[list[np.ndarray]]] = []
+    mpoly_materials: list[Material | None] = []
+    mpoly_textures: list[Texture | None] = []
+    mpoly_uvs: list[list[np.ndarray] | None] = []
     mline_geoms = []
     mpoint_geoms = []
 

@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
-from typing import Any, Iterable, Optional, Union
+from typing import Any, Iterable
 
 import lxml.etree as et
 
@@ -34,7 +36,7 @@ class CityObjectParser:
         settings: ParserSettings,
         ns: Namespace,
         codelist_store: CodelistStore,
-        appearance: Optional[Appearance] = None,
+        appearance: Appearance | None = None,
     ) -> None:
         self._settings = settings
         self._ns: Namespace = ns
@@ -42,9 +44,7 @@ class CityObjectParser:
         self._codelist_store = codelist_store
         self.appearance = appearance
 
-    def _get_id_and_name(
-        self, elem: et._Element
-    ) -> tuple[Optional[str], Optional[str]]:
+    def _get_id_and_name(self, elem: et._Element) -> tuple[str | None, str | None]:
         """@gml:id と gml:name (あれば) を読む"""
         nsmap = self._nsmap
         gml_id = elem.get("{http://www.opengis.net/gml}id", None)
@@ -57,9 +57,7 @@ class CityObjectParser:
 
         return (gml_id, gml_name)
 
-    def _get_basic_dates(
-        self, elem: et._Element
-    ) -> tuple[Optional[date], Optional[date]]:
+    def _get_basic_dates(self, elem: et._Element) -> tuple[date | None, date | None]:
         """基本的な日付 core:creationDate (あれば) と core:terminationDate (あれば) を読む"""
         nsmap = self._nsmap
         creation_date = (
@@ -75,8 +73,8 @@ class CityObjectParser:
         return (creation_date, termination_date)
 
     def _get_codelist(
-        self, base_elem: et._Element, codelist: Union[str, dict[str, str], None]
-    ) -> Optional[str]:
+        self, base_elem: et._Element, codelist: str | dict[str, str] | None
+    ) -> str | None:
         if codelist is None or isinstance(codelist, str):
             return codelist
 
@@ -192,7 +190,7 @@ class CityObjectParser:
     def process_cityobj_element(  # noqa: C901
         self,
         elem: et._Element,
-        parent: Optional[CityObject],  # 親 Feature の Processor
+        parent: CityObject | None,  # 親 Feature の Processor
     ) -> Iterable[CityObject]:
         ns = self._ns
         nsmap = self._nsmap
@@ -323,7 +321,7 @@ class PlateauCityGmlParser:
             self._settings, ns=self._ns, codelist_store=codelists
         )
 
-    def load_apperance(self, theme: Optional[str] = None) -> None:
+    def load_apperance(self, theme: str | None = None) -> None:
         for app in parse_appearances(self._doc):
             self._parser.appearance = app
             break

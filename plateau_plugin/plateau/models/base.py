@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 import re
 from dataclasses import dataclass
 from functools import cached_property
-from typing import Iterable, Iterator, Literal, Optional, Sequence, Union
+from typing import Iterable, Iterator, Literal, Sequence
 
 import lxml.etree as et
 
@@ -31,7 +33,7 @@ class GeometricAttribute:
     collect_all: Sequence[str]
     """このFeatureの階層下にある全ジオメトリを収集するための element path (部分要素に分けずに読み込む場合に使う) """
 
-    only_direct: Optional[list[str]] = None
+    only_direct: list[str] | None = None
     """このFeatureの直下にあるジオメトリを収集するための element paths"""
 
     is2d: bool = False
@@ -42,16 +44,16 @@ class GeometricAttribute:
 class GeometricAttributes:
     """Featureの出力について記述する"""
 
-    lod0: Optional[GeometricAttribute] = None
-    lod1: Optional[GeometricAttribute] = None
-    lod2: Optional[GeometricAttribute] = None
-    lod3: Optional[GeometricAttribute] = None
-    lod4: Optional[GeometricAttribute] = None
+    lod0: GeometricAttribute | None = None
+    lod1: GeometricAttribute | None = None
+    lod2: GeometricAttribute | None = None
+    lod3: GeometricAttribute | None = None
+    lod4: GeometricAttribute | None = None
 
-    lod_n: Optional[str] = None
-    lod_n_paths: Optional[GeometricAttribute] = None
+    lod_n: str | None = None
+    lod_n_paths: GeometricAttribute | None = None
 
-    semantic_parts: Optional[list[str]] = None
+    semantic_parts: list[str] | None = None
     """子Featureへの element paths"""
 
 
@@ -62,14 +64,14 @@ class Attribute:
     name: str
     path: str
     datatype: AttributeDatatype
-    predefined_codelist: Optional[Union[str, dict[str, str]]] = None
+    predefined_codelist: str | dict[str, str] | None = None
 
 
 @dataclass
 class AttributeGroup:
     """属性抽出をグルーピングする"""
 
-    base_element: Optional[str]
+    base_element: str | None
     """属性抽出の起点とするXML要素への element path。None の場合はこのFeature自体を起点とする。"""
 
     attributes: Sequence[Attribute]
@@ -81,7 +83,7 @@ class FacilityAttributePaths:
     facility_types: str
     facility_id: str
     facility_attrs: str
-    large_customer_facility_attrs: Optional[str] = None
+    large_customer_facility_attrs: str | None = None
 
 
 @dataclass
@@ -106,13 +108,13 @@ class FeatureProcessingDefinition:
     load_generic_attributes: bool = False
     """汎用属性 (gen:stringAttribute など) を読み込むかどうか"""
 
-    dm_attr_container_path: Optional[str] = None
+    dm_attr_container_path: str | None = None
     """公共測量標準図式 uro:DmAttribute を包含する要素 (e.g. bldg:bldgDmAttribute) への element path"""
 
-    facility_attr_paths: Optional[FacilityAttributePaths] = None
+    facility_attr_paths: FacilityAttributePaths | None = None
     """施設管理の応用スキーマ関連の属性への element path"""
 
-    disaster_risk_attr_conatiner_path: Optional[str] = None
+    disaster_risk_attr_conatiner_path: str | None = None
     """災害リスク属性 uro:(Building)DisasterRiskAttribute を包含する要素への element path"""
 
     non_geometric: bool = False
@@ -142,7 +144,7 @@ class FeatureProcessingDefinition:
             )
 
     @cached_property
-    def lod_list(self) -> tuple[Optional[GeometricAttribute], ...]:
+    def lod_list(self) -> tuple[GeometricAttribute | None, ...]:
         return (
             self.geometries.lod0,
             self.geometries.lod1,
@@ -156,7 +158,7 @@ class ProcessorRegistory:
     """Feature を処理する Processors を登録しておくレジストリ"""
 
     def __init__(
-        self, processors: Optional[Iterable[FeatureProcessingDefinition]] = None
+        self, processors: Iterable[FeatureProcessingDefinition] | None = None
     ) -> None:
         self._tag_map: dict[str, FeatureProcessingDefinition] = {}
         self._id_map: dict[str, FeatureProcessingDefinition] = {}
@@ -198,7 +200,7 @@ class ProcessorRegistory:
 
     def get_processor_by_tag(
         self, target_tag: str
-    ) -> Optional[FeatureProcessingDefinition]:
+    ) -> FeatureProcessingDefinition | None:
         """XMLの要素名をもとに Processor を取得する"""
         return self._tag_map.get(target_tag)
 

@@ -3,9 +3,10 @@
 事前定義されたコード表および配布物に含まれる自治体独自のコード表を扱う。
 """
 
+from __future__ import annotations
+
 import json
 from pathlib import Path
-from typing import Optional
 
 import lxml.etree as et
 
@@ -17,12 +18,10 @@ class CodelistStore:
 
     def __init__(self, base_path: Path) -> None:
         self._base_path = base_path
-        self._cached: dict[str, Optional[dict[str, str]]] = {}
+        self._cached: dict[str, dict[str, str] | None] = {}
         self._predefined: dict[str, dict[str, str]] = {}
 
-    def lookup(
-        self, predefined_name: Optional[str], path: Optional[str], code: str
-    ) -> str:
+    def lookup(self, predefined_name: str | None, path: str | None, code: str) -> str:
         """事前定義されたコードリストまたは ./codelists/ ディレクトリ内のコードリストからコードを検索する"""
 
         # キャッシュされたコードリストがあればそこから取得する

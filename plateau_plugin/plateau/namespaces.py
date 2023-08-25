@@ -1,7 +1,8 @@
 """定数値"""
 
+from __future__ import annotations
+
 import re
-from typing import Type
 
 BASE_NS = {
     # GML
@@ -45,8 +46,8 @@ class Namespace:
 
     @classmethod
     def from_document_nsmap(
-        cls: Type["Namespace"], src_nsmap: dict[str, str]
-    ) -> "Namespace":
+        cls: type[Namespace], src_nsmap: dict[str, str]
+    ) -> Namespace:
         """XML文書をもとに、接頭辞と名前空間の対応を作成する
 
         特に、与えられた文書において uro および urf 接頭辞が指すべきXML名前空間を特定する

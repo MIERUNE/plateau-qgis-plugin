@@ -1,6 +1,8 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
 from datetime import date
-from typing import Any, Literal, Optional, Union
+from typing import Any, Literal, Union
 
 import numpy as np
 
@@ -25,9 +27,9 @@ class PolygonCollection:
     polygons: list[list[np.ndarray]]
 
     # appearance
-    materials: Optional[list[Optional["Material"]]]
-    textures: Optional[list[Optional["Texture"]]]
-    uvs: Optional[list[Optional[list[np.ndarray]]]]
+    materials: list[Material | None] | None
+    textures: list[Texture | None] | None
+    uvs: list[list[np.ndarray] | None] | None
 
 
 Geometry = Union[PolygonCollection, LineStringCollection, PointCollection]
@@ -43,27 +45,27 @@ class CityObject:
     type: str
     """このFeatureの型名 (e.g. tran:Road, tran:TrafficArea, etc.)"""
 
-    id: Optional[str]
+    id: str | None
     """@gml:id"""
 
-    name: Optional[str]
+    name: str | None
     """gml:name"""
 
-    creation_date: Optional[date]
+    creation_date: date | None
     """core:creationDate"""
 
-    termination_date: Optional[date]
+    termination_date: date | None
     """core:terminationDate"""
 
     attributes: dict[str, Any]
     """Featureのプロパティ値"""
 
-    geometry: Optional[Geometry]
+    geometry: Geometry | None
     """Featureのジオメトリ"""
 
     processor: FeatureProcessingDefinition
 
-    parent: Optional["CityObject"]
+    parent: CityObject | None
     """親のCityObject"""
 
 
@@ -111,9 +113,9 @@ def get_table_definition(cityobj: CityObject) -> TableDefinition:
 @dataclass
 class Material:
     __slots__ = ("diffuse_color", "specular_color", "shininess")
-    diffuse_color: Optional[tuple[float, ...]]
-    specular_color: Optional[tuple[float, ...]]
-    shininess: Optional[float]
+    diffuse_color: tuple[float, ...] | None
+    specular_color: tuple[float, ...] | None
+    shininess: float | None
 
 
 @dataclass
