@@ -23,7 +23,7 @@ class CodelistStore:
     def lookup(
         self, predefined_name: Optional[str], path: Optional[str], code: str
     ) -> str:
-        """事前定義されたコードリストまたは codelists ディレクトリ内のコードリストからコードを検索する"""
+        """事前定義されたコードリストまたは ./codelists/ ディレクトリ内のコードリストからコードを検索する"""
 
         # キャッシュされたコードリストがあればそこから取得する
         if path in self._cached:

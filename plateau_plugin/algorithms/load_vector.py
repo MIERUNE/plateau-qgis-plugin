@@ -77,6 +77,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
     ONLY_HIGHEST_LOD = "ONLY_HIGHEST_LOD"
     LOAD_SEMANTIC_PARTS = "LOAD_SEMANTIC_PARTS"
     FORCE_2D = "FORCE_2D"
+    APPEND_MODE = "APPEND_MODE"
     CRS = "CRS"
 
     def tr(self, string: str):
@@ -111,6 +112,14 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
                 self.FORCE_2D,
                 self.tr("3次元データを強制的に2次元化する"),
                 defaultValue=False,
+                optional=True,
+            )
+        )
+        self.addParameter(
+            QgsProcessingParameterBoolean(
+                self.APPEND_MODE,
+                self.tr("既存の同名レイヤに追記する"),
+                defaultValue=True,
                 optional=True,
             )
         )
@@ -165,7 +174,10 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
     def processAlgorithm(self, parameters, context, feedback):
         destination_crs = self.parameterAsCrs(parameters, self.CRS, context)
         force2d = self.parameterAsBoolean(parameters, self.FORCE_2D, context)
-        layers = LayerManager(force2d=force2d, crs=destination_crs)
+        append_mode = self.parameterAsBoolean(parameters, self.APPEND_MODE, context)
+        layers = LayerManager(
+            force2d=force2d, crs=destination_crs, append_mode=append_mode
+        )
 
         parser = self._make_parser(parameters, context)
         total_count = parser.count_toplevel_cityobjs()
