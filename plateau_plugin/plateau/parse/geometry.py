@@ -3,8 +3,8 @@ from typing import Iterable, Optional
 import lxml.etree as et
 import numpy as np
 
+from ..types import Geometry, LineStringCollection, PointCollection, PolygonCollection
 from .appearance import Appearance, Material, Texture
-from .types import Geometry, LineStringCollection, PointCollection, PolygonCollection
 
 
 def parse_geometry(  # noqa: C901 (TODO)

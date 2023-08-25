@@ -27,6 +27,12 @@ endif
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
+update_dependencies:  ## Update PLATEAU library
+	git clone https://github.com/MIERUNE/plateau-py.git || true
+	rm -rf plateau_plugin/plateau
+	mv -f plateau-py/src/plateau plateau_plugin/
+	rm -rf plateau-py
+
 init:  ## Startup project
 ifeq ($(OS),Windows_NT)
 	$(QGIS_PYTHON) -m pip install poetry

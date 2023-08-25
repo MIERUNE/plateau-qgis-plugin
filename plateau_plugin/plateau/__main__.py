@@ -1,5 +1,5 @@
 """
-テスト実行用 __main__.py
+とりあえずのテスト実行用の __main__.py
 
 python3 -m plateau /path/to/21201_gifu-shi_2022_citygml_1_op/udx/fld/natl/kisogawa_ibigawa/53360501_fld_6697_l2_op.gml
 """
@@ -7,7 +7,7 @@ python3 -m plateau /path/to/21201_gifu-shi_2022_citygml_1_op/udx/fld/natl/kisoga
 import sys
 
 from .models import processors
-from .parser import ParserSettings, PlateauCityGmlParser
+from .parse.parser import ParserSettings, PlateauCityGmlParser
 
 if __name__ == "__main__":
     processors.validate_processors()

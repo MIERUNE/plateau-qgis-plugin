@@ -157,7 +157,7 @@ class ProcessorRegistory:
 
     def __init__(
         self, processors: Optional[Iterable[FeatureProcessingDefinition]] = None
-    ):
+    ) -> None:
         self._tag_map: dict[str, FeatureProcessingDefinition] = {}
         self._id_map: dict[str, FeatureProcessingDefinition] = {}
         if processors:
@@ -180,7 +180,7 @@ class ProcessorRegistory:
             else:
                 yield name
 
-    def register_processor(self, processor: FeatureProcessingDefinition):
+    def register_processor(self, processor: FeatureProcessingDefinition) -> None:
         """Processor を登録する"""
         assert (
             processor.id not in self._id_map
@@ -202,7 +202,7 @@ class ProcessorRegistory:
         """XMLの要素名をもとに Processor を取得する"""
         return self._tag_map.get(target_tag)
 
-    def validate_processors(self):  # noqa: C901
+    def validate_processors(self) -> None:  # noqa: C901
         """Processor の定義を検証する処理 (テスト用)"""
         from pathlib import Path
 

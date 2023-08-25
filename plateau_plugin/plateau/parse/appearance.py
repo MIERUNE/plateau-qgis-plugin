@@ -1,30 +1,10 @@
-from dataclasses import dataclass
-from typing import Iterable, Optional
+from typing import Iterable
 
 import lxml.etree as et
 import numpy as np
 
-from .namespaces import BASE_NS as _NS
-
-
-@dataclass
-class Material:
-    __slots__ = ("diffuse_color", "specular_color", "shininess")
-    diffuse_color: Optional[tuple[float, ...]]
-    specular_color: Optional[tuple[float, ...]]
-    shininess: Optional[float]
-
-
-@dataclass
-class Texture:
-    __slots__ = ("image_uri",)
-    image_uri: str
-
-
-@dataclass
-class Appearance:
-    target_material: dict[str, Material]
-    ring_texture: dict[str, tuple[Texture, np.ndarray]]
+from ..namespaces import BASE_NS as _NS
+from ..types import Appearance, Material, Texture
 
 
 def parse_appearances(doc: et._Element) -> Iterable[Appearance]:

@@ -5,13 +5,13 @@ from typing import Any, Iterable, Optional, Union
 
 import lxml.etree as et
 
-from .appearance import Appearance, parse_appearances
-from .codelists import CodelistStore
+from ..codelists import CodelistStore
+from ..models import processors
+from ..models.base import FeatureProcessingDefinition
+from ..namespaces import Namespace
+from ..types import Appearance, CityObject
+from .appearance import parse_appearances
 from .geometry import parse_geometry
-from .models import processors
-from .models.base import FeatureProcessingDefinition
-from .namespaces import Namespace
-from .types import CityObject
 
 _BOOLEAN_TRUE_STRINGS = frozenset({"true", "True", "1"})
 
@@ -42,7 +42,9 @@ class CityObjectParser:
         self._codelist_store = codelist_store
         self.appearance = appearance
 
-    def _get_id_and_name(self, elem: et._Element):
+    def _get_id_and_name(
+        self, elem: et._Element
+    ) -> tuple[Optional[str], Optional[str]]:
         """@gml:id と gml:name (あれば) を読む"""
         nsmap = self._nsmap
         gml_id = elem.get("{http://www.opengis.net/gml}id", None)
@@ -307,7 +309,7 @@ class CityObjectParser:
 class PlateauCityGmlParser:
     """PLATEAU の CityGML ファイルのパーサー"""
 
-    def __init__(self, filename: str, settings: ParserSettings):
+    def __init__(self, filename: str, settings: ParserSettings) -> None:
         self._base_dir = Path(filename).parent
         self._doc = et.parse(filename, None)
         self._settings = settings
@@ -321,7 +323,7 @@ class PlateauCityGmlParser:
             self._settings, ns=self._ns, codelist_store=codelists
         )
 
-    def load_apperance(self, theme: Optional[str] = None):
+    def load_apperance(self, theme: Optional[str] = None) -> None:
         for app in parse_appearances(self._doc):
             self._parser.appearance = app
             break
