@@ -144,13 +144,15 @@ class LayerManager:
             self._parent_map[layer_id] = parent_layer_id
             attributes.append(QgsField("parent", QVariant.String))
 
+        # Prepare basic fields
         attributes.extend(
             [
-                QgsField("type", QVariant.String),
-                QgsField("lod", QVariant.Int),
-                QgsField("name", QVariant.String),
-                QgsField("creationDate", QVariant.Date),
-                QgsField("terminationDate", QVariant.Date),
+                QgsField("source", QVariant.String),  # source file name
+                QgsField("type", QVariant.String),  # feature type
+                QgsField("lod", QVariant.Int),  # LoD
+                QgsField("name", QVariant.String),  # gml:name
+                QgsField("creationDate", QVariant.Date),  # gml:creationDate
+                QgsField("terminationDate", QVariant.Date),  # gml:terminationDate
             ]
         )
         table_def = get_table_definition(cityobj)
