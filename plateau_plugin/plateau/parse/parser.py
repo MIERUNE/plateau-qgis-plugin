@@ -23,6 +23,9 @@ class ParserSettings:
     load_semantic_parts: bool = False
     """部分要素 (e.g. Road の細分化の TrafficArea) に分けて読み込むかどうか"""
 
+    target_lods: tuple[bool, bool, bool, bool, bool] = (True, True, True, True, True)
+    """各LOD (0-4) を読み込みの対象にするかどうか"""
+
     only_highest_lod: bool = False
     """各Featureの最高の LoD だけ出力するかどうか"""
 
@@ -266,6 +269,9 @@ class CityObjectParser:
         lod_defs = processor.lod_list
         has_lods = processor.detect_lods(elem, nsmap)
         for lod in (4, 3, 2, 1, 0):
+            if not self._settings.target_lods[lod]:
+                continue
+
             if not has_lods[lod]:
                 continue
 
