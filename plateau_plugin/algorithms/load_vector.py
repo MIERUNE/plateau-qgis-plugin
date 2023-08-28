@@ -18,6 +18,7 @@
 
 import datetime
 import json
+from pathlib import Path
 from typing import Any
 
 from PyQt5.QtCore import QCoreApplication, QDate
@@ -28,7 +29,9 @@ from qgis.core import (
     # QgsLayerTreeGroup,
     # QgsLayerTreeGroup,
     QgsProcessingAlgorithm,
+    QgsProcessingContext,
     QgsProcessingException,  # pyright: ignore
+    QgsProcessingFeedback,
     QgsProcessingParameterBoolean,
     QgsProcessingParameterCrs,
     QgsProcessingParameterFile,
@@ -150,7 +153,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
     def shortHelpString(self) -> str:
         return self.tr(_DESCRIPTION)
 
-    def _make_parser(self, parameters, context) -> PlateauCityGmlParser:
+    def _make_parser(self, filename: str, parameters, context) -> PlateauCityGmlParser:
         """プロセシングの設定をもとにパーサを作る"""
         load_semantic_parts = self.parameterAsBoolean(
             parameters, self.LOAD_SEMANTIC_PARTS, context
@@ -163,7 +166,6 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
             only_highest_lod=only_highest_lod,
         )
 
-        filename = self.parameterAsFile(parameters, self.INPUT, context)
         if filename is None:
             raise QgsProcessingException(
                 self.invalidSourceError(parameters, self.INPUT)
@@ -171,15 +173,21 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
 
         return PlateauCityGmlParser(filename, settings)
 
-    def processAlgorithm(self, parameters, context, feedback):
+    def processAlgorithm(
+        self,
+        parameters: dict[str, Any],
+        context: QgsProcessingContext,
+        feedback: QgsProcessingFeedback,
+    ):
         destination_crs = self.parameterAsCrs(parameters, self.CRS, context)
         force2d = self.parameterAsBoolean(parameters, self.FORCE_2D, context)
         append_mode = self.parameterAsBoolean(parameters, self.APPEND_MODE, context)
         layers = LayerManager(
             force2d=force2d, crs=destination_crs, append_mode=append_mode
         )
+        filename = self.parameterAsFile(parameters, self.INPUT, context)
 
-        parser = self._make_parser(parameters, context)
+        parser = self._make_parser(filename, parameters, context)
         total_count = parser.count_toplevel_cityobjs()
         feedback.pushInfo(f"{total_count}個のトップレベル都市オブジェクトが含まれています。")
         feedback.pushInfo("都市オブジェクトを読み込んでいます...")
@@ -203,6 +211,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
 
             # Set attributes
             feature.setAttribute("id", cityobj.id)
+            feature.setAttribute("source", Path(filename).stem)
             feature.setAttribute("type", cityobj.type)
             feature.setAttribute("lod", cityobj.lod)
             feature.setAttribute("name", cityobj.name)
