@@ -34,6 +34,7 @@ from qgis.core import (
     QgsProcessingFeedback,
     QgsProcessingParameterBoolean,
     QgsProcessingParameterCrs,
+    QgsProcessingParameterEnum,
     QgsProcessingParameterFile,
     QgsProject,
 )
@@ -79,6 +80,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
     INPUT = "INPUT"
     ONLY_HIGHEST_LOD = "ONLY_HIGHEST_LOD"
     LOAD_SEMANTIC_PARTS = "LOAD_SEMANTIC_PARTS"
+    LODS = "LODS"
     FORCE_2D = "FORCE_2D"
     APPEND_MODE = "APPEND_MODE"
     CRS = "CRS"
@@ -93,6 +95,18 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
                 self.tr("PLATEAU CityGML ファイル"),
                 fileFilter=self.tr("PLATEAU CityGML ファイル (*.gml)"),
             )
+        )
+        self.addParameter(
+            QgsProcessingParameterEnum(
+                self.LODS,
+                self.tr("読み込むLOD"),
+                options=["LOD0", "LOD1", "LOD2", "LOD3", "LOD4"],
+                allowMultiple=True,
+                defaultValue=1,
+            )
+        )
+        self.parameterDefinition(self.LODS).setMetadata(
+            {"widget_wrapper": {"useCheckBoxes": True, "columns": 5}}
         )
         self.addParameter(
             QgsProcessingParameterBoolean(
@@ -161,8 +175,12 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
         only_highest_lod = self.parameterAsBoolean(
             parameters, self.ONLY_HIGHEST_LOD, context
         )
+        lods = self.parameterAsEnums(parameters, self.LODS, context)
+        target_lods = tuple(i in lods for i in range(5))
+
         settings = ParserSettings(
             load_semantic_parts=load_semantic_parts,
+            target_lods=target_lods,
             only_highest_lod=only_highest_lod,
         )
 
