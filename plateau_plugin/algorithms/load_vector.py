@@ -239,7 +239,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
 
             for name, value in cityobj.attributes.items():
                 feature.setAttribute(name, _convert_to_qt_value(value))
-
+            
             if cityobj.geometry:
                 # Should be treated as 2D?
                 as2d = False
@@ -258,8 +258,10 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
             if count % 100 == 0:
                 feedback.setProgress(top_level_count / total_count * 100)
                 feedback.pushInfo(f"{count} 個の地物を読み込みました。")
-
+            if append_mode:
+                layer.updateExtents()
+    
         feedback.pushInfo(f"{count} 個の地物を読み込みました。")
         layers.add_to_project()
-
+        
         return {}
