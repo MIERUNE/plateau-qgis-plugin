@@ -19,7 +19,9 @@
 from typing import Optional
 
 from PyQt5.QtCore import QVariant
+from qgis._3d import QgsPolygon3DSymbol, QgsVectorLayer3DRenderer
 from qgis.core import (
+    Qgis,
     QgsCoordinateReferenceSystem,
     QgsField,
     # QgsLayerTreeGroup,
@@ -202,6 +204,18 @@ class LayerManager:
         dp = layer.dataProvider()
         dp.addAttributes(attributes)
         self._layers[layer_id] = layer
+
+        # set a default 3d renderer
+        try:
+            symbol = QgsPolygon3DSymbol()
+            symbol.setAltitudeClamping(Qgis.AltitudeClamping.Absolute)
+            symbol.setAltitudeBinding(Qgis.AltitudeBinding.Vertex)
+            renderer = QgsVectorLayer3DRenderer()
+            renderer.setSymbol(symbol)
+            layer.setRenderer3D(renderer)
+        except Exception:
+            pass
+
         return layer
 
     def add_to_project(self):
