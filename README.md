@@ -1,6 +1,6 @@
 # plateau-qgis-plugin
 
-A QGIS plugin for loading PLATEAU 3D city models. (PLATEAU 3D 都市モデルを読み込むための QGIS プラグイン)
+A QGIS plugin for loading the PLATEAU 3D City Models. (PLATEAU 3D 都市モデルを読み込むための QGIS プラグイン)
 
 ## License
 

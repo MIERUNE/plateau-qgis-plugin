@@ -72,9 +72,9 @@ _DESCRIPTION = """3D都市モデル標準製品仕様書 第3.0版に対応し�
 
 データは一時スクラッチレイヤに読み込まれます。
 
-同一の都市オブジェクトに複数のLOD (詳細度) が用意されている場合は、デフォルトでは最も詳細なLODのみを読み込みます。すべてのLODを読み込みたい場合は「各地物の最高 LOD のみを読み込む」オプションを無効にしてください。
+同一の都市オブジェクトに複数のLOD (詳細度) が用意されている場合は、デフォルトでは最も単純なLODのみを読み込みます。必要に応じて、"読み込むLOD" オプションで「最も詳細なLODのみを読み込む」または「全てのLODを読み込む」を選択してください。
 
-「意味的な子要素に分ける」を有効にすると、一部のモデルのLOD2以上において、壁や屋根、車道や歩道といった意味的な部分に分けて地物を読み込みます。このオプションを有効にすると生成される地物の数が大幅に増える可能性があります。
+「地物を構成する部分ごとにレイヤを分ける」を有効にすると、一部のモデルのLOD2以上において、壁や屋根、車道や歩道といった意味論的な子要素ごとにレイヤを分けて地物を読み込みます。このオプションを有効にすると地物の数が大幅に増える可能性があります。
 
 「3Dデータを強制的に平面化する」を有効にすると、3次元の情報を捨てて平面データとして読み込みます。高さをもたないモデル (都市計画決定情報など) はこのオプションにかかわらず常に平面として読み込みます。
 """
@@ -112,7 +112,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
         self.addParameter(
             QgsProcessingParameterBoolean(
                 self.LOAD_SEMANTIC_PARTS,
-                self.tr("意味的な子要素に分ける"),
+                self.tr("地物を構成する部分ごとにレイヤを分ける"),
                 defaultValue=False,
                 optional=True,
             )
@@ -137,7 +137,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
             QgsProcessingParameterCrs(
                 self.CRS,
                 self.tr("変換先CRS"),
-                defaultValue="EPSG:4326",
+                defaultValue="EPSG:6668",
                 optional=True,
             )
         )
