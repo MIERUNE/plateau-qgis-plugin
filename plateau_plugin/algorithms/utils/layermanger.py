@@ -27,6 +27,7 @@ from qgis.core import (
     # QgsLayerTreeGroup,
     QgsProject,
     QgsVectorLayer,
+    QgsWkbTypes,
 )
 
 from ...plateau.types import (
@@ -85,7 +86,7 @@ class LayerManager:
                 # CRSが一致する (または NoGeometry 型である)
                 geom_type_name = self._get_geometry_type_name(cityobj)
                 if isinstance(layer, QgsVectorLayer) and (
-                    layer.wkbType().name == geom_type_name
+                    QgsWkbTypes.displayString(layer.wkbType()) == geom_type_name
                     and (geom_type_name == "NoGeometry" or layer.crs() == self._crs)
                 ):
                     self._layers[layer_id] = layer
