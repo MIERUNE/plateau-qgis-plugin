@@ -86,7 +86,25 @@ class LayerManager:
 
         return self._add_new_layer(layer_id, cityobj)
 
+    def _subclass_name(self, cityobj: CityObject) -> str:
+        """特定の種類において、属性値に応じて恣意的にレイヤを分けるための副分類名を返す"""
+        _type = cityobj.type
+        if (  # 建物の災害リスク情報を 'description' と 'scale' 属性にもとづいてレイヤ分けする
+            _type == "uro:BuildingRiverFloodingRiskAttribute"
+            or _type == "uro:BuildingTsunamiRiskAttribute"
+            or _type == "uro:BuildingLandSlideRiskAttribute"
+        ):
+            s = ""
+            if desc := cityobj.attributes.get("description"):
+                s += desc
+            if scale := cityobj.attributes.get("scale"):
+                s += " " + scale
+            return s.strip()
+
+        return ""
+
     def _get_layer_id(self, cityobj: CityObject) -> str:
+        """Featureの挿入先を決めるレイヤ識別子を CityObject をもとに組み立てる"""
         co: Optional[CityObject] = cityobj
         s = []
         while co:
@@ -96,9 +114,12 @@ class LayerManager:
         if cityobj.lod is not None:
             assert cityobj.geometry is not None
             name += f":LoD={cityobj.lod}):type={self._get_geometry_type_name(cityobj)}"
+        if subclass := self._subclass_name(cityobj):
+            name += ":subclass=" + subclass
         return name
 
     def _get_layer_name(self, cityobj: CityObject) -> str:
+        """レイヤ名を組み立てる"""
         co: Optional[CityObject] = cityobj
         s = []
         while co:
@@ -107,6 +128,8 @@ class LayerManager:
         name = " / ".join(reversed(s))
         if cityobj.lod is not None:
             name += f" (LoD{cityobj.lod})"
+        if subclass := self._subclass_name(cityobj):
+            name += " " + subclass
         return name
 
     def _get_geometry_type_name(self, cityobj: CityObject):

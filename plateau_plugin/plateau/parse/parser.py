@@ -223,7 +223,7 @@ class CityObjectParser:
             processor=processor,
             parent=parent,
         )
-        nogeom_emitted = False
+        nogeom_emitted = False  # NoGeometry な Feature が出力済みかどうか
 
         # リスク属性
         if processor.disaster_risk_attr_conatiner_path:
@@ -231,18 +231,12 @@ class CityObjectParser:
                 processor.disaster_risk_attr_conatiner_path + "/*", nsmap
             ):
                 for child_obj in self.process_cityobj_element(risk, nogeom_obj):
-                    if not nogeom_emitted:
-                        yield nogeom_obj
-                        nogeom_emitted = True
                     yield child_obj
 
         # 公共測量標準図式 (DM)
         if processor.dm_attr_container_path:
             for dm in elem.iterfind(processor.dm_attr_container_path + "/*", nsmap):
                 for child_obj in self.process_cityobj_element(dm, nogeom_obj):
-                    if not nogeom_emitted:
-                        yield nogeom_obj
-                        nogeom_emitted = True
                     yield child_obj
 
         # 子Feature (部分要素) を個別に読み込む設定の場合は、子Featureを探索する
@@ -253,9 +247,6 @@ class CityObjectParser:
                     for child_obj in self.process_cityobj_element(
                         child_elem, nogeom_obj
                     ):
-                        if not nogeom_emitted:
-                            yield nogeom_obj
-                            nogeom_emitted = True
                         yield child_obj
 
         # ジオメトリをもたない場合は、ここで終了
@@ -304,10 +295,14 @@ class CityObjectParser:
                     processor=processor,
                     parent=parent,
                 )
+                nogeom_emitted = True
 
                 if self._settings.only_highest_lod:
                     # 各Featureの最高 LoD だけ出力する設定の場合はここで離脱
                     break
+
+        if not nogeom_emitted:
+            yield nogeom_obj
 
 
 class PlateauCityGmlParser:
