@@ -13,7 +13,7 @@ if __name__ == "__main__":
     processors.validate_processors()
 
     # settings = ParseSettings(load_semantic_parts=True)
-    settings = ParserSettings(only_highest_lod=False, load_semantic_parts=False)
+    settings = ParserSettings(only_first_found_lod=False, load_semantic_parts=False)
     parser = PlateauCityGmlParser(sys.argv[1], settings)
     parser.load_apperance()
     for count, cityobj in parser.iter_cityobjs():

@@ -62,6 +62,12 @@ def _convert_to_qt_value(v: Any) -> Any:
             return v
 
 
+_LOD_OPTIONS = {
+    0: {"label": "最も単純なLODのみを読み込む", "prefer_lowest": True, "only_first": True},
+    1: {"label": "最も詳細なLODのみを読み込む", "prefer_lowest": False, "only_first": True},
+    2: {"label": "全てのLODを読み込む", "prefer_lowest": False, "only_first": False},
+}
+
 _DESCRIPTION = """3D都市モデル標準製品仕様書 第3.0版に対応した、PLATEAU 3D都市モデルのCityGML (.gml) ファイルを読み込みます。
 
 データは一時スクラッチレイヤに読み込まれます。
@@ -78,7 +84,6 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
     """Processing algorithm to load PLATEAU 3D City models as vector layers"""
 
     INPUT = "INPUT"
-    ONLY_HIGHEST_LOD = "ONLY_HIGHEST_LOD"
     LOAD_SEMANTIC_PARTS = "LOAD_SEMANTIC_PARTS"
     LODS = "LODS"
     FORCE_2D = "FORCE_2D"
@@ -100,20 +105,8 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
             QgsProcessingParameterEnum(
                 self.LODS,
                 self.tr("読み込むLOD"),
-                options=["LOD0", "LOD1", "LOD2", "LOD3", "LOD4"],
-                allowMultiple=True,
-                defaultValue=1,
-            )
-        )
-        self.parameterDefinition(self.LODS).setMetadata(
-            {"widget_wrapper": {"useCheckBoxes": True, "columns": 5}}
-        )
-        self.addParameter(
-            QgsProcessingParameterBoolean(
-                self.ONLY_HIGHEST_LOD,
-                self.tr("各地物の最高 LOD のみを読み込む"),
-                defaultValue=True,
-                optional=True,
+                options=[v["label"] for v in _LOD_OPTIONS.values()],
+                defaultValue=0,
             )
         )
         self.addParameter(
@@ -167,28 +160,24 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
     def shortHelpString(self) -> str:
         return self.tr(_DESCRIPTION)
 
-    def _make_parser(self, filename: str, parameters, context) -> PlateauCityGmlParser:
+    def _make_parser(
+        self, filename: str, parameters, context, lod_option
+    ) -> PlateauCityGmlParser:
         """プロセシングの設定をもとにパーサを作る"""
         load_semantic_parts = self.parameterAsBoolean(
             parameters, self.LOAD_SEMANTIC_PARTS, context
         )
-        only_highest_lod = self.parameterAsBoolean(
-            parameters, self.ONLY_HIGHEST_LOD, context
-        )
-        lods = self.parameterAsEnums(parameters, self.LODS, context)
-        target_lods = tuple(i in lods for i in range(5))
-
         settings = ParserSettings(
             load_semantic_parts=load_semantic_parts,
-            target_lods=target_lods,
-            only_highest_lod=only_highest_lod,
+            target_lods=(False, True, True, True, True),
+            only_first_found_lod=lod_option["only_first"],
+            lowest_lod_first=lod_option["prefer_lowest"],
         )
 
         if filename is None:
             raise QgsProcessingException(
                 self.invalidSourceError(parameters, self.INPUT)
             )  # pragma: no cover
-
         return PlateauCityGmlParser(filename, settings)
 
     def processAlgorithm(
@@ -200,12 +189,16 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
         destination_crs = self.parameterAsCrs(parameters, self.CRS, context)
         force2d = self.parameterAsBoolean(parameters, self.FORCE_2D, context)
         append_mode = self.parameterAsBoolean(parameters, self.APPEND_MODE, context)
+        lod_option = _LOD_OPTIONS[self.parameterAsEnum(parameters, self.LODS, context)]
         layers = LayerManager(
-            force2d=force2d, crs=destination_crs, append_mode=append_mode
+            force2d=force2d,
+            crs=destination_crs,
+            append_mode=append_mode,
+            lod_in_name=not lod_option["only_first"],
         )
         filename = self.parameterAsFile(parameters, self.INPUT, context)
 
-        parser = self._make_parser(filename, parameters, context)
+        parser = self._make_parser(filename, parameters, context, lod_option)
         total_count = parser.count_toplevel_cityobjs()
         feedback.pushInfo(f"{total_count}個のトップレベル都市オブジェクトが含まれています。")
         feedback.pushInfo("都市オブジェクトを読み込んでいます...")
