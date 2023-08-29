@@ -27,7 +27,6 @@ from qgis.core import (
     QgsCoordinateTransform,
     QgsFeature,
     # QgsLayerTreeGroup,
-    # QgsLayerTreeGroup,
     QgsProcessingAlgorithm,
     QgsProcessingContext,
     QgsProcessingException,  # pyright: ignore
