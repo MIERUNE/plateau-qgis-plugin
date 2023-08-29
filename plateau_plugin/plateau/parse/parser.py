@@ -26,8 +26,11 @@ class ParserSettings:
     target_lods: tuple[bool, bool, bool, bool, bool] = (True, True, True, True, True)
     """各LOD (0-4) を読み込みの対象にするかどうか"""
 
-    only_highest_lod: bool = False
-    """各Featureの最高の LoD だけ出力するかどうか"""
+    only_first_found_lod: bool = False
+    """はじめに見つかったLODのみを出力するかどうか"""
+
+    lowest_lod_first: bool = False
+    """最小のLODから順に読むかどうか"""
 
     load_apperance: bool = False
     """Apperance (マテリアル、テクスチャ) を読み込むかどうか"""
@@ -259,10 +262,12 @@ class CityObjectParser:
         # ジオメトリを読んで出力する
         lod_defs = processor.lod_list
         has_lods = processor.detect_lods(elem, nsmap)
-        for lod in (4, 3, 2, 1, 0):
+        target_lods = (
+            (0, 1, 2, 3, 4) if self._settings.lowest_lod_first else (4, 3, 2, 1, 0)
+        )
+        for lod in target_lods:
             if not self._settings.target_lods[lod]:
                 continue
-
             if not has_lods[lod]:
                 continue
 
@@ -297,7 +302,7 @@ class CityObjectParser:
                 )
                 nogeom_emitted = True
 
-                if self._settings.only_highest_lod:
+                if self._settings.only_first_found_lod:
                     # 各Featureの最高 LoD だけ出力する設定の場合はここで離脱
                     break
 

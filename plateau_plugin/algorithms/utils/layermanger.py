@@ -52,12 +52,17 @@ class LayerManager:
     """Featureの種類とLoDをもとにふさわしい出力先レイヤを返すためのユーティリティ"""
 
     def __init__(
-        self, force2d: bool, crs: QgsCoordinateReferenceSystem, append_mode: bool
+        self,
+        force2d: bool,
+        crs: QgsCoordinateReferenceSystem,
+        append_mode: bool,
+        lod_in_name: bool,
     ):
         self._layers: dict[str, QgsVectorLayer] = {}
         self._parent_map: dict[str, str] = {}
         self._force2d = force2d
         self._crs = crs
+        self._lod_in_name = lod_in_name
         self._append_mode = append_mode
 
     def get_layer(self, cityobj: CityObject) -> QgsVectorLayer:
@@ -113,7 +118,9 @@ class LayerManager:
         name = " / ".join(reversed(s))
         if cityobj.lod is not None:
             assert cityobj.geometry is not None
-            name += f":LoD={cityobj.lod}):type={self._get_geometry_type_name(cityobj)}"
+            if self._lod_in_name:
+                name += f":LoD={cityobj.lod})"
+            name += f":type={self._get_geometry_type_name(cityobj)}"
         if subclass := self._subclass_name(cityobj):
             name += ":subclass=" + subclass
         return name
@@ -126,7 +133,7 @@ class LayerManager:
             s.append(co.processor.name)
             co = co.parent
         name = " / ".join(reversed(s))
-        if cityobj.lod is not None:
+        if (cityobj.lod is not None) and self._lod_in_name:
             name += f" (LoD{cityobj.lod})"
         if subclass := self._subclass_name(cityobj):
             name += " " + subclass
@@ -201,7 +208,8 @@ class LayerManager:
         """レイヤをプロジェクトに追加する"""
         for layer in self._layers.values():
             layer.updateFields()
-        QgsProject.instance().addMapLayers(self._layers.values(), True)
+        layers = sorted(self._layers.values(), key=lambda x: x.name())
+        QgsProject.instance().addMapLayers(layers, True)
 
         # NOTE: グループを作る?
         # QgsProject.instance().addMapLayers(layers.layers(), False)
