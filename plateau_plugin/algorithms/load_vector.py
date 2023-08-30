@@ -35,6 +35,7 @@ from qgis.core import (
     QgsProcessingParameterCrs,
     QgsProcessingParameterEnum,
     QgsProcessingParameterFile,
+    QgsProcessingUtils,
     QgsProject,
 )
 
@@ -179,7 +180,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
             )  # pragma: no cover
         return PlateauCityGmlParser(filename, settings)
 
-    def processAlgorithm(
+    def processAlgorithm(  # noqa: C901
         self,
         parameters: dict[str, Any],
         context: QgsProcessingContext,
@@ -189,11 +190,12 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
         force2d = self.parameterAsBoolean(parameters, self.FORCE_2D, context)
         append_mode = self.parameterAsBoolean(parameters, self.APPEND_MODE, context)
         lod_option = _LOD_OPTIONS[self.parameterAsEnum(parameters, self.LODS, context)]
-        layers = LayerManager(
+        layer_manager = LayerManager(
             force2d=force2d,
             crs=destination_crs,
             append_mode=append_mode,
             lod_in_name=not lod_option["only_first"],
+            project=context.project(),
         )
         filename = self.parameterAsFile(parameters, self.INPUT, context)
 
@@ -215,7 +217,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
             if feedback.isCanceled():
                 return {}
 
-            layer = layers.get_layer(cityobj)
+            layer = layer_manager.get_layer(cityobj)
             provider = layer.dataProvider()
             feature = QgsFeature(provider.fields())
 
@@ -239,7 +241,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
 
             for name, value in cityobj.attributes.items():
                 feature.setAttribute(name, _convert_to_qt_value(value))
-            
+
             if cityobj.geometry:
                 # Should be treated as 2D?
                 as2d = False
@@ -258,10 +260,28 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
             if count % 100 == 0:
                 feedback.setProgress(top_level_count / total_count * 100)
                 feedback.pushInfo(f"{count} 個の地物を読み込みました。")
-            if append_mode:
-                layer.updateExtents()
-    
+
         feedback.pushInfo(f"{count} 個の地物を読み込みました。")
-        layers.add_to_project()
-        
+
+        layers = sorted(layer_manager.layers, key=lambda x: x.name())
+        for layer in layers:
+            layer.updateFields()
+            layer.updateExtents()
+
+            if context.project().mapLayer(layer.id()) is None:
+                # まだプロジェクトに追加されていないレイヤのみをプロジェクトに追加する
+                context.temporaryLayerStore().addMapLayers([layer])
+                context.addLayerToLoadOnCompletion(
+                    layer.id(),
+                    QgsProcessingContext.LayerDetails(
+                        layer.name(),
+                        context.project(),
+                        self.name(),
+                        QgsProcessingUtils.LayerHint.Vector,  # type: ignore
+                    ),
+                )
+            else:
+                # 既存レイヤに追記した場合は、背後のプロバイダをリロードする
+                layer.dataProvider().reloadData()
+
         return {}

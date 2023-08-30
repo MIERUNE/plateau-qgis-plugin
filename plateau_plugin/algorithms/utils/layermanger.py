@@ -16,7 +16,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-from typing import Optional
+from typing import Iterable, Optional
 
 from PyQt5.QtCore import QVariant
 from qgis._3d import QgsPolygon3DSymbol, QgsVectorLayer3DRenderer
@@ -60,6 +60,7 @@ class LayerManager:
         crs: QgsCoordinateReferenceSystem,
         append_mode: bool,
         lod_in_name: bool,
+        project: QgsProject,
     ):
         self._layers: dict[str, QgsVectorLayer] = {}
         self._parent_map: dict[str, str] = {}
@@ -67,6 +68,7 @@ class LayerManager:
         self._crs = crs
         self._lod_in_name = lod_in_name
         self._append_mode = append_mode
+        self._project = project
 
     def get_layer(self, cityobj: CityObject) -> QgsVectorLayer:
         """Featureの種類とLoDをもとにふさわしい出力レイヤを取得する"""
@@ -79,7 +81,7 @@ class LayerManager:
         if self._append_mode:
             # プロジェクト中に存在する同名の既存レイヤに追記する
             layer_name = self._get_layer_name(cityobj)
-            for layer in QgsProject.instance().mapLayersByName(layer_name):
+            for layer in self._project.mapLayersByName(layer_name):
                 # 既存レイヤに追記できる条件:
                 # 見つかったレイヤがベクタレイヤ かつ
                 # ジオメトリ型が一致する かつ
@@ -209,8 +211,8 @@ class LayerManager:
         # set a default 3d renderer
         try:
             symbol = QgsPolygon3DSymbol()
-            symbol.setAltitudeClamping(Qgis.AltitudeClamping.Absolute)
-            symbol.setAltitudeBinding(Qgis.AltitudeBinding.Vertex)
+            symbol.setAltitudeClamping(Qgis.AltitudeClamping.Absolute)  # type: ignore
+            symbol.setAltitudeBinding(Qgis.AltitudeBinding.Vertex)  # type: ignore
             renderer = QgsVectorLayer3DRenderer()
             renderer.setSymbol(symbol)
             layer.setRenderer3D(renderer)
@@ -219,19 +221,9 @@ class LayerManager:
 
         return layer
 
-    def add_to_project(self):
-        """レイヤをプロジェクトに追加する"""
-        for layer in self._layers.values():
-            layer.updateFields()
-        layers = sorted(self._layers.values(), key=lambda x: x.name())
-        QgsProject.instance().addMapLayers(layers, True)
-
-        # NOTE: グループを作る?
-        # QgsProject.instance().addMapLayers(layers.layers(), False)
-        # group = QgsProject.instance().layerTreeRoot().addGroup(Path(filename).stem)
-
-        # NOTE: テーブル結合を自動で生成する?
-        # self._make_joins()
+    @property
+    def layers(self) -> Iterable[QgsVectorLayer]:
+        return self._layers.values()
 
     # def _make_joins(self):
     #     """子Feature->親Featureのテーブル結合を生成する"""
