@@ -35,6 +35,9 @@ class ParserSettings:
     load_apperance: bool = False
     """Apperance (マテリアル、テクスチャ) を読み込むかどうか"""
 
+    load_dm: bool = False
+    """公共測量標準図式 (DM) を読み込むかどうか"""
+
 
 class CityObjectParser:
     def __init__(
@@ -237,7 +240,7 @@ class CityObjectParser:
                     yield child_obj
 
         # 公共測量標準図式 (DM)
-        if processor.dm_attr_container_path:
+        if self._settings.load_dm and processor.dm_attr_container_path:
             for dm in elem.iterfind(processor.dm_attr_container_path + "/*", nsmap):
                 for child_obj in self.process_cityobj_element(dm, nogeom_obj):
                     yield child_obj
