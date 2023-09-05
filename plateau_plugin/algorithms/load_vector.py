@@ -276,7 +276,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
                     QgsProcessingContext.LayerDetails(
                         layer.name(),
                         context.project(),
-                        self.name(),
+                        layer.name(),
                         QgsProcessingUtils.LayerHint.Vector,  # type: ignore
                     ),
                 )
