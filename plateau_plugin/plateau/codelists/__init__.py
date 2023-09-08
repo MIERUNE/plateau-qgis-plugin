@@ -57,8 +57,8 @@ class CodelistStore:
             }
             for entry in doc.iterfind(".//gml:dictionaryEntry", _NS):
                 for definition in entry.iterfind(".//gml:Definition", _NS):
-                    desc = definition.find("./gml:description", _NS).text
-                    name = definition.find("./gml:name", _NS).text
+                    name = definition.find("./gml:name", _NS).text or ""
+                    desc = definition.find("./gml:description", _NS).text or ""
                     dictionary[name] = desc.replace("\u3000", " ").strip()
             self._cached[str(path)] = dictionary
             return dictionary
