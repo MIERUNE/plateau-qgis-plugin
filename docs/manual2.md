@@ -105,7 +105,7 @@ QGISを起動
 7. 既存の同名レイヤに追記する[オプション] (デフォルトでチェック)
 
 8. 変換先CRS[オプション]
-> 変換先のCRSを指定します。(デフォルトで EPSG:4326 (WGS84))
+> 変換先のCRSを指定します。(デフォルトで EPSG:6668 (JGD2011))
 
 9. ｢実行｣を押下して処理を実行
 > 処理が完了すると、QGISのレイヤパネルに読み込まれたデータが表示されます。
@@ -146,7 +146,7 @@ QGISを起動
     - 各地物の最高LODのみを読み込む (デフォルトYes)
     - 意味的な子要素に分ける (デフォルトNo)
     - 3次元データを強制的に2次元化する (デフォルトNo)
-    - 変換先CRS (デフォルトで EPSG:4326 [WGS84])
+    - 変換先CRS (デフォルトで EPSG:6668 (JGD2011))
 
 1. 完了時にレイヤーを読み込む
 2. ｢実行｣を押下して処理を実行
@@ -171,6 +171,7 @@ QGISを起動
 1.１番上の行の選択項目を設定し、オートフィルを選択
 2.フィルダウンを選択
 <img src="picture/operation09.png" width="500">
+<img src="picture/operation09-2.png" width="500">
 
 3.選択列の項目が１番目の値にすべて変更されます
 
@@ -184,7 +185,7 @@ QGISを起動
 
 2. バッチプロセスで実行をクリック
 
-<img src="picture/operation05.png" width="500">
+<img src="picture/operation11.png" width="500">
 
 3. パラメータタブにおいて、以下の項目を読み込みたいCityGMLの数だけ設定する。
 
@@ -194,15 +195,15 @@ QGISを起動
 1. 完了時にレイヤーを読み込む
 2. ｢実行｣を押下して処理を実行
 
-<img src="picture/operation06.png" width="500">
+<img src="picture/operation12.png" width="500">
 
 #### 上記以外にも、オートフィル機能を使って、複数のCityGMLファイルを一括読み込みすることが可能です。
 
 1.オートフィルを選択
 2.ファイルを選択
 
-<img src="picture/operation11.png" width="500">
+<img src="picture/operation13.png" width="500">
 
 3.フォルダーから読み込みたいCityGMLファイルを複数選択
 
-<img src="picture/operation12.png" width="500">
+<img src="picture/operation14.png" width="500">
