@@ -20,7 +20,7 @@ CityGML読み込みプラグイン（PLATEAU 3D City Model Plugin、以降「本
 
 本プラグインの動作環境は以下の通りです。本プラグインを実行するには、QGIS（バージョン 3.28）がインストールされている必要があります。
 
-OS：Windows10、Windows11（16GB以上のメモリ推奨）
+OS：Windows10、Windows11
 QGIS：バージョン3.28
 QGISのインストールについては、以下を参照ください
 
