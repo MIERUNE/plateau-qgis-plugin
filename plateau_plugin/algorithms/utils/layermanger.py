@@ -1,6 +1,6 @@
 """Vector layer manager for 'load_vector' algorithm"""
 
-# Copyright (C) 2023 MIERUNE Inc.
+# Copyright (C) 2023 MLIT Japan
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License

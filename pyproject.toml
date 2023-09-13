@@ -2,7 +2,7 @@
 name = "qgis-plateau-plugin"
 version = "0.0.0"
 description = ""
-authors = ["MIERUNE Inc. <info@mierune.co.jp>"]
+authors = ["Project PLATEAU <no-reply@mlit.go.jp>"]
 readme = "README.md"
 packages = [{ include = "plateau_plugin" }]
 
