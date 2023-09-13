@@ -1,12 +1,12 @@
 [general]
-name=PLATEAU 3D City Model Plugin
+name=PLATEAU 3D City Models
 version=0.0.1
 qgisMinimumVersion=3.6
-description=This plugin allows QGIS to import the PLATEAU 3D City Models (CityGML files) used in Japan. -- PLATEAU 3D都市モデルのCityGMLファイルをQGISに読み込むことができます。
+description=This plugin allows QGIS to import the PLATEAU 3D City Models (CityGML) used in Japan. -- PLATEAU 3D都市モデルのCityGMLファイルをQGISに読み込むことができます。
 author=MLIT Japan
 email=info@mierune.co.jp
 
-about=This plugin allows QGIS to import the PLATEAU 3D City Models (CityGML files) used in Japan. -- PLATEAU 3D都市モデルのCityGMLファイルをQGISに読み込むことができます。
+about=This plugin allows QGIS to import the PLATEAU 3D City Models (CityGML) used in Japan. -- PLATEAU 3D都市モデルのCityGMLファイルをQGISに読み込むことができます。
 
 repository=https://github.com/Project-PLATEAU/plateau-qgis-plugin
 tracker=https://github.com/MIERUNE/plateau-qgis-plugin/issues
