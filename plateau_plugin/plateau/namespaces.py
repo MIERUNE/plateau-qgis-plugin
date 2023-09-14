@@ -1,4 +1,4 @@
-"""定数値"""
+"""PLATEAU CityGML の XML名前空間を扱う"""
 
 from __future__ import annotations
 

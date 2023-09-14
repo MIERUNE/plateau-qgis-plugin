@@ -73,6 +73,8 @@ class CityObject:
 class FieldDefinition:
     """QGIS 等にテーブルを作る際のフィールド定義"""
 
+    __slots__ = ("name", "datatype")
+
     name: str
     datatype: AttributeDatatype
 
@@ -80,6 +82,8 @@ class FieldDefinition:
 @dataclass
 class TableDefinition:
     """QGIS 等にテーブルを作る際のテーブル定義"""
+
+    __slots__ = ("fields",)
 
     fields: list[FieldDefinition]
 
@@ -126,5 +130,6 @@ class Texture:
 
 @dataclass
 class Appearance:
+    __slots__ = ("target_material", "ring_texture")
     target_material: dict[str, Material]
     ring_texture: dict[str, tuple[Texture, np.ndarray]]

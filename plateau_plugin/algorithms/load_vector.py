@@ -1,4 +1,4 @@
-"""Processing algorithm for converting plateau files"""
+"""Processing algorithm for loading the PLATEAU CityGML as vector layers"""
 
 # Copyright (C) 2023 MLIT Japan
 #
@@ -26,6 +26,7 @@ from qgis.core import (
     QgsCoordinateReferenceSystem,
     QgsCoordinateTransform,
     QgsFeature,
+    QgsFeatureSink,
     # QgsLayerTreeGroup,
     QgsProcessingAlgorithm,
     QgsProcessingContext,
@@ -84,8 +85,8 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
     """Processing algorithm to load PLATEAU 3D City models as vector layers"""
 
     INPUT = "INPUT"
-    LOAD_SEMANTIC_PARTS = "LOAD_SEMANTIC_PARTS"
-    LODS = "LODS"
+    SEMANTIC_PARTS = "SEMANTIC_PARTS"
+    LOD_PREFERENCE = "LOD_PREFERENCE"
     FORCE_2D = "FORCE_2D"
     APPEND_MODE = "APPEND_MODE"
     CRS = "CRS"
@@ -103,7 +104,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
         )
         self.addParameter(
             QgsProcessingParameterEnum(
-                self.LODS,
+                self.LOD_PREFERENCE,
                 self.tr("読み込むLOD"),
                 options=[v["label"] for v in _LOD_OPTIONS.values()],
                 defaultValue=0,
@@ -111,7 +112,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
         )
         self.addParameter(
             QgsProcessingParameterBoolean(
-                self.LOAD_SEMANTIC_PARTS,
+                self.SEMANTIC_PARTS,
                 self.tr("地物を構成する部分ごとにレイヤを分ける"),
                 defaultValue=False,
                 optional=True,
@@ -165,7 +166,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
     ) -> PlateauCityGmlParser:
         """プロセシングの設定をもとにパーサを作る"""
         load_semantic_parts = self.parameterAsBoolean(
-            parameters, self.LOAD_SEMANTIC_PARTS, context
+            parameters, self.SEMANTIC_PARTS, context
         )
         settings = ParserSettings(
             load_semantic_parts=load_semantic_parts,
@@ -189,7 +190,9 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
         destination_crs = self.parameterAsCrs(parameters, self.CRS, context)
         force2d = self.parameterAsBoolean(parameters, self.FORCE_2D, context)
         append_mode = self.parameterAsBoolean(parameters, self.APPEND_MODE, context)
-        lod_option = _LOD_OPTIONS[self.parameterAsEnum(parameters, self.LODS, context)]
+        lod_option = _LOD_OPTIONS[
+            self.parameterAsEnum(parameters, self.LOD_PREFERENCE, context)
+        ]
         layer_manager = LayerManager(
             force2d=force2d,
             crs=destination_crs,
@@ -255,7 +258,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
                 geom.transform(crs_transform, transformZ=False)
                 feature.setGeometry(geom)
 
-            provider.addFeature(feature)
+            provider.addFeature(feature, QgsFeatureSink.FastInsert)
             count += 1
             if count % 100 == 0:
                 feedback.setProgress(top_level_count / total_count * 100)

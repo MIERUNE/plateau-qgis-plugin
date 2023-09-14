@@ -1,4 +1,4 @@
-"""Processing algorithm for converting plateau files"""
+"""Processing algorithm for loading a PLATEAU dem file as a mesh layer"""
 
 # Copyright (C) 2023 MLIT Japan
 #
