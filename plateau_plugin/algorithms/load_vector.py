@@ -180,6 +180,10 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
             )  # pragma: no cover
         return PlateauCityGmlParser(filename, settings)
 
+    def flags(self) -> QgsProcessingAlgorithm.Flags:
+        # NOTE: Windowsなどでバッチ処理が停止する問題への暫定対応としてメインスレッドで実行する
+        return super().flags() | QgsProcessingAlgorithm.FlagNoThreading
+
     def processAlgorithm(  # noqa: C901
         self,
         parameters: dict[str, Any],
