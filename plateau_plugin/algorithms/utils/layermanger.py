@@ -197,7 +197,7 @@ class LayerManager:
         # make a new layer
         crs = self._crs.authid()
         geometry_type_name = self._get_geometry_type_name(cityobj)
-        layer_path = f"{geometry_type_name}?crs={crs}"
+        layer_path = f"{geometry_type_name}?crs={crs}&index=yes"
 
         layer = QgsVectorLayer(
             layer_path,
