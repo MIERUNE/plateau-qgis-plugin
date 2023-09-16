@@ -1,4 +1,4 @@
-# PLATEAU 3D City Model Plugin
+# PLATEAU QGISプラグイン(plateau-qgis-plugin)
 
 #### PLATEAU 地形モデル以外
 
@@ -325,10 +325,10 @@ QGISでは上記の手順でインポートしたPLATEAUのCityGMLファイル�
 
 7. 標高データがある場合は、左上の[Layres]で、[FlatPlane]のチェックを外し、標高データにチェックを入れることで、CityGMLデータが地形から浮かずに表示されます。
 > 標高データは、上記の通り地形モデルからラスタライズして作成するか、QGISプラグインの[ElevationTile4JP](https://qiita.com/nokonoko_1203/items/51cc0990cea4c96c4565)などで入手することが可能です。
-
 <img src="picture/3dview06.png" width="500">
 
 
 ### 3Dマップビューによる3D表示
 QGISには標準機能で3D表示するための[3Dマップビュー]という機能が存在します。[3Dマップビュー]の使用方法は、[QGIS公式ドキュメント](https://docs.qgis.org/3.28/ja/docs/user_manual/map_views/3d_map_view.html)を参照してください。
+
 <img src="picture/3dview07.png" width="500">
