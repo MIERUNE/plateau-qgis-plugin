@@ -272,6 +272,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
 
         layers = sorted(layer_manager.layers, key=lambda x: x.name())
         for layer in layers:
+            layer.dataProvider().flushBuffer()
             layer.updateFields()
             layer.updateExtents()
 
@@ -288,7 +289,9 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
                     ),
                 )
             else:
+                pass
+                # NOTE: 以下はバッチ処理時に多大なパフォーマンス低下を招くため無効化している
                 # 既存レイヤに追記した場合は、背後のプロバイダをリロードする
-                layer.dataProvider().reloadData()
+                # layer.dataProvider().reloadData()
 
         return {}
