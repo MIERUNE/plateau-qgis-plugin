@@ -1,8 +1,8 @@
-# PLATEAUデータ表⽰⽤QGISプラグイン(PLATEAU 3D City Model Plugin)
+# PLATEAUQGISプラグイン(plateau-qgis-plugin)
 
 
 ## 概要
-本プラグイン(PLATEAU 3D City Model Plugin)は、QGIS上で「3D都市モデル標準製品仕様書 第3.0版」に対応したPLATEAUのCityGMLファイルを読み込むためのツール（ベータ版）です。
+本プラグイン(plateau-qgis-plugin)は、QGIS上で「3D都市モデル標準製品仕様書 第3.0版」に対応したPLATEAUのCityGMLファイルを読み込むためのツール（ベータ版）です。
 
 
 ## プラグイン概要
@@ -13,10 +13,10 @@
 
 ### 利用方法
 本プラグインの導入から集計の実施までの手順は以下の通りです。
-詳細な操作方法は本プラグインの[利用マニュアル]を参照ください。
+詳細な操作方法は本プラグインの[利用マニュアル](https://github.com/Project-PLATEAU/plateau-qgis-plugin/blob/main/docs/manual.md)を参照ください。
 なお、本プラグインは、QGIS上のベクタレイヤに対応しています。
 
-1.	本プラグインをダウンロード
+1.	GitHubからプラグインの[Zipファイル](https://github.com/Project-PLATEAU/plateau-qgis-plugin/releases/download/v0.02/plateau_plugin.zip)をダウンロード
 2.	QGISを起動
 3.	本プラグインをインストール
 4.  本プラグインを起動
