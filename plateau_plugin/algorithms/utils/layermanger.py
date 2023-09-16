@@ -16,7 +16,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-from typing import Iterable, Optional, cast
+from typing import Iterable, Optional
 
 from PyQt5.QtCore import QVariant
 from qgis._3d import QgsPolygon3DSymbol, QgsVectorLayer3DRenderer
@@ -26,7 +26,6 @@ from qgis.core import (
     QgsField,
     # QgsLayerTreeGroup,
     QgsProject,
-    QgsVectorDataProvider,
     QgsVectorLayer,
     QgsWkbTypes,
 )
@@ -75,9 +74,8 @@ class LayerManager:
         """Featureの種類とLoDをもとにふさわしい出力レイヤを取得する"""
 
         layer_id = self._get_layer_id(cityobj)
+        # if already exists
         if (layer := self._layers.get(layer_id)) is not None:
-            # if already exists
-            cast(QgsVectorDataProvider, layer.dataProvider()).cancelReload()
             return layer
 
         if self._append_mode:
@@ -93,7 +91,6 @@ class LayerManager:
                     QgsWkbTypes.displayString(layer.wkbType()) == geom_type_name
                     and (geom_type_name == "NoGeometry" or layer.crs() == self._crs)
                 ):
-                    cast(QgsVectorDataProvider, layer.dataProvider()).cancelReload()
                     self._layers[layer_id] = layer
                     return layer
 

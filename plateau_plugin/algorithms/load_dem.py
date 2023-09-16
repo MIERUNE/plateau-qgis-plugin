@@ -53,7 +53,7 @@ def convert_citygml_relief_to_ply(src_filename: str, dst_filename: str) -> None:
     for pos_list in doc.iterfind(".//dem:TINRelief//gml:posList", BASE_NS):
         tri_verts = [float(v) for v in pos_list.text.split()]
         tri_indices = [b"\x03"]
-        for i in range(0, 3):
+        for i in range(3):
             y, x, z = tri_verts[i * 3 : i * 3 + 3]
             key = (x, y)
             if (idx := index_map.get(key)) is None:
