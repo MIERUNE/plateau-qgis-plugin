@@ -1,4 +1,4 @@
-# PLATEAU 3D City Model Plugin
+# PLATEAU QGISプラグイン(plateau-qgis-plugin)
 
 #### PLATEAU 地形モデル以外
 
@@ -11,7 +11,7 @@
 ## はじめに
 ### プラグインの概要
 
-CityGML読み込みプラグイン（PLATEAU 3D City Model Plugin、以降「本プラグイン」と呼称）は、QGISでPLATEAUのCityGMLファイルを読み込み、QGIS上に表示するためのプラグインです。データは一時スクラッチレイヤとして読み込まれます。
+CityGML読み込みプラグイン（PLATEAU QGISプラグイン、以降「本プラグイン」と呼称）は、QGISでPLATEAUのCityGMLファイルを読み込み、QGIS上に表示するためのプラグインです。データは一時スクラッチレイヤとして読み込まれます。
 ### 対応データ形式
 
 本プラグインでは「3D都市モデル標準製品仕様書 第3.0版」に対応するCityGMLファイルを指定する必要があります。
@@ -295,3 +295,40 @@ QGISを起動
 3.フォルダーから読み込みたいCityGMLファイルを複数選択します。
 
 <img src="picture/operation14.png" width="500">
+
+## 3D表示
+QGISでは上記の手順でインポートしたPLATEAUのCityGMLファイルを3Dで表示することが可能です。
+
+### QGIS2threejsによる3D表示
+ここでは、QGISプラグインの[QGIS2threejs](https://qgis2threejs.readthedocs.io/ja/docs-1.4_a/)を使用して3D表示する方法を紹介します。
+<img src="picture/3dview00.png" width="500">
+
+
+1. メニューバーより[プラグイン]、[プラグインの管理とリポジトリ]の順にクリックします。
+<img src="picture/3dview01.png" width="500">
+
+
+2. 左のタブから[すべて]を選択して、検索ワード入力欄に[threejs]と入力して、一覧より[QGIS2threejs]を選択して、下部の[インストール]をクリックします。
+<img src="picture/3dview02.png" width="500">
+
+
+3. [QGIS2threejs]はプロジェクトの座標系を投影座標系に変更する必要があります。画面右下の[EPSG:○○○○]ボタンをクリックして、プロジェクトの座標系を[EPSG：3857]などの投影座標系に変更します。
+<img src="picture/3dview03.png" width="500">
+
+4. レイヤパネルで、背景地図のみの表示に変更しておきます。
+5. ツールバーより[QGIS2threejs]のアイコンをクリックしてプラグインを起動します。
+<img src="picture/3dview04.png" width="500">
+
+6. 左上の[Layres]より[FlatPlane]とPLATEAUのCityGMLファイル（ここでは[Building]）にチェックを入れることで、3Dでマップが表示されます。
+<img src="picture/3dview05.png" width="500">
+
+
+7. 標高データがある場合は、左上の[Layres]で、[FlatPlane]のチェックを外し、標高データにチェックを入れることで、CityGMLデータが地形から浮かずに表示されます。
+> 標高データは、上記の通り地形モデルからラスタライズして作成するか、QGISプラグインの[ElevationTile4JP](https://qiita.com/nokonoko_1203/items/51cc0990cea4c96c4565)などで入手することが可能です。
+<img src="picture/3dview06.png" width="500">
+
+
+### 3Dマップビューによる3D表示
+QGISには標準機能で3D表示するための[3Dマップビュー]という機能が存在します。[3Dマップビュー]の使用方法は、[QGIS公式ドキュメント](https://docs.qgis.org/3.28/ja/docs/user_manual/map_views/3d_map_view.html)を参照してください。
+
+<img src="picture/3dview07.png" width="500">
