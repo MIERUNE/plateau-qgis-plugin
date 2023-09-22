@@ -15,16 +15,6 @@ _base_attributes = [
         base_element=None,
         attributes=[
             Attribute(
-                name="function",
-                path="./urf:function",
-                datatype="[]string",
-            ),
-            Attribute(
-                name="usage",
-                path="./urf:usage",
-                datatype="[]string",
-            ),
-            Attribute(
                 name="areaClassificationType",
                 path="./urf:areaClassificationType",
                 datatype="string",
@@ -324,6 +314,18 @@ URF_DISTRICTS_AND_ZONES = FeatureProcessingDefinition(
                     path="./urf:function",
                     datatype="[]string",
                     predefined_codelist="Common_districtsAndZonesType",
+                ),
+                Attribute(
+                    name="usage",
+                    path="./urf:usage",
+                    datatype="[]string",
+                    predefined_codelist={
+                        "urf:SpecialUseDistrict": "SpecialUseDistrict_usage",
+                        "urf:HeightControlDistrict": "HeightControlDistrict_usage",
+                        "urf:FirePreventionDistrict": "FirePreventionDistrict_usage",
+                        "urf:ScenicDistrict": "ScenicDistrict_usage",
+                        "urf:PortZone": "PortZone_usage",
+                    },
                 ),
                 Attribute(
                     name="areaInTotal",
@@ -1006,6 +1008,9 @@ URF_URBAN_DEVELOPMENT_PROJECT = FeatureProcessingDefinition(
                     name="usage",
                     path="./urf:usage",
                     datatype="[]string",
+                    predefined_codelist={
+                        "urf:UrbanRedevelopmentProject": "UrbanRedevelopmentProject_usage",
+                    },
                 ),
                 Attribute(
                     name="buildingLotDevelopment",
