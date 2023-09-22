@@ -1,6 +1,6 @@
 """区域モデル (./area/)、都市計画決定情報モデル (./urf/)"""
 
-from .base import (
+from ..base import (
     Attribute,
     AttributeGroup,
     FeatureProcessingDefinition,
@@ -1533,3 +1533,21 @@ URF_DISTRICT = FeatureProcessingDefinition(
         ),
     ),
 )
+
+DEFS = [
+    URF_AREA_CLASSIFICATION,
+    URF_DISTRICT,
+    URF_DISTRICT_DEVELOPMENT_PLAN,
+    URF_DISTRICT_FACILITY,
+    URF_DISTRICT_PLAN,
+    URF_DISTRICTS_AND_ZONES,
+    URF_PROJECT_PROMOTION_AREA,
+    URF_PROMOTION_DISTRICT,
+    URF_QUASI_URBAN_PLANNING_AREA,
+    URF_SCHEDULED_AREA_FOR_URBAN_DEVELOPMENT,
+    URF_UNUSED_LAND_USE_PROMOTION_AREA,
+    URF_URBAN_DEVELOPMENT_PROJECT,
+    URF_URBAN_DISASTER_RECOVERY_PROMOTION_AREA,
+    URF_URBAN_FACILITY,
+    URF_URBAN_PLANNING_AREA,
+]
