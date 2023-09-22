@@ -142,6 +142,8 @@ class CityObjectParser:
                         value = child_elem.text
                     else:
                         continue
+                    if value is None:
+                        continue
 
                     if prop.datatype == "string":
                         v = str(value)
