@@ -186,6 +186,7 @@ class LayerManager:
                 QgsField("type", QVariant.String),  # feature type
                 QgsField("lod", QVariant.Int),  # LoD
                 QgsField("name", QVariant.String),  # gml:name
+                QgsField("description", QVariant.String),  # gml:description
                 QgsField("creationDate", QVariant.Date),  # gml:creationDate
                 QgsField("terminationDate", QVariant.Date),  # gml:terminationDate
             ]

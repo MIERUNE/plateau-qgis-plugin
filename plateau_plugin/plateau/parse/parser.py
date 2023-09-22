@@ -53,8 +53,10 @@ class CityObjectParser:
         self._codelist_store = codelist_store
         self.appearance = appearance
 
-    def _get_id_and_name(self, elem: et._Element) -> tuple[str | None, str | None]:
-        """@gml:id と gml:name (あれば) を読む"""
+    def _get_id_and_name(
+        self, elem: et._Element
+    ) -> tuple[str | None, str | None, str | None]:
+        """@gml:id と gml:name (あれば) と gml:description (あれば) を読む"""
         nsmap = self._nsmap
         gml_id = elem.get("{http://www.opengis.net/gml}id", None)
         if (name_elem := elem.find("./gml:name", nsmap)) is not None:
@@ -64,7 +66,12 @@ class CityObjectParser:
         else:
             gml_name = None
 
-        return (gml_id, gml_name)
+        if (desc_elem := elem.find("./gml:description", nsmap)) is not None:
+            gml_description = desc_elem.text
+        else:
+            gml_description = None
+
+        return (gml_id, gml_name, gml_description)
 
     def _get_basic_dates(self, elem: et._Element) -> tuple[date | None, date | None]:
         """基本的な日付 core:creationDate (あれば) と core:terminationDate (あれば) を読む"""
@@ -205,7 +212,7 @@ class CityObjectParser:
         nsmap = self._nsmap
         appearance = self.appearance
 
-        (gml_id, gml_name) = self._get_id_and_name(elem)
+        (gml_id, gml_name, gml_desc) = self._get_id_and_name(elem)
         (creation_date, termination_date) = self._get_basic_dates(elem)
 
         # この要素のための Processor を得る
@@ -221,6 +228,7 @@ class CityObjectParser:
             type=ns.to_prefixed_name(elem.tag),
             id=gml_id,
             name=gml_name,
+            description=gml_desc,
             creation_date=creation_date,
             termination_date=termination_date,
             lod=None,
@@ -296,6 +304,7 @@ class CityObjectParser:
                     type=ns.to_prefixed_name(elem.tag),
                     id=gml_id,
                     name=gml_name,
+                    description=gml_desc,
                     creation_date=creation_date,
                     termination_date=termination_date,
                     attributes=props,

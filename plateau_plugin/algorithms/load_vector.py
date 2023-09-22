@@ -234,6 +234,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
             feature.setAttribute("type", cityobj.type)
             feature.setAttribute("lod", cityobj.lod)
             feature.setAttribute("name", cityobj.name)
+            feature.setAttribute("description", cityobj.description)
             feature.setAttribute(
                 "creationDate",
                 QDate(cityobj.creation_date) if cityobj.creation_date else None,  # type: ignore
