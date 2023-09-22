@@ -51,6 +51,9 @@ class CityObject:
     name: str | None
     """gml:name"""
 
+    description: str | None
+    """gml:description"""
+
     creation_date: date | None
     """core:creationDate"""
 
