@@ -467,7 +467,7 @@ TUNNEL_FURNITURE = FeatureProcessingDefinition(
                     name="function",
                     path="./tun:function",
                     datatype="[]string",
-                    predefined_codelist=None,
+                    predefined_codelist="TunnelInstallation_function",
                 ),
             ],
         ),

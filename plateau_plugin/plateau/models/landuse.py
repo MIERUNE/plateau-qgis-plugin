@@ -117,7 +117,7 @@ LAND_USE = FeatureProcessingDefinition(
                     name="prefecture",
                     path="./uro:prefecture",
                     datatype="string",
-                    predefined_codelist="Common_prefecture",
+                    predefined_codelist="Common_localPublicAuthorities",
                 ),
                 Attribute(
                     name="city",

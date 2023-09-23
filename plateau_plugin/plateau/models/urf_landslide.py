@@ -34,7 +34,7 @@ URF_SEDIMENT_DISASTER_PRONE_AREA = FeatureProcessingDefinition(
                     name="prefecture",
                     path="./urf:prefecture",
                     datatype="string",
-                    predefined_codelist="Common_prefecture",
+                    predefined_codelist="Common_localPublicAuthorities",
                 ),
                 Attribute(
                     name="location",
