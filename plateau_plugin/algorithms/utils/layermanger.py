@@ -18,7 +18,7 @@
 
 from __future__ import annotations
 
-from typing import Iterable, Optional
+from typing import Iterable
 
 from PyQt5.QtCore import QVariant
 from qgis._3d import QgsPolygon3DSymbol, QgsVectorLayer3DRenderer
@@ -118,7 +118,7 @@ class LayerManager:
 
     def _get_layer_id(self, cityobj: CityObject) -> str:
         """Featureの挿入先を決めるレイヤ識別子を CityObject をもとに組み立てる"""
-        co: Optional[CityObject] = cityobj
+        co: CityObject | None = cityobj
         s = []
         while co:
             s.append(co.processor.id)
@@ -135,7 +135,7 @@ class LayerManager:
 
     def _get_layer_name(self, cityobj: CityObject) -> str:
         """レイヤ名を組み立てる"""
-        co: Optional[CityObject] = cityobj
+        co: CityObject | None = cityobj
         s = []
         while co:
             s.append(co.processor.name)
