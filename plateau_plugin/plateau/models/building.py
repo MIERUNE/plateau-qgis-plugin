@@ -83,7 +83,7 @@ BUILDING = FeatureProcessingDefinition(
                     name="prefecture",
                     path="./uro:prefecture",
                     datatype="string",
-                    predefined_codelist="Common_prefecture",
+                    predefined_codelist="Common_localPublicAuthorities",
                 ),
                 Attribute(
                     name="city",
@@ -148,7 +148,7 @@ BUILDING = FeatureProcessingDefinition(
         #             name="urbanPlanType",
         #             path="./uro:urbanPlanType",
         #             datatype="string",
-        #             predefined_codelist=None,
+        #             predefined_codelist="Common_urbanPlanType",
         #         ),
         #         Attribute(
         #             name="areaClassificationType",

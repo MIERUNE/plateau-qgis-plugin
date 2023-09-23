@@ -22,7 +22,7 @@ _uro_vegetation_data_quality_attribute = AttributeGroup(
             name="geometrySrcDesc",
             path="./uro:geometrySrcDesc",
             datatype="[]string",
-            predefined_codelist="VegetationDataQualityAttribute_GeometrySrcDesc",
+            predefined_codelist="VegetationDataQualityAttribute_geometrySrcDesc",
         ),
         Attribute(
             name="thematicSrcDesc",

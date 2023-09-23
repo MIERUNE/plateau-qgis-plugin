@@ -41,7 +41,7 @@ WATER_BODY = FeatureProcessingDefinition(
                     name="adminType",
                     path="./uro:adminType",
                     datatype="string",
-                    predefined_codelist=None,
+                    predefined_codelist="WaterbodyDetailAttribute_adminType",
                 ),
                 Attribute(
                     name="area",

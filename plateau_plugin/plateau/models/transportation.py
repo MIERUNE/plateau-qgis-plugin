@@ -505,7 +505,7 @@ _square_urban_plan_attribute_attrs = [
         name="railwayType",
         path="./uro:railwayType",
         datatype="[]string",
-        predefined_codelist=None,
+        predefined_codelist="StationSquareAttribute_railwayType",
     ),
     Attribute(
         name="remarks",
@@ -526,7 +526,7 @@ _square_urban_plan_attribute_attrs = [
         name="status",
         path="./uro:status",
         datatype="string",
-        predefined_codelist=None,
+        predefined_codelist="Common_status",
     ),
     Attribute(
         name="structure",
@@ -537,7 +537,7 @@ _square_urban_plan_attribute_attrs = [
         name="terminalType",
         path="./uro:terminalType",
         datatype="string",
-        predefined_codelist=None,
+        predefined_codelist="TerminalAttribute_terminalType",
     ),
     Attribute(
         name="urbanPlanningAreaName",
@@ -548,7 +548,7 @@ _square_urban_plan_attribute_attrs = [
         name="userType",
         path="./uro:userType",
         datatype="string",
-        predefined_codelist=None,
+        predefined_codelist="TerminalAttribute_userType",
     ),
 ]
 
@@ -681,7 +681,7 @@ WATERWAY = FeatureProcessingDefinition(
                     name="routeDirection",
                     path="./uro:routeDirection",
                     datatype="string",
-                    predefined_codelist=None,
+                    predefined_codelist="WaterwayDetailAttribute_routeDirection",
                 ),
                 Attribute(
                     name="routeID",
