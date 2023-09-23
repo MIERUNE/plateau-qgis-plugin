@@ -66,8 +66,8 @@ _construction_structure_attribute_attrs = [
 
 
 OTHER_CONSTRUCTION = FeatureProcessingDefinition(
-    id="OtherConstruction",
-    name="uro:OtherConstruction",
+    id="uro:OtherConstruction",
+    name="OtherConstruction",
     target_elements=["uro:OtherConstruction"],
     attribute_groups=[
         AttributeGroup(
@@ -344,7 +344,7 @@ OTHER_CONSTRUCTION_BOUNDARY_SURFACE = FeatureProcessingDefinition(
 
 OTHER_CONSTRUCTION_INSTALLATION = FeatureProcessingDefinition(
     id="uro:ConstructionInstallation",
-    name="uro:ConstructionInstallation",
+    name="ConstructionInstallation",
     target_elements=["uro:ConstructionInstallation"],
     attribute_groups=[
         AttributeGroup(
