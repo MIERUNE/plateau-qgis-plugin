@@ -629,7 +629,7 @@ SQUARE = FeatureProcessingDefinition(
 
 WATERWAY = FeatureProcessingDefinition(
     id="uro:Waterway",
-    name="uro:Waterway",
+    name="Waterway",
     target_elements=["uro:Waterway"],
     attribute_groups=[
         AttributeGroup(

@@ -129,6 +129,12 @@ class CityObjectParser:
                             v = codelist_lookup(pcl, path, v)
                         values.append(v)
                     props[prop.name] = values
+                elif prop.datatype == "[]double":
+                    props[prop.name] = [
+                        float(e.text)
+                        for e in base_elem.findall(prop.path, nsmap)
+                        if e.text is not None
+                    ]
                 elif prop.datatype == "xAL":
                     if (child_elem := base_elem.find(prop.path, nsmap)) is not None:
                         value = " ".join(

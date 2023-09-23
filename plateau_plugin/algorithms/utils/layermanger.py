@@ -45,6 +45,7 @@ _TYPE_TO_QT_TYPE = {
     "boolean": QVariant.Bool,
     "date": QVariant.Date,
     "[]string": QVariant.String,  # Comma-separated string
+    "[]double": QVariant.String,  # Comma-separated string
     "object": QVariant.String,  # JSON string
     "[]object": QVariant.String,  # JSON string
     "xAL": QVariant.String,  # JSON string

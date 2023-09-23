@@ -18,6 +18,7 @@
 
 import datetime
 import json
+import platform
 from pathlib import Path
 from typing import Any
 
@@ -49,8 +50,8 @@ def _convert_to_qt_value(v: Any) -> Any:
     if isinstance(v, list):
         if not v:
             return None
-        elif isinstance(v[0], str):
-            return ",".join(v)
+        elif isinstance(v[0], (str, float, int)):
+            return ",".join(str(e) for e in v)
         else:
             return json.dumps(v, ensure_ascii=False)
     else:
@@ -182,8 +183,11 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
         return PlateauCityGmlParser(filename, settings)
 
     def flags(self) -> QgsProcessingAlgorithm.Flags:
-        # NOTE: Windowsなどでバッチ処理が停止する問題への暫定対応としてメインスレッドで実行する
-        return super().flags() | QgsProcessingAlgorithm.FlagNoThreading
+        if platform.system() == "Windows":
+            # NOTE: Windowsでバッチ処理が停止する問題への暫定対応としてメインスレッドで実行する
+            return super().flags() | QgsProcessingAlgorithm.FlagNoThreading
+        else:
+            return super().flags()
 
     def processAlgorithm(  # noqa: C901
         self,

@@ -14,6 +14,7 @@ AttributeDatatype = Literal[
     "[]string",
     "integer",
     "double",
+    "[]double",
     "datetime",
     "boolean",
     "date",
@@ -189,7 +190,11 @@ class ProcessorRegistory:
         ), f"Processor id {processor.id} is already registered"
 
         self._id_map[processor.id] = processor
+        closed_target = set()
         for prefixed_name in self._make_prefix_variants(processor.target_elements):
+            assert prefixed_name not in closed_target
+            closed_target.add(prefixed_name)
+
             qualified_name = re.sub(
                 r"^(.+?):()", lambda m: "{" + BASE_NS[m.group(1)] + "}", prefixed_name
             )
