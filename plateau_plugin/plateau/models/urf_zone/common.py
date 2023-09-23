@@ -64,7 +64,7 @@ ZONE_ATTRIBUTES = [
                 name="prefecture",
                 path="./urf:prefecture",
                 datatype="string",
-                predefined_codelist="Common_prefecture",
+                predefined_codelist="Common_localPublicAuthorities",
             ),
             Attribute(
                 name="reason",
