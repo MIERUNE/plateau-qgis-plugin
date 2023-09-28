@@ -6,7 +6,7 @@ import lxml.etree as et
 import numpy as np
 
 from ..types import Geometry, LineStringCollection, PointCollection, PolygonCollection
-from .appearance import Appearance, Material, Texture
+from .appearance import Appearance
 
 
 def parse_geometry(  # noqa: C901 (TODO)
@@ -19,8 +19,8 @@ def parse_geometry(  # noqa: C901 (TODO)
     # TODO: refactoring
 
     mpoly_geoms = []
-    mpoly_materials: list[Material | None] = []
-    mpoly_textures: list[Texture | None] = []
+    mpoly_materials: list[int | None] = []
+    mpoly_textures: list[int | None] = []
     mpoly_uvs: list[list[np.ndarray] | None] = []
     mline_geoms = []
     mpoint_geoms = []
@@ -44,24 +44,24 @@ def parse_geometry(  # noqa: C901 (TODO)
 
                     # TODO: refactoring
                     mat = None
-                    if poly_id and (m := appearance.target_material.get(poly_id)):
+                    if poly_id and (m := appearance.target_to_material.get(poly_id)):
                         mat = m
                     else:
                         sur = polygon.getparent().getparent()
                         sur_id = sur.get("{http://www.opengis.net/gml}id")
-                        if sur_id and (m := appearance.target_material.get(sur_id)):
+                        if sur_id and (m := appearance.target_to_material.get(sur_id)):
                             mat = m
                         elif sur.tag == "{http://www.opengis.net/gml}CompositeSurface":
                             sur2 = sur.getparent().getparent()
                             sur2_id = sur2.get("{http://www.opengis.net/gml}id")
                             if sur2_id and (
-                                m := appearance.target_material.get(sur2_id)
+                                m := appearance.target_to_material.get(sur2_id)
                             ):
                                 mat = m
 
                     mpoly_materials.append(mat)
 
-                    if tex_uv := appearance.ring_texture.get(ring_id):
+                    if tex_uv := appearance.ring_to_texture.get(ring_id):
                         tex, uv = tex_uv
                         assert ring.shape[0] == uv.shape[0]
                         mpoly_textures.append(tex)
@@ -81,7 +81,7 @@ def parse_geometry(  # noqa: C901 (TODO)
                     if appearance:
                         uv = None
                         ring_id = ring_elem.get("{http://www.opengis.net/gml}id")
-                        if tex_uv := appearance.ring_texture.get(ring_id):
+                        if tex_uv := appearance.ring_to_texture.get(ring_id):
                             _, uv = tex_uv
                             poly_uvs.append(uv)
 

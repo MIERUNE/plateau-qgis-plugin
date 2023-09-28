@@ -337,20 +337,24 @@ class PlateauCityGmlParser:
         self._base_dir = Path(filename).parent
         self._doc = et.parse(filename, None)
         self._settings = settings
+        self.appearance: Appearance | None = None
 
         # ドキュメントで使われている i-UR のバージョンを検出して
         # uro: と urf: 接頭辞が指すべきXML名前空間を自動で決定する
         self._ns = Namespace.from_document_nsmap(self._doc.getroot().nsmap)
         codelists = CodelistStore(self._base_dir)
 
-        self._parser = CityObjectParser(
-            self._settings, ns=self._ns, codelist_store=codelists
-        )
+        if settings.load_apperance:
+            for app in parse_appearances(self._doc):
+                self.appearance = app
+                break
 
-    def load_apperance(self, theme: str | None = None) -> None:
-        for app in parse_appearances(self._doc):
-            self._parser.appearance = app
-            break
+        self._parser = CityObjectParser(
+            self._settings,
+            ns=self._ns,
+            codelist_store=codelists,
+            appearance=self.appearance,
+        )
 
     def count_toplevel_cityobjs(self) -> int:
         """ファイルに含まれるトップレベルのFeatureの数を返す"""

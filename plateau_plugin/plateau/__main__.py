@@ -13,9 +13,10 @@ if __name__ == "__main__":
     processors.validate_processors()
 
     # settings = ParseSettings(load_semantic_parts=True)
-    settings = ParserSettings(only_first_found_lod=False, load_semantic_parts=False)
+    settings = ParserSettings(
+        only_first_found_lod=False, load_semantic_parts=False, load_apperance=True
+    )
     parser = PlateauCityGmlParser(sys.argv[1], settings)
-    parser.load_apperance()
     for count, cityobj in parser.iter_cityobjs():
         print(
             f"{count} [{cityobj.processor.id}] {cityobj.type}, {cityobj.name}, LoD={cityobj.lod}, {cityobj.attributes}"
