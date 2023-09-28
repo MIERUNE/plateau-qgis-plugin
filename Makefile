@@ -27,13 +27,6 @@ endif
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
-update_dependencies:  ## Update PLATEAU library
-	git clone https://github.com/MIERUNE/plateau-py.git || true
-	rm -rf plateau_plugin/plateau
-	mv -f plateau-py/src/plateau plateau_plugin/
-	mv -f plateau-py/LICENSE.txt plateau_plugin/plateau/
-	rm -rf plateau-py
-
 init:  ## Startup project
 ifeq ($(OS),Windows_NT)
 	$(QGIS_PYTHON) -m pip install poetry
@@ -63,3 +56,11 @@ ifeq ($(OS),Windows_NT)
 else
 	poetry run pytest -v --cov --cov-report=term
 endif
+
+update_dependencies:  ## Update PLATEAU library
+	pip download plateau-py --no-dependencies
+	wheel3 unpack plateau_py-*-py3-none-any.whl
+	rsync -r --delete plateau_py-*/plateau ${PACKAGE_NAME}/
+	cp plateau_py-*/plateau_py-*.dist-info/LICENSE.txt ${PACKAGE_NAME}/plateau/
+	rm -rf plateau_py-*/
+	rm -rf plateau_py-*.whl

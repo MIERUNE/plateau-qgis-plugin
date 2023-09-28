@@ -27,8 +27,8 @@ class PolygonCollection:
     polygons: list[list[np.ndarray]]
 
     # appearance
-    materials: list[Material | None] | None
-    textures: list[Texture | None] | None
+    materials: list[int | None] | None
+    textures: list[int | None] | None
     uvs: list[list[np.ndarray] | None] | None
 
 
@@ -119,10 +119,13 @@ def get_table_definition(cityobj: CityObject) -> TableDefinition:
 
 @dataclass
 class Material:
-    __slots__ = ("diffuse_color", "specular_color", "shininess")
-    diffuse_color: tuple[float, ...] | None
-    specular_color: tuple[float, ...] | None
-    shininess: float | None
+    ambient_intensity: float = 0.2
+    diffuse_color: tuple[float, float, float] = (0.8, 0.8, 0.8)
+    emissive_color: tuple[float, float, float] = (0.0, 0.0, 0.0)
+    specular_color: tuple[float, float, float] = (1.0, 1.0, 1.0)
+    shininess: float = 0.2
+    transparency: float = 0
+    is_smooth: bool = False
 
 
 @dataclass
@@ -133,6 +136,7 @@ class Texture:
 
 @dataclass
 class Appearance:
-    __slots__ = ("target_material", "ring_texture")
-    target_material: dict[str, Material]
-    ring_texture: dict[str, tuple[Texture, np.ndarray]]
+    materials: list[Material]
+    textures: list[Texture]
+    target_to_material: dict[str, int]
+    ring_to_texture: dict[str, tuple[int, np.ndarray]]
