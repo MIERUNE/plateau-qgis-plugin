@@ -45,19 +45,19 @@ URF_SEDIMENT_DISASTER_PRONE_AREA = FeatureProcessingDefinition(
                     name="disasterType",
                     path="./urf:disasterType",
                     datatype="string",
-                    predefined_codelist="SedimentDisasterProneArea_disasterType",
+                    predefined_codelist="LandSlideRiskAttribute_description",
                 ),
                 Attribute(
                     name="areaType",
                     path="./urf:areaType",
                     datatype="string",
-                    predefined_codelist="SedimentDisasterProneArea_areaType",
+                    predefined_codelist="LandSlideRiskAttribute_areaType",
                 ),
                 Attribute(
                     name="status",
                     path="./urf:status",
                     datatype="string",
-                    predefined_codelist="SedimentDisasterProneArea_status",
+                    predefined_codelist="LandSlideRiskAttribute_status",
                 ),
                 Attribute(
                     name="zoneName",

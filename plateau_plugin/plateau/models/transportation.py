@@ -9,38 +9,44 @@ from .base import (
     GeometricAttributes,
 )
 
-_transportation_data_quality_attribute = [
-    Attribute(
-        name="srcScale",
-        path="./uro:srcScale",
-        datatype="[]string",
-        predefined_codelist="RoadDataQualityAttribute_srcScale",
-    ),
-    Attribute(
-        name="geometrySrcDesc",
-        path="./uro:geometrySrcDesc",
-        datatype="[]string",
-        predefined_codelist="RoadDataQualityAttribute_geometrySrcDesc",
-    ),
-    Attribute(
-        name="thematicSrcDesc",
-        path="./uro:thematicSrcDesc",
-        datatype="[]string",
-        predefined_codelist="RoadDataQualityAttribute_thematicSrcDesc",
-    ),
-    Attribute(
-        name="appearanceSrcDesc",
-        path="./uro:appearanceSrcDesc",
-        datatype="[]string",
-        predefined_codelist="RoadDataQualityAttribute_appearanceSrcDesc",
-    ),
-    Attribute(
-        name="lodType",
-        path="./uro:lodType",
-        datatype="[]string",
-        predefined_codelist="Road_lodType",
-    ),
-]
+_transportation_data_quality_attributes = AttributeGroup(
+    base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
+    attributes=[
+        Attribute(
+            name="srcScale",
+            path="./uro:srcScale",
+            datatype="[]string",
+            predefined_codelist="TransportationDataQualityAttribute_srcScale",
+        ),
+        Attribute(
+            name="geometrySrcDesc",
+            path="./uro:geometrySrcDesc",
+            datatype="[]string",
+            predefined_codelist="TransportationDataQualityAttribute_geometrySrcDesc",
+        ),
+        Attribute(
+            name="thematicSrcDesc",
+            path="./uro:thematicSrcDesc",
+            datatype="[]string",
+            predefined_codelist="TransportationDataQualityAttribute_thematicSrcDesc",
+        ),
+        Attribute(
+            name="appearanceSrcDesc",
+            path="./uro:appearanceSrcDesc",
+            datatype="[]string",
+            predefined_codelist="TransportationDataQualityAttribute_appearanceSrcDesc",
+        ),
+        Attribute(
+            name="lodType",
+            path="./uro:lodType",
+            datatype="[]string",
+            predefined_codelist={
+                "tran:Road": "Road_lodType",
+                "tran:Railway": "Railway_lodType",
+            },
+        ),
+    ],
+)
 
 ROAD = FeatureProcessingDefinition(
     id="tran:Road",
@@ -172,10 +178,7 @@ ROAD = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        AttributeGroup(
-            base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
-            attributes=_transportation_data_quality_attribute,
-        ),
+        _transportation_data_quality_attributes,
     ],
     dm_attr_container_path="./uro:tranDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
@@ -266,10 +269,7 @@ RAILWAY = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        AttributeGroup(
-            base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
-            attributes=_transportation_data_quality_attribute,
-        ),
+        _transportation_data_quality_attributes,
     ],
     dm_attr_container_path="./uro:tranDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
@@ -372,10 +372,7 @@ TRACK = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        AttributeGroup(
-            base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
-            attributes=_transportation_data_quality_attribute,
-        ),
+        _transportation_data_quality_attributes,
     ],
     dm_attr_container_path="./uro:tranDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
@@ -586,10 +583,7 @@ SQUARE = FeatureProcessingDefinition(
             base_element="./uro:squareUrbanPlanAttribute/uro:TerminalAttribute",
             attributes=_square_urban_plan_attribute_attrs,
         ),
-        AttributeGroup(
-            base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
-            attributes=_transportation_data_quality_attribute,
-        ),
+        _transportation_data_quality_attributes,
     ],
     dm_attr_container_path="./uro:tranDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
@@ -684,8 +678,8 @@ WATERWAY = FeatureProcessingDefinition(
                     predefined_codelist="WaterwayDetailAttribute_routeDirection",
                 ),
                 Attribute(
-                    name="routeID",
-                    path="./uro:routeID",
+                    name="routeId",
+                    path="./uro:routeId",
                     datatype="integer",
                 ),
                 Attribute(
@@ -700,11 +694,9 @@ WATERWAY = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        AttributeGroup(
-            base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
-            attributes=_transportation_data_quality_attribute,
-        ),
+        _transportation_data_quality_attributes,
     ],
+    dm_attr_container_path="./uro:tranDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
         facility_id="./uro:tranFacilityIdAttribute",
         facility_types="./uro:tranFacilityTypeAttribute",

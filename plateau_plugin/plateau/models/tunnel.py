@@ -248,6 +248,7 @@ TUNNEL = FeatureProcessingDefinition(
                     name="lodType",
                     path="./uro:lodType",
                     datatype="[]string",
+                    predefined_codelist="Tunnel_lodType",
                 ),
                 Attribute(
                     name="photoScale",
