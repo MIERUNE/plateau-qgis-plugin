@@ -31,7 +31,7 @@ from .base import (
     GeometricAttributes,
 )
 
-_common_property_groups = [
+_utility_network_element_attrs = [
     AttributeGroup(
         base_element=None,
         attributes=[
@@ -42,9 +42,16 @@ _common_property_groups = [
                 predefined_codelist="CityFurniture_function",
             ),
             Attribute(
+                name="administrator",
+                path="./uro:administrator",
+                datatype="string",
+                predefined_codelist="UtilityNetworkElement_administrator",
+            ),
+            Attribute(
                 name="occupierName",
                 path="./uro:occupierName",
                 datatype="string",
+                predefined_codelist="UtilityNetworkElement_occupierName",
             ),
             Attribute(
                 name="occupierType",
@@ -52,6 +59,16 @@ _common_property_groups = [
                 datatype="string",
                 predefined_codelist="UtilityNetworkElement_occupierType",
             ),
+            # Attribute(
+            #    name="offsetDepth",
+            #    path="./uro:offsetDepth",
+            #    datatype="[]uro:OffsetDepthPropertyType",
+            # ),
+            # Attribute(
+            #    name="thematicShape",
+            #    path="./uro:thematicShape",
+            #    datatype="[]uro:ThematicShapePropertyType",
+            # ),
             Attribute(
                 name="year",
                 path="./uro:year",
@@ -126,7 +143,7 @@ UTILITY_NODE = FeatureProcessingDefinition(
     ],
     load_generic_attributes=True,
     attribute_groups=[
-        *_common_property_groups,
+        *_utility_network_element_attrs,
         AttributeGroup(
             base_element=None,
             attributes=[
@@ -145,6 +162,11 @@ UTILITY_NODE = FeatureProcessingDefinition(
                     name="previousLink",
                     path="./uro:previousLink",
                     datatype="[]string",
+                ),
+                Attribute(
+                    name="rotationAngle",
+                    path="./uro:rotationAngle",
+                    datatype="double",
                 ),
             ],
         ),
@@ -180,7 +202,7 @@ UTILITY_NODE_CONTAINER = FeatureProcessingDefinition(
     ],
     load_generic_attributes=True,
     attribute_groups=[
-        *_common_property_groups,
+        *_utility_network_element_attrs,
         AttributeGroup(
             base_element=None,
             attributes=[
@@ -188,6 +210,12 @@ UTILITY_NODE_CONTAINER = FeatureProcessingDefinition(
                     name="appurtenance",
                     path="./uro:appurtenance",
                     datatype="[]string",
+                ),
+                Attribute(
+                    name="containerType",
+                    path="./uro:containerType",
+                    datatype="string",
+                    predefined_codelist="UtilityNodeContainer_containerType",
                 ),
                 Attribute(
                     name="depth",
@@ -212,6 +240,11 @@ UTILITY_NODE_CONTAINER = FeatureProcessingDefinition(
                 Attribute(
                     name="outerDiamiterShort",
                     path="./uro:outerDiamiterShort",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="rotationAngle",
+                    path="./uro:rotationAngle",
                     datatype="double",
                 ),
             ],
@@ -255,7 +288,7 @@ UTILITY_LINK = FeatureProcessingDefinition(
     ],
     load_generic_attributes=True,
     attribute_groups=[
-        *_common_property_groups,
+        *_utility_network_element_attrs,
         AttributeGroup(
             base_element=None,
             attributes=[
@@ -280,20 +313,15 @@ UTILITY_LINK = FeatureProcessingDefinition(
                     datatype="string",
                 ),
                 Attribute(
-                    name="horizontalLength",
-                    path="./uro:horizontalLength",
-                    datatype="double",
-                ),
-                Attribute(
                     name="innerDiamiter",
                     path="./uro:innerDiamiter",
                     datatype="double",
                 ),
-                Attribute(
-                    name="length",
-                    path="./uro:length",
-                    datatype="double",
-                ),
+                # Attribute(
+                #    name="lengthAttribute",
+                #    path="./uro:lengthAttribute",
+                #    datatype="[]uro:LengthAttributePropertyType",
+                # ),
                 Attribute(
                     name="material",
                     path="./uro:material",
@@ -303,6 +331,11 @@ UTILITY_LINK = FeatureProcessingDefinition(
                 Attribute(
                     name="maxDepth",
                     path="./uro:maxDepth",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="maxWidth",
+                    path="./uro:maxWidth",
                     datatype="double",
                 ),
                 Attribute(
@@ -321,19 +354,29 @@ UTILITY_LINK = FeatureProcessingDefinition(
                     datatype="double",
                 ),
                 Attribute(
+                    name="routeEndNode",
+                    path="./uro:routeEndNode",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="routeStartNode",
+                    path="./uro:routeStartNode",
+                    datatype="string",
+                ),
+                Attribute(
                     name="rows",
                     path="./uro:rows",
                     datatype="integer",
                 ),
                 Attribute(
-                    name="sewerWaterType",
-                    path="./uro:sewerWaterType",
-                    datatype="string",
-                    predefined_codelist=None,
-                ),
-                Attribute(
                     name="sleeveType",
                     path="./uro:sleeveType",
+                    datatype="string",
+                    predefined_codelist="Pipe_sleeveType",
+                ),
+                Attribute(
+                    name="slope",
+                    path="./uro:slope",
                     datatype="double",
                 ),
                 Attribute(

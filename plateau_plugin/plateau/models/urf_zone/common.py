@@ -36,6 +36,16 @@ ZONE_ATTRIBUTES = [
                 datatype="integer",
             ),
             Attribute(
+                name="urf:finalNotificationDate",
+                path="./urf:finalNotificationDate",
+                datatype="date",
+            ),
+            Attribute(
+                name="urf:finalNotificationNumber",
+                path="./urf:finalNotificationNumber",
+                datatype="string",
+            ),
+            Attribute(
                 name="legalGrounds",
                 path="./urf:legalGrounds",
                 datatype="string",
@@ -75,6 +85,11 @@ ZONE_ATTRIBUTES = [
                 name="reference",
                 path="./urf:reference",
                 datatype="string",
+            ),
+            Attribute(
+                name="urf:surveyYear",
+                path="./urf:surveyYear",
+                datatype="integer",
             ),
             Attribute(
                 name="urbanPlanType",
