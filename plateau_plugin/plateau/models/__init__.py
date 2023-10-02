@@ -18,10 +18,12 @@ from .bridge import (
 from .building import (
     BUILDING,
     BUILDING_BOUNDARY_SURFACE,
+    BUILDING_DETAIL,
     BUILDING_FURNITURE,
     BUILDING_INSTALLATION,
     BUILDING_INT_INSTALLATION,
     BUILDING_OPENING,
+    LARGE_CUSTOMER_FACILITY_ATTRIBUTE,
 )
 from .cityfurniture import CITY_FURNITURE
 from .generics import GENERIC_CITY_OBJECT
@@ -58,6 +60,8 @@ processors = ProcessorRegistory(
         BUILDING_INT_INSTALLATION,
         BUILDING_OPENING,
         BUILDING_FURNITURE,
+        BUILDING_DETAIL,
+        LARGE_CUSTOMER_FACILITY_ATTRIBUTE,
         # bridge
         BRIDGE,
         BRIDGE_BOUNDARY_SURFACE,

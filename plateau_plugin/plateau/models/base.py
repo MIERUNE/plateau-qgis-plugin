@@ -118,6 +118,9 @@ class FeatureProcessingDefinition:
     disaster_risk_attr_conatiner_path: str | None = None
     """災害リスク属性 uro:(Building)DisasterRiskAttribute を包含する要素への element path"""
 
+    nested_attributes: list[str] | None = None
+    """ネストされた属性として表現すべき属性"""
+
     non_geometric: bool = False
     """ジオメトリを持たない Feature かどうか
 

@@ -255,6 +255,13 @@ class CityObjectParser:
                 for child_obj in self.process_cityobj_element(risk, nogeom_obj):
                     yield child_obj
 
+        # 入れ子属性
+        if processor.nested_attributes:
+            for path in processor.nested_attributes:
+                for child in elem.iterfind(path, nsmap):
+                    for child_obj in self.process_cityobj_element(child, nogeom_obj):
+                        yield child_obj
+
         # 公共測量標準図式 (DM)
         if self._settings.load_dm and processor.dm_attr_container_path:
             for dm in elem.iterfind(processor.dm_attr_container_path + "/*", nsmap):
