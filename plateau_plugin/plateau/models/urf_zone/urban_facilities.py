@@ -48,15 +48,13 @@ _STIPULATED_ATTRS = [
 ]
 
 _COMMON_GEOMETRIES = GeometricAttributes(
-    lod0=GeometricAttribute(
-        is2d=True,
-        lod_detection=["./urf:lod0MultiSurface"],
-        collect_all=["./urf:lod0MultiSurface//gml:Polygon"],
-    ),
     lod1=GeometricAttribute(
         is2d=True,
-        lod_detection=["./urf:lod1MultiSurface"],
-        collect_all=["./urf:lod1MultiSurface//gml:Polygon"],
+        lod_detection=["./urf:lod1MultiSurface", "./urf:lod0MultiSurface"],
+        collect_all=[
+            "./urf:lod1MultiSurface//gml:Polygon",
+            "./urf:lod0MultiSurface//gml:Polygon",
+        ],
     ),
 )
 
