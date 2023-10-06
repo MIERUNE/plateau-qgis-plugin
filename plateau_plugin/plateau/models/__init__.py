@@ -29,7 +29,16 @@ from .cityfurniture import CITY_FURNITURE
 from .generics import GENERIC_CITY_OBJECT
 from .landuse import LAND_USE
 from .relief import RELIEF
-from .transportation import RAILWAY, ROAD, SQUARE, TRACK, TRAFFIC_AREA, WATERWAY
+from .transportation import (
+    AUXILIARY_TRAFFIC_AREA,
+    RAILWAY,
+    RAILWAY_TRACK_ATTRIBUTE,
+    ROAD,
+    SQUARE,
+    TRACK,
+    TRAFFIC_AREA,
+    WATERWAY,
+)
 from .tunnel import (
     TUNNEL,
     TUNNEL_BOUNDARY_SURFACE,
@@ -77,6 +86,8 @@ processors = ProcessorRegistory(
         SQUARE,
         WATERWAY,
         TRAFFIC_AREA,
+        AUXILIARY_TRAFFIC_AREA,
+        RAILWAY_TRACK_ATTRIBUTE,
         # tunnel
         TUNNEL,
         TUNNEL_BOUNDARY_SURFACE,

@@ -150,15 +150,16 @@ LAND_USE = FeatureProcessingDefinition(
         facility_attrs="./uro:luseFacilityAttribute",
     ),
     geometries=GeometricAttributes(
-        lod0=GeometricAttribute(  # NOTE: PLATEAU 2.0 compatibility
-            is2d=True,
-            lod_detection=["./luse:lod0MultiSurface"],
-            collect_all=["./luse:lod0MultiSurface//gml:Polygon"],
-        ),
         lod1=GeometricAttribute(
             is2d=True,
-            lod_detection=["./luse:lod1MultiSurface"],
-            collect_all=["./luse:lod1MultiSurface//gml:Polygon"],
+            lod_detection=[
+                "./luse:lod0MultiSurface",  # NOTE: PLATEAU 2.0 compatibility
+                "./luse:lod1MultiSurface",
+            ],
+            collect_all=[
+                "./luse:lod0MultiSurface//gml:Polygon"  # NOTE: PLATEAU 2.0 compatibility
+                "./luse:lod1MultiSurface//gml:Polygon"
+            ],
         ),
     ),
 )
