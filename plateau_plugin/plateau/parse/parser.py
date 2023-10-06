@@ -124,7 +124,7 @@ class CityObjectParser:
                         path = child_elem.get("codeSpace")
                         if prop.predefined_codelist or path:
                             pcl = self._get_codelist(
-                                base_elem, prop.predefined_codelist
+                                feature_elem, prop.predefined_codelist
                             )
                             v = codelist_lookup(pcl, path, v)
                         values.append(v)

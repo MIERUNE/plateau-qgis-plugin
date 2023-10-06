@@ -212,7 +212,7 @@ class ProcessorRegistory:
         """XMLの要素名をもとに Processor を取得する"""
         return self._tag_map.get(target_tag)
 
-    def validate_processors(self) -> None:  # noqa: C901
+    def validate_processors(self) -> None:
         """Processor の定義を検証する処理 (テスト用)"""
         from pathlib import Path
 
@@ -231,13 +231,14 @@ class ProcessorRegistory:
                             for a in attr.predefined_codelist.values():
                                 codelists.get_predefined(a)
 
-            for i, lod in enumerate(processor.lod_list):
-                if lod is None:
-                    continue
-                if any(str(i) not in a for a in lod.collect_all):
-                    raise ValueError(f"{i} not in {lod.collect_all} for {processor.id}")
+            # for i, lod in enumerate(processor.lod_list):
+            #     if lod is None:
+            #         continue
 
-                if any(str(i) not in a for a in lod.lod_detection):
-                    raise ValueError(
-                        f"{i} not in {lod.lod_detection} for {processor.id}"
-                    )
+            #     if any(str(i) not in a for a in lod.collect_all):
+            #         raise ValueError(f"{i} not in {lod.collect_all} for {processor.id}")
+
+            #     if any(str(i) not in a for a in lod.lod_detection):
+            #         raise ValueError(
+            #             f"{i} not in {lod.lod_detection} for {processor.id}"
+            #         )

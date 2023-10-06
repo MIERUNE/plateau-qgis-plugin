@@ -732,12 +732,12 @@ WATERWAY = FeatureProcessingDefinition(
     ),
 )
 
-# TrafficArea, AuxiliaryTrafficArea を扱う
+# TrafficArea を扱う
 # これらは Road, Railway, Track, Square (いずれもLoD2-4) の子として使われる
 TRAFFIC_AREA = FeatureProcessingDefinition(
     id="tran:TrafficArea",
     name="TrafficArea",
-    target_elements=["tran:TrafficArea", "tran:AuxiliaryTrafficArea"],
+    target_elements=["tran:TrafficArea"],
     attribute_groups=[
         AttributeGroup(
             base_element=None,
@@ -767,9 +767,94 @@ TRAFFIC_AREA = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        # uro:RailwayTrackAttribute (Railway)
+    ],
+    geometries=GeometricAttributes(
+        lod2=GeometricAttribute(
+            is2d=True,
+            lod_detection=[
+                "./tran:lod2MultiSurface",
+                "./uro:railwayTrackAttribute/uro:RailwayTrackAttribute/uro:lod2Network",
+            ],
+            collect_all=[
+                "./tran:lod2MultiSurface//gml:Polygon",
+                "./uro:railwayTrackAttribute/uro:RailwayTrackAttribute/uro:lod2Network//gml:LineString",
+            ],
+        ),
+        lod3=GeometricAttribute(
+            lod_detection=[
+                "./tran:lod3MultiSurface",
+                "./uro:railwayTrackAttribute/uro:RailwayTrackAttribute/uro:lod3Network",
+            ],
+            collect_all=[
+                "./tran:lod3MultiSurface//gml:Polygon",
+                "./uro:railwayTrackAttribute/uro:RailwayTrackAttribute/uro:lod3Network//gml:LineString",
+            ],
+        ),
+        semantic_parts=[
+            "./uro:railwayTrackAttribute/uro:RailwayTrackAttribute",
+        ],
+    ),
+    dm_attr_container_path="./uro:tranDmAttribute",
+)
+
+# AuxiliaryTrafficArea を扱う
+# これらは Road, Railway, Track, Square (いずれもLoD2-4) の子として使われる
+AUXILIARY_TRAFFIC_AREA = FeatureProcessingDefinition(
+    id="tran:AuxiliaryTrafficArea",
+    name="AuxiliaryTrafficArea",
+    target_elements=["tran:AuxiliaryTrafficArea"],
+    attribute_groups=[
         AttributeGroup(
-            base_element="./uro:railwayTrackAttribute/uro:RailwayTrackAttribute",
+            base_element=None,
+            attributes=[
+                Attribute(
+                    name="function",
+                    path="./tran:function",
+                    datatype="[]string",
+                    predefined_codelist="AuxiliaryTrafficArea_function",
+                ),
+                Attribute(
+                    name="surfaceMaterial",
+                    path="./tran:surfaceMaterial",
+                    datatype="string",
+                    predefined_codelist="AuxiliaryTrafficArea_surfaceMaterial",
+                ),
+            ],
+        ),
+    ],
+    geometries=GeometricAttributes(
+        lod2=GeometricAttribute(
+            is2d=True,
+            lod_detection=[
+                "./tran:lod2MultiSurface",
+            ],
+            collect_all=[
+                "./tran:lod2MultiSurface//gml:Polygon",
+            ],
+        ),
+        lod3=GeometricAttribute(
+            lod_detection=[
+                "./tran:lod3MultiSurface",
+            ],
+            collect_all=[
+                "./tran:lod3MultiSurface//gml:Polygon",
+            ],
+        ),
+    ),
+    dm_attr_container_path="./uro:tranDmAttribute",
+)
+
+
+# uro:RailwayTrackAttribute
+RAILWAY_TRACK_ATTRIBUTE = FeatureProcessingDefinition(
+    id="uro:RailwayTrackAttribute",
+    name="RailwayTrackAttribute",
+    target_elements=[
+        "uro:RailwayTrackAttribute",
+    ],
+    attribute_groups=[
+        AttributeGroup(
+            base_element=None,
             attributes=[
                 Attribute(
                     name="routeName",
@@ -811,25 +896,12 @@ TRAFFIC_AREA = FeatureProcessingDefinition(
     geometries=GeometricAttributes(
         lod2=GeometricAttribute(
             is2d=True,
-            lod_detection=[
-                "./tran:lod2MultiSurface",
-                "./uro:railwayTrackAttribute/uro:RailwayTrackAttribute/uro:lod2Network",
-            ],
-            collect_all=[
-                "./tran:lod2MultiSurface//gml:Polygon",
-                "./uro:railwayTrackAttribute/uro:RailwayTrackAttribute/uro:lod2Network//gml:LineString",
-            ],
+            lod_detection=["./uro:lod2Network"],
+            collect_all=["./uro:lod2Network//gml:LineString"],
         ),
         lod3=GeometricAttribute(
-            lod_detection=[
-                "./tran:lod3MultiSurface",
-                "./uro:railwayTrackAttribute/uro:RailwayTrackAttribute/uro:lod3Network",
-            ],
-            collect_all=[
-                "./tran:lod3MultiSurface//gml:Polygon",
-                "./uro:railwayTrackAttribute/uro:RailwayTrackAttribute/uro:lod3Network//gml:LineString",
-            ],
+            lod_detection=["./uro:lod3Network"],
+            collect_all=["./uro:lod3Network//gml:LineString"],
         ),
     ),
-    dm_attr_container_path="./uro:tranDmAttribute",
 )
