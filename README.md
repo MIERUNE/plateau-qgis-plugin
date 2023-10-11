@@ -1,17 +1,65 @@
-# plateau-qgis-plugin
+# PLATEAU QGIS プラグイン
 
-A QGIS plugin for loading the PLATEAU 3D City Models. (PLATEAU 3D 都市モデルを読み込むための QGIS プラグイン)
+オープンソースの GIS アプリケーション [QGIS](https://www.qgis.org/) で「PLATEAU 3D 都市モデル」を読み込むためのプラグイン（ベータ版）です。(A QGIS plugin for importing the PLATEAU 3D City Models.)
 
-## License
+PLATEAU の「3D 都市モデル標準製品仕様書 第 3.0 版」に対応した CityGML ファイルを読み込むことができます。
 
-License: GPL v2
+## 利用方法
 
-This plugin contains [plateau-py](https://github.com/MIERUNE/plateau-py), which is licensed under the MIT License.
+### 動作環境
 
-## 開発
+本プラグインを利用するには、QGIS（バージョン 3.28 以上）がインストールされている必要があります。QGIS のダウンロードとインストールについては、[QGIS 公式サイトのダウンロードページ](https://qgis.org/ja/site/forusers/download.html)を参照してください。
 
+### プラグインのインストール
+
+本プラグインは QGIS の[公式プラグインリポジトリで公開されており](https://plugins.qgis.org/plugins/plateau_plugin/)、以下の手順で QGIS にインストールできます：
+
+1. QGIS を起動します。
+2. メニューから「プラグイン」→「プラグインの管理とインストール」を開きます。
+3. プラグインの検索欄に "PLATEAU" などと入力して見つかる「PLATEAU 3D City Models」をインストールします。
+
+### 利用方法
+
+詳しい利用方法は本プラグインの[利用マニュアル](https://github.com/Project-PLATEAU/plateau-qgis-plugin/blob/main/docs/manual.md)を参照してください。
+
+ここでは利用方法を簡単に紹介します：
+
+1. 「プロセシング」メニューから「ツールボックス」を開きます。
+2. プロセシングツールボックスの「Project PLATEAU」から「PLATEAU 3D 都市モデルを読み込む」を選択します。
+3. 読み込みたい CityGML ファイルを指定します。
+4. 必要に応じて読み込みオプションを変更します。
+5. 「実行」ボタンをクリックして読み込み処理を実行します。
+
+## 2023 年度 PLATEAU Hands-on 動画 | PLATEAU のデータを活用しよう！ 初心者向け QGIS ハンズオン
+
+![image](https://github.com/Project-PLATEAU/plateau-qgis-plugin/assets/79615787/f909a6f7-8c72-49f8-9de3-52dfa84e9054)
+
+PLATEAU データを読み込むための本プラグインの使用方法や、PLATEAU データを他のオープンデータと組み合わせて解析する方法をハンズオン形式で紹介する動画です。
+
+QGIS の基本から紹介しているため、QGIS を初めて触る方にも役立つ内容となっています。ぜひご覧ください。
+
+- [YouTube 動画はコチラ](https://www.youtube.com/watch?v=xZCLndeT58A)
+- [資料はコチラ](https://github.com/Project-PLATEAU/plateau-qgis-plugin/blob/main/docs/plateauhands-on-08.pdf)
+
+## ライセンス
+
+本ソフトウェアのソースコードは GPL v2 でライセンスされています。ソースコードおよび関連ドキュメントの著作権は国土交通省に帰属します。
+
+本リポジトリに含まれている [plateau-py](https://github.com/MIERUNE/plateau-py) は MIT ランセンスで公開されています。
+
+本ドキュメントは Project PLATEAU のサイトポリシー（CC BY 4.0 および政府標準利用規約 2.0）に従い提供されています。
+
+## 注意事項
+
+- 本リポジトリは参考資料として提供しているものです。動作の保証は行っておりません。
+- 予告なく変更・削除する可能性があります。
+- 本リポジトリの利用により生じた損失及び損害等について、国土交通省はいかなる責任も負わないものとします。
+
+## 開発者向け情報
+
+- 問題を報告したい方は GitHub の [Issue](https://github.com/MIERUNE/plateau-qgis-plugin/issues) または [Pull Request](https://github.com/MIERUNE/plateau-qgis-plugin/pulls) をご利用ください。
 - QGIS 3.28 で動作させるため Python 3.9 の文法で実装する必要があります。
-- PLATEAU データのパーサなどは [plateau-py](https://github.com/MIERUNE/plateau-py) パッケージとして分離されています。
+- PLATEAU CityGML ファイルの解析処理部分は [plateau-py](https://github.com/MIERUNE/plateau-py) パッケージとして分離されています。
 
 QGIS にデプロイする:
 
