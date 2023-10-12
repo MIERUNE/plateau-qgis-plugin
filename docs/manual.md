@@ -37,7 +37,7 @@ QGISを起動
 <img src="picture/install00.png" width="500">
 
 2. 表示画面の左側のタブから[すべて]を選択します。
-3. 表示画面の上部に「plateau」と入力します。
+3. 表示画面の上部の入力欄に「plateau」と入力します。
 4. 一覧に表示された「PLATEAU 3D City Models」を選択します。
 5. 表示画面下部の[インストール]を選択します。
 
