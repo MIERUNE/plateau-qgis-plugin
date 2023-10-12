@@ -14,11 +14,13 @@ PLATEAU の「3D 都市モデル標準製品仕様書 第 3.0 版」に対応し
 
 ### プラグインのインストール
 
-本プラグインは QGIS の[公式プラグインリポジトリで公開されており](https://plugins.qgis.org/plugins/plateau_plugin/)、以下の手順で QGIS にインストールできます：
+本プラグインは QGIS の[公式プラグインリポジトリで公開されており](https://plugins.qgis.org/plugins/plateau_plugin/)、以下の手順で QGIS にインストールできます。：
 
 1. QGIS を起動します。
 2. メニューから「プラグイン」→「プラグインの管理とインストール」を開きます。
 3. プラグインの検索欄に "PLATEAU" などと入力して見つかる「PLATEAU 3D City Models」をインストールします。
+
+詳しいインストール手順は、本プラグインの[利用マニュアル](https://github.com/Project-PLATEAU/plateau-qgis-plugin/blob/main/docs/manual.md)を参照してください。
 
 ### 利用方法
 
