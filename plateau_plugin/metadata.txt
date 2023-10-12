@@ -7,6 +7,7 @@ author=MLIT Japan
 email=info@mierune.co.jp
 
 about=This plugin allows QGIS to import the PLATEAU 3D City Models (CityGML) used in Japan. PLATEAU 3D都市モデルのCityGMLファイルをQGISに読み込むことができます。プロセッシングツールボックスから呼び出して使用できます。
+    本プラグインは Project PLATEAU の参考資料として提供するものであり、動作の保証は行っておりません。また本プラグインの利用により生じた損失及び損害等について、国土交通省はいかなる責任も負わないものとします。
 
 repository=https://github.com/Project-PLATEAU/plateau-qgis-plugin
 tracker=https://github.com/MIERUNE/plateau-qgis-plugin/issues
