@@ -1,10 +1,10 @@
 # PLATEAU QGISプラグイン(plateau-qgis-plugin)
 
-#### PLATEAU 地形モデル以外
+#### PLATEAU 3D都市モデルを読み込む
 
 <img src="picture/screen01.png" width="500">
 
-#### PLATEAU 地形モデル
+#### PLATEAU 地形モデルをメッシュとして読み込む
 
 <img src="picture/screen02.png" width="500">
 
@@ -333,3 +333,5 @@ QGISでは上記の手順でインポートしたPLATEAUのCityGMLファイル�
 QGISには標準機能で3D表示するための[3Dマップビュー]という機能が存在します。[3Dマップビュー]の使用方法は、[QGIS公式ドキュメント](https://docs.qgis.org/3.28/ja/docs/user_manual/map_views/3d_map_view.html)を参照してください。
 
 <img src="picture/3dview07.png" width="500">
+
+
