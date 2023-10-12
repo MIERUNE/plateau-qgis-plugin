@@ -1,12 +1,12 @@
 # PLATEAU QGIS プラグイン
 
-オープンソースの GIS アプリケーション [QGIS](https://www.qgis.org/) で「PLATEAU 3D 都市モデル」を読み込むためのプラグイン（ベータ版）です。(A QGIS plugin for importing the PLATEAU 3D City Models.)
+オープンソースの GIS アプリケーション [QGIS](https://www.qgis.org/) で「PLATEAU 3D 都市モデル」を読み込むためのプラグイン（ベータ版）です。PLATEAU の「3D 都市モデル標準製品仕様書 第 3.0 版」に対応した CityGML ファイルを読み込むことができます。
 
-PLATEAU の「3D 都市モデル標準製品仕様書 第 3.0 版」に対応した CityGML ファイルを読み込むことができます。
+[静岡県沼津市の CityGML (v2)](https://www.geospatial.jp/ckan/dataset/plateau-22203-numazu-shi-2021/resource/758fe63a-b20f-4d5d-817d-c35eac530143) を読み込んで、LOD3のデータをQgis2threejsで表示した例：
 
-[静岡県沼津市](https://www.geospatial.jp/ckan/dataset/plateau-22203-numazu-shi-2021/resource/758fe63a-b20f-4d5d-817d-c35eac530143)のCityGML(V2)を読み込んで、LOD3のデータをQgis2threejs表示した例：
-<img src="docs/picture/example_output.jpg" width="500">
-## 利用方法
+<img src="docs/picture/example_output.jpg" alt="LOD3のデータをQgis2threejsで表示した例">
+
+## プラグインの利用方法
 
 ### 動作環境
 
@@ -24,15 +24,15 @@ PLATEAU の「3D 都市モデル標準製品仕様書 第 3.0 版」に対応し
 
 ### 利用方法
 
-詳しい利用方法は本プラグインの[利用マニュアル](https://github.com/Project-PLATEAU/plateau-qgis-plugin/blob/main/docs/manual.md)を参照してください。
-
-ここでは利用方法を簡単に紹介します：
+ここでは単純な利用方法を簡単に示します：
 
 1. 「プロセシング」メニューから「ツールボックス」を開きます。
 2. プロセシングツールボックスの「Project PLATEAU」から「PLATEAU 3D 都市モデルを読み込む」を選択します。
 3. 読み込みたい CityGML ファイルを指定します。
 4. 必要に応じて読み込みオプションを変更します。
 5. 「実行」ボタンをクリックして読み込み処理を実行します。
+
+詳しい利用方法は本プラグインの[利用マニュアル](https://github.com/Project-PLATEAU/plateau-qgis-plugin/blob/main/docs/manual.md)を参照してください。
 
 ## 2023 年度 PLATEAU Hands-on 動画 | PLATEAU のデータを活用しよう！ 初心者向け QGIS ハンズオン
 
@@ -63,7 +63,7 @@ QGIS の基本から紹介しているため、QGIS を初めて触る方にも�
 
 - 問題を報告したい方は GitHub の [Issue](https://github.com/MIERUNE/plateau-qgis-plugin/issues) または [Pull Request](https://github.com/MIERUNE/plateau-qgis-plugin/pulls) をご利用ください。
 - QGIS 3.28 で動作させるため Python 3.9 の文法で実装する必要があります。
-- PLATEAU CityGML ファイルの解析処理部分は [plateau-py](https://github.com/MIERUNE/plateau-py) パッケージとして分離されています。
+- PLATEAU CityGML ファイルの解析処理は [plateau-py](https://github.com/MIERUNE/plateau-py) パッケージとして分離されています。
 
 QGIS にデプロイする:
 
