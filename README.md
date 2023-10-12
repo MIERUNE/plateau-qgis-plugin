@@ -4,6 +4,8 @@
 
 PLATEAU の「3D 都市モデル標準製品仕様書 第 3.0 版」に対応した CityGML ファイルを読み込むことができます。
 
+[静岡県沼津市](https://www.geospatial.jp/ckan/dataset/plateau-22203-numazu-shi-2021/resource/758fe63a-b20f-4d5d-817d-c35eac530143)のCityGML(V2)を読み込んで、LOD3のデータをQgis2threejs表示した例：
+<img src="docs/picture/example_output.jpg" width="500">
 ## 利用方法
 
 ### 動作環境
