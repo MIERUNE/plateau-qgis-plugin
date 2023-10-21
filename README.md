@@ -36,7 +36,7 @@
 
 ## 2023 年度 PLATEAU Hands-on 動画 | PLATEAU のデータを活用しよう！ 初心者向け QGIS ハンズオン
 
-![image](https://github.com/Project-PLATEAU/plateau-qgis-plugin/assets/79615787/f909a6f7-8c72-49f8-9de3-52dfa84e9054)
+<img src="docs/picture/hands-on 08.png">
 
 PLATEAU データを読み込むための本プラグインの使用方法や、PLATEAU データを他のオープンデータと組み合わせて解析する方法をハンズオン形式で紹介する動画です。
 
