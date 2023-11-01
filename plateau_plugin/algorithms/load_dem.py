@@ -34,9 +34,9 @@ _PLY_HEADER_TEMPLATE = """ply
 format binary_little_endian 1.0
 comment crs: GEOGCRS["JGD2011",DATUM["Japanese Geodetic Datum 2011",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Japan - onshore and offshore."],BBOX[17.09,122.38,46.05,157.65]],ID["EPSG",6668]]
 element vertex {n_verts}
-property double x
-property double y
-property double z
+property float x
+property float y
+property float z
 element face {n_faces}
 property list uchar uint vertex_indices
 end_header\n"""
@@ -68,7 +68,7 @@ def convert_citygml_relief_to_ply(src_filename: str, dst_filename: str) -> None:
                 n_verts=len(points) // 3, n_faces=len(faces)
             ).encode("ascii")
         )
-        f.write(np.asarray(points, dtype="<f8").tobytes())
+        f.write(np.asarray(points, dtype="<f4").tobytes())
         f.write(b"".join(faces))
 
 
