@@ -126,7 +126,8 @@ class PlateauDEMLoaderAlrogithm(QgsProcessingAlgorithm):
             convert_citygml_relief_to_ply(input_filename, output_filename)
         except Exception as e:
             feedback.reportError(
-                "変換に失敗しました。ファイルがTIN地形モデルを含んでいない可能性があります", fatalError=True
+                "変換に失敗しました。ファイルがTIN地形モデルを含んでいない可能性があります",
+                fatalError=True,
             )
             raise e
 

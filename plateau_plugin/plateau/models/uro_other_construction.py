@@ -64,11 +64,79 @@ _construction_structure_attribute_attrs = [
     ),
 ]
 
+URO_ELEVATION = FeatureProcessingDefinition(
+    id="uro:Elevation",
+    name="Elevation",
+    target_elements=["uro:Elevation"],
+    non_geometric=True,
+    attribute_groups=[
+        AttributeGroup(
+            base_element=None,
+            attributes=[
+                Attribute(
+                    name="elevationReference",
+                    path="./uro:elevationReference",
+                    datatype="string",
+                    predefined_codelist="Elevation_elevationReference",
+                ),
+            ],
+        )
+    ],
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
+            lod_detection=["./uro:elevationValue"],
+            collect_all=["./uro:elevationValue"],
+        ),
+    ),
+)
+
+
+URO_HEIGHT = FeatureProcessingDefinition(
+    id="uro:Height",
+    name="Height",
+    target_elements=["uro:Height"],
+    non_geometric=True,
+    attribute_groups=[
+        AttributeGroup(
+            base_element=None,
+            attributes=[
+                Attribute(
+                    name="heighReference",
+                    path="./uro:heighReference",
+                    datatype="string",
+                    predefined_codelist="Elevation_elevationReference",
+                ),
+                Attribute(
+                    name="lowReference",
+                    path="./uro:lowReference",
+                    datatype="string",
+                    predefined_codelist="Elevation_elevationReference",
+                ),
+                Attribute(
+                    name="status",
+                    path="./uro:status",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="value",
+                    path="./uro:value",
+                    datatype="double",
+                ),
+            ],
+        )
+    ],
+    geometries=GeometricAttributes(),
+)
+
 
 OTHER_CONSTRUCTION = FeatureProcessingDefinition(
     id="uro:OtherConstruction",
     name="OtherConstruction",
     target_elements=["uro:OtherConstruction"],
+    nested_attributes=[
+        "./uro:elevation/uro:Elevation",
+        "./uro:height/uro:Height",
+    ],
     attribute_groups=[
         AttributeGroup(
             base_element=None,
@@ -239,17 +307,6 @@ OTHER_CONSTRUCTION = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        # TODO: 入れ子データ
-        # Attribute(
-        #    name="elevation",
-        #    path="./uro:elevation",
-        #    datatype="[]uro:ElevationAttributeType",
-        # ),
-        # Attribute(
-        #    name="height",
-        #    path="./uro:height",
-        #    datatype="[]uro:HeightAttributeType",
-        # ),
     ],
     dm_attr_container_path="./uro:consDmAttribute",
     facility_attr_paths=FacilityAttributePaths(

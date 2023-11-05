@@ -26,6 +26,9 @@ addopts = ["--import-mode=importlib"]
 # filterwarnings = "ignore::DeprecationWarning"
 
 [tool.ruff]
+target-version = "py38"
+
+[tool.ruff.lint]
 select = [
     "F",
     "E",
@@ -44,9 +47,8 @@ select = [
     "RUF",
 ]
 ignore = ["N802", "E501"]
-target-version = "py38"
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 known-third-party = ["plateau"]
 
 [tool.coverage.run]

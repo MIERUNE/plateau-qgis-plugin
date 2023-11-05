@@ -97,6 +97,11 @@ def parse_geometry(  # noqa: C901 (TODO)
                 mline_geoms.append(line)
 
         elif geometry_path.endswith("/gml:Point"):
+            # TODO
+            pass
+
+        elif geometry_path.endswith("/uro:pos"):
+            # TODO pos
             pass
 
         else:

@@ -14,6 +14,9 @@ CITY_FURNITURE = FeatureProcessingDefinition(
     name="CityFurniture",
     target_elements=["frn:CityFurniture"],
     load_generic_attributes=True,
+    nested_attributes=[
+        "./uro:cityFurnitureDetailAttribute/uro:CityFurnitureDetailAttribute",
+    ],
     attribute_groups=[
         AttributeGroup(
             base_element=None,
@@ -71,22 +74,6 @@ CITY_FURNITURE = FeatureProcessingDefinition(
                 ),
             ],
         ),
-        # # FIXME: cityFurnitureDetailAttribute は多重度が[0..*] (入れ子) なのでこれは正しくない
-        # AttributeGroup(
-        #     base_element="./uro:cityFurnitureDetailAttribute/uro:CityFurnitureDetailAttribute",
-        #     attributes=[
-        #         Attribute(
-        #             name="facilityType",
-        #             path="./uro:facilityType",
-        #             datatype="string",
-        #         ),
-        #         Attribute(
-        #             name="description",
-        #             path="./uro:description",
-        #             datatype="string",
-        #         ),
-        #     ],
-        # ),
     ],
     dm_attr_container_path="./uro:frnDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
@@ -108,4 +95,32 @@ CITY_FURNITURE = FeatureProcessingDefinition(
             collect_all=["./frn:lod3Geometry//gml:Polygon"],
         ),
     ),
+)
+
+CITY_FURNITURE_DETAIL_ATTRIBUTE = FeatureProcessingDefinition(
+    id="uro:CityFurnitureDetailAttribute",
+    name="CityFurnitureDetail",
+    target_elements=[
+        "uro:CityFurnitureDetailAttribute",
+    ],
+    non_geometric=True,
+    attribute_groups=[
+        AttributeGroup(
+            base_element=None,
+            attributes=[
+                Attribute(
+                    name="facilityType",
+                    path="./uro:facilityType",
+                    datatype="string",
+                    predefined_codelist="CityFurnitureDetailAttribute_facilityType",
+                ),
+                Attribute(
+                    name="description",
+                    path="./uro:description",
+                    datatype="string",
+                ),
+            ],
+        )
+    ],
+    geometries=GeometricAttributes(),
 )

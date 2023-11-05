@@ -68,9 +68,74 @@ DEFS = [
         geometries=_COMMON_GEOMETRIES,
     ),
     FeatureProcessingDefinition(
+        id="urf:StructureDetails",
+        name="StructureDetails",
+        target_elements=["urf:StructureDetails"],
+        non_geometric=True,
+        attribute_groups=[
+            AttributeGroup(
+                base_element=None,
+                attributes=[
+                    Attribute(
+                        name="startLocation",
+                        path="urf:startLocation",
+                        datatype="string",
+                    ),
+                    Attribute(
+                        name="endLocation",
+                        path="urf:endLocation",
+                        datatype="string",
+                    ),
+                    Attribute(
+                        name="viaLocations",
+                        path="urf:viaLocations",
+                        datatype="string",
+                    ),
+                    Attribute(
+                        name="length",
+                        path="urf:length",
+                        datatype="double",
+                    ),
+                    Attribute(
+                        name="structureType",
+                        path="urf:structureType",
+                        datatype="string",
+                        predefined_codelist="TrafficFacility_trafficFacilityStructureType",
+                    ),
+                    Attribute(
+                        name="minimumWidth",
+                        path="urf:minimumWidth",
+                        datatype="double",
+                    ),
+                    Attribute(
+                        name="maximumWidth",
+                        path="urf:maximumWidth",
+                        datatype="double",
+                    ),
+                    Attribute(
+                        name="standardWidth",
+                        path="urf:standardWidth",
+                        datatype="double",
+                    ),
+                    Attribute(
+                        name="crossType",
+                        path="urf:crossType",
+                        datatype="string",
+                        predefined_codelist="TrafficFacility_trafficFacilityCrossingType",
+                    ),
+                ],
+            )
+        ],
+        geometries=GeometricAttributes(),
+    ),
+    FeatureProcessingDefinition(
         id="urf:TrafficFacility",
         name="交通施設",
         target_elements=["urf:TrafficFacility"],
+        nested_attributes=[
+            "./urf:urbanRapidTransitRailroadAttribute/urf:UrbanRapidTransitRailroadAttribute/urf:structuralDetails/urf:StructureDetails",
+            "./urf:urbanRoadAttribute/urf:UrbanRoadAttribute/urf:structuralDetails/urf:StructureDetails",
+        ],
         attribute_groups=[
             *_COMMON_ATTRS,
             AttributeGroup(
@@ -133,12 +198,6 @@ DEFS = [
                         datatype="string",
                         predefined_codelist="TrafficFacility_trafficFacilityCrossingType",
                     ),
-                    # TODO: 入れ子データ
-                    # Attributes(
-                    #     name="structuralDetails",
-                    #     path="./urf:structuralDetails",
-                    #     datatype="[]urf:StructureDetails",
-                    # ),
                 ],
             ),
             AttributeGroup(
@@ -195,12 +254,6 @@ DEFS = [
                         datatype="string",
                         predefined_codelist="Common_availabilityType",
                     ),
-                    # TODO: 入れ子データ
-                    # Attribute(
-                    #     name="structuralDetails",
-                    #     path="./urf:structuralDetails",
-                    #     datatype="[]urf:StructureDetails",
-                    # ),
                 ],
             ),
             AttributeGroup(

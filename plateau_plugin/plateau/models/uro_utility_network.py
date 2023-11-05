@@ -59,16 +59,6 @@ _utility_network_element_attrs = [
                 datatype="string",
                 predefined_codelist="UtilityNetworkElement_occupierType",
             ),
-            # Attribute(
-            #    name="offsetDepth",
-            #    path="./uro:offsetDepth",
-            #    datatype="[]uro:OffsetDepthPropertyType",
-            # ),
-            # Attribute(
-            #    name="thematicShape",
-            #    path="./uro:thematicShape",
-            #    datatype="[]uro:ThematicShapePropertyType",
-            # ),
             Attribute(
                 name="year",
                 path="./uro:year",
@@ -116,22 +106,6 @@ _utility_network_element_attrs = [
             ),
         ],
     ),
-    # FIXME: cityFurnitureDetailAttribute は多重度が[0..*] (入れ子)
-    # AttributeGroup(
-    #     base_element="./uro:cityFurnitureDetailAttribute/uro:CityFurnitureDetailAttribute",
-    #     attributes=[
-    #         Attribute(
-    #             name="facilityType",
-    #             path="./uro:facilityType",
-    #             datatype="string",
-    #         ),
-    #         Attribute(
-    #             name="description",
-    #             path="./uro:description",
-    #             datatype="string",
-    #         ),
-    #     ],
-    # ),
 ]
 
 
@@ -142,6 +116,11 @@ UTILITY_NODE = FeatureProcessingDefinition(
         "uro:Appurtenance",
     ],
     load_generic_attributes=True,
+    nested_attributes=[
+        "./uro:offsetDepth/uro:OffsetDepth",
+        "./uro:thematicShape/uro:ThematicShape",
+        "./uro:cityFurnitureDetailAttribute/uro:CityFurnitureDetailAttribute",
+    ],
     attribute_groups=[
         *_utility_network_element_attrs,
         AttributeGroup(
@@ -201,6 +180,11 @@ UTILITY_NODE_CONTAINER = FeatureProcessingDefinition(
         "uro:Handhole",
     ],
     load_generic_attributes=True,
+    nested_attributes=[
+        "./uro:offsetDepth/uro:OffsetDepth",
+        "./uro:thematicShape/uro:ThematicShape",
+        "./uro:cityFurnitureDetailAttribute/uro:CityFurnitureDetailAttribute",
+    ],
     attribute_groups=[
         *_utility_network_element_attrs,
         AttributeGroup(
@@ -287,6 +271,12 @@ UTILITY_LINK = FeatureProcessingDefinition(
         "uro:ElectricityCable",
     ],
     load_generic_attributes=True,
+    nested_attributes=[
+        "./uro:cityFurnitureDetailAttribute/uro:CityFurnitureDetailAttribute",
+        "./uro:offsetDepth/uro:OffsetDepth",
+        "./uro:thematicShape/uro:ThematicShape",
+        "./uro:lengthAttribute/uro:LengthAttribute",
+    ],
     attribute_groups=[
         *_utility_network_element_attrs,
         AttributeGroup(
@@ -317,16 +307,11 @@ UTILITY_LINK = FeatureProcessingDefinition(
                     path="./uro:innerDiamiter",
                     datatype="double",
                 ),
-                # Attribute(
-                #    name="lengthAttribute",
-                #    path="./uro:lengthAttribute",
-                #    datatype="[]uro:LengthAttributePropertyType",
-                # ),
                 Attribute(
                     name="material",
                     path="./uro:material",
                     datatype="string",
-                    predefined_codelist=None,
+                    predefined_codelist="UtilityNetworkElement_material",
                 ),
                 Attribute(
                     name="maxDepth",
@@ -412,4 +397,103 @@ UTILITY_LINK = FeatureProcessingDefinition(
             collect_all=["./frn:lod3Geometry//gml:Polygon"],
         ),
     ),
+)
+
+OFFSET_DEPTH = FeatureProcessingDefinition(
+    id="uro:OffsetDepth",
+    name="OffsetDepth",
+    target_elements=[
+        "uro:OffsetDepth",
+    ],
+    attribute_groups=[
+        AttributeGroup(
+            base_element=None,
+            attributes=[
+                Attribute(
+                    name="offset",
+                    path="./uro:offset",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="depth",
+                    path="./uro:depth",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="minDepth",
+                    path="./uro:minDepth",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="maxDepth",
+                    path="./uro:maxDepth",
+                    datatype="double",
+                ),
+            ],
+        )
+    ],
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
+            lod_detection=["./uro:pos"],
+            collect_all=["./uro:pos"],
+        ),
+    ),
+)
+
+THEMATIC_SHAPE = FeatureProcessingDefinition(
+    id="uro:TheamticShape",
+    name="ThematicShape",
+    target_elements=[
+        "uro:ThematicShape",
+    ],
+    attribute_groups=[
+        AttributeGroup(
+            base_element=None,
+            attributes=[
+                Attribute(
+                    name="heightType",
+                    path="./uro:heightType",
+                    datatype="string",
+                    predefined_codelist="ThematicShape_heightType",
+                ),
+            ],
+        )
+    ],
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
+            lod_detection=[
+                "./uro:shape//gml:LineString",
+                "./uro:shape//gml:Point",
+            ],
+            collect_all=["./uro:shape//gml:LineString", "./uro:shape//gml:Point"],
+        ),
+    ),
+)
+
+LENGTH_ATTRIBUTE = FeatureProcessingDefinition(
+    id="uro:LengthAttribute",
+    name="LengthAttribute",
+    target_elements=[
+        "uro:LengthAttribute",
+    ],
+    non_geometric=True,
+    attribute_groups=[
+        AttributeGroup(
+            base_element=None,
+            attributes=[
+                Attribute(
+                    name="length",
+                    path="./uro:length",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="mesureType",
+                    path="./uro:mesureType",
+                    datatype="string",
+                    predefined_codelist="LengthAttribute_mesureType",
+                ),
+            ],
+        )
+    ],
+    geometries=GeometricAttributes(),
 )

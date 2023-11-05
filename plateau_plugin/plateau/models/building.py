@@ -596,6 +596,7 @@ LARGE_CUSTOMER_FACILITY_ATTRIBUTE = FeatureProcessingDefinition(
     name="LargeCustomerFacilityAttribute",
     target_elements=[
         "uro:LargeCustomerFacilityAttribute",
+        "uro:LargeCustomerFacilities",
     ],
     non_geometric=True,
     attribute_groups=[

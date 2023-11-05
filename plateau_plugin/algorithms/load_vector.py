@@ -67,8 +67,16 @@ def _convert_to_qt_value(v: Any) -> Any:
 
 
 _LOD_OPTIONS = {
-    0: {"label": "最も単純なLODのみを読み込む", "prefer_lowest": True, "only_first": True},
-    1: {"label": "最も詳細なLODのみを読み込む", "prefer_lowest": False, "only_first": True},
+    0: {
+        "label": "最も単純なLODのみを読み込む",
+        "prefer_lowest": True,
+        "only_first": True,
+    },
+    1: {
+        "label": "最も詳細なLODのみを読み込む",
+        "prefer_lowest": False,
+        "only_first": True,
+    },
     2: {"label": "全てのLODを読み込む", "prefer_lowest": False, "only_first": False},
 }
 
@@ -214,7 +222,9 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
 
         parser = self._make_parser(filename, parameters, context, lod_option)
         total_count = parser.count_toplevel_cityobjs()
-        feedback.pushInfo(f"{total_count}個のトップレベル都市オブジェクトが含まれています。")
+        feedback.pushInfo(
+            f"{total_count}個のトップレベル都市オブジェクトが含まれています。"
+        )
         feedback.pushInfo("都市オブジェクトを読み込んでいます...")
         top_level_count = 0
         count = 0
