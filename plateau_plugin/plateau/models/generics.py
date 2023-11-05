@@ -42,7 +42,7 @@ GENERIC_CITY_OBJECT = FeatureProcessingDefinition(
             collect_all=[
                 "./gen:lod0Geometry//gml:Polygon",
                 "./gen:lod0Geometry//gml:LineString",
-                # TODO: Point ?
+                "./gen:lod0Geometry//gml:Point",
             ],
         ),
         lod1=GeometricAttribute(

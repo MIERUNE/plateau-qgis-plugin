@@ -25,7 +25,7 @@ from .building import (
     BUILDING_OPENING,
     LARGE_CUSTOMER_FACILITY_ATTRIBUTE,
 )
-from .cityfurniture import CITY_FURNITURE
+from .cityfurniture import CITY_FURNITURE, CITY_FURNITURE_DETAIL_ATTRIBUTE
 from .generics import GENERIC_CITY_OBJECT
 from .landuse import LAND_USE
 from .relief import RELIEF
@@ -37,6 +37,7 @@ from .transportation import (
     SQUARE,
     TRACK,
     TRAFFIC_AREA,
+    URO_CONTROL_POINT,
     WATERWAY,
 )
 from .tunnel import (
@@ -54,9 +55,18 @@ from .uro_other_construction import (
     OTHER_CONSTRUCTION,
     OTHER_CONSTRUCTION_BOUNDARY_SURFACE,
     OTHER_CONSTRUCTION_INSTALLATION,
+    URO_ELEVATION,
+    URO_HEIGHT,
 )
 from .uro_underground_building import UNDERGROUND_BUILDING
-from .uro_utility_network import UTILITY_LINK, UTILITY_NODE, UTILITY_NODE_CONTAINER
+from .uro_utility_network import (
+    LENGTH_ATTRIBUTE,
+    OFFSET_DEPTH,
+    THEMATIC_SHAPE,
+    UTILITY_LINK,
+    UTILITY_NODE,
+    UTILITY_NODE_CONTAINER,
+)
 from .vegetation import PLANT_COVER, SOLITARY_VEGETATION_OBJECT
 from .waterbody import WATER_BODY, WATER_BOUNDARY_SURFACE
 
@@ -97,6 +107,7 @@ processors = ProcessorRegistory(
         TUNNEL_OPENING,
         # cityfurniture
         CITY_FURNITURE,
+        CITY_FURNITURE_DETAIL_ATTRIBUTE,
         # vegetation
         SOLITARY_VEGETATION_OBJECT,
         PLANT_COVER,
@@ -113,12 +124,18 @@ processors = ProcessorRegistory(
         OTHER_CONSTRUCTION,
         OTHER_CONSTRUCTION_BOUNDARY_SURFACE,
         OTHER_CONSTRUCTION_INSTALLATION,
+        URO_ELEVATION,
+        URO_HEIGHT,
+        URO_CONTROL_POINT,
         # uro - underground building
         UNDERGROUND_BUILDING,
         # uro - underground city furniture
         UTILITY_LINK,
         UTILITY_NODE,
         UTILITY_NODE_CONTAINER,
+        LENGTH_ATTRIBUTE,
+        OFFSET_DEPTH,
+        THEMATIC_SHAPE,
         # urf - sediment disaster
         URF_SEDIMENT_DISASTER_PRONE_AREA,
         # urf - Zone

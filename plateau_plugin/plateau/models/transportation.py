@@ -852,6 +852,9 @@ RAILWAY_TRACK_ATTRIBUTE = FeatureProcessingDefinition(
     target_elements=[
         "uro:RailwayTrackAttribute",
     ],
+    nested_attributes=[
+        "./uro:controlPoint/uro:ControlPoint",
+    ],
     attribute_groups=[
         AttributeGroup(
             base_element=None,
@@ -889,7 +892,6 @@ RAILWAY_TRACK_ATTRIBUTE = FeatureProcessingDefinition(
                     datatype="string",
                     predefined_codelist="RailwayTrackAttribute_alignmentType",
                 ),
-                # TODO: uro:controlType
             ],
         ),
     ],
@@ -902,6 +904,54 @@ RAILWAY_TRACK_ATTRIBUTE = FeatureProcessingDefinition(
         lod3=GeometricAttribute(
             lod_detection=["./uro:lod3Network"],
             collect_all=["./uro:lod3Network//gml:LineString"],
+        ),
+    ),
+)
+
+URO_CONTROL_POINT = FeatureProcessingDefinition(
+    id="uro:ControlPoint",
+    name="ControlPoint",
+    target_elements=["uro:ControlPoint"],
+    non_geometric=True,
+    attribute_groups=[
+        AttributeGroup(
+            base_element=None,
+            attributes=[
+                Attribute(
+                    name="startPost",
+                    path="./uro:startPost",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="endPost",
+                    path="./uro:endPost",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="function",
+                    path="./uro:function",
+                    datatype="string",
+                    predefined_codelist="ControlPoint_function",
+                ),
+                # TODO (the original schema is broken)
+                # Attribute(
+                #     name="parameter",
+                #     path="./uro:parameter",
+                #     datatype="string",
+                # ),
+            ],
+        )
+    ],
+    geometries=GeometricAttributes(
+        lod0=GeometricAttribute(
+            lod_detection=[
+                "./uro:startPoint/gml:Point",
+                "./uro:endPoint/gml:Point",
+            ],
+            collect_all=[
+                "./uro:startPoint/gml:Point",
+                "./uro:endPoint/gml:Point",
+            ],
         ),
     ),
 )

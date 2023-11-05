@@ -37,7 +37,7 @@ DM_GEOMETRIC = FeatureProcessingDefinition(
             collect_all=[
                 "./uro:lod0Geometry//gml:Polygon",
                 "./uro:lod0Geometry//gml:LineString",
-                # TODO: Point ?
+                "./uro:lod0Geometry//gml:Point",
             ],
         ),
     ),

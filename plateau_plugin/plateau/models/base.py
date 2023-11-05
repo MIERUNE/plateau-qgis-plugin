@@ -212,7 +212,7 @@ class ProcessorRegistory:
         """XMLの要素名をもとに Processor を取得する"""
         return self._tag_map.get(target_tag)
 
-    def validate_processors(self) -> None:
+    def validate_processors(self) -> None:  # noqa: C901
         """Processor の定義を検証する処理 (テスト用)"""
         from pathlib import Path
 
@@ -221,6 +221,18 @@ class ProcessorRegistory:
         codelists = CodelistStore(Path("./"))
 
         for processor in self._id_map.values():
+            for target in processor.nested_attributes or []:
+                target = target.rsplit("/", 1)[1]
+                for prefixed in self._make_prefix_variants([target]):
+                    assert prefixed in self._tag_map, f"{prefixed} is not registered"
+
+            for target in processor.geometries.semantic_parts or []:
+                target = target.rsplit("/", 1)[1]
+                if target == "*":
+                    continue
+                for prefixed in self._make_prefix_variants([target]):
+                    assert prefixed in self._tag_map, f"{prefixed} is not registered"
+
             for group in processor.attribute_groups:
                 for attr in group.attributes:
                     assert attr.name in attr.path, f"{attr.name} not in {attr.path}"
@@ -231,14 +243,14 @@ class ProcessorRegistory:
                             for a in attr.predefined_codelist.values():
                                 codelists.get_predefined(a)
 
-            # for i, lod in enumerate(processor.lod_list):
-            #     if lod is None:
-            #         continue
+        # for i, lod in enumerate(processor.lod_list):
+        #     if lod is None:
+        #         continue
 
-            #     if any(str(i) not in a for a in lod.collect_all):
-            #         raise ValueError(f"{i} not in {lod.collect_all} for {processor.id}")
+        #     if any(str(i) not in a for a in lod.collect_all):
+        #         raise ValueError(f"{i} not in {lod.collect_all} for {processor.id}")
 
-            #     if any(str(i) not in a for a in lod.lod_detection):
-            #         raise ValueError(
-            #             f"{i} not in {lod.lod_detection} for {processor.id}"
-            #         )
+        #     if any(str(i) not in a for a in lod.lod_detection):
+        #         raise ValueError(
+        #             f"{i} not in {lod.lod_detection} for {processor.id}"
+        #         )
