@@ -1,4 +1,4 @@
-# PLATEAU QGISプラグイン(plateau-qgis-plugin)
+# PLATEAU QGIS Plugin(plateau-qgis-plugin)
 
 #### PLATEAU 3D都市モデルを読み込む
 
