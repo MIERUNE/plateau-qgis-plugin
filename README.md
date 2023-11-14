@@ -1,4 +1,4 @@
-# PLATEAU QGIS プラグイン
+# PLATEAU QGIS Plugin
 
 オープンソースの GIS アプリケーション [QGIS](https://www.qgis.org/) で「PLATEAU 3D 都市モデル」を読み込むためのプラグイン（ベータ版）です。PLATEAU の「3D 都市モデル標準製品仕様書 第 3.0 版」に対応した CityGML ファイルを読み込むことができます。
 
