@@ -2,7 +2,7 @@
 
 オープンソースの GIS アプリケーション [QGIS](https://www.qgis.org/) で「PLATEAU 3D 都市モデル」を読み込むためのプラグイン（ベータ版）です。PLATEAU の「3D 都市モデル標準製品仕様書 第 3.0 版」に対応した CityGML ファイルを読み込むことができます。
 
-[静岡県沼津市の CityGML (v2)](https://www.geospatial.jp/ckan/dataset/plateau-22203-numazu-shi-2021/resource/758fe63a-b20f-4d5d-817d-c35eac530143) を読み込んで、LOD3のデータをQgis2threejsで表示した例：
+[静岡県沼津市の CityGML (v2)](https://www.geospatial.jp/ckan/dataset/plateau-22203-numazu-shi-2021/resource/758fe63a-b20f-4d5d-817d-c35eac530143) を読み込んで、LOD3 のデータを Qgis2threejs で表示した例：
 
 <img src="docs/picture/example_output.jpg" alt="LOD3のデータをQgis2threejsで表示した例">
 
@@ -18,7 +18,7 @@
 
 1. QGIS を起動します。
 2. メニューから「プラグイン」→「プラグインの管理とインストール」を開きます。
-3. プラグインの検索欄に "PLATEAU" などと入力して見つかる「PLATEAU 3D City Models」をインストールします。
+3. プラグインの検索欄に "PLATEAU" などと入力して見つかる「PLATEAU QGIS Plugin」をインストールします。
 
 詳しいインストール手順は、本プラグインの[利用マニュアル](https://github.com/Project-PLATEAU/plateau-qgis-plugin/blob/main/docs/manual.md)を参照してください。
 
@@ -49,7 +49,7 @@ QGIS の基本から紹介しているため、QGIS を初めて触る方にも�
 
 本ソフトウェアのソースコードは GPL v2 でライセンスされています。ソースコードおよび関連ドキュメントの著作権は国土交通省に帰属します。
 
-本ソフトウェアは[株式会社MIERUNE](https://www.mierune.co.jp/)が開発しました。本リポジトリに含まれている [plateau-py](https://github.com/MIERUNE/plateau-py) は MIT ライセンスで公開しています。
+本ソフトウェアは[株式会社 MIERUNE](https://www.mierune.co.jp/)が開発しました。本リポジトリに含まれている [plateau-py](https://github.com/MIERUNE/plateau-py) は MIT ライセンスで公開しています。
 
 本ドキュメントは Project PLATEAU のサイトポリシー（CC BY 4.0 および政府標準利用規約 2.0）に従い提供されています。
 
