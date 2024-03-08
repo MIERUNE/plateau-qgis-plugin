@@ -372,12 +372,10 @@ class PlateauCityGmlParser:
     def iter_cityobjs(self) -> Iterable[tuple[int, CityObject]]:
         """都市オブジェクトをパースして返す"""
 
-        toplevel_count = 0
-        for city_object in self._doc.iterfind(
-            "./core:cityObjectMember/*", self._ns.nsmap
+        for toplevel_count, city_object in enumerate(
+            self._doc.iterfind("./core:cityObjectMember/*", self._ns.nsmap)
         ):
             for cityobj in self._parser.process_cityobj_element(
                 city_object, parent=None
             ):
                 yield (toplevel_count, cityobj)
-            toplevel_count += 1
