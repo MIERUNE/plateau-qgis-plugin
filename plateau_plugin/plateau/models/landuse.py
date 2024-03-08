@@ -158,7 +158,7 @@ LAND_USE = FeatureProcessingDefinition(
             ],
             collect_all=[
                 "./luse:lod0MultiSurface//gml:Polygon",  # NOTE: PLATEAU 2.0 compatibility
-                "./luse:lod1MultiSurface//gml:Polygon"
+                "./luse:lod1MultiSurface//gml:Polygon",
             ],
         ),
     ),
