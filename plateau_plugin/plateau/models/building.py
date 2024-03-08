@@ -24,6 +24,12 @@ BUILDING = FeatureProcessingDefinition(
             base_element=None,
             attributes=[
                 Attribute(
+                    name="class",
+                    path="./bldg:class",
+                    datatype="[]string",
+                    predefined_codelist="Building_class",
+                ),
+                Attribute(
                     name="usage",
                     path="./bldg:usage",
                     datatype="[]string",
