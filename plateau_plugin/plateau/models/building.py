@@ -18,7 +18,6 @@ BUILDING = FeatureProcessingDefinition(
         "./uro:buildingDetails/uro:BuildingDetails",  # PLATEAU v1.x
         "./uro:largeCustomerFacilityAttribute/uro:LargeCustomerFacilityAttribute",
         "./uro:largeCustomerFacilities/uro:LargeCustomerFacilities",  # PLATEAU v1.x
-        "./uro:bldgRealEstateIDAttribute/uro:RealEstateIDAttribute",
     ],
     attribute_groups=[
         AttributeGroup(
@@ -143,6 +142,41 @@ BUILDING = FeatureProcessingDefinition(
                     name="lodType",
                     path="./uro:lodType",
                     datatype="[]string",
+                ),
+            ],
+        ),
+        AttributeGroup(
+            base_element="./uro:bldgRealEstateIDAttribute/uro:RealEstateIDAttribute",
+            attributes=[
+                Attribute(
+                    name="realEstateIDOfBuilding",
+                    path="./uro:realEstateIDOfBuilding",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="numberOfBuildingUnitOwnership",
+                    path="./uro:numberOfBuildingUnitOwnership",
+                    datatype="integer",
+                ),
+                Attribute(
+                    name="realEstateIDOfBuildingUnitOwnership",
+                    path="./uro:realEstateIDOfBuildingUnitOwnership",
+                    datatype="[]string",
+                ),
+                Attribute(
+                    name="numberOfRealEstateIDOfLand",
+                    path="./uro:numberOfRealEstateIDOfLand",
+                    datatype="integer",
+                ),
+                Attribute(
+                    name="realEstateIDOfLand",
+                    path="./uro:realEstateIDOfLand",
+                    datatype="[]string",
+                ),
+                Attribute(
+                    name="matchingScore",
+                    path="./uro:matchingScore",
+                    datatype="integer",
                 ),
             ],
         ),
@@ -703,52 +737,6 @@ LARGE_CUSTOMER_FACILITY_ATTRIBUTE = FeatureProcessingDefinition(
                 Attribute(
                     name="surveyYear",
                     path="./uro:surveyYear",
-                    datatype="integer",
-                ),
-            ],
-        ),
-    ],
-    geometries=GeometricAttributes(),
-)
-
-
-REAL_ESTATE_ID_ATTRIBUTE = FeatureProcessingDefinition(
-    id="uro:RealEstateIDAttribute",
-    name="RealEstateIDAttribute",
-    target_elements=["uro:RealEstateIDAttribute"],
-    non_geometric=True,
-    attribute_groups=[
-        AttributeGroup(
-            base_element=None,
-            attributes=[
-                Attribute(
-                    name="realEstateIDOfBuilding",
-                    path="./uro:realEstateIDOfBuilding",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="numberOfBuildingUnitOwnership",
-                    path="./uro:numberOfBuildingUnitOwnership",
-                    datatype="integer",
-                ),
-                Attribute(
-                    name="realEstateIDOfBuildingUnitOwnership",
-                    path="./uro:realEstateIDOfBuildingUnitOwnership",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="numberOfRealEstateIDOfLand",
-                    path="./uro:numberOfRealEstateIDOfLand",
-                    datatype="integer",
-                ),
-                Attribute(
-                    name="realEstateIDOfLand",
-                    path="./uro:realEstateIDOfLand",
-                    datatype="string",
-                ),
-                Attribute(
-                    name="matchingScore",
-                    path="./uro:matchingScore",
                     datatype="integer",
                 ),
             ],
