@@ -18,6 +18,7 @@ BUILDING = FeatureProcessingDefinition(
         "./uro:buildingDetails/uro:BuildingDetails",  # PLATEAU v1.x
         "./uro:largeCustomerFacilityAttribute/uro:LargeCustomerFacilityAttribute",
         "./uro:largeCustomerFacilities/uro:LargeCustomerFacilities",  # PLATEAU v1.x
+        "./uro:bldgRealEstateIDAttribute/uro:RealEstateIDAttribute",
     ],
     attribute_groups=[
         AttributeGroup(
@@ -150,6 +151,7 @@ BUILDING = FeatureProcessingDefinition(
         # TODO: uro:indoorBuildingAttribute
     ],
     disaster_risk_attr_conatiner_path="./uro:buildingDisasterRiskAttribute",
+    # real_estate_id_attr_container_path="./uro:bldgRealEstateIDAttribute", # 不動産ID
     dm_attr_container_path="./uro:bldgDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
         facility_id="./uro:bldgFacilityIdAttribute",
@@ -157,6 +159,14 @@ BUILDING = FeatureProcessingDefinition(
         facility_attrs="./uro:bldgFacilityAttribute",
         large_customer_facility_attrs="./uro:largeCustomerFacilityAttribute",
     ),
+    # real_estate_id_path = RealEstateIDAttributePaths( # uro:bldgRealEstateIDAttribute/aaa
+    #     real_estate_id_of_building = "./uro:realEstateIDOfBuilding",
+    #     number_of_building_unit_ownership= "./uro:numberOfBuildingUnitOwnership",
+    #     real_estate_id_of_building_unit_ownership = "./uro:realEstateIDOfBuildingUnitOwnership",
+    #     number_of_real_estate_id_of_Land = "./uro:numberOfRealEstateIDOfLand",
+    #     real_estate_id_of_land = "./uro:realEstateIDOfLand",
+    #     matchingS_score = "./uro:matchingScore",
+    # ),
     geometries=GeometricAttributes(
         lod0=GeometricAttribute(
             is2d=True,
@@ -702,6 +712,52 @@ LARGE_CUSTOMER_FACILITY_ATTRIBUTE = FeatureProcessingDefinition(
                 Attribute(
                     name="surveyYear",
                     path="./uro:surveyYear",
+                    datatype="integer",
+                ),
+            ],
+        ),
+    ],
+    geometries=GeometricAttributes(),
+)
+
+
+REAL_ESTATE_ID_ATTRIBUTE = FeatureProcessingDefinition(
+    id="uro:RealEstateIDAttribute",
+    name="RealEstateIDAttribute",
+    target_elements=["uro:RealEstateIDAttribute"],
+    non_geometric=True,
+    attribute_groups=[
+        AttributeGroup(
+            base_element=None,
+            attributes=[
+                Attribute(
+                    name="realEstateIDOfBuilding",
+                    path="./uro:realEstateIDOfBuilding",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="numberOfBuildingUnitOwnership",
+                    path="./uro:numberOfBuildingUnitOwnership",
+                    datatype="integer",
+                ),
+                Attribute(
+                    name="realEstateIDOfBuildingUnitOwnership",
+                    path="./uro:realEstateIDOfBuildingUnitOwnership",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="numberOfRealEstateIDOfLand",
+                    path="./uro:numberOfRealEstateIDOfLand",
+                    datatype="integer",
+                ),
+                Attribute(
+                    name="realEstateIDOfLand",
+                    path="./uro:realEstateIDOfLand",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="matchingScore",
+                    path="./uro:matchingScore",
                     datatype="integer",
                 ),
             ],
