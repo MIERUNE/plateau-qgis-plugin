@@ -151,7 +151,6 @@ BUILDING = FeatureProcessingDefinition(
         # TODO: uro:indoorBuildingAttribute
     ],
     disaster_risk_attr_conatiner_path="./uro:buildingDisasterRiskAttribute",
-    # real_estate_id_attr_container_path="./uro:bldgRealEstateIDAttribute", # 不動産ID
     dm_attr_container_path="./uro:bldgDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
         facility_id="./uro:bldgFacilityIdAttribute",
@@ -159,14 +158,6 @@ BUILDING = FeatureProcessingDefinition(
         facility_attrs="./uro:bldgFacilityAttribute",
         large_customer_facility_attrs="./uro:largeCustomerFacilityAttribute",
     ),
-    # real_estate_id_path = RealEstateIDAttributePaths( # uro:bldgRealEstateIDAttribute/aaa
-    #     real_estate_id_of_building = "./uro:realEstateIDOfBuilding",
-    #     number_of_building_unit_ownership= "./uro:numberOfBuildingUnitOwnership",
-    #     real_estate_id_of_building_unit_ownership = "./uro:realEstateIDOfBuildingUnitOwnership",
-    #     number_of_real_estate_id_of_Land = "./uro:numberOfRealEstateIDOfLand",
-    #     real_estate_id_of_land = "./uro:realEstateIDOfLand",
-    #     matchingS_score = "./uro:matchingScore",
-    # ),
     geometries=GeometricAttributes(
         lod0=GeometricAttribute(
             is2d=True,
