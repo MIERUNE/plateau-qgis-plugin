@@ -13,7 +13,7 @@ python = ">=3.8.1,<4.0"
 pytest = "^8"
 pytest-cov = "^4"
 pyqt5-stubs = "^5"
-ruff = "^0.3"
+ruff = "^0.4"
 
 [build-system]
 requires = ["poetry-core"]
