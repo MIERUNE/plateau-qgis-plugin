@@ -17,33 +17,27 @@ jobs:
         with:
           python-version: 3.8
 
-      - name: Install poetry
+      - name: Install uv
         run: |
           python -m pip install --upgrade pip
-          pip install poetry
-          poetry config virtualenvs.in-project true
+          pip install uv
+          
       - name: Set up cache
         uses: actions/cache@v4
         id: cache
         with:
           path: .venv
-          key: venv-lint-${{ hashFiles('**/poetry.lock') }}
+          key: venv-lint-${{ hashFiles('**/uv.lock') }}
 
       - name: Ensure cache is healthy
         if: steps.cache.outputs.cache-hit == 'true'
-        run: poetry run pip --version >/dev/null 2>&1 || rm -rf .venv
+        run: uv run python --version >/dev/null 2>&1 || rm -rf .venv
 
       - name: Install dependencies
-        run: poetry install
-
-      - name: Check poetry.lock
-        run: poetry lock --check
-
-      # - name: pyright
-      #   run: poetry run pyright .
+        run: uv sync
 
       - name: ruff (format)
-        run: poetry run ruff format --check .
+        run: uv run ruff format --check .
 
       - name: ruff (lint)
-        run: poetry run ruff check --output-format github .
+        run: uv run ruff check --output-format github .
