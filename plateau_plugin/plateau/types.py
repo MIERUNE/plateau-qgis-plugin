@@ -23,7 +23,7 @@ class LineStringCollection:
 
 @dataclass
 class PolygonCollection:
-    __slots__ = ("polygons", "materials", "textures", "uvs")
+    __slots__ = ("materials", "polygons", "textures", "uvs")
     polygons: list[list[np.ndarray]]
 
     # appearance
@@ -76,7 +76,7 @@ class CityObject:
 class FieldDefinition:
     """QGIS 等にテーブルを作る際のフィールド定義"""
 
-    __slots__ = ("name", "datatype")
+    __slots__ = ("datatype", "name")
 
     name: str
     datatype: AttributeDatatype
@@ -110,9 +110,9 @@ def get_table_definition(cityobj: CityObject) -> TableDefinition:
                 closed[prop.name] = prop.datatype
             else:
                 # 同名のフィールドが既にある場合は、型が一致しているか確認する
-                assert (
-                    closed[prop.name] == prop.datatype
-                ), f"{prop.name}, {closed[prop.name]} != {prop.datatype}"
+                assert closed[prop.name] == prop.datatype, (
+                    f"{prop.name}, {closed[prop.name]} != {prop.datatype}"
+                )
 
     return TableDefinition(fields=fields)
 
