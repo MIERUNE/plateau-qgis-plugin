@@ -20,17 +20,16 @@ from __future__ import annotations
 
 from typing import Iterable
 
-from PyQt5.QtCore import QVariant
 from qgis._3d import QgsPolygon3DSymbol, QgsVectorLayer3DRenderer
 from qgis.core import (
     Qgis,
     QgsCoordinateReferenceSystem,
     QgsField,
-    # QgsLayerTreeGroup,
     QgsProject,
     QgsVectorLayer,
     QgsWkbTypes,
 )
+from qgis.PyQt.QtCore import QVariant
 
 from ...plateau.types import (
     CityObject,

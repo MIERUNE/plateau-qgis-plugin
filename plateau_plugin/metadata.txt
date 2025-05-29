@@ -1,6 +1,6 @@
 [general]
 name=PLATEAU QGIS Plugin
-version=0.0.8
+version=0.1.0
 qgisMinimumVersion=3.6
 supportsQt6=True
 description=Import the PLATEAU 3D city model data (CityGML) used in Japan — PLATEAU 3D都市モデルのCityGMLファイルをQGISに読み込みます

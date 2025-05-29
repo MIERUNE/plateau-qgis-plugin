@@ -18,8 +18,8 @@
 
 from pathlib import Path
 
-from PyQt5.QtGui import QIcon
 from qgis.core import QgsProcessingProvider
+from qgis.PyQt.QtGui import QIcon
 
 from .algorithms.load_dem import PlateauDEMLoaderAlrogithm
 from .algorithms.load_vector import PlateauVectorLoaderAlrogithm

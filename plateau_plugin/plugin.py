@@ -18,9 +18,9 @@
 
 import contextlib
 
-from PyQt5.QtWidgets import QAction
 from qgis.core import QgsApplication
 from qgis.gui import QgisInterface
+from qgis.PyQt.QtWidgets import QAction
 
 from .provider import PlateauProcessingProvider
 

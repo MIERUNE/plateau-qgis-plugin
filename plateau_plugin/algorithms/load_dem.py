@@ -18,15 +18,14 @@
 
 import lxml.etree as et
 import numpy as np
-from PyQt5.QtCore import QCoreApplication
 from qgis.core import (
-    # QgsLayerTreeGroup,
     QgsProcessingAlgorithm,
     QgsProcessingContext,
     QgsProcessingParameterFile,
     QgsProcessingParameterFileDestination,
     QgsProcessingUtils,
 )
+from qgis.PyQt.QtCore import QCoreApplication
 
 from ..plateau.namespaces import BASE_NS
 

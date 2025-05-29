@@ -24,13 +24,11 @@ import platform
 from pathlib import Path
 from typing import Any
 
-from PyQt5.QtCore import QCoreApplication, QDate
 from qgis.core import (
     QgsCoordinateReferenceSystem,
     QgsCoordinateTransform,
     QgsFeature,
     QgsFeatureSink,
-    # QgsLayerTreeGroup,
     QgsProcessingAlgorithm,
     QgsProcessingContext,
     QgsProcessingException,  # pyright: ignore
@@ -42,6 +40,7 @@ from qgis.core import (
     QgsProcessingUtils,
     QgsProject,
 )
+from qgis.PyQt.QtCore import QCoreApplication, QDate
 
 from ..geometry import to_qgis_geometry
 from ..plateau.parse import ParserSettings, PlateauCityGmlParser
