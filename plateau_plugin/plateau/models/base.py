@@ -188,9 +188,9 @@ class ProcessorRegistory:
 
     def register_processor(self, processor: FeatureProcessingDefinition) -> None:
         """Processor を登録する"""
-        assert (
-            processor.id not in self._id_map
-        ), f"Processor id {processor.id} is already registered"
+        assert processor.id not in self._id_map, (
+            f"Processor id {processor.id} is already registered"
+        )
 
         self._id_map[processor.id] = processor
         closed_target = set()
