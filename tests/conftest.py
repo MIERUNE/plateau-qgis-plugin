@@ -33,7 +33,7 @@ def qgis_app(tmp_path_factory) -> Iterable[QgsApplication]:
     app.exitQgis()
 
 
-@pytest.fixture()
+@pytest.fixture
 def provider(qgis_app: QgsApplication) -> Iterable[None]:
     plugin = classFactory(None)  # pyright: ignore
     plugin.initGui()
