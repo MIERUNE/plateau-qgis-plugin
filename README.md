@@ -79,6 +79,6 @@ make update_dependencies
 
 ## Authors
 
-- Taku Fukada (@ciscorn) - original author
+- Taku Fukada ([@ciscorn](https://github.com/ciscorn)) - original author
 - MIERUNE Inc.
 - and all contributors!
