@@ -33,6 +33,7 @@ from qgis.core import (
     QgsProcessingContext,
     QgsProcessingException,  # pyright: ignore
     QgsProcessingFeedback,
+    QgsProcessingOutputMultipleLayers,
     QgsProcessingParameterBoolean,
     QgsProcessingParameterCrs,
     QgsProcessingParameterEnum,
@@ -100,6 +101,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
     FORCE_2D = "FORCE_2D"
     APPEND_MODE = "APPEND_MODE"
     CRS = "CRS"
+    OUTPUT = "OUTPUT"
 
     def tr(self, string: str):
         return QCoreApplication.translate("Processing", string)
@@ -151,6 +153,9 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
                 defaultValue="EPSG:6668",
                 optional=True,
             )
+        )
+        self.addOutput(
+            QgsProcessingOutputMultipleLayers(self.OUTPUT, self.tr("読み込んだレイヤ"))
         )
 
     def createInstance(self):
@@ -310,4 +315,5 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
                 # 既存レイヤに追記した場合は、背後のプロバイダをリロードする
                 # layer.dataProvider().reloadData()
 
-        return {}
+        # 追記先の既存レイヤも含めて、読み込んだ全レイヤのIDを返す
+        return {self.OUTPUT: [layer.id() for layer in layers]}
