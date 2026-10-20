@@ -9,6 +9,7 @@ from qgis.core import (
     QgsProject,
     QgsVectorLayer,
 )
+from qgis.PyQt.QtCore import QDate
 from qgis.PyQt.QtGui import QIcon
 
 TESTDATA = Path(__file__).parent / "testdata"
@@ -200,3 +201,21 @@ def test_gpkg_append_while_loaded(provider, tmp_path):
 #     layer: QgsVectorLayer = result["OUTPUT"]
 #     assert layer.featureCount() == 27237
 #
+
+
+def test_termination_date(provider, tmp_path):
+    src = tmp_path / "urf.gml"
+    src.write_text(
+        Path(URF)
+        .read_text(encoding="utf-8")
+        .replace(
+            "<core:creationDate>2023-03-22</core:creationDate>",
+            "<core:creationDate>2023-03-22</core:creationDate>"
+            "<core:terminationDate>2030-01-02</core:terminationDate>",
+        ),
+        encoding="utf-8",
+    )
+    _, layers = _run({"INPUT": str(src)})
+    f = next(layers[0].getFeatures())
+    assert f["creationDate"] == QDate(2023, 3, 22)
+    assert f["terminationDate"] == QDate(2030, 1, 2)

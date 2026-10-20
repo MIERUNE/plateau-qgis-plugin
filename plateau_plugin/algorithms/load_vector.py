@@ -289,7 +289,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
             )
             feature.setAttribute(
                 "terminationDate",
-                QDate(cityobj.creation_date) if cityobj.termination_date else None,  # type: ignore
+                QDate(cityobj.termination_date) if cityobj.termination_date else None,  # type: ignore
             )
             if cityobj.parent:
                 # 親Featureと結合 (join) できるように親Featureの ID を持たせる
