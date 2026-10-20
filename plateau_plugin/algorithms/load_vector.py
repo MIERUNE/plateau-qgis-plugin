@@ -21,6 +21,7 @@ from __future__ import annotations
 import datetime
 import json
 import platform
+import re
 from pathlib import Path
 from typing import Any
 
@@ -33,18 +34,23 @@ from qgis.core import (
     QgsProcessingContext,
     QgsProcessingException,  # pyright: ignore
     QgsProcessingFeedback,
+    QgsProcessingLayerPostProcessorInterface,
     QgsProcessingParameterBoolean,
     QgsProcessingParameterCrs,
     QgsProcessingParameterEnum,
     QgsProcessingParameterFile,
+    QgsProcessingParameterFileDestination,
     QgsProcessingUtils,
     QgsProject,
+    QgsProviderRegistry,
+    QgsVectorFileWriter,
+    QgsVectorLayer,
 )
 from qgis.PyQt.QtCore import QCoreApplication, QDate
 
 from ..geometry import to_qgis_geometry
 from ..plateau.parse import ParserSettings, PlateauCityGmlParser
-from .utils.layermanger import LayerManager
+from .utils.layermanger import LayerManager, set_default_3d_renderer
 
 
 def _convert_to_qt_value(v: Any) -> Any:
@@ -81,7 +87,9 @@ _LOD_OPTIONS = {
 
 _DESCRIPTION = """3D都市モデル標準製品仕様書 第3.0版に対応した、PLATEAU 3D都市モデルのCityGML (.gml) ファイルを読み込みます。
 
-データは一時スクラッチレイヤに読み込まれます。
+"出力先 GeoPackage" を指定しない場合、データは一時スクラッチレイヤに読み込まれます (QGIS を閉じると消えます)。指定した場合は、レイヤごとに1つのテーブルとして GeoPackage に保存してから読み込みます。
+
+「既存の同名レイヤに追記する」が有効なとき、出力先を指定しない場合はプロジェクト内の同名レイヤに追記します。出力先を指定した場合は、その GeoPackage が既にあれば同名のテーブルに追記します (上書き確認が表示されても、ファイルは置き換えずに追記します)。無効にすると GeoPackage を作り直します。
 
 同一の都市オブジェクトに複数のLOD (詳細度) が用意されている場合は、デフォルトでは最も単純なLODのみを読み込みます。必要に応じて、"読み込むLOD" オプションで「最も詳細なLODのみを読み込む」または「全てのLODを読み込む」を選択してください。
 
@@ -100,6 +108,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
     FORCE_2D = "FORCE_2D"
     APPEND_MODE = "APPEND_MODE"
     CRS = "CRS"
+    OUTPUT = "OUTPUT"
 
     def tr(self, string: str):
         return QCoreApplication.translate("Processing", string)
@@ -150,6 +159,15 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
                 self.tr("変換先CRS"),
                 defaultValue="EPSG:6668",
                 optional=True,
+            )
+        )
+        self.addParameter(
+            QgsProcessingParameterFileDestination(
+                self.OUTPUT,
+                self.tr("出力先 GeoPackage"),
+                fileFilter=self.tr("GeoPackage (*.gpkg)"),
+                optional=True,
+                createByDefault=False,
             )
         )
 
@@ -207,13 +225,28 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
         destination_crs = self.parameterAsCrs(parameters, self.CRS, context)
         force2d = self.parameterAsBoolean(parameters, self.FORCE_2D, context)
         append_mode = self.parameterAsBoolean(parameters, self.APPEND_MODE, context)
+        output_path = self.parameterAsFileOutput(parameters, self.OUTPUT, context)
+        if (
+            output_path
+            and not append_mode
+            and any(
+                _same_source(lyr, output_path)
+                for lyr in context.project().mapLayers().values()
+            )
+        ):
+            # 開いているファイルを作り直すと、読み込み済みのレイヤが古いデータを指したままになる (Windows では削除に失敗する)
+            raise QgsProcessingException(
+                f"{output_path} はプロジェクトで開かれているため作り直せません。"
+                "レイヤを削除してから実行するか、「既存の同名レイヤに追記する」を有効にしてください。"
+            )
         lod_option = _LOD_OPTIONS[
             self.parameterAsEnum(parameters, self.LOD_PREFERENCE, context)
         ]
         layer_manager = LayerManager(
             force2d=force2d,
             crs=destination_crs,
-            append_mode=append_mode,
+            # ファイル出力時は無関係なプロジェクトレイヤに書き込まないよう、プロジェクト内は探さない
+            append_mode=append_mode and not output_path,
             lod_in_name=not lod_option["only_first"],
             project=context.project(),
         )
@@ -287,6 +320,10 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
         feedback.pushInfo(f"{count} 個の地物を読み込みました。")
 
         layers = sorted(layer_manager.layers, key=lambda x: x.name())
+        if output_path:
+            _write_to_gpkg(layers, output_path, append_mode, context, feedback)
+            return {self.OUTPUT: output_path}
+
         for layer in layers:
             layer.dataProvider().flushBuffer()
             layer.updateFields()
@@ -311,3 +348,111 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
                 # layer.dataProvider().reloadData()
 
         return {}
+
+
+class _Renderer3DPostProcessor(QgsProcessingLayerPostProcessorInterface):
+    def postProcessLayer(self, layer, context, feedback):
+        if isinstance(layer, QgsVectorLayer):
+            set_default_3d_renderer(layer)
+
+
+# NOTE: PostProcessor の所有権は C++ 側に移るが、Python 側の参照が消えて GC されないよう保持しておく
+_post_processors: list[_Renderer3DPostProcessor] = []
+
+
+def _table_name(layer_name: str) -> str:
+    """レイヤ名を GeoPackage のテーブル名に使える文字列にする ("|" などは URI を壊すため)"""
+    return re.sub(r"\W+", "_", layer_name).strip("_") or "layer"
+
+
+def _same_source(layer, path: str, table: str | None = None) -> bool:
+    """レイヤが GeoPackage (のテーブル) を参照しているか"""
+    if layer.providerType() != "ogr":
+        return False
+    parts = QgsProviderRegistry.instance().decodeUri("ogr", layer.source())
+    return Path(parts.get("path", "")).resolve() == Path(path).resolve() and (
+        table is None or parts.get("layerName") == table
+    )
+
+
+def _write_to_gpkg(
+    layers: list[QgsVectorLayer],
+    path: str,
+    append_mode: bool,
+    context: QgsProcessingContext,
+    feedback: QgsProcessingFeedback,
+):
+    """メモリレイヤを GeoPackage に1テーブルずつ書き出し、読み込み対象に登録する"""
+    # ponytail: 全件をメモリに載せてから書き出すため、メモリのピークは一時レイヤと同じ。
+    # 問題になったら LayerManager が GeoPackage に直接書き込むようにする
+    append = append_mode and Path(path).exists()
+    used_tables: set[str] = set()
+    for i, layer in enumerate(layers):
+        layer.dataProvider().flushBuffer()
+        layer.updateFields()
+        layer.updateExtents()
+
+        options = QgsVectorFileWriter.SaveVectorOptions()
+        options.driverName = "GPKG"
+        options.fileEncoding = "UTF-8"
+        options.actionOnExistingFile = (
+            QgsVectorFileWriter.ActionOnExistingFile.CreateOrOverwriteFile
+            if i == 0 and not append
+            else QgsVectorFileWriter.ActionOnExistingFile.CreateOrOverwriteLayer
+        )
+
+        # 同名のテーブルがあれば、ジオメトリ型と CRS が一致するときだけ追記する。
+        # 一致しなければ連番を付けた別のテーブルにする
+        base = _table_name(layer.name())
+        n = 1
+        while True:
+            table = base if n == 1 else f"{base}_{n}"
+            n += 1
+            if table in used_tables:
+                continue
+            if not append or not QgsVectorFileWriter.targetLayerExists(path, table):
+                break
+            existing = QgsVectorLayer(f"{path}|layername={table}", "", "ogr")
+            if existing.wkbType() == layer.wkbType() and (
+                not existing.isSpatial() or existing.crs() == layer.crs()
+            ):
+                options.actionOnExistingFile = (
+                    QgsVectorFileWriter.ActionOnExistingFile.AppendToLayerAddFields
+                )
+                break
+        used_tables.add(table)
+        options.layerName = table
+
+        error, message, *_ = QgsVectorFileWriter.writeAsVectorFormatV3(
+            layer, path, context.transformContext(), options
+        )
+        if error != QgsVectorFileWriter.WriterError.NoError:
+            raise QgsProcessingException(
+                f"{path} のテーブル {table} への書き出しに失敗しました: {message}"
+            )
+        feedback.pushInfo(
+            f"{layer.featureCount()} 個の地物を {table} に書き出しました。"
+        )
+
+        uri = f"{path}|layername={table}"
+        loaded = [
+            lyr
+            for lyr in context.project().mapLayers().values()
+            if _same_source(lyr, path, table)
+        ]
+        if loaded:
+            # 既にプロジェクトに読み込まれているテーブルは追加せず、再描画だけする
+            for lyr in loaded:
+                lyr.triggerRepaint()
+            continue
+
+        details = QgsProcessingContext.LayerDetails(
+            layer.name(),
+            context.project(),
+            layer.name(),
+            QgsProcessingUtils.LayerHint.Vector,  # type: ignore
+        )
+        post_processor = _Renderer3DPostProcessor()
+        _post_processors.append(post_processor)
+        details.setPostProcessor(post_processor)
+        context.addLayerToLoadOnCompletion(uri, details)
