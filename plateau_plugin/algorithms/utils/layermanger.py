@@ -53,6 +53,19 @@ _TYPE_TO_QT_TYPE = {
 }
 
 
+def set_default_3d_renderer(layer: QgsVectorLayer):
+    """ポリゴンを絶対高度で描画する 3D レンダラを設定する"""
+    try:
+        symbol = QgsPolygon3DSymbol()
+        symbol.setAltitudeClamping(Qgis.AltitudeClamping.Absolute)  # type: ignore
+        symbol.setAltitudeBinding(Qgis.AltitudeBinding.Vertex)  # type: ignore
+        renderer = QgsVectorLayer3DRenderer()
+        renderer.setSymbol(symbol)
+        layer.setRenderer3D(renderer)
+    except Exception:
+        pass
+
+
 class LayerManager:
     """Featureの種類とLoDをもとにふさわしい出力先レイヤを返すためのユーティリティ"""
 
@@ -210,18 +223,7 @@ class LayerManager:
         dp = layer.dataProvider()
         dp.addAttributes(attributes)
         self._layers[layer_id] = layer
-
-        # set a default 3d renderer
-        try:
-            symbol = QgsPolygon3DSymbol()
-            symbol.setAltitudeClamping(Qgis.AltitudeClamping.Absolute)  # type: ignore
-            symbol.setAltitudeBinding(Qgis.AltitudeBinding.Vertex)  # type: ignore
-            renderer = QgsVectorLayer3DRenderer()
-            renderer.setSymbol(symbol)
-            layer.setRenderer3D(renderer)
-        except Exception:
-            pass
-
+        set_default_3d_renderer(layer)
         return layer
 
     @property
