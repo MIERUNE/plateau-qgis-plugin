@@ -12,6 +12,8 @@ jobs:
     name: Make zip package
     runs-on: ubuntu-latest
     env:
+      PLUGIN_NAME: plateau_plugin
+      RELEASE_TAG: ${{ github.event.release.tag_name }}
       ASSET_NAME: ${{ github.event.repository.name }}-${{ github.event.release.tag_name }}.zip
     steps:
       - uses: actions/checkout@v4
@@ -19,10 +21,30 @@ jobs:
       - name: Zip plugin package
         run: |
           make package
-          mv dist/artifact-HEAD.zip dist/$ASSET_NAME
+          unzip -q dist/artifact-HEAD.zip -d dist/build
+
+      # Write the version from the release tag (v0.1.2 -> 0.1.2) into metadata.txt
+      - name: Write version to metadata.txt
+        run: |
+          VERSION="${RELEASE_TAG#v}"
+          METADATA="dist/build/$PLUGIN_NAME/metadata.txt"
+          sed -i "s/^version=.*/version=$VERSION/" "$METADATA"
+          grep -qx "version=$VERSION" "$METADATA"
+          (cd dist/build && zip -qr "../$ASSET_NAME" "$PLUGIN_NAME")
 
       - name: Upload release asset
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release upload ${{ github.event.release.tag_name }} dist/$ASSET_NAME
+          gh release upload "$RELEASE_TAG" "dist/$ASSET_NAME" --clobber
+
+      - name: Upload to plugins.qgis.org
+        if: ${{ !github.event.release.prerelease }}
+        env:
+          QGIS_PLUGIN_TOKEN: ${{ secrets.QGIS_PLUGIN_TOKEN }}
+        run: |
+          curl --fail-with-body --silent --show-error \
+            -X POST \
+            "https://plugins.qgis.org/plugins/api/$PLUGIN_NAME/version/add/" \
+            -H "Authorization: Bearer $QGIS_PLUGIN_TOKEN" \
+            -F "package=@dist/$ASSET_NAME"
