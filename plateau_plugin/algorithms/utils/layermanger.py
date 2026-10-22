@@ -62,7 +62,8 @@ def set_default_3d_renderer(layer: QgsVectorLayer):
         renderer = QgsVectorLayer3DRenderer()
         renderer.setSymbol(symbol)
         layer.setRenderer3D(renderer)
-    except Exception:
+    except Exception:  # nosec B110
+        # QGIS の 3D API が使えない環境では何もしない
         pass
 
 
