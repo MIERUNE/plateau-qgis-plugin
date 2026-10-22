@@ -29,7 +29,7 @@ jobs:
 
       - name: Export requirements.txt
         run: |
-          uv export --group dev > requirements.txt
+          uv export --only-group test > requirements.txt
 
       - name: Run tests
         # PIP_BREAK_SYSTEM_PACKAGES: QGIS 4.x の Debian ベースのイメージは PEP 668 で pip install が拒否される (古い pip は無視する)

@@ -8,7 +8,9 @@ requires-python = ">=3.9,<4.0"
 packages = [{ include = "plateau_plugin" }]
 
 [dependency-groups]
-dev = ["bandit[toml]>=1.7", "pytest>=8", "pytest-cov>=6", "pyqt5-stubs>=5", "ruff>=0.3"]
+test = ["pytest>=8", "pytest-cov>=6"]
+lint = ["bandit[toml]>=1.7", "ruff>=0.3"]
+dev = [{ include-group = "test" }, { include-group = "lint" }, "pyqt5-stubs>=5"]
 
 [tool.pytest.ini_options]
 pythonpath = "."
