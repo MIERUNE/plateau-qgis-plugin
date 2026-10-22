@@ -63,7 +63,10 @@ def parse_geometry(  # noqa: C901 (TODO)
 
                     if tex_uv := appearance.ring_to_texture.get(ring_id):
                         tex, uv = tex_uv
-                        assert ring.shape[0] == uv.shape[0]
+                        if ring.shape[0] != uv.shape[0]:
+                            raise ValueError(
+                                f"Texture coordinates do not match ring {ring_id}"
+                            )
                         mpoly_textures.append(tex)
                         poly_uvs.append(uv)
                     else:
@@ -108,10 +111,13 @@ def parse_geometry(  # noqa: C901 (TODO)
             raise NotImplementedError(f"Unsupported geometry path: {geometry_path}")
 
     if mpoly_geoms:
-        if appearance:
-            assert len(mpoly_geoms) == len(mpoly_textures)
-            assert len(mpoly_geoms) == len(mpoly_uvs)
-            assert len(mpoly_geoms) == len(mpoly_materials)
+        if appearance and not (
+            len(mpoly_geoms)
+            == len(mpoly_textures)
+            == len(mpoly_uvs)
+            == len(mpoly_materials)
+        ):
+            raise ValueError("Polygon, texture, UV and material counts do not match")
         return PolygonCollection(
             polygons=mpoly_geoms,
             materials=mpoly_materials if appearance else None,

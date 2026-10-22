@@ -110,9 +110,10 @@ def get_table_definition(cityobj: CityObject) -> TableDefinition:
                 closed[prop.name] = prop.datatype
             else:
                 # 同名のフィールドが既にある場合は、型が一致しているか確認する
-                assert closed[prop.name] == prop.datatype, (
-                    f"{prop.name}, {closed[prop.name]} != {prop.datatype}"
-                )
+                if closed[prop.name] != prop.datatype:
+                    raise ValueError(
+                        f"{prop.name}, {closed[prop.name]} != {prop.datatype}"
+                    )
 
     return TableDefinition(fields=fields)
 
