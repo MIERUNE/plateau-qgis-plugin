@@ -36,7 +36,7 @@ jobs:
         run: >
           docker run --rm --env PIP_BREAK_SYSTEM_PACKAGES=1 --volume `pwd`:/app -w=/app qgis/qgis:${{ matrix.qgis_image_tag }} sh -c "
             pip3 install --require-hashes --no-deps -r requirements.txt &&
-            PYTHONPATH=/app xvfb-run -s '+extension GLX -screen 0 1024x768x24' pytest -v --cov --cov-report=xml --cov-report=term
+            PYTHONPATH=/app:\$PYTHONPATH xvfb-run -s '+extension GLX -screen 0 1024x768x24' pytest -v --cov --cov-report=xml --cov-report=term
           "
 
       - name: Upload coverage
