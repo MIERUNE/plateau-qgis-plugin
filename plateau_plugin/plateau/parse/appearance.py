@@ -19,15 +19,18 @@ def parse_appearances(doc: et._Element) -> Iterable[Appearance]:  # noqa: C901
             m = Material()
             if (diffuse := material.find("./app:diffuseColor", _NS)) is not None:
                 v = tuple(float(v) for v in diffuse.text.split())
-                assert len(v) == 3
+                if len(v) != 3:
+                    raise ValueError(f"Invalid diffuseColor: {diffuse.text!r}")
                 m.diffuse_color = v
             if (specular := material.find("./app:specularColor", _NS)) is not None:
                 v = tuple(float(v) for v in specular.text.split())
-                assert len(v) == 3
+                if len(v) != 3:
+                    raise ValueError(f"Invalid specularColor: {specular.text!r}")
                 m.specular_color = v
             if (emissive := material.find("./app:emissiveColor", _NS)) is not None:
                 v = tuple(float(v) for v in emissive.text.split())
-                assert len(v) == 3
+                if len(v) != 3:
+                    raise ValueError(f"Invalid emissiveColor: {emissive.text!r}")
                 m.specular_color = v
             if (shininess := material.find("./app:shininess", _NS)) is not None:
                 m.shininess = float(shininess.text)
@@ -41,7 +44,8 @@ def parse_appearances(doc: et._Element) -> Iterable[Appearance]:  # noqa: C901
             materials.append(m)
             idx = len(materials) - 1
             for target in material.iterfind("./app:target", _NS):
-                assert target.text.startswith("#")
+                if not target.text.startswith("#"):
+                    raise ValueError(f"Invalid material target: {target.text!r}")
                 target_id = target.text[1:]
                 target_to_material[target_id] = idx
 
@@ -56,7 +60,8 @@ def parse_appearances(doc: et._Element) -> Iterable[Appearance]:  # noqa: C901
             for target in texture.iterfind("./app:target", _NS):
                 coords = target.find(".//app:textureCoordinates", _NS)
                 ring_id = coords.get("ring")
-                assert ring_id.startswith("#")
+                if not ring_id.startswith("#"):
+                    raise ValueError(f"Invalid texture ring reference: {ring_id!r}")
                 ring_id = ring_id[1:]
                 uv = np.fromstring(coords.text, dtype=np.float32, sep=" ")
                 ring_to_texture[ring_id] = (idx, uv.reshape(-1, 2))

@@ -1,4 +1,0 @@
-[bandit]
-# plugins.qgis.org のセキュリティスキャンも、この (プラグイン直下の) ファイルを読み込む
-# assert は型の絞り込みや内部の不変条件の確認にのみ使っている (plateau/ は make update_dependencies で上書きされる)
-skips = B101

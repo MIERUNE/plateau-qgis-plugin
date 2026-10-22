@@ -116,7 +116,8 @@ class CityObjectParser:
                     continue
 
             for prop in group.attributes:
-                assert prop.name in prop.path, f"{prop.name} not in {prop.path}"
+                if prop.name not in prop.path:
+                    raise ValueError(f"{prop.name} not in {prop.path}")
                 if prop.datatype == "[]string":
                     values = []
                     for child_elem in base_elem.iterfind(prop.path, nsmap):

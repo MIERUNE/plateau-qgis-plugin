@@ -18,6 +18,7 @@
 
 from __future__ import annotations
 
+import contextlib
 from typing import Iterable
 
 from qgis._3d import QgsPolygon3DSymbol, QgsVectorLayer3DRenderer
@@ -55,17 +56,14 @@ _TYPE_TO_QT_TYPE = {
 
 def set_default_3d_renderer(layer: QgsVectorLayer):
     """ポリゴンを絶対高度で描画する 3D レンダラを設定する"""
-    try:
+    # QGIS の 3D API が使えない環境では何もしない
+    with contextlib.suppress(Exception):
         symbol = QgsPolygon3DSymbol()
         symbol.setAltitudeClamping(Qgis.AltitudeClamping.Absolute)  # type: ignore
         symbol.setAltitudeBinding(Qgis.AltitudeBinding.Vertex)  # type: ignore
         renderer = QgsVectorLayer3DRenderer()
         renderer.setSymbol(symbol)
         layer.setRenderer3D(renderer)
-    except Exception:
-        # QGIS の 3D API が使えない環境では何もしない
-        # nosec B110
-        pass
 
 
 class LayerManager:
@@ -139,7 +137,8 @@ class LayerManager:
             co = co.parent
         name = " / ".join(reversed(s))
         if cityobj.lod is not None:
-            assert cityobj.geometry is not None
+            if cityobj.geometry is None:
+                raise ValueError(f"{cityobj.processor.id} has LoD but no geometry")
             if self._lod_in_name:
                 name += f":LoD={cityobj.lod})"
             name += f":type={self._get_geometry_type_name(cityobj)}"
