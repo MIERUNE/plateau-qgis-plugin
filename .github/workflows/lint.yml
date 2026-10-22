@@ -43,4 +43,5 @@ jobs:
         run: uv run ruff format . --check --diff
 
       - name: Security check with bandit
-        run: uv run bandit -c pyproject.toml -r plateau_plugin
+        # plateau_plugin/.bandit は bandit が自動で読み込む (plugins.qgis.org のスキャンと同じ条件)
+        run: uv run bandit -r plateau_plugin
