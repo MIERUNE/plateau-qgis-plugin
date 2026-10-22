@@ -212,7 +212,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
     def flags(self) -> QgsProcessingAlgorithm.Flags:
         if platform.system() == "Windows":
             # NOTE: Windowsでバッチ処理が停止する問題への暫定対応としてメインスレッドで実行する
-            return super().flags() | QgsProcessingAlgorithm.FlagNoThreading
+            return super().flags() | QgsProcessingAlgorithm.Flag.FlagNoThreading
         else:
             return super().flags()
 
@@ -311,7 +311,7 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
                 geom.transform(crs_transform, transformZ=False)
                 feature.setGeometry(geom)
 
-            provider.addFeature(feature, QgsFeatureSink.FastInsert)
+            provider.addFeature(feature, QgsFeatureSink.Flag.FastInsert)
             count += 1
             if count % 100 == 0:
                 feedback.setProgress(top_level_count / total_count * 100)

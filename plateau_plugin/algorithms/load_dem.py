@@ -133,7 +133,7 @@ class PlateauDEMLoaderAlrogithm(QgsProcessingAlgorithm):
         context.addLayerToLoadOnCompletion(
             output_filename,
             QgsProcessingContext.LayerDetails(
-                "TINRelief", context.project(), "TIN", QgsProcessingUtils.Mesh
+                "TINRelief", context.project(), "TIN", QgsProcessingUtils.LayerHint.Mesh
             ),
         )
 

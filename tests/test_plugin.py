@@ -1,8 +1,10 @@
+import platform
 from pathlib import Path
 
 import pytest
 from qgis.core import (
     QgsApplication,
+    QgsProcessingAlgorithm,
     QgsProcessingContext,
     QgsProcessingFeedback,
     QgsProcessingUtils,
@@ -30,6 +32,19 @@ def test_registered(qgis_app: QgsApplication, provider: str):
     assert alg.groupId() is None
     assert isinstance(alg.displayName(), str)
     assert isinstance(alg.shortHelpString(), str)
+
+
+def test_flags_no_threading_on_windows(provider, monkeypatch):
+    """Windows ではバッチ処理の問題への暫定対応としてメインスレッドで実行する"""
+    registory = QgsApplication.processingRegistry()
+    alg = registory.algorithmById("plateau_plugin:load_as_vector")
+    no_threading = QgsProcessingAlgorithm.Flag.FlagNoThreading
+
+    monkeypatch.setattr(platform, "system", lambda: "Windows")
+    assert alg.flags() & no_threading
+
+    monkeypatch.setattr(platform, "system", lambda: "Linux")
+    assert not alg.flags() & no_threading
 
 
 def _run(params: dict) -> tuple[dict, list[QgsVectorLayer]]:
