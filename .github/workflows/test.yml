@@ -33,9 +33,10 @@ jobs:
 
       - name: Run tests
         # PIP_BREAK_SYSTEM_PACKAGES: QGIS 4.x の Debian ベースのイメージは PEP 668 で pip install が拒否される (古い pip は無視する)
+        # --ignore-installed: イメージに Debian パッケージとして入った pytest などは pip で入れ替えられないため、上書きせずに入れる
         run: >
           docker run --rm --env PIP_BREAK_SYSTEM_PACKAGES=1 --volume `pwd`:/app -w=/app qgis/qgis:${{ matrix.qgis_image_tag }} sh -c "
-            pip3 install --require-hashes --no-deps -r requirements.txt &&
+            pip3 install --ignore-installed --require-hashes --no-deps -r requirements.txt &&
             PYTHONPATH=/app:\$PYTHONPATH xvfb-run -s '+extension GLX -screen 0 1024x768x24' pytest -v --cov --cov-report=xml --cov-report=term
           "
 
