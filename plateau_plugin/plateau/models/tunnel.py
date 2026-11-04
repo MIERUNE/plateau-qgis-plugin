@@ -8,6 +8,7 @@ from .base import (
     GeometricAttribute,
     GeometricAttributes,
 )
+from .common import data_quality_attribute
 
 TUNNEL = FeatureProcessingDefinition(
     id="tun:Tunnel",
@@ -58,6 +59,11 @@ TUNNEL = FeatureProcessingDefinition(
                 Attribute(
                     name="administorator",
                     path="./uro:administorator",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="administrator",
+                    path="./uro:administrator",
                     datatype="string",
                 ),
                 Attribute(
@@ -218,6 +224,7 @@ TUNNEL = FeatureProcessingDefinition(
                 ),
             ],
         ),
+        data_quality_attribute("tunDataQualityAttribute"),
         AttributeGroup(
             base_element="./uro:tunDataQualityAttribute/uro:ConstructionDataQualityAttribute",
             attributes=[

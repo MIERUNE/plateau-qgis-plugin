@@ -30,6 +30,7 @@ from .base import (
     GeometricAttribute,
     GeometricAttributes,
 )
+from .common import data_quality_attribute
 
 _utility_network_element_attrs = [
     AttributeGroup(
@@ -72,6 +73,7 @@ _utility_network_element_attrs = [
             ),
         ],
     ),
+    data_quality_attribute("frnDataQualityAttribute"),
     AttributeGroup(
         base_element="./uro:cityFurnitureDataQualityAttribute/uro:CityFurnitureDataQualityAttribute",
         attributes=[
@@ -212,8 +214,18 @@ UTILITY_NODE_CONTAINER = FeatureProcessingDefinition(
                     datatype="double",
                 ),
                 Attribute(
+                    name="innerDiameterLong",
+                    path="./uro:innerDiameterLong",
+                    datatype="double",
+                ),
+                Attribute(
                     name="innerDiamiterShort",
                     path="./uro:innerDiamiterShort",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="innerDiameterShort",
+                    path="./uro:innerDiameterShort",
                     datatype="double",
                 ),
                 Attribute(
@@ -222,8 +234,18 @@ UTILITY_NODE_CONTAINER = FeatureProcessingDefinition(
                     datatype="double",
                 ),
                 Attribute(
+                    name="outerDiameterLong",
+                    path="./uro:outerDiameterLong",
+                    datatype="double",
+                ),
+                Attribute(
                     name="outerDiamiterShort",
                     path="./uro:outerDiamiterShort",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="outerDiameterShort",
+                    path="./uro:outerDiameterShort",
                     datatype="double",
                 ),
                 Attribute(
@@ -308,6 +330,11 @@ UTILITY_LINK = FeatureProcessingDefinition(
                     datatype="double",
                 ),
                 Attribute(
+                    name="innerDiameter",
+                    path="./uro:innerDiameter",
+                    datatype="double",
+                ),
+                Attribute(
                     name="material",
                     path="./uro:material",
                     datatype="string",
@@ -336,6 +363,11 @@ UTILITY_LINK = FeatureProcessingDefinition(
                 Attribute(
                     name="outerDiamiter",
                     path="./uro:outerDiamiter",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="outerDiameter",
+                    path="./uro:outerDiameter",
                     datatype="double",
                 ),
                 Attribute(
@@ -489,6 +521,12 @@ LENGTH_ATTRIBUTE = FeatureProcessingDefinition(
                 Attribute(
                     name="mesureType",
                     path="./uro:mesureType",
+                    datatype="string",
+                    predefined_codelist="LengthAttribute_mesureType",
+                ),
+                Attribute(
+                    name="measureType",
+                    path="./uro:measureType",
                     datatype="string",
                     predefined_codelist="LengthAttribute_mesureType",
                 ),

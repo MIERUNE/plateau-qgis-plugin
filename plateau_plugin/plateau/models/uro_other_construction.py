@@ -8,6 +8,7 @@ from .base import (
     GeometricAttribute,
     GeometricAttributes,
 )
+from .common import data_quality_attribute
 
 _construction_structure_attribute_attrs = [
     Attribute(
@@ -101,8 +102,8 @@ URO_HEIGHT = FeatureProcessingDefinition(
             base_element=None,
             attributes=[
                 Attribute(
-                    name="heighReference",
-                    path="./uro:heighReference",
+                    name="highReference",
+                    path="./uro:highReference",
                     datatype="string",
                     predefined_codelist="Elevation_elevationReference",
                 ),
@@ -160,7 +161,7 @@ OTHER_CONSTRUCTION = FeatureProcessingDefinition(
                 ),
                 Attribute(
                     name="conditionOfConstruction",
-                    path="./uro:conditionOfConstruction/uro:ConditionOfConstructionValue",
+                    path="./uro:conditionOfConstruction",
                     datatype="string",
                 ),
             ],
@@ -182,6 +183,11 @@ OTHER_CONSTRUCTION = FeatureProcessingDefinition(
                 Attribute(
                     name="administorator",
                     path="./uro:administorator",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="administrator",
+                    path="./uro:administrator",
                     datatype="string",
                 ),
                 Attribute(
@@ -256,6 +262,7 @@ OTHER_CONSTRUCTION = FeatureProcessingDefinition(
             base_element="./uro:consStructureAttribute/uro:EmbankmentAttribute",
             attributes=_construction_structure_attribute_attrs,
         ),
+        data_quality_attribute("consDataQualityAttribute"),
         AttributeGroup(
             base_element="./uro:consDataQualityAttribute/uro:ConstructionDataQualityAttribute",
             attributes=[

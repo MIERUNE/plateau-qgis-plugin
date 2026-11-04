@@ -8,6 +8,7 @@ from .base import (
     GeometricAttribute,
     GeometricAttributes,
 )
+from .common import data_quality_attribute
 
 _transportation_data_quality_attributes = AttributeGroup(
     base_element="./uro:tranDataQualityAttribute/uro:TransportationDataQualityAttribute",
@@ -179,6 +180,7 @@ ROAD = FeatureProcessingDefinition(
             ],
         ),
         _transportation_data_quality_attributes,
+        data_quality_attribute("tranDataQualityAttribute"),
     ],
     dm_attr_container_path="./uro:tranDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
@@ -270,6 +272,7 @@ RAILWAY = FeatureProcessingDefinition(
             ],
         ),
         _transportation_data_quality_attributes,
+        data_quality_attribute("tranDataQualityAttribute"),
     ],
     dm_attr_container_path="./uro:tranDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
@@ -373,6 +376,7 @@ TRACK = FeatureProcessingDefinition(
             ],
         ),
         _transportation_data_quality_attributes,
+        data_quality_attribute("tranDataQualityAttribute"),
     ],
     dm_attr_container_path="./uro:tranDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
@@ -584,6 +588,7 @@ SQUARE = FeatureProcessingDefinition(
             attributes=_square_urban_plan_attribute_attrs,
         ),
         _transportation_data_quality_attributes,
+        data_quality_attribute("tranDataQualityAttribute"),
     ],
     dm_attr_container_path="./uro:tranDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
@@ -644,7 +649,7 @@ WATERWAY = FeatureProcessingDefinition(
             ],
         ),
         AttributeGroup(
-            base_element="./uro:watewayDetailAttribute/uro:WaterwayDetailAttribute",
+            base_element="./uro:waterwayDetailAttribute/uro:WaterwayDetailAttribute",
             attributes=[
                 Attribute(
                     name="length",
@@ -680,7 +685,7 @@ WATERWAY = FeatureProcessingDefinition(
                 Attribute(
                     name="routeId",
                     path="./uro:routeId",
-                    datatype="integer",
+                    datatype="string",
                 ),
                 Attribute(
                     name="speedLimit",
@@ -695,6 +700,7 @@ WATERWAY = FeatureProcessingDefinition(
             ],
         ),
         _transportation_data_quality_attributes,
+        data_quality_attribute("tranDataQualityAttribute"),
     ],
     dm_attr_container_path="./uro:tranDmAttribute",
     facility_attr_paths=FacilityAttributePaths(

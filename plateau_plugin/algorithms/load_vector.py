@@ -253,6 +253,13 @@ class PlateauVectorLoaderAlrogithm(QgsProcessingAlgorithm):
         filename = self.parameterAsFile(parameters, self.INPUT, context)
 
         parser = self._make_parser(filename, parameters, context, lod_option)
+        if parser.unsupported_iur_namespaces:
+            versions = ", ".join(
+                ns.rsplit("/", 1)[-1] for ns in parser.unsupported_iur_namespaces
+            )
+            feedback.pushWarning(
+                f"i-UR {versions} は対応していないため、uro/urf の地物と属性が読み込まれない可能性があります"
+            )
         total_count = parser.count_toplevel_cityobjs()
         feedback.pushInfo(
             f"{total_count}個のトップレベル都市オブジェクトが含まれています。"

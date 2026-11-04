@@ -8,6 +8,7 @@ from .base import (
     GeometricAttribute,
     GeometricAttributes,
 )
+from .common import data_quality_attribute
 
 UNDERGROUND_BUILDING = FeatureProcessingDefinition(
     id="uro:UndergroundBuilding",
@@ -90,6 +91,7 @@ UNDERGROUND_BUILDING = FeatureProcessingDefinition(
                 ),
             ],
         ),
+        data_quality_attribute("bldgDataQualityAttribute"),
         AttributeGroup(
             base_element="./uro:buildingDataQualityAttribute/uro:BuildingDataQualityAttribute",
             attributes=[

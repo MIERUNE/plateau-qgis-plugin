@@ -8,6 +8,7 @@ from .base import (
     GeometricAttribute,
     GeometricAttributes,
 )
+from .common import data_quality_attribute
 
 _uro_vegetation_data_quality_attribute = AttributeGroup(
     base_element="./uro:vegetationDataQualityAttribute/uro:VegetationDataQualityAttribute",
@@ -77,6 +78,7 @@ SOLITARY_VEGETATION_OBJECT = FeatureProcessingDefinition(
             ],
         ),
         _uro_vegetation_data_quality_attribute,
+        data_quality_attribute("vegDataQualityAttribute"),
     ],
     dm_attr_container_path="./uro:vegDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
@@ -122,6 +124,7 @@ PLANT_COVER = FeatureProcessingDefinition(
             ],
         ),
         _uro_vegetation_data_quality_attribute,
+        data_quality_attribute("vegDataQualityAttribute"),
     ],
     dm_attr_container_path="./uro:vegDmAttribute",
     facility_attr_paths=FacilityAttributePaths(
