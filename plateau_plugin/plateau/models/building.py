@@ -8,6 +8,7 @@ from .base import (
     GeometricAttribute,
     GeometricAttributes,
 )
+from .common import data_quality_attribute
 
 BUILDING = FeatureProcessingDefinition(
     id="bldg:Building",
@@ -105,6 +106,7 @@ BUILDING = FeatureProcessingDefinition(
                 ),
             ],
         ),
+        data_quality_attribute("bldgDataQualityAttribute"),
         AttributeGroup(
             base_element="./uro:buildingDataQualityAttribute/uro:BuildingDataQualityAttribute",
             attributes=[
@@ -615,8 +617,8 @@ BUILDING_DETAIL = FeatureProcessingDefinition(
                     datatype="double",
                 ),
                 Attribute(
-                    name="buidingHeight",
-                    path="./uro:buidingHeight",
+                    name="buildingHeight",
+                    path="./uro:buildingHeight",
                     datatype="double",
                 ),
                 Attribute(

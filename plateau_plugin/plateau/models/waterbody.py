@@ -143,6 +143,49 @@ WATER_BODY = FeatureProcessingDefinition(
             ],
         ),
         AttributeGroup(
+            base_element="./uro:floodingRiskAttribute/uro:RiverFloodingRiskAttribute",
+            attributes=[
+                Attribute(
+                    name="description",
+                    path="./uro:description",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="rank",
+                    path="./uro:rank",
+                    datatype="string",
+                    predefined_codelist="RiverFloodingRiskAttribute_rank",
+                ),
+                Attribute(
+                    name="rankOrg",
+                    path="./uro:rankOrg",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="depth",
+                    path="./uro:depth",
+                    datatype="double",
+                ),
+                Attribute(
+                    name="adminType",
+                    path="./uro:adminType",
+                    datatype="string",
+                    predefined_codelist="RiverFloodingRiskAttribute_adminType",
+                ),
+                Attribute(
+                    name="scale",
+                    path="./uro:scale",
+                    datatype="string",
+                    predefined_codelist="RiverFloodingRiskAttribute_scale",
+                ),
+                Attribute(
+                    name="duration",
+                    path="./uro:duration",
+                    datatype="double",
+                ),
+            ],
+        ),
+        AttributeGroup(
             base_element="./uro:floodingRiskAttribute/uro:WaterBodyHighTideRiskAttribute",
             attributes=[
                 Attribute(
@@ -169,7 +212,59 @@ WATER_BODY = FeatureProcessingDefinition(
             ],
         ),
         AttributeGroup(
+            base_element="./uro:floodingRiskAttribute/uro:HighTideRiskAttribute",
+            attributes=[
+                Attribute(
+                    name="description",
+                    path="./uro:description",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="rank",
+                    path="./uro:rank",
+                    datatype="string",
+                    predefined_codelist="HighTideRiskAttribute_rank",
+                ),
+                Attribute(
+                    name="rankOrg",
+                    path="./uro:rankOrg",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="depth",
+                    path="./uro:depth",
+                    datatype="double",
+                ),
+            ],
+        ),
+        AttributeGroup(
             base_element="./uro:floodingRiskAttribute/uro:WaterBodyTsunamiRiskAttribute",
+            attributes=[
+                Attribute(
+                    name="description",
+                    path="./uro:description",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="rank",
+                    path="./uro:rank",
+                    datatype="string",
+                    predefined_codelist="TsunamiRiskAttribute_rank",
+                ),
+                Attribute(
+                    name="rankOrg",
+                    path="./uro:rankOrg",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="depth",
+                    path="./uro:depth",
+                    datatype="double",
+                ),
+            ],
+        ),
+        AttributeGroup(
+            base_element="./uro:floodingRiskAttribute/uro:TsunamiRiskAttribute",
             attributes=[
                 Attribute(
                     name="description",
@@ -222,6 +317,32 @@ WATER_BODY = FeatureProcessingDefinition(
         ),
         AttributeGroup(
             base_element="./uro:floodingRiskAttribute/uro:WaterBodyInlandFloodingRiskAttribute",
+            attributes=[
+                Attribute(
+                    name="description",
+                    path="./uro:description",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="rank",
+                    path="./uro:rank",
+                    datatype="string",
+                    predefined_codelist="InlandFloodingRiskAttribute_rank",
+                ),
+                Attribute(
+                    name="rankOrg",
+                    path="./uro:rankOrg",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="depth",
+                    path="./uro:depth",
+                    datatype="double",
+                ),
+            ],
+        ),
+        AttributeGroup(
+            base_element="./uro:floodingRiskAttribute/uro:InlandFloodingRiskAttribute",
             attributes=[
                 Attribute(
                     name="description",

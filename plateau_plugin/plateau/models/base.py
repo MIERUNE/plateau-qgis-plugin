@@ -185,6 +185,8 @@ class ProcessorRegistory:
                 yield "urf15:" + n
                 yield "urf2:" + n
                 yield "urf3:" + n
+                yield "urf31:" + n
+                yield "urf32:" + n
             else:
                 yield name
 

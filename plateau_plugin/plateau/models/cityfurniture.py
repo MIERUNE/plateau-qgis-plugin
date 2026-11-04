@@ -8,6 +8,7 @@ from .base import (
     GeometricAttribute,
     GeometricAttributes,
 )
+from .common import data_quality_attribute
 
 CITY_FURNITURE = FeatureProcessingDefinition(
     id="frn:CityFurniture",
@@ -40,6 +41,7 @@ CITY_FURNITURE = FeatureProcessingDefinition(
                 ),
             ],
         ),
+        data_quality_attribute("frnDataQualityAttribute"),
         AttributeGroup(
             base_element="./uro:cityFurnitureDataQualityAttribute/uro:CityFurnitureDataQualityAttribute",
             attributes=[

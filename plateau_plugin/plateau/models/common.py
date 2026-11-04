@@ -1,6 +1,6 @@
 """様々なモデルで共通して使われる定義"""
 
-from .base import Attribute
+from .base import Attribute, AttributeGroup
 
 # uro:facilityIdAttribute の属性セット
 # 未使用
@@ -145,3 +145,62 @@ river_facility_id_attribute_attrs = [
         predefined_codelist="RiverfacilityIdAttribute_sideType",
     ),
 ]
+
+
+def data_quality_attribute(container: str) -> AttributeGroup:
+    """i-UR 3.1以降で共通になったデータ品質属性。"""
+    # 内蔵の DataQualityAttribute_appearanceSrcDesc は旧版の値で、i-UR 3.1 以降とは
+    # コード 2〜4 の意味が異なる。内蔵の表は codeSpace より先に引かれるため指定しない。
+    attributes = [
+        Attribute(
+            name=f"geometrySrcDescLod{lod}",
+            path=f"./uro:geometrySrcDescLod{lod}",
+            datatype="[]string",
+            predefined_codelist="DataQualityAttribute_geometrySrcDesc",
+        )
+        for lod in range(5)
+    ]
+    attributes.extend(
+        Attribute(
+            name=f"appearanceSrcDescLod{lod}",
+            path=f"./uro:appearanceSrcDescLod{lod}",
+            datatype="[]string",
+        )
+        for lod in range(5)
+    )
+    attributes.extend(
+        [
+            Attribute(
+                name="thematicSrcDesc",
+                path="./uro:thematicSrcDesc",
+                datatype="[]string",
+                predefined_codelist="DataQualityAttribute_thematicSrcDesc",
+            ),
+            Attribute(name="lodType", path="./uro:lodType", datatype="[]string"),
+            Attribute(
+                name="lod1HeightType",
+                path="./uro:lod1HeightType",
+                datatype="string",
+                predefined_codelist="DataQualityAttribute_lod1HeightType",
+            ),
+            Attribute(
+                name="tranDataAcquisition",
+                path="./uro:tranDataAcquisition",
+                datatype="string",
+            ),
+        ]
+    )
+    attributes.extend(
+        Attribute(
+            name=f"{kind}Lod{lod}",
+            path="./uro:publicSurveyDataQualityAttribute/uro:PublicSurveyDataQualityAttribute/"
+            f"uro:{kind}Lod{lod}",
+            datatype="string" if kind == "srcScale" else "[]string",
+        )
+        for kind in ("srcScale", "publicSurveySrcDesc")
+        for lod in range(5)
+    )
+    return AttributeGroup(
+        base_element=f"./uro:{container}/uro:DataQualityAttribute",
+        attributes=attributes,
+    )

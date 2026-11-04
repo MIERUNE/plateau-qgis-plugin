@@ -222,7 +222,7 @@ ATTR_DISASTER_RISK_LAND_SLIDE = FeatureProcessingDefinition(
                 Attribute(
                     name="areaType",
                     path="./uro:areaType",
-                    datatype="double",
+                    datatype="string",
                     predefined_codelist={
                         "uro:BuildingLandSlideRiskAttribute": "BuildingLandSlideRiskAttribute_areaType",
                         "uro:LandSlideRiskAttribute": "LandSlideRiskAttribute_areaType",
