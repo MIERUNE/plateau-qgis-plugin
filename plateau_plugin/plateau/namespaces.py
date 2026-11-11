@@ -31,6 +31,8 @@ BASE_NS = {
     "uro3": "https://www.geospatial.jp/iur/uro/3.0",
     "uro31": "https://www.geospatial.jp/iur/uro/3.1",
     "uro32": "https://www.geospatial.jp/iur/uro/3.2",
+    "urf31": "https://www.geospatial.jp/iur/urf/3.1",
+    "urf32": "https://www.geospatial.jp/iur/urf/3.2",
     "urf3": "https://www.geospatial.jp/iur/urf/3.0",
 }
 """XML Namespaces used in PLATEAU 3D City Models"""
@@ -44,6 +46,11 @@ class Namespace:
 
     def __init__(self, update: dict) -> None:
         self.nsmap: dict[str, str] = dict(**BASE_NS, **update)
+        self.unsupported_iur_namespaces = tuple(
+            ns
+            for prefix, ns in update.items()
+            if prefix in ("uro", "urf") and ns not in BASE_NS.values()
+        )
         self.inverted = {v: k for k, v in self.nsmap.items()}
 
     @classmethod

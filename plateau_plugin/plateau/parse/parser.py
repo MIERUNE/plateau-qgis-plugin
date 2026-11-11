@@ -129,7 +129,9 @@ class CityObjectParser:
                             )
                             v = codelist_lookup(pcl, path, v)
                         values.append(v)
-                    props[prop.name] = values
+                    # 新旧の版のデータ品質など、同名の属性を持つ別の属性グループが
+                    # 先に値を入れていれば、空配列で上書きせずに足す
+                    props.setdefault(prop.name, []).extend(values)
                 elif prop.datatype == "[]double":
                     props[prop.name] = [
                         float(e.text)
@@ -351,6 +353,7 @@ class PlateauCityGmlParser:
         # ドキュメントで使われている i-UR のバージョンを検出して
         # uro: と urf: 接頭辞が指すべきXML名前空間を自動で決定する
         self._ns = Namespace.from_document_nsmap(self._doc.getroot().nsmap)
+        self.unsupported_iur_namespaces = self._ns.unsupported_iur_namespaces
         codelists = CodelistStore(self._base_dir)
 
         if settings.load_apperance:

@@ -8,6 +8,7 @@ from .base import (
     GeometricAttribute,
     GeometricAttributes,
 )
+from .common import data_quality_attribute
 
 BRIDGE = FeatureProcessingDefinition(
     id="brid:Bridge",
@@ -63,6 +64,11 @@ BRIDGE = FeatureProcessingDefinition(
                 Attribute(
                     name="administorator",
                     path="./uro:administorator",
+                    datatype="string",
+                ),
+                Attribute(
+                    name="administrator",
+                    path="./uro:administrator",
                     datatype="string",
                 ),
                 Attribute(
@@ -232,6 +238,7 @@ BRIDGE = FeatureProcessingDefinition(
                 ),
             ],
         ),
+        data_quality_attribute("bridDataQualityAttribute"),
         AttributeGroup(
             base_element="./uro:bridDataQualityAttribute/uro:ConstructionDataQualityAttribute",
             attributes=[
